@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# VS Code
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Java
+simulation/target/
+simulation/.idea/
+
+# IntelliJ
+*.iml
+
+# Results
+results/*
+!results/.gitkeep
