@@ -9,10 +9,12 @@ public class DigitalTwinManager {
 
     private final List<EdgeNode> edgeNodes;
     private final List<NetworkLink> networkLinks;
+    private final List<DeviceNode> devices;
 
     public DigitalTwinManager() {
         edgeNodes = new ArrayList<>();
         networkLinks = new ArrayList<>();
+        devices = new ArrayList<>();
     }
 
     public void addNode(EdgeNode node) {
@@ -48,6 +50,26 @@ public class DigitalTwinManager {
 
         System.out.println(
                 "Digital Twin mirrored " + nodeCount + " network link(s)."
+        );
+    }
+
+    /**
+     * Creates `deviceCount` IoMT device twins (Sprint 3.75), assigning
+     * each one round-robin to one of the `edgeNodeCount` edge nodes it
+     * reports to — mirroring how wearables/sensors in the real
+     * architecture connect to their nearest edge server.
+     */
+    public void mirrorDevices(int deviceCount, int edgeNodeCount) {
+
+        for (int i = 0; i < deviceCount; i++) {
+
+            int assignedEdgeNodeId = edgeNodeCount > 0 ? i % edgeNodeCount : 0;
+
+            devices.add(new DeviceNode(i, assignedEdgeNodeId));
+        }
+
+        System.out.println(
+                "Digital Twin mirrored " + deviceCount + " IoMT device(s)."
         );
     }
 
@@ -121,6 +143,20 @@ public class DigitalTwinManager {
         return null;
     }
 
+    public List<DeviceNode> getDevices() {
+        return devices;
+    }
+
+    public DeviceNode getDevice(int deviceId) {
+
+        for (DeviceNode device : devices) {
+            if (device.getId() == deviceId)
+                return device;
+        }
+
+        return null;
+    }
+
     public void printStatus() {
 
         System.out.println("\n========== DIGITAL TWIN ==========");
@@ -149,5 +185,23 @@ public class DigitalTwinManager {
             System.out.println("--------------------------------");
         }
 
+        if (!devices.isEmpty()) {
+
+            System.out.println("\n---------- IoMT DEVICE LAYER ----------");
+
+            for (DeviceNode device : devices) {
+
+                System.out.println("Device ID   : " + device.getId());
+                System.out.println("Edge Node   : " + device.getAssignedEdgeNodeId());
+                System.out.println("Battery     : " + device.getBatteryLevel() + " %");
+                System.out.println("Connected   : " + device.isConnected());
+                System.out.println("Signal Qual : " + device.getSignalQuality() + " %");
+                System.out.println("Signal Noise: " + device.getSignalNoise() + " %");
+                System.out.println("Last HB Time: " + device.getLastHeartbeatTime() + "s");
+                System.out.println("Alive       : " + device.isActive());
+                System.out.println("FailureMode : " + device.getFailureMode());
+                System.out.println("--------------------------------");
+            }
+        }
     }
 }

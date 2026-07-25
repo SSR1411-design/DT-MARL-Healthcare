@@ -11,7 +11,10 @@ public class FailureEvent {
         LINK_DEGRADED_START,
         LINK_DEGRADED_END,
         CYBER_ATTACK_START,
-        CYBER_ATTACK_END
+        CYBER_ATTACK_END,
+        DEVICE_DROPOUT,
+        DEVICE_BATTERY_DEPLETED,
+        DEVICE_SENSOR_FAULT
     }
 
     public enum Cause {
@@ -57,6 +60,12 @@ public class FailureEvent {
 
     /**
      * One CSV row: time,nodeId,type,cause,cpuAtEvent
+     *
+     * Note: for DEVICE_* event types, `nodeId` is actually the device
+     * ID (not a host ID), and `cpuAtEvent` holds the device's battery
+     * level at the moment of the event instead of CPU%. Consumers
+     * should always disambiguate by `type`, never by `nodeId` alone,
+     * since device IDs and host IDs both start at 0 and can collide.
      */
     public String toCsvRow() {
         return String.format("%.2f,%d,%s,%s,%.2f",

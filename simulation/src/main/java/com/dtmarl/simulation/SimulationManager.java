@@ -1,9 +1,12 @@
 package com.dtmarl.simulation;
 
 import com.dtmarl.ai.digitaltwin.DigitalTwinManager;
+import com.dtmarl.ai.prediction.DeviceHistoryCollector;
+import com.dtmarl.ai.prediction.HistoryCollector;
 import com.dtmarl.broker.BrokerManager;
 import com.dtmarl.cloudlet.CloudletManager;
 import com.dtmarl.datacenter.DatacenterManager;
+import com.dtmarl.failure.DeviceFailureManager;
 import com.dtmarl.failure.FailureManager;
 import com.dtmarl.failure.NetworkFailureManager;
 import com.dtmarl.host.HostManager;
@@ -39,7 +42,7 @@ public class SimulationManager {
                 );
 
         // ==========================================
-        // Create Digital Twin (Hosts + Network Links)
+        // Create Digital Twin (Hosts + Network Links + Devices)
         // ==========================================
 
         DigitalTwinManager digitalTwin =
@@ -47,6 +50,7 @@ public class SimulationManager {
 
         digitalTwin.mirrorHosts(hosts);
         digitalTwin.mirrorNetworkLinks(hosts.size());
+        digitalTwin.mirrorDevices(10, hosts.size());
 
         // ==========================================
         // Create Failure Managers
@@ -57,6 +61,9 @@ public class SimulationManager {
 
         NetworkFailureManager networkFailureManager =
                 new NetworkFailureManager(digitalTwin, failureManager);
+
+        DeviceFailureManager deviceFailureManager =
+                new DeviceFailureManager(digitalTwin, failureManager);
 
         // Compute-layer test (Sprint 3): Node 1 fully fails at t=15s.
         failureManager.scheduleFailure(1, 15.0);
@@ -70,9 +77,15 @@ public class SimulationManager {
         // t=25s and t=30s (bandwidth spike + high packet loss signature).
         networkFailureManager.scheduleCyberAttack(0, 25.0, 5.0);
 
-        // Random modes OFF by default. Enable later for full experiments:
-        // failureManager.enableRandomFailures(0.005);
-        // networkFailureManager.enableRandomLinkFailures(0.005);
+        failureManager.enableRandomFailures(0.01);
+        networkFailureManager.enableRandomLinkFailures(0.01);
+
+        // Device-layer tests (Sprint 3.75)
+        deviceFailureManager.scheduleDropout(3, 12.0);
+        deviceFailureManager.scheduleSensorFault(5, 20.0);
+        deviceFailureManager.enableBatteryDrain(1.5);
+        deviceFailureManager.enableRandomDropouts(0.005);
+        deviceFailureManager.enableRandomSensorFaults(0.005);
 
         // ==========================================
         // Create Broker
@@ -110,17 +123,33 @@ public class SimulationManager {
         );
 
         // ==========================================
-        // Continuously check compute + network/attack
-        // conditions AND sync the Digital Twin, on
-        // every clock tick.
+        // Sprint 4: rolling telemetry history collectors,
+        // window size = 10 ticks, for both hosts and devices.
+        // ==========================================
+
+        HistoryCollector historyCollector =
+                new HistoryCollector(digitalTwin, failureManager, 10);
+
+        DeviceHistoryCollector deviceHistoryCollector =
+                new DeviceHistoryCollector(digitalTwin, failureManager, 10);
+
+        // ==========================================
+        // Continuously check compute + network/attack +
+        // device conditions, sync the twin, and collect
+        // rolling telemetry history (host AND device), on
+        // every simulation clock tick.
         // ==========================================
 
         simulation.addOnClockTickListener(info -> {
 
             failureManager.checkAndTriggerFailures(info.getTime());
             networkFailureManager.checkAndTrigger(info.getTime());
+            deviceFailureManager.checkAndTrigger(info.getTime());
 
             digitalTwin.syncWithHosts(hosts);
+
+            historyCollector.collect(info.getTime());
+            deviceHistoryCollector.collect(info.getTime());
 
             System.out.println(
                     "\n[Simulation Time = "
@@ -156,11 +185,19 @@ public class SimulationManager {
                         + failureManager.getFailedHosts()
         );
 
+        System.out.println(
+                "Total failed devices during this run: "
+                        + deviceFailureManager.getFailedDevices()
+        );
+
         // ==========================================
-        // Export unified failure/network/attack log
+        // Export unified failure log, plus BOTH Sprint 4
+        // labeled telemetry-history datasets (host + device).
         // ==========================================
 
         failureManager.exportEventsToCsv("failure_log.csv");
+        historyCollector.exportLabeledCsv("failure_history.csv", 10.0);
+        deviceHistoryCollector.exportLabeledCsv("device_failure_history.csv", 10.0);
     }
 
     public CloudSimPlus getSimulation() {

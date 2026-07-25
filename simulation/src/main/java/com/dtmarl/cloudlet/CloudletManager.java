@@ -13,11 +13,15 @@ public class CloudletManager {
 
         List<Cloudlet> cloudlets = new ArrayList<>();
 
-        // Create 10 healthcare tasks
-        for (int taskId = 0; taskId < 10; taskId++) {
+        // Bumped from 10 tasks / 10000 MI to 40 tasks / 40000 MI so the
+        // workload keeps the datacenter busy well past t=30s — long
+        // enough for all three Sprint 3/3.5 scheduled failure/attack
+        // events to actually trigger, and to accumulate 30+ ticks per
+        // node for Sprint 4's sequence_length=10 windows.
+        for (int taskId = 0; taskId < 40; taskId++) {
 
             Cloudlet cloudlet = new CloudletSimple(
-                    10000,
+                    40000,
                     2,
                     new UtilizationModelDynamic(0.5)
             );
