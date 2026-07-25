@@ -12,13 +12,24 @@ public class VmManager {
 
         List<Vm> vmList = new ArrayList<>();
 
-        Vm vm = new VmSimple(1000, 2);
+        // Create 6 Virtual Machines
+        for (int vmId = 0; vmId < 6; vmId++) {
 
-        vm.setRam(2048)
-                .setBw(1000)
-                .setSize(10000);
+            Vm vm = new VmSimple(
+                    1000,  // CPU capacity
+                    2      // Number of CPU cores
+            );
 
-        vmList.add(vm);
+            vm.setRam(2048)       // 2 GB RAM
+                    .setBw(1000)  // Bandwidth
+                    .setSize(10000); // Storage
+
+            vmList.add(vm);
+
+            System.out.println(
+                    "VM " + vmId + " created successfully!"
+            );
+        }
 
         return vmList;
     }

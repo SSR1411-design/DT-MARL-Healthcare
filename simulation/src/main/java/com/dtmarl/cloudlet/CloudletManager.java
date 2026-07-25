@@ -13,14 +13,22 @@ public class CloudletManager {
 
         List<Cloudlet> cloudlets = new ArrayList<>();
 
-        Cloudlet cloudlet =
-                new CloudletSimple(
-                        10000,
-                        2,
-                        new UtilizationModelDynamic(0.5)
-                );
+        // Create 10 healthcare tasks
+        for (int taskId = 0; taskId < 10; taskId++) {
 
-        cloudlets.add(cloudlet);
+            Cloudlet cloudlet = new CloudletSimple(
+                    10000,
+                    2,
+                    new UtilizationModelDynamic(0.5)
+            );
+
+            cloudlets.add(cloudlet);
+
+            System.out.println(
+                    "Healthcare Task " + taskId +
+                    " created successfully!"
+            );
+        }
 
         return cloudlets;
     }

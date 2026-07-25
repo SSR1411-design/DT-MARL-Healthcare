@@ -16,6 +16,11 @@ public class EdgeNode {
 
     private boolean active;
 
+    // NEW: true when the node is overloaded (high sustained CPU) but has
+    // NOT fully failed. Distinct from `active` so we can tell apart
+    // "struggling" from "dead" in later sprints (prediction/MARL need this).
+    private boolean degraded;
+
     public EdgeNode(int id) {
 
         this.id = id;
@@ -31,6 +36,8 @@ public class EdgeNode {
         runningTasks = 0;
 
         active = true;
+
+        degraded = false;
     }
 
     public int getId() {
@@ -83,5 +90,13 @@ public class EdgeNode {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public boolean isDegraded() {
+        return degraded;
+    }
+
+    public void setDegraded(boolean degraded) {
+        this.degraded = degraded;
     }
 }

@@ -1,18 +1,96 @@
 package com.dtmarl.ai.digitaltwin;
 
+import org.cloudsimplus.hosts.Host;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DigitalTwinManager {
 
     private final List<EdgeNode> edgeNodes;
+    private final List<NetworkLink> networkLinks;
 
     public DigitalTwinManager() {
         edgeNodes = new ArrayList<>();
+        networkLinks = new ArrayList<>();
     }
 
     public void addNode(EdgeNode node) {
         edgeNodes.add(node);
+    }
+
+    /**
+     * Creates one EdgeNode per physical Host in the simulation, so the
+     * Digital Twin always has a 1:1 mirror of the CloudSim infrastructure.
+     * Node id == Host list index, which is also used by syncWithHosts()
+     * to match twin nodes back to their real host.
+     */
+    public void mirrorHosts(List<Host> hosts) {
+
+        for (int i = 0; i < hosts.size(); i++) {
+            addNode(new EdgeNode(i));
+        }
+
+        System.out.println(
+                "Digital Twin mirrored " + hosts.size() + " edge node(s)."
+        );
+    }
+
+    /**
+     * Creates one NetworkLink per node, mirroring the communication link
+     * each edge node relies on. Independent of host compute state.
+     */
+    public void mirrorNetworkLinks(int nodeCount) {
+
+        for (int i = 0; i < nodeCount; i++) {
+            networkLinks.add(new NetworkLink(i));
+        }
+
+        System.out.println(
+                "Digital Twin mirrored " + nodeCount + " network link(s)."
+        );
+    }
+
+    /**
+     * Pulls live resource-utilization metrics from the real CloudSim Host
+     * objects into the matching EdgeNode twin. Call this after simulation
+     * execution so the twin reflects the actual system state instead of
+     * staying at 0.
+     */
+    public void syncWithHosts(List<Host> hosts) {
+
+        for (int i = 0; i < hosts.size(); i++) {
+
+            Host host = hosts.get(i);
+            EdgeNode node = getNode(i);
+
+            if (node == null) {
+                continue;
+            }
+
+            double cpuPercent = host.getCpuPercentUtilization() * 100;
+
+            double ramPercent = host.getRam()
+                    .getPercentUtilization() * 100;
+
+            double bwPercent = host.getBw()
+                    .getPercentUtilization() * 100;
+
+            node.setCpuUsage(cpuPercent);
+            node.setRamUsage(ramPercent);
+            node.setBandwidthUsage(bwPercent);
+
+            double powerWatts = host.getPowerModel().getPower();
+            node.setEnergyConsumption(powerWatts);
+
+            node.setRunningTasks(host.getVmList().size());
+
+            node.setActive(host.isActive());
+        }
+
+        System.out.println(
+                "Digital Twin synchronized with " + hosts.size() + " host(s)."
+        );
     }
 
     public List<EdgeNode> getNodes() {
@@ -24,6 +102,20 @@ public class DigitalTwinManager {
         for(EdgeNode node : edgeNodes) {
             if(node.getId() == id)
                 return node;
+        }
+
+        return null;
+    }
+
+    public List<NetworkLink> getLinks() {
+        return networkLinks;
+    }
+
+    public NetworkLink getLink(int nodeId) {
+
+        for (NetworkLink link : networkLinks) {
+            if (link.getNodeId() == nodeId)
+                return link;
         }
 
         return null;
@@ -42,6 +134,17 @@ public class DigitalTwinManager {
             System.out.println("Energy  : " + node.getEnergyConsumption());
             System.out.println("Tasks   : " + node.getRunningTasks());
             System.out.println("Alive   : " + node.isActive());
+            System.out.println("Degraded: " + node.isDegraded());
+
+            NetworkLink link = getLink(node.getId());
+
+            if (link != null) {
+                System.out.println("Link Up : " + link.isUp());
+                System.out.println("Link BW : " + link.getBandwidthMbps() + " Mbps");
+                System.out.println("Latency : " + link.getLatencyMs() + " ms");
+                System.out.println("PktLoss : " + link.getPacketLossPercent() + " %");
+                System.out.println("Attacked: " + link.isUnderAttack());
+            }
 
             System.out.println("--------------------------------");
         }
