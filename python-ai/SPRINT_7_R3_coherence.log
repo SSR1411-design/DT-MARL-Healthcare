@@ -1,0 +1,82 @@
+==============================================================================
+SPRINT 7 RUNG 2.75 -- items B/C bridge: WEAK signal or INCOHERENT
+        signal?  gradient norms at MATCHED advantage mass
+        (one backward pass per condition; no optimiser, no step)
+==============================================================================
+
+-- A0 (mappo_A0_cpu_repro.pth) --------------------------------
+   T=3100  decision=3452  high-risk=212  (6.1% of decision entries)
+   adv pre-norm  mean -0.0124 sd 2.9351   post-norm over decision entries mean +1.55e-08 sd 1.0000
+   L2 mass over decision entries (all matched to real 58.75):  synth x4.21  real_hi x3.76
+   synth support: 14 EDGE(+) / 181 STAY(-) entries
+
+   ||g|| at matched mass
+      real                 7.062612e-02
+      synth (coherent)     1.732428e-01    real/synth = 0.4077
+      real_hi              5.653895e-02
+      shuffled NULL        5.437302e-02 +/- 1.21e-02  [1.572e-02, 8.526e-02]
+      real/shuffled        1.2989   (z +1.35, perm p 0.1050)
+
+   direction: does the real gradient point the way that would
+              raise MIGRATE_EDGE at high risk?
+      cos(g_real,  g_synth) = +0.49925
+      cos(g_real_hi, g_synth) = +0.94495
+      NULL cos(g_shuffled, g_synth) = -0.00210 +/- 0.31547   |null| 95th pct 0.59022
+      two-sided permutation p for cos(g_real, g_synth) = 0.1100
+
+-- R2 (mappo_R2_mc_target.pth) --------------------------------
+   T=3200  decision=4967  high-risk=269  (5.4% of decision entries)
+   adv pre-norm  mean -0.0011 sd 2.6522   post-norm over decision entries mean +6.14e-09 sd 1.0000
+   L2 mass over decision entries (all matched to real 70.48):  synth x4.51  real_hi x3.46
+   synth support: 10 EDGE(+) / 234 STAY(-) entries
+
+   ||g|| at matched mass
+      real                 2.755415e-02
+      synth (coherent)     9.613300e-02    real/synth = 0.2866
+      real_hi              3.365684e-02
+      shuffled NULL        3.449891e-02 +/- 7.87e-03  [1.703e-02, 6.125e-02]
+      real/shuffled        0.7987   (z -0.88, perm p 0.8050)
+
+   direction: does the real gradient point the way that would
+              raise MIGRATE_EDGE at high risk?
+      cos(g_real,  g_synth) = +0.30127
+      cos(g_real_hi, g_synth) = +0.87342
+      NULL cos(g_shuffled, g_synth) = -0.02042 +/- 0.26814   |null| 95th pct 0.50276
+      two-sided permutation p for cos(g_real, g_synth) = 0.2450
+
+-- R3 (R3_batch32.pth) ----------------------------------------
+   T=3105  decision=4744  high-risk=158  (3.3% of decision entries)
+   adv pre-norm  mean -0.3108 sd 2.7889   post-norm over decision entries mean -4.82e-09 sd 1.0000
+   L2 mass over decision entries (all matched to real 68.88):  synth x5.82  real_hi x3.76
+   synth support: 11 EDGE(+) / 129 STAY(-) entries
+
+   ||g|| at matched mass
+      real                 5.556539e-02
+      synth (coherent)     8.982075e-02    real/synth = 0.6186
+      real_hi              3.492332e-02
+      shuffled NULL        4.485939e-02 +/- 1.08e-02  [1.909e-02, 7.910e-02]
+      real/shuffled        1.2387   (z +1.00, perm p 0.1450)
+
+   direction: does the real gradient point the way that would
+              raise MIGRATE_EDGE at high risk?
+      cos(g_real,  g_synth) = -0.65706
+      cos(g_real_hi, g_synth) = -0.24495
+      NULL cos(g_shuffled, g_synth) = +0.00843 +/- 0.29007   |null| 95th pct 0.49876
+      two-sided permutation p for cos(g_real, g_synth) = 0.0100
+
+==============================================================================
+SUMMARY -- at MATCHED advantage mass
+==============================================================================
+        real/synth  real/shuf  cos(real,syn)  cos(hi,syn)  null|cos|p95
+  A0        0.4077     1.2989       +0.49925     +0.94495       0.59022
+  R2        0.2866     0.7987       +0.30127     +0.87342       0.50276
+  R3        0.6186     1.2387       -0.65706     -0.24495       0.49876
+
+  read: real/synth << 1 means magnitude is being lost to
+        cancellation. real/shuf ~ 1 means the real advantage
+        carries no more usable state-action information than a
+        permutation of its own values. cos(real,syn) <= 0 means the
+        real signal does not push toward MIGRATE_EDGE at high risk.
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_75_coherence_R3.json
+==============================================================================

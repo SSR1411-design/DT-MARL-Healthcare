@@ -1,0 +1,238 @@
+{
+ "probe": "SPRINT_7_PHASE0_calibration",
+ "what": "read-only reconstruction audit of Sprint 7; no training, no production edit",
+ "Q1_rule9_calibration": {
+  "behavioural_metric": "Delta = pi(EDGE|risk>=0.6) - pi(EDGE|risk<0.2), fixed policy-independent sets",
+  "behaviour": {
+   "RANDOM": {
+    "A0": -0.02643642970603796,
+    "R2": 0.2024195013955644,
+    "R2_best": 0.2024195013955644,
+    "R3": 0.15752716078143603,
+    "R3_best": 0.1466714932781459,
+    "theta0": 0.016526735593753228
+   },
+   "UNION": {
+    "A0": 0.019136412969666533,
+    "R2": 0.1578811412616909,
+    "R2_best": 0.1578811412616909,
+    "R3": 0.1241723910487835,
+    "R3_best": 0.09458093372732457,
+    "theta0": 0.0007072178069871815
+   }
+  },
+  "behaviour_order": "R2 > R3 > A0 on both sets",
+  "per_instrument": [
+   {
+    "instrument": "E1 proj_frac hi-lo",
+    "measured_on": "RANDOM",
+    "arms": [
+     "A0",
+     "R3"
+    ],
+    "values": {
+     "A0": -0.24495270757787418,
+     "R3": -0.5259583210788377
+    },
+    "spearman_vs_behaviour_RANDOM": -0.9999999999999998,
+    "spearman_vs_behaviour_UNION": -0.9999999999999998
+   },
+   {
+    "instrument": "E1 proj_frac at hi",
+    "measured_on": "RANDOM",
+    "arms": [
+     "A0",
+     "R3"
+    ],
+    "values": {
+     "A0": 0.45421494759530384,
+     "R3": 0.1598559426763676
+    },
+    "spearman_vs_behaviour_RANDOM": -0.9999999999999998,
+    "spearman_vs_behaviour_UNION": -0.9999999999999998
+   },
+   {
+    "instrument": "cos(g_full,g_synth)",
+    "measured_on": "RANDOM",
+    "arms": [
+     "A0",
+     "R2",
+     "R3"
+    ],
+    "values": {
+     "A0": 0.15009847283363342,
+     "R2": -0.07784746587276459,
+     "R3": -0.007958224974572659
+    },
+    "spearman_vs_behaviour_RANDOM": -0.9999999999999998,
+    "spearman_vs_behaviour_UNION": -0.9999999999999998
+   },
+   {
+    "instrument": "cos(g_hi,g_lo)",
+    "measured_on": "RANDOM",
+    "arms": [
+     "A0",
+     "R2",
+     "R3"
+    ],
+    "values": {
+     "A0": 0.2142105996608734,
+     "R2": 0.17732460796833038,
+     "R3": 0.07933955639600754
+    },
+    "spearman_vs_behaviour_RANDOM": -0.4999999999999999,
+    "spearman_vs_behaviour_UNION": -0.4999999999999999
+   },
+   {
+    "instrument": "E1 proj_frac hi-lo",
+    "measured_on": "UNION",
+    "arms": [
+     "A0",
+     "R3"
+    ],
+    "values": {
+     "A0": -0.2507117015223439,
+     "R3": -0.497700616728755
+    },
+    "spearman_vs_behaviour_RANDOM": -0.9999999999999998,
+    "spearman_vs_behaviour_UNION": -0.9999999999999998
+   },
+   {
+    "instrument": "E1 proj_frac at hi",
+    "measured_on": "UNION",
+    "arms": [
+     "A0",
+     "R3"
+    ],
+    "values": {
+     "A0": 0.3457834679071754,
+     "R3": 0.21469749824978182
+    },
+    "spearman_vs_behaviour_RANDOM": -0.9999999999999998,
+    "spearman_vs_behaviour_UNION": -0.9999999999999998
+   },
+   {
+    "instrument": "cos(g_full,g_synth)",
+    "measured_on": "UNION",
+    "arms": [
+     "A0",
+     "R2",
+     "R3"
+    ],
+    "values": {
+     "A0": 0.07232416421175003,
+     "R2": -0.14394624531269073,
+     "R3": -0.13789480924606323
+    },
+    "spearman_vs_behaviour_RANDOM": -0.9999999999999998,
+    "spearman_vs_behaviour_UNION": -0.9999999999999998
+   },
+   {
+    "instrument": "cos(g_hi,g_lo)",
+    "measured_on": "UNION",
+    "arms": [
+     "A0",
+     "R2",
+     "R3"
+    ],
+    "values": {
+     "A0": 0.6860390901565552,
+     "R2": -0.31486889719963074,
+     "R3": 0.5841462016105652
+    },
+    "spearman_vs_behaviour_RANDOM": -0.9999999999999998,
+    "spearman_vs_behaviour_UNION": -0.9999999999999998
+   },
+   {
+    "instrument": "||g_hi||/||g_lo||",
+    "measured_on": "OWN",
+    "arms": [
+     "A0",
+     "R2",
+     "R3"
+    ],
+    "values": {
+     "A0": 0.4922343940888456,
+     "R2": 0.17846394840121735,
+     "R3": 0.38654683519425986
+    },
+    "spearman_vs_behaviour_RANDOM": -0.9999999999999998,
+    "spearman_vs_behaviour_UNION": -0.9999999999999998
+   },
+   {
+    "instrument": "cos(g_full,g_synth)",
+    "measured_on": "OWN",
+    "arms": [
+     "A0",
+     "R2",
+     "R3"
+    ],
+    "values": {
+     "A0": 0.40227970480918884,
+     "R2": -0.23720192909240723,
+     "R3": -0.24367991089820862
+    },
+    "spearman_vs_behaviour_RANDOM": -0.4999999999999999,
+    "spearman_vs_behaviour_UNION": -0.4999999999999999
+   }
+  ],
+  "n_readings": 20,
+  "n_negative": 20,
+  "n_positive": 0,
+  "mean_spearman": -0.8999999999999998,
+  "caveat": "n=2 or n=3 arms per instrument, so no single rho is significant (permutation p >= 1/6 at n=3). The readings share arms and all derive from terminal checkpoints, so they are NOT independent and the sign count must not be read as p = 2^-20."
+ },
+ "Q2_per_state_offset": {
+  "definition": "c(s) := gae(s, a_ref); a_true(s,a_ref) == 0 by construction, so c is pure estimator error",
+  "source": "SPRINT_7_RUNG2_5_native_dev_R2.json rows (R2's own greedy baselines)",
+  "n_rows": 547,
+  "shared_across_agents_at_same_tick": {
+   "n_groups_total": 520,
+   "n_groups_with_2plus_agents": 27,
+   "mean_within_group_spread_of_c": 6.650740598086958,
+   "max_within_group_spread_of_c": 18.605222702026367,
+   "overall_sd_of_c": 4.645725507783892,
+   "verdict": "agent-idiosyncratic: within-tick spread EXCEEDS the overall sd, so cross-agent or per-tick centring would not remove c(s)"
+  },
+  "per_bucket": {
+   "lo": {
+    "n": 290,
+    "mean_c": -0.8814290815065133,
+    "sd_c": 4.1061575998360915,
+    "frac_abs_c_gt_1": 0.7896551724137931
+   },
+   "mid": {
+    "n": 27,
+    "mean_c": 2.4009380495106734,
+    "sd_c": 4.057116856984127,
+    "frac_abs_c_gt_1": 0.8518518518518519
+   },
+   "hi": {
+    "n": 230,
+    "mean_c": -0.8694613545161226,
+    "sd_c": 5.190345946057903,
+    "frac_abs_c_gt_1": 0.8826086956521739
+   }
+  },
+  "sign_flips_raw_vs_paired": {
+   "lo": {
+    "deviation_pairs": 388,
+    "sign_flips": 178,
+    "flip_rate": 0.4587628865979381,
+    "median_abs_c_over_abs_paired": 4.143681290694611
+   },
+   "mid": {
+    "deviation_pairs": 30,
+    "sign_flips": 14,
+    "flip_rate": 0.4666666666666667,
+    "median_abs_c_over_abs_paired": 3.50151693145878
+   },
+   "hi": {
+    "deviation_pairs": 298,
+    "sign_flips": 169,
+    "flip_rate": 0.5671140939597316,
+    "median_abs_c_over_abs_paired": 2.9623935612667336
+   }
+  }
+ }
+}

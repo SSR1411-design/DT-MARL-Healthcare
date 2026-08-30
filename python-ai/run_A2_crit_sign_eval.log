@@ -1,0 +1,145 @@
+====================================================================================================
+SPRINT 6 — MAPPO EVALUATION (exploration disabled)
+====================================================================================================
+  checkpoint        : mappo_A2_crit_sign.pth  (kind=final, episode=600, train mean reward=+12.41)
+  risk source       : oof  (calibrated=False)
+  eval start window : ticks [491, 698] = last 30% of usable trace (training used the first 70%)
+  episodes          : 8 at fixed starts [491, 521, 550, 580, 609, 639, 668, 698]
+  episode length    : 400 steps x 2s = 800s
+  agents            : 10 (one per edge node)
+====================================================================================================
+
+POLICY COMPARISON — identical episode starts, identical failures
+
+policy                      reward success   lost critLo   reloc   preem   react    prot    sla  latency    energy
+------------------------------------------------------------------------------------------------------------------
+mappo-greedy                 12.33   0.719   10.6    3.9    67.8    66.5     1.2     7.2    1.4    288.9    1984.8
+static-no-migration         -37.06   0.459   21.6    8.1     0.0     0.0     0.0     0.0    0.5    307.4    2075.3
+random-legal                 -5.59   0.650   11.8    4.8    84.2    81.6     2.6     8.9    1.9    292.5    2011.1
+reactive-threshold            0.53   0.578   14.1    4.6    17.8     0.0    17.8    12.1    6.2    343.1    2289.7
+risk-threshold@0.18          76.54   0.847    3.4    0.8    36.2    31.1     5.1    30.2    7.2    322.3    2649.0
+risk-threshold@0.5           77.04   0.844    3.4    0.8    35.5    30.4     5.1    29.6    6.9    319.7    2647.5
+------------------------------------------------------------------------------------------------------------------
+  lost/critLo/reloc/preem/react/prot/sla are per-episode means; latency in s; energy in Wh-equivalent trace units
+
+====================================================================================================
+REQUIRED METRICS — MAPPO, exploration disabled, mean +/- sd over 8 episodes
+====================================================================================================
+  average episode reward                    +12.329  +/-    19.388
+  task success rate                          0.7188  +/-    0.0634
+  SLA violation rate                         0.0344  +/-    0.0450
+  migration count (total relocations)         67.75  +/-      4.09
+    of which preemptive                       66.50  +/-      4.69
+    of which reactive                          1.25  +/-      1.20
+  average task latency (s)                   288.89  +/-     14.54
+  energy cost                                1984.8  +/-     132.3
+  failed critical tasks                        3.88  +/-      1.69
+  tasks protected before failure               7.25  +/-      2.95
+
+  supporting breakdown
+  edge migrations                             42.75
+  cloud migrations                            25.00
+  preemptive reroutes                          0.00
+  tasks completed                             28.75
+  tasks lost                                  10.62
+    lost on the resident host                  9.38
+    lost in flight (bad destination)           1.25
+  tasks unfinished at horizon                  0.62
+  critical-task success rate                 0.7422
+  infeasible actions attempted                16.88
+
+====================================================================================================
+BEHAVIOUR PROBE 1 — does predicted_failure_risk change the policy?
+====================================================================================================
+  300 real decision-time observations collected (agents holding a task with >= 2 legal actions)
+
+  counterfactual: local predicted_failure_risk overwritten, everything else held fixed
+        risk       STAY  MIGRATE_T  MIGRATE_T  PREEMPTIV   P(relocate)
+        0.00      0.764      0.176      0.060      0.000       0.236
+        0.10      0.764      0.177      0.060      0.000       0.236
+        0.25      0.763      0.177      0.060      0.000       0.237
+        0.50      0.762      0.178      0.060      0.000       0.238
+        0.75      0.761      0.179      0.060      0.000       0.239
+        0.90      0.760      0.180      0.060      0.000       0.240
+        0.99      0.760      0.180      0.060      0.000       0.240
+    P(relocate) span = 0.004, corr(feature, P(relocate)) = +1.000
+    a policy that ignored the prediction would show a flat column
+    per-agent P(relocate) at risk=0.0 -> 0.99 (agents with >= 5 samples):
+      agent  0 (n=182): 0.072 -> 0.072 (delta +0.000)
+      agent  1 (n= 18): 0.733 -> 0.742 (delta +0.009)
+      agent  2 (n= 48): 0.418 -> 0.429 (delta +0.011)
+      agent  3 (n=  5): 0.533 -> 0.536 (delta +0.002)
+      agent  4 (n= 10): 0.681 -> 0.681 (delta +0.000)
+      agent  5 (n= 19): 0.246 -> 0.258 (delta +0.011)
+      agent  7 (n= 13): 0.506 -> 0.524 (delta +0.018)
+
+  empirical: actions actually taken, bucketed by the node's real risk
+          bucket       STAY  MIGRATE_T  MIGRATE_T  PREEMPTIV       n   %reloc
+         0.0-0.2       2717        326        310          0    3353    0.190
+         0.2-0.4          4          0          0          0       4    0.000
+         0.4-0.6          0          0          0          0       0      nan
+         0.6-0.8         96          5         12          0     113    0.150
+         0.8-1.0         96         11         13          0     120    0.200
+    counts over decision steps only; buckets are unevenly populated because high risk is rare in the trace
+
+====================================================================================================
+BEHAVIOUR PROBE 2 — does patient criticality change the policy?
+====================================================================================================
+
+  counterfactual: focus-task clinical severity overwritten
+    severity       STAY  MIGRATE_T  MIGRATE_T  PREEMPTIV   P(relocate)
+        0.00      0.763      0.177      0.060      0.000       0.237
+        0.20      0.763      0.177      0.060      0.000       0.237
+        0.40      0.763      0.177      0.060      0.000       0.237
+        0.60      0.763      0.177      0.060      0.000       0.237
+        0.80      0.763      0.177      0.060      0.000       0.237
+        1.00      0.764      0.176      0.060      0.000       0.236
+    P(relocate) span = 0.001, corr(feature, P(relocate)) = -0.993
+    severity enters the reward only as a multiplier on loss/SLA/migration, so its effect should be smaller than risk's and need not be monotone
+
+  empirical: actions taken, split by severity
+          bucket       STAY  MIGRATE_T  MIGRATE_T  PREEMPTIV       n   %reloc
+       sev < 0.5       1162        205        189          0    1556    0.253
+      sev >= 0.5       1751        137        146          0    2034    0.139
+    the Sprint 5 severity distribution centres near 0.5, so both cells are populated
+
+====================================================================================================
+ABLATION — the same trained policy with the risk channel forced to 0
+====================================================================================================
+policy                      reward success   lost critLo   reloc   preem   react    prot    sla  latency    energy
+------------------------------------------------------------------------------------------------------------------
+mappo (real risk)            12.33   0.719   10.6    3.9    67.8    66.5     1.2     7.2    1.4    288.9    1984.8
+mappo (risk=0)               -1.03   0.663   12.9    5.4    67.9    66.5     1.4     7.0    0.6    280.4    1839.7
+------------------------------------------------------------------------------------------------------------------
+  CAVEAT: zeroing risk changes THREE things at once — the policy's input, the exposure term of the reward, and the destination selector's score. The reward columns are therefore not directly comparable; read `prot`, `lost` and `reloc`, which are physical outcomes.
+  protected before failure: 7.25 -> 7.00
+  tasks lost              : 10.62 -> 12.88
+  relocations             : 67.75 -> 67.88
+
+====================================================================================================
+SAVE / LOAD ROUND TRIP (testing step 10)
+====================================================================================================
+  actor parameters bit-identical after reload : True
+  critic parameters bit-identical             : True
+  greedy actions identical over 60 steps      : True
+  action probabilities exactly equal          : True
+  centralised value identical                 : True
+  config recovered from checkpoint            : True
+
+====================================================================================================
+VERDICT
+====================================================================================================
+                                          MAPPO   risk-thr     static
+  episode reward                         12.329     76.543    -37.057   better: risk-threshold
+  task success rate                       0.719      0.847      0.459   better: risk-threshold
+  failed critical tasks                   3.875      0.750      8.125   better: risk-threshold
+  tasks protected                         7.250     30.250      0.000   better: risk-threshold
+  relocations (cost)                     67.750     36.250      0.000   better: risk-threshold
+  SLA violations                          1.375      7.250      0.500   better: MAPPO
+  energy cost                          1984.765   2648.969   2075.269   better: MAPPO
+
+  A threshold on the risk channel is a one-line rule. Any claim for MAPPO has to be a claim against THAT row, not against the static baseline.
+  MAPPO is ahead of risk-threshold on 2/6 axes: ['sla_violations', 'energy_cost']
+
+  written: saved_models\marl\mappo_A2_crit_sign_eval.json
+           saved_models\marl\mappo_A2_crit_sign_eval.csv

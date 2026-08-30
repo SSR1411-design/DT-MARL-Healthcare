@@ -1,0 +1,57 @@
+==============================================================================
+SPRINT 7 RUNG 2.5 -- items G (actor stall) and H (R2-aware replica)
+       attribution only; the R2 actor is NOT changed
+==============================================================================
+
+===== R2: mappo_R2_mc_target.pth (critic_target=mc) =====
+-- G: policy saturation at decision entries ------------------
+  decision entries          : 4967
+  mean per-entry entropy    : 0.1841 (max possible ln4 = 1.3863)
+  max prob   mean/p50/p95   : 0.9107 / 0.9948 / 0.9991
+  frac max prob > 0.99      : 0.5051
+  frac max prob > 0.999     : 0.2203
+  frac entry entropy < 0.01 : 0.2424
+  high-risk decision entries: 269 (EDGE n=10, share=0.03717472118959108)
+  episodes truncated        : 8/8
+-- H: R2-aware replica update on a deepcopy -----------------
+  critic target used        : mc
+  entropy                   : 0.183993
+  approx_kl (k1)            : +0.00000698
+  kl_k3                     : 0.00000009
+  clip_frac                 : 0.000000
+  adv_std                   : 2.652215
+  actor grad norm  total    : 6.083908e-02
+                   pg only  : 6.112536e-02
+              entropy only  : 4.785630e-03
+  minibatches               : 16  zero high-risk: 0  zero high-risk EDGE: 1
+  high-risk EDGE / minibatch: mean 2.50 min 0 max 6
+  ACTOR param delta  L2     : 5.429798e-03 (rms 1.125e-05, max|d| 1.433e-04)
+  CRITIC param delta L2     : 3.663205e-02 (rms 8.314e-05, max|d| 5.852e-04)
+
+===== A0: mappo_A0_cpu_repro.pth (critic_target=lambda) =====
+-- G: policy saturation at decision entries ------------------
+  decision entries          : 3452
+  mean per-entry entropy    : 0.3176 (max possible ln4 = 1.3863)
+  max prob   mean/p50/p95   : 0.8767 / 0.9382 / 0.9651
+  frac max prob > 0.99      : 0.0000
+  frac max prob > 0.999     : 0.0000
+  frac entry entropy < 0.01 : 0.0000
+  high-risk decision entries: 212 (EDGE n=14, share=0.0660377358490566)
+  episodes truncated        : 5/8
+-- H: R2-aware replica update on a deepcopy -----------------
+  critic target used        : lambda
+  entropy                   : 0.318032
+  approx_kl (k1)            : +0.00001452
+  kl_k3                     : 0.00000094
+  clip_frac                 : 0.000000
+  adv_std                   : 2.935150
+  actor grad norm  total    : 1.237602e-01
+                   pg only  : 1.196867e-01
+              entropy only  : 1.282352e-02
+  minibatches               : 16  zero high-risk: 0  zero high-risk EDGE: 1
+  high-risk EDGE / minibatch: mean 3.50 min 0 max 7
+  ACTOR param delta  L2     : 1.059609e-02 (rms 2.195e-05, max|d| 1.439e-04)
+  CRITIC param delta L2     : 2.234617e-02 (rms 5.071e-05, max|d| 4.540e-04)
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_5_actor_stall.json
+==============================================================================

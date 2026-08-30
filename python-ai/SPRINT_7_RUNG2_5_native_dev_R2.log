@@ -1,0 +1,57 @@
+==============================================================================
+SPRINT 7 RUNG 2.5 -- item E addendum: R2-NATIVE deviation set
+        (no training, no gradient, no production edit)
+==============================================================================
+  model        : mappo_R2_mc_target.pth
+  critic_target: mc
+  window     : 0.00-0.70 ticks [9, 491]
+  starts     : [9, 41, 73, 105, 138, 170, 202, 234, 266, 298, 330, 362, 395, 427, 459, 491]
+  baseline mean reward +4.2472  (19s)
+  gae replica vs MAPPO.compute_gae: ok=True max|dadv|=0.00e+00
+  greedy baseline lengths: [369, 372, 376, 378, 398, 399, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400]
+  truncated (>= 400): 10/16
+
+  pool sizes (available -> sampled):
+    pool A risk_hi :    659 ->  150
+    pool A risk_lo :  13900 ->  150
+    pool A risk_mid:     24 ->   24
+    pool B risk_hi :     62 ->   62
+    pool B risk_lo :    919 ->   80
+    pool B risk_mid:      3 ->    3
+    pool C risk_hi :     18 ->   18
+    pool C risk_lo :    512 ->   60
+    pool C risk_mid:      0 ->    0
+  native rows with >=1 deviation: 547
+    100/547 states, 101 replays, 147s
+    200/547 states, 211 replays, 321s
+    300/547 states, 324 replays, 463s
+    400/547 states, 500 replays, 675s
+    500/547 states, 669 replays, 877s
+  replay mismatches: 0 / 716
+  usable states 547, forced replays 716, mismatches 0  (935s)
+
+-- per-action means, HIGH-RISK bucket -------------------------
+  [a_true_team] ordering_by_true=['MIGRATE_TO_CLOUD', 'MIGRATE_TO_NEIGHBOR_EDGE', 'STAY']
+              ordering_by_gae =['MIGRATE_TO_NEIGHBOR_EDGE', 'STAY', 'MIGRATE_TO_CLOUD']
+     STAY                     n=  80  true  -0.2630 +-0.2405 (t= -1.09)   gae  -0.7668 +-0.4471 (t= -1.72)
+     MIGRATE_TO_NEIGHBOR_EDGE n= 212  true  +1.6227 +-0.4295 (t= +3.78)   gae  +0.1655 +-0.3266 (t= +0.51)
+     MIGRATE_TO_CLOUD         n=   6  true  +5.2115 +-0.5998 (t= +8.69)   gae  -5.4068 +-1.6960 (t= -3.19)
+  [a_true_own] ordering_by_true=['MIGRATE_TO_CLOUD', 'MIGRATE_TO_NEIGHBOR_EDGE', 'STAY']
+              ordering_by_gae =['MIGRATE_TO_NEIGHBOR_EDGE', 'STAY', 'MIGRATE_TO_CLOUD']
+     STAY                     n=  80  true  -0.8822 +-0.2208 (t= -3.99)   gae  -0.7668 +-0.4471 (t= -1.72)
+     MIGRATE_TO_NEIGHBOR_EDGE n= 212  true  +0.8675 +-0.2341 (t= +3.71)   gae  +0.1655 +-0.3266 (t= +0.51)
+     MIGRATE_TO_CLOUD         n=   6  true  +4.5311 +-0.5578 (t= +8.12)   gae  -5.4068 +-1.6960 (t= -3.19)
+
+-- raw vs paired sign agreement -------------------------------
+  [a_true_team]
+    hi  n= 298  raw 0.4396  paired 0.7114  delta +0.2718
+    lo  n= 388  raw 0.5155  paired 0.7423  delta +0.2268
+    all n= 716  raw 0.4818  paired 0.7235  delta +0.2416
+  [a_true_own]
+    hi  n= 298  raw 0.4597  paired 0.9463  delta +0.4866
+    lo  n= 388  raw 0.5464  paired 0.9278  delta +0.3814
+    all n= 716  raw 0.5084  paired 0.9372  delta +0.4288
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_5_native_dev_R2.json
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_5_native_dev_R2.json
+==============================================================================

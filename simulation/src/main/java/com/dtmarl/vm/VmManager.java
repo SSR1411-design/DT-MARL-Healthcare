@@ -1,5 +1,7 @@
 package com.dtmarl.vm;
 
+import com.dtmarl.host.HostManager;
+
 import org.cloudsimplus.vms.Vm;
 import org.cloudsimplus.vms.VmSimple;
 
@@ -8,12 +10,16 @@ import java.util.List;
 
 public class VmManager {
 
+    /** VMs per host. Kept at 2 so every host keeps the same nominal load. */
+    public static final int VMS_PER_HOST = 2;
+
     public List<Vm> createVms() {
 
         List<Vm> vmList = new ArrayList<>();
 
-        // Create 6 Virtual Machines
-        for (int vmId = 0; vmId < 6; vmId++) {
+        int vmCount = HostManager.HOST_COUNT * VMS_PER_HOST;
+
+        for (int vmId = 0; vmId < vmCount; vmId++) {
 
             Vm vm = new VmSimple(
                     1000,  // CPU capacity

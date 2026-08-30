@@ -1,5 +1,7 @@
 package com.dtmarl.ai.digitaltwin;
 
+import com.dtmarl.healthcare.HealthcareTask;
+
 import org.cloudsimplus.hosts.Host;
 
 import java.util.ArrayList;
@@ -11,10 +13,16 @@ public class DigitalTwinManager {
     private final List<NetworkLink> networkLinks;
     private final List<DeviceNode> devices;
 
+    // Sprint 5: workload-layer mirror. One TaskTwin per submitted
+    // HealthcareTask, kept in sync alongside the existing host/link/device
+    // twins. Purely additive — none of the existing twins are affected.
+    private final List<TaskTwin> taskTwins;
+
     public DigitalTwinManager() {
         edgeNodes = new ArrayList<>();
         networkLinks = new ArrayList<>();
         devices = new ArrayList<>();
+        taskTwins = new ArrayList<>();
     }
 
     public void addNode(EdgeNode node) {
@@ -155,6 +163,94 @@ public class DigitalTwinManager {
         }
 
         return null;
+    }
+
+    // ==========================================================
+    // Sprint 5: workload-layer (task) mirror
+    // ==========================================================
+
+    /**
+     * Creates one {@link TaskTwin} per submitted {@link HealthcareTask},
+     * mirroring the workload the way {@link #mirrorHosts(List)} mirrors the
+     * infrastructure. Call once after the tasks have been built.
+     *
+     * @param tasks the healthcare tasks to mirror (must not be null)
+     */
+    public void mirrorTasks(List<HealthcareTask> tasks) {
+
+        for (HealthcareTask task : tasks) {
+            taskTwins.add(new TaskTwin(task));
+        }
+
+        System.out.println(
+                "Digital Twin mirrored " + tasks.size() + " healthcare task(s)."
+        );
+    }
+
+    /**
+     * Refreshes every {@link TaskTwin} from its source task. Call on each
+     * clock tick (after infrastructure sync) so the workload mirror stays
+     * current. Twins are matched to tasks by healthcare task id.
+     *
+     * @param tasks the live healthcare tasks to sync from (must not be null)
+     */
+    public void syncTasks(List<HealthcareTask> tasks) {
+
+        for (HealthcareTask task : tasks) {
+
+            TaskTwin twin = getTaskTwin(task.getHealthcareTaskId());
+
+            if (twin != null) {
+                twin.syncFrom(task);
+            }
+        }
+    }
+
+    /** @return the live list of task twins (never null; may be empty) */
+    public List<TaskTwin> getTaskTwins() {
+        return taskTwins;
+    }
+
+    /**
+     * @param healthcareTaskId domain id of the task to look up
+     * @return the matching {@link TaskTwin}, or {@code null} if none
+     */
+    public TaskTwin getTaskTwin(int healthcareTaskId) {
+
+        for (TaskTwin twin : taskTwins) {
+            if (twin.getHealthcareTaskId() == healthcareTaskId)
+                return twin;
+        }
+
+        return null;
+    }
+
+    /**
+     * Prints the workload-layer mirror. Kept <em>separate</em> from
+     * {@link #printStatus()} so existing infrastructure telemetry output is
+     * byte-for-byte unchanged.
+     */
+    public void printTaskStatus() {
+
+        if (taskTwins.isEmpty()) {
+            return;
+        }
+
+        System.out.println("\n---------- HEALTHCARE TASK LAYER ----------");
+
+        for (TaskTwin twin : taskTwins) {
+
+            System.out.println("Task ID    : " + twin.getHealthcareTaskId());
+            System.out.println("Patient    : " + twin.getPatientId());
+            System.out.println("Edge Node  : " + twin.getCurrentEdgeNodeId());
+            System.out.println("State      : " + twin.getTaskState());
+            System.out.println("Priority   : " + twin.getPriorityScore());
+            System.out.println("Severity   : " + twin.getClinicalSeverity());
+            System.out.println("P(fail)    : " + twin.getFailureProbability());
+            System.out.println("Confidence : " + twin.getFailureConfidence());
+            System.out.println("Migrations : " + twin.getMigrationCount());
+            System.out.println("--------------------------------");
+        }
     }
 
     public void printStatus() {

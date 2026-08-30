@@ -1,0 +1,90 @@
+Device: cuda
+Feature arm: legacy  (7 raw -> 16 engineered)
+raw columns: ['energy', 'active', 'degraded', 'linkUp', 'linkBandwidthMbps', 'linkLatencyMs', 'linkPacketLoss']
+
+Windows: (14910, 10, 16)  positives: 320 (2.15%)  blocks: 1500  nodes: 10
+
+=== Leakage-safe grouped CV (5 folds, 80 epochs) ===
+fold 0: thr=0.42 acc=0.9634 prec=0.119 rec=0.222 pos_test=45 purged=5731
+  WARNING: threshold pinned at search-grid boundary (0.05); val F1=0.037. Scores poorly separated - distinct probabilities: 2
+fold 1: thr=0.05 acc=0.0244 prec=0.024 rec=1.000 pos_test=72 purged=5722
+  WARNING: threshold pinned at search-grid boundary (0.05); val F1=0.026. Scores poorly separated - distinct probabilities: 3
+fold 2: thr=0.05 acc=0.1074 prec=0.025 rec=1.000 pos_test=69 purged=5813
+  WARNING: threshold pinned at search-grid boundary (0.05); val F1=0.045. Scores poorly separated - distinct probabilities: 2
+fold 3: thr=0.05 acc=0.0210 prec=0.021 rec=1.000 pos_test=64 purged=5923
+  WARNING: threshold pinned at search-grid boundary (0.05); val F1=0.016. Scores poorly separated - distinct probabilities: 1
+fold 4: thr=0.05 acc=0.0229 prec=0.023 rec=0.957 pos_test=70 purged=5750
+
+windows scored out-of-fold: 14910/14910 (100.0%), positives covered: 320/320
+
+=== POOLED OUT-OF-FOLD METRICS (headline) ===
+
+[host predictor / pooled OOF]  n=14910  positives=320 (2.15%)
+  Accuracy        :  22.77%   (always-negative would score 97.85%)
+  Precision       : 0.0240
+  Recall          : 0.8812
+  F1-score        : 0.0467
+  PR-AUC          : 0.0777   (random ranking = 0.0215)
+  ROC-AUC         : 0.6250   (random = 0.5000)
+  Pos. pred. rate : 78.87%  (alerts raised on this share of all windows)
+  Confusion       : TN=3113 FP=11477 FN=38 TP=282
+                    [[  3113 11477]   rows=true 0/1
+                     [    38   282]]  cols=pred 0/1
+
+=== TRIVIAL BASELINES (same windows, same metrics) ===
+
+[BASELINE always-negative]  n=14910  positives=320 (2.15%)
+  Accuracy        :  97.85%   (always-negative would score 97.85%)
+  Precision       : 0.0000
+  Recall          : 0.0000
+  F1-score        : 0.0000
+  Pos. pred. rate : 0.00%  (alerts raised on this share of all windows)
+  Confusion       : TN=14590 FP=0 FN=320 TP=0
+                    [[ 14590     0]   rows=true 0/1
+                     [   320     0]]  cols=pred 0/1
+
+[BASELINE linkUp==1]  n=14910  positives=320 (2.15%)
+  Accuracy        :   8.75%   (always-negative would score 97.85%)
+  Precision       : 0.0230
+  Recall          : 1.0000
+  F1-score        : 0.0449
+  Pos. pred. rate : 93.40%  (alerts raised on this share of all windows)
+  Confusion       : TN=984 FP=13606 FN=0 TP=320
+                    [[   984 13606]   rows=true 0/1
+                     [     0   320]]  cols=pred 0/1
+
+[BASELINE degraded==1]  n=14910  positives=320 (2.15%)
+  Accuracy        :  97.90%   (always-negative would score 97.85%)
+  Precision       : 0.7333
+  Recall          : 0.0344
+  F1-score        : 0.0657
+  Pos. pred. rate : 0.10%  (alerts raised on this share of all windows)
+  Confusion       : TN=14586 FP=4 FN=309 TP=11
+                    [[ 14586     4]   rows=true 0/1
+                     [   309    11]]  cols=pred 0/1
+
+[BASELINE active==1]  n=14910  positives=320 (2.15%)
+  Accuracy        :   8.75%   (always-negative would score 97.85%)
+  Precision       : 0.0230
+  Recall          : 1.0000
+  F1-score        : 0.0449
+  Pos. pred. rate : 93.40%  (alerts raised on this share of all windows)
+  Confusion       : TN=984 FP=13606 FN=0 TP=320
+                    [[   984 13606]   rows=true 0/1
+                     [     0   320]]  cols=pred 0/1
+
+--- headline vs baselines (F1 is the comparison that matters) ---
+  model                       acc     prec      rec       F1
+  PREDICTOR (OOF)          22.77%   0.0240   0.8812   0.0467
+  always-negative          97.85%   0.0000   0.0000   0.0000
+  linkUp==1                 8.75%   0.0230   1.0000   0.0449
+  degraded==1              97.90%   0.7333   0.0344   0.0657
+  active==1                 8.75%   0.0230   1.0000   0.0449
+
+=== Training final deployable model (4/5 grouped split) ===
+Final deployment threshold: 0.180 (val F1=0.0638)
+NOTE: the threshold was tuned on that same 1/5 slice, so its F1 (0.0638) is optimistic.
+      Quote the pooled OOF numbers above, not this one.
+
+Saved: failure_predictor_legacy.pth + scaler + meta + OOF probs + host_metrics_legacy.json
+Training complete.
