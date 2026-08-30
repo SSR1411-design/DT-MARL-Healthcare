@@ -1,0 +1,175 @@
+==============================================================================
+SPRINT 7 PHASE 5 -- risk response as a function of update number
+  metric : Delta_EDGE = pi(EDGE | risk>=0.6) - pi(EDGE | risk<0.2)
+  states : RANDOM and UNION, rebuilt with the frozen artifact's
+           own code and unchanged parameters. NOT redefined.
+==============================================================================
+
+  eval window     : [491, 698]
+  distinct starts : 32  first [495, 498, 506, 507, 517, 520]
+  building fixed state sets (once) ...
+    RANDOM  n_decision   4975  n_highrisk   216  n_lo   4757  n_hi_cut   216  truncated 26  mean_len 397.3
+    UNION   n_decision  74237  n_highrisk  3592  n_lo  70621  n_hi_cut  3592  truncated 17  mean_len 383.1
+
+  manifest records : 76  (u000 has stats=None by construction: it precedes update 1)
+  checkpoints to score : 76  u000..u075
+  u000 ep  0  RANDOM d +0.0165 (lo 0.4385 hi 0.4551 argmaxE_hs 0.0833)   UNION d +0.0007 (lo 0.4852 hi 0.4859 argmaxE_hs 0.2311)   [1/76 96s]
+  u001 ep  8  RANDOM d -0.0120 (lo 0.4143 hi 0.4023 argmaxE_hs 0.1574)   UNION d -0.0315 (lo 0.4672 hi 0.4357 argmaxE_hs 0.2344)   [2/76 98s]
+  u002 ep 16  RANDOM d +0.0214 (lo 0.4194 hi 0.4409 argmaxE_hs 0.3056)   UNION d +0.0245 (lo 0.4739 hi 0.4984 argmaxE_hs 0.6058)   [3/76 99s]
+  u003 ep 24  RANDOM d +0.0119 (lo 0.3989 hi 0.4108 argmaxE_hs 0.3380)   UNION d +0.0135 (lo 0.4623 hi 0.4758 argmaxE_hs 0.5097)   [4/76 101s]
+  u004 ep 32  RANDOM d -0.0230 (lo 0.4054 hi 0.3823 argmaxE_hs 0.1806)   UNION d -0.0196 (lo 0.4629 hi 0.4434 argmaxE_hs 0.1862)   [5/76 103s]
+  u005 ep 40  RANDOM d +0.0098 (lo 0.3639 hi 0.3737 argmaxE_hs 0.1019)   UNION d -0.0041 (lo 0.4108 hi 0.4067 argmaxE_hs 0.1008)   [6/76 105s]
+  u006 ep 48  RANDOM d +0.0110 (lo 0.3233 hi 0.3343 argmaxE_hs 0.0000)   UNION d -0.0144 (lo 0.3644 hi 0.3500 argmaxE_hs 0.0000)   [7/76 107s]
+  u007 ep 56  RANDOM d +0.0228 (lo 0.3222 hi 0.3451 argmaxE_hs 0.1574)   UNION d -0.0053 (lo 0.3786 hi 0.3733 argmaxE_hs 0.1673)   [8/76 109s]
+  u008 ep 64  RANDOM d +0.0572 (lo 0.2775 hi 0.3347 argmaxE_hs 0.1620)   UNION d +0.0383 (lo 0.3307 hi 0.3690 argmaxE_hs 0.1679)   [9/76 111s]
+  u009 ep 72  RANDOM d +0.0426 (lo 0.2856 hi 0.3282 argmaxE_hs 0.2269)   UNION d +0.0326 (lo 0.3482 hi 0.3808 argmaxE_hs 0.2982)   [10/76 113s]
+  u010 ep 80  RANDOM d +0.0551 (lo 0.2552 hi 0.3102 argmaxE_hs 0.1806)   UNION d +0.0341 (lo 0.3208 hi 0.3550 argmaxE_hs 0.1862)   [11/76 115s]
+  u011 ep 88  RANDOM d +0.0824 (lo 0.2394 hi 0.3218 argmaxE_hs 0.1806)   UNION d +0.0567 (lo 0.3057 hi 0.3623 argmaxE_hs 0.1862)   [12/76 117s]
+  u012 ep 96  RANDOM d +0.1075 (lo 0.2247 hi 0.3322 argmaxE_hs 0.1806)   UNION d +0.0705 (lo 0.2828 hi 0.3533 argmaxE_hs 0.1862)   [13/76 119s]
+  u013 ep104  RANDOM d +0.0811 (lo 0.2341 hi 0.3151 argmaxE_hs 0.2176)   UNION d +0.0422 (lo 0.2926 hi 0.3348 argmaxE_hs 0.2943)   [14/76 121s]
+  u014 ep112  RANDOM d +0.0776 (lo 0.2258 hi 0.3035 argmaxE_hs 0.2917)   UNION d +0.0402 (lo 0.2902 hi 0.3304 argmaxE_hs 0.3480)   [15/76 123s]
+  u015 ep120  RANDOM d +0.0717 (lo 0.2006 hi 0.2723 argmaxE_hs 0.1806)   UNION d +0.0321 (lo 0.2677 hi 0.2998 argmaxE_hs 0.1862)   [16/76 124s]
+  u016 ep128  RANDOM d +0.0803 (lo 0.1914 hi 0.2716 argmaxE_hs 0.1806)   UNION d +0.0317 (lo 0.2532 hi 0.2849 argmaxE_hs 0.1862)   [17/76 126s]
+  u017 ep136  RANDOM d +0.0789 (lo 0.1973 hi 0.2762 argmaxE_hs 0.1852)   UNION d +0.0572 (lo 0.2578 hi 0.3150 argmaxE_hs 0.1862)   [18/76 128s]
+  u018 ep144  RANDOM d +0.0731 (lo 0.2050 hi 0.2781 argmaxE_hs 0.1759)   UNION d +0.0656 (lo 0.2611 hi 0.3267 argmaxE_hs 0.1815)   [19/76 130s]
+  u019 ep152  RANDOM d +0.0725 (lo 0.1867 hi 0.2592 argmaxE_hs 0.2176)   UNION d +0.0802 (lo 0.2472 hi 0.3274 argmaxE_hs 0.3335)   [20/76 132s]
+  u020 ep160  RANDOM d +0.0746 (lo 0.1740 hi 0.2486 argmaxE_hs 0.0972)   UNION d +0.0929 (lo 0.2368 hi 0.3297 argmaxE_hs 0.2336)   [21/76 134s]
+  u021 ep168  RANDOM d +0.1051 (lo 0.1801 hi 0.2852 argmaxE_hs 0.2176)   UNION d +0.1320 (lo 0.2406 hi 0.3726 argmaxE_hs 0.2817)   [22/76 136s]
+  u022 ep176  RANDOM d +0.1060 (lo 0.1829 hi 0.2889 argmaxE_hs 0.2176)   UNION d +0.1444 (lo 0.2471 hi 0.3915 argmaxE_hs 0.3458)   [23/76 138s]
+  u023 ep184  RANDOM d +0.1291 (lo 0.1624 hi 0.2916 argmaxE_hs 0.1157)   UNION d +0.1413 (lo 0.2109 hi 0.3523 argmaxE_hs 0.1545)   [24/76 140s]
+  u024 ep192  RANDOM d +0.1173 (lo 0.1363 hi 0.2537 argmaxE_hs 0.1157)   UNION d +0.1345 (lo 0.1791 hi 0.3136 argmaxE_hs 0.1542)   [25/76 142s]
+  u025 ep200  RANDOM d +0.1276 (lo 0.1412 hi 0.2689 argmaxE_hs 0.1111)   UNION d +0.1436 (lo 0.1800 hi 0.3236 argmaxE_hs 0.1542)   [26/76 144s]
+  u026 ep208  RANDOM d +0.1384 (lo 0.1451 hi 0.2834 argmaxE_hs 0.1111)   UNION d +0.1374 (lo 0.1802 hi 0.3175 argmaxE_hs 0.1542)   [27/76 146s]
+  u027 ep216  RANDOM d +0.1442 (lo 0.1418 hi 0.2860 argmaxE_hs 0.1065)   UNION d +0.1285 (lo 0.1734 hi 0.3019 argmaxE_hs 0.1542)   [28/76 148s]
+  u028 ep224  RANDOM d +0.1536 (lo 0.1423 hi 0.2959 argmaxE_hs 0.1065)   UNION d +0.1288 (lo 0.1738 hi 0.3026 argmaxE_hs 0.1542)   [29/76 150s]
+  u029 ep232  RANDOM d +0.1524 (lo 0.1423 hi 0.2947 argmaxE_hs 0.1065)   UNION d +0.1339 (lo 0.1753 hi 0.3091 argmaxE_hs 0.1542)   [30/76 152s]
+  u030 ep240  RANDOM d +0.1350 (lo 0.1364 hi 0.2714 argmaxE_hs 0.1065)   UNION d +0.1389 (lo 0.1713 hi 0.3102 argmaxE_hs 0.1542)   [31/76 154s]
+  u031 ep248  RANDOM d +0.1391 (lo 0.1401 hi 0.2792 argmaxE_hs 0.1065)   UNION d +0.1466 (lo 0.1742 hi 0.3208 argmaxE_hs 0.1542)   [32/76 155s]
+  u032 ep256  RANDOM d +0.1232 (lo 0.1387 hi 0.2620 argmaxE_hs 0.1111)   UNION d +0.1407 (lo 0.1787 hi 0.3194 argmaxE_hs 0.1542)   [33/76 157s]
+  u033 ep264  RANDOM d +0.1425 (lo 0.1450 hi 0.2876 argmaxE_hs 0.1157)   UNION d +0.1581 (lo 0.1800 hi 0.3381 argmaxE_hs 0.1542)   [34/76 159s]
+  u034 ep272  RANDOM d +0.1297 (lo 0.1356 hi 0.2653 argmaxE_hs 0.1065)   UNION d +0.1459 (lo 0.1679 hi 0.3137 argmaxE_hs 0.1542)   [35/76 161s]
+  u035 ep280  RANDOM d +0.1247 (lo 0.1313 hi 0.2560 argmaxE_hs 0.1065)   UNION d +0.1359 (lo 0.1611 hi 0.2970 argmaxE_hs 0.1542)   [36/76 163s]
+  u036 ep288  RANDOM d +0.1135 (lo 0.1268 hi 0.2403 argmaxE_hs 0.1065)   UNION d +0.1313 (lo 0.1560 hi 0.2873 argmaxE_hs 0.1542)   [37/76 165s]
+  u037 ep296  RANDOM d +0.1071 (lo 0.1219 hi 0.2289 argmaxE_hs 0.1065)   UNION d +0.1345 (lo 0.1510 hi 0.2854 argmaxE_hs 0.1542)   [38/76 167s]
+  u038 ep304  RANDOM d +0.1178 (lo 0.1269 hi 0.2446 argmaxE_hs 0.1065)   UNION d +0.1427 (lo 0.1542 hi 0.2969 argmaxE_hs 0.1542)   [39/76 169s]
+  u039 ep312  RANDOM d +0.1118 (lo 0.1173 hi 0.2291 argmaxE_hs 0.1065)   UNION d +0.1283 (lo 0.1370 hi 0.2653 argmaxE_hs 0.1542)   [40/76 171s]
+  u040 ep320  RANDOM d +0.1324 (lo 0.1245 hi 0.2568 argmaxE_hs 0.1065)   UNION d +0.1291 (lo 0.1383 hi 0.2674 argmaxE_hs 0.1542)   [41/76 173s]
+  u041 ep328  RANDOM d +0.1488 (lo 0.1285 hi 0.2773 argmaxE_hs 0.1065)   UNION d +0.1308 (lo 0.1384 hi 0.2692 argmaxE_hs 0.1542)   [42/76 175s]
+  u042 ep336  RANDOM d +0.1640 (lo 0.1338 hi 0.2978 argmaxE_hs 0.1065)   UNION d +0.1340 (lo 0.1380 hi 0.2720 argmaxE_hs 0.1542)   [43/76 177s]
+  u043 ep344  RANDOM d +0.1817 (lo 0.1403 hi 0.3220 argmaxE_hs 0.2685)   UNION d +0.1358 (lo 0.1394 hi 0.2752 argmaxE_hs 0.2219)   [44/76 179s]
+  u044 ep352  RANDOM d +0.1809 (lo 0.1379 hi 0.3187 argmaxE_hs 0.3287)   UNION d +0.1301 (lo 0.1360 hi 0.2661 argmaxE_hs 0.2238)   [45/76 180s]
+  u045 ep360  RANDOM d +0.1897 (lo 0.1395 hi 0.3292 argmaxE_hs 0.3796)   UNION d +0.1397 (lo 0.1357 hi 0.2753 argmaxE_hs 0.2567)   [46/76 182s]
+  u046 ep368  RANDOM d +0.2034 (lo 0.1456 hi 0.3490 argmaxE_hs 0.5139)   UNION d +0.1401 (lo 0.1389 hi 0.2790 argmaxE_hs 0.3160)   [47/76 184s]
+  u047 ep376  RANDOM d +0.2072 (lo 0.1477 hi 0.3549 argmaxE_hs 0.5509)   UNION d +0.1379 (lo 0.1389 hi 0.2768 argmaxE_hs 0.3210)   [48/76 186s]
+  u048 ep384  RANDOM d +0.1951 (lo 0.1398 hi 0.3349 argmaxE_hs 0.5509)   UNION d +0.1321 (lo 0.1326 hi 0.2647 argmaxE_hs 0.3207)   [49/76 188s]
+  u049 ep392  RANDOM d +0.1917 (lo 0.1373 hi 0.3289 argmaxE_hs 0.5463)   UNION d +0.1340 (lo 0.1311 hi 0.2650 argmaxE_hs 0.3193)   [50/76 190s]
+  u050 ep400  RANDOM d +0.1869 (lo 0.1368 hi 0.3237 argmaxE_hs 0.5278)   UNION d +0.1331 (lo 0.1304 hi 0.2635 argmaxE_hs 0.3104)   [51/76 192s]
+  u051 ep408  RANDOM d +0.1869 (lo 0.1398 hi 0.3267 argmaxE_hs 0.4954)   UNION d +0.1407 (lo 0.1360 hi 0.2767 argmaxE_hs 0.3046)   [52/76 194s]
+  u052 ep416  RANDOM d +0.1856 (lo 0.1414 hi 0.3270 argmaxE_hs 0.4444)   UNION d +0.1437 (lo 0.1392 hi 0.2829 argmaxE_hs 0.2664)   [53/76 196s]
+  u053 ep424  RANDOM d +0.1843 (lo 0.1418 hi 0.3261 argmaxE_hs 0.3519)   UNION d +0.1455 (lo 0.1405 hi 0.2860 argmaxE_hs 0.2322)   [54/76 198s]
+  u054 ep432  RANDOM d +0.1827 (lo 0.1388 hi 0.3215 argmaxE_hs 0.2870)   UNION d +0.1444 (lo 0.1380 hi 0.2824 argmaxE_hs 0.2269)   [55/76 200s]
+  u055 ep440  RANDOM d +0.1802 (lo 0.1365 hi 0.3167 argmaxE_hs 0.2546)   UNION d +0.1421 (lo 0.1357 hi 0.2778 argmaxE_hs 0.2224)   [56/76 202s]
+  u056 ep448  RANDOM d +0.1835 (lo 0.1370 hi 0.3205 argmaxE_hs 0.3704)   UNION d +0.1422 (lo 0.1360 hi 0.2783 argmaxE_hs 0.2428)   [57/76 204s]
+  u057 ep456  RANDOM d +0.1896 (lo 0.1394 hi 0.3290 argmaxE_hs 0.4722)   UNION d +0.1451 (lo 0.1383 hi 0.2834 argmaxE_hs 0.3149)   [58/76 205s]
+  u058 ep464  RANDOM d +0.1935 (lo 0.1425 hi 0.3360 argmaxE_hs 0.4722)   UNION d +0.1499 (lo 0.1427 hi 0.2926 argmaxE_hs 0.3149)   [59/76 207s]
+  u059 ep472  RANDOM d +0.1976 (lo 0.1460 hi 0.3435 argmaxE_hs 0.4676)   UNION d +0.1608 (lo 0.1484 hi 0.3092 argmaxE_hs 0.3188)   [60/76 209s]
+  u060 ep480  RANDOM d +0.2008 (lo 0.1487 hi 0.3495 argmaxE_hs 0.4815)   UNION d +0.1691 (lo 0.1521 hi 0.3212 argmaxE_hs 0.3580)   [61/76 211s]
+  u061 ep488  RANDOM d +0.2075 (lo 0.1517 hi 0.3592 argmaxE_hs 0.4815)   UNION d +0.1762 (lo 0.1556 hi 0.3318 argmaxE_hs 0.3697)   [62/76 213s]
+  u062 ep496  RANDOM d +0.2102 (lo 0.1533 hi 0.3636 argmaxE_hs 0.4815)   UNION d +0.1808 (lo 0.1572 hi 0.3380 argmaxE_hs 0.3694)   [63/76 215s]
+  u063 ep504  RANDOM d +0.2089 (lo 0.1517 hi 0.3606 argmaxE_hs 0.4815)   UNION d +0.1792 (lo 0.1545 hi 0.3337 argmaxE_hs 0.3447)   [64/76 217s]
+  u064 ep512  RANDOM d +0.2057 (lo 0.1495 hi 0.3552 argmaxE_hs 0.4676)   UNION d +0.1741 (lo 0.1513 hi 0.3254 argmaxE_hs 0.3174)   [65/76 219s]
+  u065 ep520  RANDOM d +0.2065 (lo 0.1496 hi 0.3561 argmaxE_hs 0.4630)   UNION d +0.1727 (lo 0.1506 hi 0.3233 argmaxE_hs 0.3163)   [66/76 221s]
+  u066 ep528  RANDOM d +0.2085 (lo 0.1501 hi 0.3586 argmaxE_hs 0.4815)   UNION d +0.1714 (lo 0.1505 hi 0.3219 argmaxE_hs 0.3165)   [67/76 223s]
+  u067 ep536  RANDOM d +0.2076 (lo 0.1490 hi 0.3567 argmaxE_hs 0.4722)   UNION d +0.1686 (lo 0.1489 hi 0.3175 argmaxE_hs 0.3165)   [68/76 225s]
+  u068 ep544  RANDOM d +0.2054 (lo 0.1472 hi 0.3526 argmaxE_hs 0.4630)   UNION d +0.1650 (lo 0.1465 hi 0.3115 argmaxE_hs 0.3163)   [69/76 227s]
+  u069 ep552  RANDOM d +0.2048 (lo 0.1458 hi 0.3506 argmaxE_hs 0.4722)   UNION d +0.1617 (lo 0.1449 hi 0.3066 argmaxE_hs 0.3163)   [70/76 229s]
+  u070 ep560  RANDOM d +0.2051 (lo 0.1455 hi 0.3506 argmaxE_hs 0.4630)   UNION d +0.1625 (lo 0.1455 hi 0.3080 argmaxE_hs 0.3165)   [71/76 231s]
+  u071 ep568  RANDOM d +0.2038 (lo 0.1440 hi 0.3478 argmaxE_hs 0.4630)   UNION d +0.1596 (lo 0.1440 hi 0.3036 argmaxE_hs 0.3165)   [72/76 233s]
+  u072 ep576  RANDOM d +0.2026 (lo 0.1428 hi 0.3454 argmaxE_hs 0.4630)   UNION d +0.1576 (lo 0.1427 hi 0.3002 argmaxE_hs 0.3163)   [73/76 234s]
+  u073 ep584  RANDOM d +0.2023 (lo 0.1427 hi 0.3450 argmaxE_hs 0.4630)   UNION d +0.1573 (lo 0.1426 hi 0.2999 argmaxE_hs 0.3163)   [74/76 236s]
+  u074 ep592  RANDOM d +0.2026 (lo 0.1427 hi 0.3453 argmaxE_hs 0.4630)   UNION d +0.1579 (lo 0.1425 hi 0.3004 argmaxE_hs 0.3163)   [75/76 238s]
+  u075 ep600  RANDOM d +0.2024 (lo 0.1425 hi 0.3449 argmaxE_hs 0.4630)   UNION d +0.1579 (lo 0.1423 hi 0.3002 argmaxE_hs 0.3163)   [76/76 240s]
+
+==============================================================================
+PARITY SELF-TEST -- u075 must reproduce the frozen R2 endpoint row
+  reference: SPRINT_7_RUNG2_75_matched_states_main.json
+==============================================================================
+  PASS  RANDOM n_decision                       4975 vs 4975
+  PASS  RANDOM n_highrisk                       216 vs 216
+  PASS  RANDOM truncated                        26 vs 26
+  PASS  RANDOM risk_response_high_minus_low     +0.2024195014 vs +0.2024195014  |d| 0.000e+00  (bit-exact)
+  PASS  RANDOM p_edge_risk_lt_02                +0.1424954282 vs +0.1424954282  |d| 0.000e+00  (bit-exact)
+  PASS  RANDOM p_edge_risk_ge_06                +0.3449149296 vs +0.3449149296  |d| 0.000e+00  (bit-exact)
+  PASS  RANDOM spearman_risk_vs_p_edge          +0.0776728722 vs +0.0776728722  |d| 0.000e+00  (bit-exact)
+  PASS  RANDOM frac_argmax_edge                 +0.4629629630 vs +0.4629629630  |d| 0.000e+00  (bit-exact)
+  PASS  RANDOM entropy_mean                     +0.6378952860 vs +0.6378952860  |d| 0.000e+00  (bit-exact)
+  PASS  RANDOM p_edge_mean                      +0.3449149296 vs +0.3449149296  |d| 0.000e+00  (bit-exact)
+  PASS  RANDOM maxp_mean                        +0.6484842924 vs +0.6484842924  |d| 0.000e+00  (bit-exact)
+  PASS  RANDOM frac_maxp_gt_099                 +0.0185185185 vs +0.0185185185  |d| 0.000e+00  (bit-exact)
+  PASS  RANDOM p_stay_mean                      +0.5229197275 vs +0.5229197275  |d| 0.000e+00  (bit-exact)
+  PASS  RANDOM risk_response_cluster.delta      +0.2024195014 vs +0.2024195014  |d| 0.000e+00
+  PASS  RANDOM risk_response_cluster.se_cluster +0.0262086746 vs +0.0262086746  |d| 0.000e+00
+  PASS  RANDOM risk_response_cluster.z          +7.7233780241 vs +7.7233780241  |d| 0.000e+00
+  PASS  UNION  n_decision                       74237 vs 74237
+  PASS  UNION  n_highrisk                       3592 vs 3592
+  PASS  UNION  truncated                        17 vs 17
+  PASS  UNION  risk_response_high_minus_low     +0.1578811413 vs +0.1578811413  |d| 0.000e+00  (bit-exact)
+  PASS  UNION  p_edge_risk_lt_02                +0.1422937944 vs +0.1422937944  |d| 0.000e+00  (bit-exact)
+  PASS  UNION  p_edge_risk_ge_06                +0.3001749356 vs +0.3001749356  |d| 0.000e+00  (bit-exact)
+  PASS  UNION  spearman_risk_vs_p_edge          +0.0859593190 vs +0.0859593190  |d| 0.000e+00  (bit-exact)
+  PASS  UNION  frac_argmax_edge                 +0.3162583519 vs +0.3162583519  |d| 0.000e+00  (bit-exact)
+  PASS  UNION  entropy_mean                     +0.5061938112 vs +0.5061938112  |d| 0.000e+00  (bit-exact)
+  PASS  UNION  p_edge_mean                      +0.3001749356 vs +0.3001749356  |d| 0.000e+00  (bit-exact)
+  PASS  UNION  maxp_mean                        +0.7343867440 vs +0.7343867440  |d| 0.000e+00  (bit-exact)
+  PASS  UNION  frac_maxp_gt_099                 +0.0690423163 vs +0.0690423163  |d| 0.000e+00  (bit-exact)
+  PASS  UNION  p_stay_mean                      +0.6562149911 vs +0.6562149911  |d| 0.000e+00  (bit-exact)
+  PASS  UNION  risk_response_cluster.delta      +0.1578811413 vs +0.1578811413  |d| 0.000e+00
+  PASS  UNION  risk_response_cluster.se_cluster +0.0067909702 vs +0.0067909702  |d| 0.000e+00
+  PASS  UNION  risk_response_cluster.z          +23.2486870762 vs +23.2486870762  |d| 0.000e+00
+
+  PARITY: ALL PASS   (32/32 fields)
+
+==============================================================================
+DESCRIPTIVE TEMPORAL SUMMARY  (ordering only -- NOT causal, and the
+  n=75 updates are NOT independent replicates)
+==============================================================================
+  series                                             first      last       max   @u   rho_u  p50  p90
+  RANDOM.risk_response_high_minus_low              +0.0165   +0.2024   +0.2102   62  +0.939   23   46
+  RANDOM.p_edge_risk_ge_06                         +0.4551   +0.3449   +0.4551    0  +0.256    6   20
+  RANDOM.p_edge_risk_lt_02                         +0.4385   +0.1425   +0.4385    0  -0.495    8   24
+  RANDOM.spearman_risk_vs_p_edge                   +0.0255   +0.0777   +0.0777   75  +0.939    4    4
+  RANDOM.frac_argmax_edge                          +0.0833   +0.4630   +0.5509   47  +0.638    3   46
+  RANDOM.entropy_mean                              +0.8001   +0.6379   +0.8001    0  -0.278   10   15
+  RANDOM.maxp_mean                                 +0.4572   +0.6485   +0.7521   37  -0.140    8   15
+  RANDOM.frac_maxp_gt_099                          +0.0000   +0.0185   +0.0185   23  +0.796   23   23
+  RANDOM.argmax_edge_response                      -0.2864   +0.2874   +0.4437   49  +0.731    8   48
+  RANDOM.entropy_mean_all_decision                 +0.8412   +0.4030   +0.8412    0  -0.838   15   35
+  RANDOM.frac_maxp_gt_099_all_decision             +0.0000   +0.2149   +0.2149   63  +0.969   33   57
+  RANDOM.p_edge_mean_all_decision                  +0.4393   +0.1514   +0.4393    0  -0.468    8   24
+  RANDOM.risk_response_CLOUD                       -0.0332   -0.1331   -0.0332    0  -0.828   11   42
+  UNION.risk_response_high_minus_low               +0.0007   +0.1579   +0.1808   62  +0.875   20   60
+  UNION.p_edge_risk_ge_06                          +0.4859   +0.3002   +0.4984    2  -0.550    6   16
+  UNION.p_edge_risk_lt_02                          +0.4852   +0.1423   +0.4852    0  -0.801   11   35
+  UNION.spearman_risk_vs_p_edge                    -0.0372   +0.0860   +0.0890   45  +0.810   11   23
+  UNION.frac_argmax_edge                           +0.2311   +0.3163   +0.6058    2  +0.426    2    2
+  UNION.entropy_mean                               +0.7257   +0.5062   +0.7257    0  -0.799   13   40
+  UNION.maxp_mean                                  +0.4879   +0.7344   +0.7940   40  +0.506    9   39
+  UNION.frac_maxp_gt_099                           +0.0000   +0.0690   +0.0690   24  +0.808   23   23
+  UNION.argmax_edge_response                       -0.1634   +0.1384   +0.2303   19  +0.692    2   19
+  UNION.entropy_mean_all_decision                  +0.7289   +0.2875   +0.7289    0  -0.859   16   36
+  UNION.frac_maxp_gt_099_all_decision              +0.0000   +0.3559   +0.3559   63  +0.972   33   61
+  UNION.p_edge_mean_all_decision                   +0.4852   +0.1500   +0.4852    0  -0.794   11   35
+  UNION.risk_response_CLOUD                        -0.0025   -0.0145   -0.0025    0  +0.265    6   11
+  recorded.actor_loss                              -0.0137   -0.0310   +0.2029   58  +0.359   58   58
+  recorded.critic_loss                            +14.6707   +5.7710  +20.5060   14  -0.871   35   72
+  recorded.entropy                                 +0.8599   +0.1380   +0.8599    1  -0.946   12   32
+  recorded.approx_kl                               +0.0160   +0.0000   +0.0189   22  -0.594    3   21
+  recorded.clip_frac                               +0.1625   +0.0000   +0.1625    1  -0.926    2   14
+  recorded.adv_mean                                +0.2358   +0.2339   +1.0949   10  -0.188   36   36
+  recorded.adv_std                                 +3.4471   +2.4680   +4.0101   14  -0.863   42   72
+  recorded.value_mean                              -0.4721   +1.7241   +2.9267   37  +0.400   19   36
+  recorded.decision_frac                           +0.0379   +0.1767   +0.2038   71  +0.859   25   43
+  recorded.explained_var                           +0.0268   +0.7409   +0.7583   72  +0.902   12   41
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_PHASE5_risk_trajectory_main.json
+  elapsed 240s
