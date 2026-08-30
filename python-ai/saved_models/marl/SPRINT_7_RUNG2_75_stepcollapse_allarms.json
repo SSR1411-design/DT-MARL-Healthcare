@@ -1,0 +1,458 @@
+{
+  "probe": "SPRINT_7_RUNG2_75_stepcollapse",
+  "what": "attribution of the actor's trust-region collapse during training into the known lr annealing schedule versus policy sharpening, using only the per-update CSVs training already wrote",
+  "flaw_it_corrects": {
+    "what": "every prior actor-stall diagnostic in this project measured the FINAL checkpoint, where clip_frac is 0.0000",
+    "why_that_misleads": "clip_frac STARTS healthy (0.1081 A0 / 0.1625 R2) and collapses over the run, so a final-checkpoint measurement observes the bottom of a collapse and cannot distinguish an incapable actor from an annealed and sharpened one",
+    "handling": "no prior artifact is altered; this adds the training-time measurement they were all missing"
+  },
+  "method": {
+    "identity": "Adam's step is approximately lr-sized regardless of gradient magnitude, so the PPO ratio deviation is first order in lr_scale and clip_frac/lr_scale is lr-free by construction",
+    "schedule_is_known_exactly": "train.py anneals lr_scale linearly 1.0 -> 1/75, and lr_scale is logged per update, so the schedule's contribution needs no estimation",
+    "independent_check": "approx_kl/lr_scale^2 has a different power of lr; if both lr-free series collapse, the residual is not an artifact of the assumed power",
+    "caveat": "Adam's step is only approximately lr-sized -- with grad clipping at max_grad_norm 0.5 and bias correction the proportionality is not exact, so the split is an attribution, not an identity. The two independent powers of lr are reported precisely so this can be judged."
+  },
+  "not_a_fix": "reads two CSVs; loads no model, runs no rollout, writes no checkpoint, and proposes no hyperparameter change",
+  "per_arm": {
+    "A0": {
+      "source_csv": "mappo_A0_cpu_repro_updates.csv",
+      "n_updates": 75,
+      "clip_frac": {
+        "first": 0.1081,
+        "last": 0.0,
+        "max": 0.1353,
+        "quartile_means": [
+          0.06101666666666667,
+          0.031052631578947373,
+          0.005563157894736842,
+          0.0005789473684210526
+        ],
+        "collapse_Q1_over_Q4": 105.39242424242425
+      },
+      "lr_scale": {
+        "first": 1.0,
+        "last": 0.0133,
+        "quartile_means": [
+          0.8866666666666667,
+          0.64,
+          0.38666842105263166,
+          0.13333157894736844
+        ],
+        "collapse_Q1_over_Q4": 6.65008750115133
+      },
+      "clip_frac_over_lr_scale": {
+        "what": "clip_frac with the annealing schedule divided out; lr-free by construction, so any remaining collapse is NOT the schedule",
+        "quartile_means": [
+          0.06888320826148059,
+          0.047932487070146634,
+          0.014234660258941068,
+          0.0032580710569320797
+        ],
+        "collapse_Q1_over_Q4": 21.142328407761482,
+        "caveat": "this is mean(cf/ls) per quartile, which does NOT factorise exactly against mean(cf)/mean(ls); the headline attribution uses the exactly-factorising form instead"
+      },
+      "approx_kl_over_lr_scale_sq": {
+        "what": "independent check with a different power of lr (KL is second order in the step, clip_frac first order)",
+        "quartile_means": [
+          0.006086818890817517,
+          0.009013673869756033,
+          0.0036754839403335105,
+          -0.0006641757914904222
+        ],
+        "collapse_Q1_over_Q4": null
+      },
+      "entropy": {
+        "first": 0.7165,
+        "last": 0.3329,
+        "quartile_means": [
+          0.6663388888888888,
+          0.5468631578947368,
+          0.35442105263157897,
+          0.3043842105263157
+        ],
+        "collapse_Q1_over_Q4": 2.189137497430341
+      },
+      "attribution": {
+        "total_clip_frac_collapse": 105.39242424242425,
+        "explained_by_lr_schedule": 6.65008750115133,
+        "explained_by_sharpening": 15.848276315789478,
+        "lr_free_series_mean_ratio": 21.142328407761482,
+        "product_check": 105.39242424242427,
+        "product_matches_total": true,
+        "identity": "total = schedule x sharpening, exactly, by construction",
+        "dominant": "sharpening"
+      },
+      "trust_region_engagement": {
+        "n_updates_clip_frac_gt_001": 38,
+        "frac_of_run": 0.5066666666666667,
+        "last_update_engaged": 52,
+        "first_update_never_engaged_after": 53
+      },
+      "entropy_vs_lr_free_utilisation": {
+        "spearman": 0.7895878539933899,
+        "loglog_slope_on_entropy": 3.2345077613727398,
+        "loglog_r2": 0.5075491755028504,
+        "reading": "a positive slope near 1 means the lr-free loss of step utilisation tracks the policy's own sharpening, which is what ||e_a - pi|| -> 0 predicts"
+      },
+      "counterfactual_lr_held_at_full": {
+        "what": "clip_frac that the FINAL quartile would have shown if lr_scale had stayed at 1.0, holding the measured lr-free utilisation fixed",
+        "value": 0.004342162396873642,
+        "vs_first_quartile_clip_frac": 0.0688157894736842,
+        "shortfall_factor": 15.848276315789478,
+        "reading": "this is the ceiling on what an lr-only intervention can recover: it restores the schedule's factor and nothing else, leaving the sharpening factor untouched"
+      }
+    },
+    "R2": {
+      "source_csv": "mappo_R2_mc_target_updates.csv",
+      "n_updates": 75,
+      "clip_frac": {
+        "first": 0.1625,
+        "last": 0.0,
+        "max": 0.1625,
+        "quartile_means": [
+          0.04256111111111111,
+          0.018863157894736842,
+          0.0026842105263157894,
+          4.210526315789473e-05
+        ],
+        "collapse_Q1_over_Q4": 1010.826388888889
+      },
+      "lr_scale": {
+        "first": 1.0,
+        "last": 0.0133,
+        "quartile_means": [
+          0.8866666666666667,
+          0.64,
+          0.38666842105263166,
+          0.13333157894736844
+        ],
+        "collapse_Q1_over_Q4": 6.65008750115133
+      },
+      "clip_frac_over_lr_scale": {
+        "what": "clip_frac with the annealing schedule divided out; lr-free by construction, so any remaining collapse is NOT the schedule",
+        "quartile_means": [
+          0.0463441843955473,
+          0.027685462872020287,
+          0.005977742642553786,
+          0.0002012281475634388
+        ],
+        "collapse_Q1_over_Q4": 230.30666910521015,
+        "caveat": "this is mean(cf/ls) per quartile, which does NOT factorise exactly against mean(cf)/mean(ls); the headline attribution uses the exactly-factorising form instead"
+      },
+      "approx_kl_over_lr_scale_sq": {
+        "what": "independent check with a different power of lr (KL is second order in the step, clip_frac first order)",
+        "quartile_means": [
+          0.00484556289738937,
+          0.00507284352456343,
+          -0.0018610815872137307,
+          -0.0017833518300425584
+        ],
+        "collapse_Q1_over_Q4": null
+      },
+      "entropy": {
+        "first": 0.8599,
+        "last": 0.138,
+        "quartile_means": [
+          0.5751055555555555,
+          0.2784263157894737,
+          0.1812842105263158,
+          0.1611
+        ],
+        "collapse_Q1_over_Q4": 3.569866887371543
+      },
+      "attribution": {
+        "total_clip_frac_collapse": 1010.826388888889,
+        "explained_by_lr_schedule": 6.65008750115133,
+        "explained_by_sharpening": 152.0019682017544,
+        "lr_free_series_mean_ratio": 230.30666910521015,
+        "product_check": 1010.8263888888889,
+        "product_matches_total": true,
+        "identity": "total = schedule x sharpening, exactly, by construction",
+        "dominant": "sharpening"
+      },
+      "trust_region_engagement": {
+        "n_updates_clip_frac_gt_001": 28,
+        "frac_of_run": 0.37333333333333335,
+        "last_update_engaged": 40,
+        "first_update_never_engaged_after": 41
+      },
+      "entropy_vs_lr_free_utilisation": {
+        "spearman": 0.8680551920388418,
+        "loglog_slope_on_entropy": 1.9391035157771481,
+        "loglog_r2": 0.5676368020970336,
+        "reading": "a positive slope near 1 means the lr-free loss of step utilisation tracks the policy's own sharpening, which is what ||e_a - pi|| -> 0 predicts"
+      },
+      "counterfactual_lr_held_at_full": {
+        "what": "clip_frac that the FINAL quartile would have shown if lr_scale had stayed at 1.0, holding the measured lr-free utilisation fixed",
+        "value": 0.0003157936288635376,
+        "vs_first_quartile_clip_frac": 0.04800125313283208,
+        "shortfall_factor": 152.0019682017544,
+        "reading": "this is the ceiling on what an lr-only intervention can recover: it restores the schedule's factor and nothing else, leaving the sharpening factor untouched"
+      }
+    },
+    "A1": {
+      "source_csv": "mappo_A1_cpu_bugfix_updates.csv",
+      "n_updates": 75,
+      "clip_frac": {
+        "first": 0.1625,
+        "last": 0.0,
+        "max": 0.1625,
+        "quartile_means": [
+          0.07195000000000001,
+          0.013484210526315791,
+          0.0036684210526315795,
+          0.0003526315789473684
+        ],
+        "collapse_Q1_over_Q4": 204.03731343283587
+      },
+      "lr_scale": {
+        "first": 1.0,
+        "last": 0.0133,
+        "quartile_means": [
+          0.8866666666666667,
+          0.64,
+          0.38666842105263166,
+          0.13333157894736844
+        ],
+        "collapse_Q1_over_Q4": 6.65008750115133
+      },
+      "clip_frac_over_lr_scale": {
+        "what": "clip_frac with the annealing schedule divided out; lr-free by construction, so any remaining collapse is NOT the schedule",
+        "quartile_means": [
+          0.08230542075823821,
+          0.02023441592636169,
+          0.00848819348521336,
+          0.0014091538897070873
+        ],
+        "collapse_Q1_over_Q4": 58.407688017201984,
+        "caveat": "this is mean(cf/ls) per quartile, which does NOT factorise exactly against mean(cf)/mean(ls); the headline attribution uses the exactly-factorising form instead"
+      },
+      "approx_kl_over_lr_scale_sq": {
+        "what": "independent check with a different power of lr (KL is second order in the step, clip_frac first order)",
+        "quartile_means": [
+          0.013912792447171878,
+          0.00077915145530961,
+          0.007433597274609624,
+          0.028041846277565452
+        ],
+        "collapse_Q1_over_Q4": 0.4961439524865609
+      },
+      "entropy": {
+        "first": 0.8599,
+        "last": 0.3561,
+        "quartile_means": [
+          0.6525222222222222,
+          0.37176315789473685,
+          0.3479263157894737,
+          0.34928421052631575
+        ],
+        "collapse_Q1_over_Q4": 1.8681698243358182
+      },
+      "attribution": {
+        "total_clip_frac_collapse": 204.03731343283587,
+        "explained_by_lr_schedule": 6.65008750115133,
+        "explained_by_sharpening": 30.681899057344864,
+        "lr_free_series_mean_ratio": 58.407688017201984,
+        "product_check": 204.03731343283587,
+        "product_matches_total": true,
+        "identity": "total = schedule x sharpening, exactly, by construction",
+        "dominant": "sharpening"
+      },
+      "trust_region_engagement": {
+        "n_updates_clip_frac_gt_001": 29,
+        "frac_of_run": 0.38666666666666666,
+        "last_update_engaged": 46,
+        "first_update_never_engaged_after": 47
+      },
+      "entropy_vs_lr_free_utilisation": {
+        "spearman": 0.5884765063901041,
+        "loglog_slope_on_entropy": 3.4207401749235187,
+        "loglog_r2": 0.35006579918568126,
+        "reading": "a positive slope near 1 means the lr-free loss of step utilisation tracks the policy's own sharpening, which is what ||e_a - pi|| -> 0 predicts"
+      },
+      "counterfactual_lr_held_at_full": {
+        "what": "clip_frac that the FINAL quartile would have shown if lr_scale had stayed at 1.0, holding the measured lr-free utilisation fixed",
+        "value": 0.0026447716417321277,
+        "vs_first_quartile_clip_frac": 0.0811466165413534,
+        "shortfall_factor": 30.681899057344864,
+        "reading": "this is the ceiling on what an lr-only intervention can recover: it restores the schedule's factor and nothing else, leaving the sharpening factor untouched"
+      }
+    },
+    "A2": {
+      "source_csv": "mappo_A2_crit_sign_updates.csv",
+      "n_updates": 75,
+      "clip_frac": {
+        "first": 0.1602,
+        "last": 0.0,
+        "max": 0.1602,
+        "quartile_means": [
+          0.05417777777777777,
+          0.014394736842105264,
+          0.003321052631578948,
+          5.263157894736842e-06
+        ],
+        "collapse_Q1_over_Q4": 10293.777777777776
+      },
+      "lr_scale": {
+        "first": 1.0,
+        "last": 0.0133,
+        "quartile_means": [
+          0.8866666666666667,
+          0.64,
+          0.38666842105263166,
+          0.13333157894736844
+        ],
+        "collapse_Q1_over_Q4": 6.65008750115133
+      },
+      "clip_frac_over_lr_scale": {
+        "what": "clip_frac with the annealing schedule divided out; lr-free by construction, so any remaining collapse is NOT the schedule",
+        "quartile_means": [
+          0.059204623807093584,
+          0.022155473462133406,
+          0.00832582528547974,
+          2.077835726307478e-05
+        ],
+        "collapse_Q1_over_Q4": 2849.3409299639934,
+        "caveat": "this is mean(cf/ls) per quartile, which does NOT factorise exactly against mean(cf)/mean(ls); the headline attribution uses the exactly-factorising form instead"
+      },
+      "approx_kl_over_lr_scale_sq": {
+        "what": "independent check with a different power of lr (KL is second order in the step, clip_frac first order)",
+        "quartile_means": [
+          0.006460996367832064,
+          0.006663213863125794,
+          0.014307282153235798,
+          0.06703200244020482
+        ],
+        "collapse_Q1_over_Q4": 0.09638674263976414
+      },
+      "entropy": {
+        "first": 0.8598,
+        "last": 0.2965,
+        "quartile_means": [
+          0.5944166666666667,
+          0.3843947368421053,
+          0.36232105263157893,
+          0.3418210526315789
+        ],
+        "collapse_Q1_over_Q4": 1.7389703240640946
+      },
+      "attribution": {
+        "total_clip_frac_collapse": 10293.777777777776,
+        "explained_by_lr_schedule": 6.65008750115133,
+        "explained_by_sharpening": 1547.916140350877,
+        "lr_free_series_mean_ratio": 2849.3409299639934,
+        "product_check": 10293.777777777776,
+        "product_matches_total": true,
+        "identity": "total = schedule x sharpening, exactly, by construction",
+        "dominant": "sharpening"
+      },
+      "trust_region_engagement": {
+        "n_updates_clip_frac_gt_001": 30,
+        "frac_of_run": 0.4,
+        "last_update_engaged": 47,
+        "first_update_never_engaged_after": 48
+      },
+      "entropy_vs_lr_free_utilisation": {
+        "spearman": 0.6529723443236547,
+        "loglog_slope_on_entropy": 2.8920523986397653,
+        "loglog_r2": 0.34454403862020155,
+        "reading": "a positive slope near 1 means the lr-free loss of step utilisation tracks the policy's own sharpening, which is what ||e_a - pi|| -> 0 predicts"
+      },
+      "counterfactual_lr_held_at_full": {
+        "what": "clip_frac that the FINAL quartile would have shown if lr_scale had stayed at 1.0, holding the measured lr-free utilisation fixed",
+        "value": 3.947420360794221e-05,
+        "vs_first_quartile_clip_frac": 0.06110275689223056,
+        "shortfall_factor": 1547.916140350877,
+        "reading": "this is the ceiling on what an lr-only intervention can recover: it restores the schedule's factor and nothing else, leaving the sharpening factor untouched"
+      }
+    },
+    "A3": {
+      "source_csv": "mappo_A3_entropy_updates.csv",
+      "n_updates": 75,
+      "clip_frac": {
+        "first": 0.154,
+        "last": 0.0,
+        "max": 0.154,
+        "quartile_means": [
+          0.04948333333333333,
+          0.02574736842105263,
+          0.004178947368421052,
+          0.00033157894736842103
+        ],
+        "collapse_Q1_over_Q4": 149.23544973544975
+      },
+      "lr_scale": {
+        "first": 1.0,
+        "last": 0.0133,
+        "quartile_means": [
+          0.8866666666666667,
+          0.64,
+          0.38666842105263166,
+          0.13333157894736844
+        ],
+        "collapse_Q1_over_Q4": 6.65008750115133
+      },
+      "clip_frac_over_lr_scale": {
+        "what": "clip_frac with the annealing schedule divided out; lr-free by construction, so any remaining collapse is NOT the schedule",
+        "quartile_means": [
+          0.05496259089077263,
+          0.03927322785030165,
+          0.010423710435208958,
+          0.0017045653496568893
+        ],
+        "collapse_Q1_over_Q4": 32.24434363976483,
+        "caveat": "this is mean(cf/ls) per quartile, which does NOT factorise exactly against mean(cf)/mean(ls); the headline attribution uses the exactly-factorising form instead"
+      },
+      "approx_kl_over_lr_scale_sq": {
+        "what": "independent check with a different power of lr (KL is second order in the step, clip_frac first order)",
+        "quartile_means": [
+          0.0068148018388092795,
+          0.009936583383887278,
+          0.011415061753756825,
+          -0.005468750427485076
+        ],
+        "collapse_Q1_over_Q4": null
+      },
+      "entropy": {
+        "first": 0.8601,
+        "last": 0.3745,
+        "quartile_means": [
+          0.6237111111111111,
+          0.43924736842105266,
+          0.361,
+          0.3557105263157895
+        ],
+        "collapse_Q1_over_Q4": 1.7534232612430436
+      },
+      "attribution": {
+        "total_clip_frac_collapse": 149.23544973544975,
+        "explained_by_lr_schedule": 6.65008750115133,
+        "explained_by_sharpening": 22.441125730994152,
+        "lr_free_series_mean_ratio": 32.24434363976483,
+        "product_check": 149.23544973544972,
+        "product_matches_total": true,
+        "identity": "total = schedule x sharpening, exactly, by construction",
+        "dominant": "sharpening"
+      },
+      "trust_region_engagement": {
+        "n_updates_clip_frac_gt_001": 34,
+        "frac_of_run": 0.4533333333333333,
+        "last_update_engaged": 43,
+        "first_update_never_engaged_after": 44
+      },
+      "entropy_vs_lr_free_utilisation": {
+        "spearman": 0.6938332366918732,
+        "loglog_slope_on_entropy": 2.832694861081769,
+        "loglog_r2": 0.3300239417927051,
+        "reading": "a positive slope near 1 means the lr-free loss of step utilisation tracks the policy's own sharpening, which is what ||e_a - pi|| -> 0 predicts"
+      },
+      "counterfactual_lr_held_at_full": {
+        "what": "clip_frac that the FINAL quartile would have shown if lr_scale had stayed at 1.0, holding the measured lr-free utilisation fixed",
+        "value": 0.002486874827300359,
+        "vs_first_quartile_clip_frac": 0.055808270676691724,
+        "shortfall_factor": 22.441125730994152,
+        "reading": "this is the ceiling on what an lr-only intervention can recover: it restores the schedule's factor and nothing else, leaving the sharpening factor untouched"
+      }
+    }
+  }
+}

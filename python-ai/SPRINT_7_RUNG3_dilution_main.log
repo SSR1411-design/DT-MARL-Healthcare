@@ -1,0 +1,254 @@
+==============================================================================
+SPRINT 7 RUNG 3 -- DILUTION: is the high-risk actor signal drowned
+        by the low-risk bulk?   g_full = g_hi + g_lo, exactly.
+        OFFLINE ONLY. OWN batch = 32 episodes
+==============================================================================
+  pre-registration: SPRINT_7_RUNG3_PREREGISTRATION.md
+                    md5 972dc323bc4a8d98ca0c5ad3273540ad
+  (A) does g_hi contain useful direction?  (B) does g_hi control the
+      update?   These are DIFFERENT and are scored separately.
+
+  EVAL window [491, 698]  greedy/random starts 32
+  building RANDOM (uniform-legal) with full recording ...
+  building A0-greedy and R2-greedy with full recording ...
+
+  verifying the recorded sets are BIT-IDENTICAL to the existing
+  matched-states constructors (guards against silent redefinition):
+         RANDOM: obs IDENTICAL  mask IDENTICAL  risk IDENTICAL
+      A0-greedy: obs IDENTICAL  mask IDENTICAL  risk IDENTICAL
+      R2-greedy: obs IDENTICAL  mask IDENTICAL  risk IDENTICAL
+          UNION: obs IDENTICAL  mask IDENTICAL  risk IDENTICAL
+     UNION verified against union_source(A0, R2): 32 + 32 episodes
+
+-- A0 / OWN -----------------------------------------------------
+   T=12523  decision=13144  high-risk(risk>0.50)=850 (6.47%)  [bucket rule >=0.6 would give 848]
+   EXACTNESS  cached-vs-flat_pg_grad 0.00e+00   g_full-(g_hi+g_lo) 1.90e-07
+   synth support: EDGE(+) 70  CLOUD(+) 79  STAY(-) 701
+   ||g_full|| 2.62589e-02   ||g_hi|| 1.10036e-02   ||g_lo|| 2.23544e-02
+   MASS   hi/full 0.4190   lo/full 0.8513   hi/lo 0.4922
+   COS    (full,syn) +0.40228   (hi,syn) +0.91298   (lo,syn) +0.02314
+          (hi,lo) +0.13971   (full,lo) +0.90992   (full,hi) +0.53800
+          (hi, synth_CLOUD) +0.91333   <- action-channel control
+   NULL (n=200 random subsets of size 850)
+      cos(g_subset, g_synth) +0.12929 +/- 0.33776   [-0.5991, +0.8207]
+      cos(g_hi,g_synth) +0.91298  vs null: z +2.32, one-sided p 0.0000
+      ||g_subset|| 6.15796e-03 +/- 2.08e-03   ||g_hi|| p 0.0350
+   SENSITIVITY  g(w) = w*g_hi + g_lo   (analytic, offline)
+         w  cos(g(w),syn)  cos(g(w),g(1))  ||g(w)||/||g(1)||
+         1       +0.40228        +1.00007             1.0000
+         2       +0.61542        +0.96094             1.2753
+         4       +0.78158        +0.84531             1.9832
+         8       +0.86232        +0.72174             3.5722
+        16       +0.89317        +0.63730             6.8755
+      <g_hi,syn> +1.6665e-03  <g_lo,syn> +8.5810e-05  -> alignment numerator flips sign at w* = -0.051
+
+-- A0 / RANDOM --------------------------------------------------
+   COUNTERFACTUAL gradient: actions are from a foreign
+   behaviour policy, so the PPO ratio is not 1 here.
+   T=12715  decision=4975  high-risk(risk>0.50)=216 (4.34%)  [bucket rule >=0.6 would give 216]
+   EXACTNESS  cached-vs-flat_pg_grad 0.00e+00   g_full-(g_hi+g_lo) 6.45e-08
+   synth support: EDGE(+) 101  CLOUD(+) 18  STAY(-) 97
+   ||g_full|| 4.68335e-01   ||g_hi|| 5.56923e-02   ||g_lo|| 4.53234e-01
+   MASS   hi/full 0.1189   lo/full 0.9678   hi/lo 0.1229
+   COS    (full,syn) +0.15010   (hi,syn) +0.78298   (lo,syn) +0.05889
+          (hi,lo) +0.21421   (full,lo) +0.99329   (full,hi) +0.32622
+          (hi, synth_CLOUD) +0.52817   <- action-channel control
+   NULL (n=200 random subsets of size 216)
+      cos(g_subset, g_synth) +0.10704 +/- 0.22441   [-0.5338, +0.6802]
+      cos(g_hi,g_synth) +0.78298  vs null: z +3.01, one-sided p 0.0000
+      ||g_subset|| 3.03640e-02 +/- 8.69e-03   ||g_hi|| p 0.0050
+   SENSITIVITY  g(w) = w*g_hi + g_lo   (analytic, offline)
+         w  cos(g(w),syn)  cos(g(w),g(1))  ||g(w)||/||g(1)||
+         1       +0.15010        +1.00006             1.0000
+         2       +0.23277        +0.99425             1.0449
+         4       +0.36823        +0.95733             1.1662
+         8       +0.53624        +0.85039             1.4953
+        16       +0.66899        +0.68422             2.3120
+      <g_hi,syn> +2.4646e-02  <g_lo,syn> +1.5086e-02  -> alignment numerator flips sign at w* = -0.612
+
+-- A0 / UNION ---------------------------------------------------
+   COUNTERFACTUAL gradient: actions are from a foreign
+   behaviour policy, so the PPO ratio is not 1 here.
+   T=24521  decision=74237  high-risk(risk>0.50)=3597 (4.85%)  [bucket rule >=0.6 would give 3592]
+   EXACTNESS  cached-vs-flat_pg_grad 0.00e+00   g_full-(g_hi+g_lo) 1.61e-07
+   synth support: EDGE(+) 182  CLOUD(+) 278  STAY(-) 3137
+   ||g_full|| 3.22925e-01   ||g_hi|| 2.54549e-02   ||g_lo|| 3.04931e-01
+   MASS   hi/full 0.0788   lo/full 0.9443   hi/lo 0.0835
+   COS    (full,syn) +0.07232   (hi,syn) +0.19500   (lo,syn) +0.06031
+          (hi,lo) +0.68604   (full,lo) +0.99840   (full,hi) +0.72664
+          (hi, synth_CLOUD) +0.27147   <- action-channel control
+   NULL (n=200 random subsets of size 3597)
+      cos(g_subset, g_synth) +0.07457 +/- 0.02970   [-0.0162, +0.1440]
+      cos(g_hi,g_synth) +0.19500  vs null: z +4.05, one-sided p 0.0000
+      ||g_subset|| 1.57205e-02 +/- 8.15e-04   ||g_hi|| p 0.0000
+   SENSITIVITY  g(w) = w*g_hi + g_lo   (analytic, offline)
+         w  cos(g(w),syn)  cos(g(w),g(1))  ||g(w)||/||g(1)||
+         1       +0.07232        +1.00004             1.0000
+         2       +0.08284        +0.99873             1.0587
+         4       +0.10011        +0.99057             1.1830
+         8       +0.12397        +0.96532             1.4513
+        16       +0.14929        +0.91638             2.0289
+      <g_hi,syn> +1.0872e-03  <g_lo,syn> +4.0284e-03  -> alignment numerator flips sign at w* = -3.705
+
+-- R2 / OWN -----------------------------------------------------
+   T=12684  decision=22098  high-risk(risk>0.50)=1071 (4.85%)  [bucket rule >=0.6 would give 1069]
+   EXACTNESS  cached-vs-flat_pg_grad 0.00e+00   g_full-(g_hi+g_lo) 1.36e-07
+   synth support: EDGE(+) 69  CLOUD(+) 91  STAY(-) 911
+   ||g_full|| 1.81751e-02   ||g_hi|| 3.15786e-03   ||g_lo|| 1.76947e-02
+   MASS   hi/full 0.1737   lo/full 0.9736   hi/lo 0.1785
+   COS    (full,syn) -0.23720   (hi,syn) +0.53639   (lo,syn) -0.33937
+          (hi,lo) +0.06499   (full,lo) +0.98492   (full,hi) +0.23702
+          (hi, synth_CLOUD) +0.54310   <- action-channel control
+   NULL (n=200 random subsets of size 1071)
+      cos(g_subset, g_synth) -0.06502 +/- 0.24009   [-0.6661, +0.6351]
+      cos(g_hi,g_synth) +0.53639  vs null: z +2.50, one-sided p 0.0050
+      ||g_subset|| 3.30772e-03 +/- 8.28e-04   ||g_hi|| p 0.5450
+   SENSITIVITY  g(w) = w*g_hi + g_lo   (analytic, offline)
+         w  cos(g(w),syn)  cos(g(w),g(1))  ||g(w)||/||g(1)||
+         1       -0.23720        +1.00007             1.0000
+         2       -0.13653        +0.98718             1.0548
+         4       +0.03440        +0.91174             1.2324
+         8       +0.23751        +0.73701             1.7481
+        16       +0.38632        +0.53844             3.0046
+      <g_hi,syn> +1.8489e-04  <g_lo,syn> -6.5546e-04  -> alignment numerator flips sign at w* = +3.545
+
+-- R2 / RANDOM --------------------------------------------------
+   COUNTERFACTUAL gradient: actions are from a foreign
+   behaviour policy, so the PPO ratio is not 1 here.
+   T=12715  decision=4975  high-risk(risk>0.50)=216 (4.34%)  [bucket rule >=0.6 would give 216]
+   EXACTNESS  cached-vs-flat_pg_grad 0.00e+00   g_full-(g_hi+g_lo) 5.13e-08
+   synth support: EDGE(+) 101  CLOUD(+) 18  STAY(-) 97
+   ||g_full|| 9.43782e-01   ||g_hi|| 3.88871e-02   ||g_lo|| 9.36112e-01
+   MASS   hi/full 0.0412   lo/full 0.9919   hi/lo 0.0415
+   COS    (full,syn) -0.07785   (hi,syn) +0.81116   (lo,syn) -0.11218
+          (hi,lo) +0.17732   (full,lo) +0.99922   (full,hi) +0.21709
+          (hi, synth_CLOUD) +0.70352   <- action-channel control
+   NULL (n=200 random subsets of size 216)
+      cos(g_subset, g_synth) -0.06472 +/- 0.07613   [-0.2577, +0.1894]
+      cos(g_hi,g_synth) +0.81116  vs null: z +11.50, one-sided p 0.0000
+      ||g_subset|| 4.84383e-02 +/- 1.18e-02   ||g_hi|| p 0.8050
+   SENSITIVITY  g(w) = w*g_hi + g_lo   (analytic, offline)
+         w  cos(g(w),syn)  cos(g(w),g(1))  ||g(w)||/||g(1)||
+         1       -0.07785        +1.00004             1.0000
+         2       -0.04400        +0.99925             1.0097
+         4       +0.02169        +0.99321             1.0339
+         8       +0.14201        +0.96670             1.0993
+        16       +0.32966        +0.88290             1.2846
+      <g_hi,syn> +1.3492e-02  <g_lo,syn> -4.4918e-02  -> alignment numerator flips sign at w* = +3.329
+
+-- R2 / UNION ---------------------------------------------------
+   COUNTERFACTUAL gradient: actions are from a foreign
+   behaviour policy, so the PPO ratio is not 1 here.
+   T=24521  decision=74237  high-risk(risk>0.50)=3597 (4.85%)  [bucket rule >=0.6 would give 3592]
+   EXACTNESS  cached-vs-flat_pg_grad 0.00e+00   g_full-(g_hi+g_lo) 2.68e-07
+   synth support: EDGE(+) 182  CLOUD(+) 278  STAY(-) 3137
+   ||g_full|| 7.94538e-02   ||g_hi|| 2.76443e-02   ||g_lo|| 8.37005e-02
+   MASS   hi/full 0.3479   lo/full 1.0534   hi/lo 0.3303
+   COS    (full,syn) -0.14395   (hi,syn) +0.90822   (lo,syn) -0.43660
+          (hi,lo) -0.31487   (full,lo) +0.94393   (full,hi) +0.01624
+          (hi, synth_CLOUD) +0.92484   <- action-channel control
+   NULL (n=200 random subsets of size 3597)
+      cos(g_subset, g_synth) -0.12236 +/- 0.11563   [-0.3990, +0.2888]
+      cos(g_hi,g_synth) +0.90822  vs null: z +8.91, one-sided p 0.0000
+      ||g_subset|| 3.97696e-03 +/- 5.06e-04   ||g_hi|| p 0.0000
+   SENSITIVITY  g(w) = w*g_hi + g_lo   (analytic, offline)
+         w  cos(g(w),syn)  cos(g(w),g(1))  ||g(w)||/||g(1)||
+         1       -0.14395        +1.00003             1.0000
+         2       +0.16168        +0.94508             1.0641
+         4       +0.55178        +0.69791             1.4572
+         8       +0.78104        +0.39262             2.6478
+        16       +0.86232        +0.20353             5.3298
+      <g_hi,syn> +6.5270e-03  <g_lo,syn> -9.5003e-03  -> alignment numerator flips sign at w* = +1.456
+
+-- R3 / OWN -----------------------------------------------------
+   T=12554  decision=19301  high-risk(risk>0.50)=849 (4.40%)  [bucket rule >=0.6 would give 847]
+   EXACTNESS  cached-vs-flat_pg_grad 0.00e+00   g_full-(g_hi+g_lo) 1.39e-07
+   synth support: EDGE(+) 74  CLOUD(+) 68  STAY(-) 706
+   ||g_full|| 4.30411e-02   ||g_hi|| 1.57969e-02   ||g_lo|| 4.08667e-02
+   MASS   hi/full 0.3670   lo/full 0.9495   hi/lo 0.3865
+   COS    (full,syn) -0.24368   (hi,syn) +0.45051   (lo,syn) -0.43079
+          (hi,lo) -0.05197   (full,lo) +0.93048   (full,hi) +0.31770
+          (hi, synth_CLOUD) +0.75981   <- action-channel control
+   NULL (n=200 random subsets of size 849)
+      cos(g_subset, g_synth) -0.09678 +/- 0.30940   [-0.7525, +0.6983]
+      cos(g_hi,g_synth) +0.45051  vs null: z +1.77, one-sided p 0.0250
+      ||g_subset|| 4.52666e-03 +/- 1.31e-03   ||g_hi|| p 0.0000
+   SENSITIVITY  g(w) = w*g_hi + g_lo   (analytic, offline)
+         w  cos(g(w),syn)  cos(g(w),g(1))  ||g(w)||/||g(1)||
+         1       -0.24368        +1.00007             1.0000
+         2       -0.06698        +0.95479             1.1695
+         4       +0.14789        +0.79107             1.7064
+         8       +0.30072        +0.59776             3.0385
+        16       +0.37909        +0.46598             5.8996
+      <g_hi,syn> +7.7630e-04  <g_lo,syn> -1.9204e-03  -> alignment numerator flips sign at w* = +2.474
+
+-- R3 / RANDOM --------------------------------------------------
+   COUNTERFACTUAL gradient: actions are from a foreign
+   behaviour policy, so the PPO ratio is not 1 here.
+   T=12715  decision=4975  high-risk(risk>0.50)=216 (4.34%)  [bucket rule >=0.6 would give 216]
+   EXACTNESS  cached-vs-flat_pg_grad 0.00e+00   g_full-(g_hi+g_lo) 2.42e-08
+   synth support: EDGE(+) 101  CLOUD(+) 18  STAY(-) 97
+   ||g_full|| 8.26094e-01   ||g_hi|| 3.17030e-02   ||g_lo|| 8.22974e-01
+   MASS   hi/full 0.0384   lo/full 0.9962   hi/lo 0.0385
+   COS    (full,syn) -0.00796   (hi,syn) +0.56524   (lo,syn) -0.02976
+          (hi,lo) +0.07934   (full,lo) +0.99937   (full,hi) +0.11742
+          (hi, synth_CLOUD) +0.82238   <- action-channel control
+   NULL (n=200 random subsets of size 216)
+      cos(g_subset, g_synth) -0.01404 +/- 0.09851   [-0.2962, +0.3621]
+      cos(g_hi,g_synth) +0.56524  vs null: z +5.88, one-sided p 0.0000
+      ||g_subset|| 4.32567e-02 +/- 1.30e-02   ||g_hi|| p 0.8150
+   SENSITIVITY  g(w) = w*g_hi + g_lo   (analytic, offline)
+         w  cos(g(w),syn)  cos(g(w),g(1))  ||g(w)||/||g(1)||
+         1       -0.00796        +1.00010             1.0000
+         2       +0.01366        +0.99938             1.0052
+         4       +0.05600        +0.99379             1.0199
+         8       +0.13504        +0.96824             1.0655
+        16       +0.26212        +0.88165             1.2110
+      <g_hi,syn> +6.7905e-03  <g_lo,syn> -9.2817e-03  -> alignment numerator flips sign at w* = +1.367
+
+-- R3 / UNION ---------------------------------------------------
+   COUNTERFACTUAL gradient: actions are from a foreign
+   behaviour policy, so the PPO ratio is not 1 here.
+   T=24521  decision=74237  high-risk(risk>0.50)=3597 (4.85%)  [bucket rule >=0.6 would give 3592]
+   EXACTNESS  cached-vs-flat_pg_grad 0.00e+00   g_full-(g_hi+g_lo) 1.42e-07
+   synth support: EDGE(+) 182  CLOUD(+) 278  STAY(-) 3137
+   ||g_full|| 3.12385e-01   ||g_hi|| 2.35325e-02   ||g_lo|| 2.98053e-01
+   MASS   hi/full 0.0753   lo/full 0.9541   hi/lo 0.0790
+   COS    (full,syn) -0.13789   (hi,syn) +0.20726   (lo,syn) -0.16089
+          (hi,lo) +0.58415   (full,lo) +0.99818   (full,hi) +0.63268
+          (hi, synth_CLOUD) +0.20308   <- action-channel control
+   NULL (n=200 random subsets of size 3597)
+      cos(g_subset, g_synth) -0.13505 +/- 0.02613   [-0.2356, -0.0667]
+      cos(g_hi,g_synth) +0.20726  vs null: z +13.10, one-sided p 0.0000
+      ||g_subset|| 1.51780e-02 +/- 9.40e-04   ||g_hi|| p 0.0000
+   SENSITIVITY  g(w) = w*g_hi + g_lo   (analytic, offline)
+         w  cos(g(w),syn)  cos(g(w),g(1))  ||g(w)||/||g(1)||
+         1       -0.13789        +1.00005             1.0000
+         2       -0.11654        +0.99850             1.0493
+         4       -0.07875        +0.98853             1.1563
+         8       -0.02051        +0.95622             1.3947
+        16       +0.05002        +0.89078             1.9253
+      <g_hi,syn> +9.9420e-04  <g_lo,syn> -9.7747e-03  -> alignment numerator flips sign at w* = +9.832
+
+==============================================================================
+SUMMARY
+==============================================================================
+  arm     src    hi% |hi|/|full|  |hi|/|lo| cos(full,s)  cos(hi,s)  cos(lo,s)  cos(hi,lo) cos(full,lo)  nullp
+   A0     OWN  6.47%      0.4190     0.4922    +0.40228   +0.91298   +0.02314    +0.13971     +0.90992  0.000
+   A0  RANDOM  4.34%      0.1189     0.1229    +0.15010   +0.78298   +0.05889    +0.21421     +0.99329  0.000
+   A0   UNION  4.85%      0.0788     0.0835    +0.07232   +0.19500   +0.06031    +0.68604     +0.99840  0.000
+   R2     OWN  4.85%      0.1737     0.1785    -0.23720   +0.53639   -0.33937    +0.06499     +0.98492  0.005
+   R2  RANDOM  4.34%      0.0412     0.0415    -0.07785   +0.81116   -0.11218    +0.17732     +0.99922  0.000
+   R2   UNION  4.85%      0.3479     0.3303    -0.14395   +0.90822   -0.43660    -0.31487     +0.94393  0.000
+   R3     OWN  4.40%      0.3670     0.3865    -0.24368   +0.45051   -0.43079    -0.05197     +0.93048  0.025
+   R3  RANDOM  4.34%      0.0384     0.0385    -0.00796   +0.56524   -0.02976    +0.07934     +0.99937  0.000
+   R3   UNION  4.85%      0.0753     0.0790    -0.13789   +0.20726   -0.16089    +0.58415     +0.99818  0.000
+
+  (A) useful direction?  -> cos(hi,s) > 0 and nullp < 0.05
+  (B) controls update?   -> |hi|/|full| large, cos(full,lo) far from 1
+  dilution needs (A) TRUE and (B) FALSE.
+  cos(hi,lo) < 0 would be COMPETING gradients, not dilution.
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG3_dilution_main.json
+==============================================================================
+EXIT_MAIN=0

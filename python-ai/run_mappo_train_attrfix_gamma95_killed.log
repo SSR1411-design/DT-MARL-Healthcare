@@ -1,0 +1,38 @@
+==============================================================================
+SPRINT 6 — MAPPO TRAINING
+==============================================================================
+DT-MARL environment (trace-driven replay of the CloudSim Digital Twin)
+  agents            : 10 (one per edge node)
+  topology          : ring topology, n=10, offsets=[-2, -1, 1, 2], degree=4, plus 1 cloud tier (id -2)
+  obs dim / agent   : 48
+  centralized state : 489
+  actions           : 4 (STAY, MIGRATE_TO_NEIGHBOR_EDGE, MIGRATE_TO_CLOUD, PREEMPTIVE_REROUTE)
+  decision interval : 2.0 s (2 recorded ticks)
+  episode           : 400 steps = 800 s of cluster time
+  trace             : 10 nodes x 1500 ticks
+  episode starts    : ticks [9, 491]
+  risk              : risk_source=oof calibrated=False min=0.0145 max=0.9585 mean=0.0785 distinct=203 first_valid_tick=9
+                      Leakage-safe out-of-fold sigmoid scores: every window scored by a model that never trained on its temporal block. UNCALIBRATED (pools 5 folds).
+  workload          : 40 healthcare tasks, Sprint-5 criticality
+
+MAPPO (centralised training, decentralised execution)
+  actors            : 10 x MLP(48 -> [128, 128] -> 4), separate=True
+  centralised critic: MLP(489+10 -> [256, 256] -> 1)
+  clip=0.2 value_clip=0.2 ent=0.02 vf=0.5
+  gamma=0.95 lambda=0.9 epochs=4 minibatches=4
+  lr_actor=0.0007 lr_critic=0.001 grad_clip=0.5
+  device=cpu
+  independence      : 10 independent actors (233,000 params total, 23,300 each), 1 centralised critic (194,049 params)
+
+  episodes          : 600 (8 per PPO update = 75 updates)
+  train start window: ticks [9, 491] (first 70% of the usable range; evaluate.py uses the rest)
+  seed              : 20260818
+==============================================================================
+  ep    1/600  reward    -38.04  success 0.750  lost  6  reloc  89  preem  87  prot  12  (    2s)
+  ep   25/600  reward    -70.39  success 0.575  lost 15  reloc  90  preem  90  prot   8  (   58s)
+  ep   50/600  reward    -91.84  success 0.500  lost 16  reloc  88  preem  88  prot   7  (  115s)
+  ep   75/600  reward   -106.95  success 0.400  lost 19  reloc  93  preem  92  prot  13  (  174s)
+  ep  100/600  reward   -116.71  success 0.525  lost 15  reloc  95  preem  94  prot  18  (  232s)
+  ep  125/600  reward   -113.32  success 0.425  lost 17  reloc  58  preem  57  prot  11  (  292s)
+  ep  150/600  reward   -100.17  success 0.550  lost 17  reloc  46  preem  45  prot   8  (  352s)
+  ep  175/600  reward    -95.97  success 0.500  lost 18  reloc  41  preem  40  prot  10  (  414s)

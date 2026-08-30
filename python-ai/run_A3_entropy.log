@@ -1,0 +1,53 @@
+==============================================================================
+SPRINT 6 — MAPPO TRAINING
+==============================================================================
+DT-MARL environment (trace-driven replay of the CloudSim Digital Twin)
+  agents            : 10 (one per edge node)
+  topology          : ring topology, n=10, offsets=[-2, -1, 1, 2], degree=4, plus 1 cloud tier (id -2)
+  obs dim / agent   : 48
+  centralized state : 489
+  actions           : 4 (STAY, MIGRATE_TO_NEIGHBOR_EDGE, MIGRATE_TO_CLOUD, PREEMPTIVE_REROUTE)
+  decision interval : 2.0 s (2 recorded ticks)
+  episode           : 400 steps = 800 s of cluster time
+  trace             : 10 nodes x 1500 ticks
+  episode starts    : ticks [9, 491]
+  risk              : risk_source=oof calibrated=False min=0.0145 max=0.9585 mean=0.0785 distinct=203 first_valid_tick=9
+                      Leakage-safe out-of-fold sigmoid scores: every window scored by a model that never trained on its temporal block. UNCALIBRATED (pools 5 folds).
+  workload          : 40 healthcare tasks, Sprint-5 criticality
+
+MAPPO (centralised training, decentralised execution)
+  actors            : 10 x MLP(48 -> [128, 128] -> 4), separate=True
+  centralised critic: MLP(489+10 -> [256, 256] -> 1)
+  clip=0.2 value_clip=0.2 ent=0.05 vf=0.5
+  gamma=0.999 lambda=0.995 epochs=4 minibatches=4
+  lr_actor=0.0007 lr_critic=0.001 grad_clip=0.5
+  device=cpu
+  independence      : 10 independent actors (233,000 params total, 23,300 each), 1 centralised critic (194,049 params)
+
+  episodes          : 600 (8 per PPO update = 75 updates)
+  train start window: ticks [9, 491] (first 70% of the usable range; evaluate.py uses the rest)
+  seed              : 20260818
+==============================================================================
+  ep    1/600  reward    +13.93  success 0.750  lost  6  reloc  87  preem  86  prot  11  ev +nan  ent nan  (    2s)
+  ep   50/600  reward    -18.68  success 0.700  lost 10  reloc  79  preem  78  prot   7  ev +0.24  ent 0.690  (  123s)
+  ep  100/600  reward    -13.99  success 0.700  lost 10  reloc  85  preem  84  prot  14  ev +0.50  ent 0.562  (  243s)
+  ep  150/600  reward    -18.13  success 0.650  lost 14  reloc  85  preem  85  prot   5  ev +0.60  ent 0.495  (  362s)
+  ep  200/600  reward    -15.05  success 0.625  lost 15  reloc  85  preem  84  prot   8  ev +0.71  ent 0.420  (  483s)
+  ep  250/600  reward    -12.30  success 0.675  lost 12  reloc  74  preem  74  prot   9  ev +0.76  ent 0.398  (  602s)
+  ep  300/600  reward    -13.10  success 0.750  lost  5  reloc  83  preem  82  prot  10  ev +0.79  ent 0.468  (  724s)
+  ep  350/600  reward    -12.65  success 0.825  lost  5  reloc  83  preem  82  prot  15  ev +0.80  ent 0.383  (  843s)
+  ep  400/600  reward    -11.98  success 0.725  lost 11  reloc  80  preem  80  prot   8  ev +0.83  ent 0.319  (  964s)
+  ep  450/600  reward    -15.53  success 0.800  lost  8  reloc  78  preem  77  prot  11  ev +0.85  ent 0.355  ( 1085s)
+  ep  500/600  reward    -11.71  success 0.825  lost  6  reloc  77  preem  77  prot  18  ev +0.80  ent 0.314  ( 1204s)
+  ep  550/600  reward    -10.77  success 0.750  lost  9  reloc  76  preem  75  prot   8  ev +0.86  ent 0.368  ( 1326s)
+  ep  600/600  reward     -6.91  success 0.700  lost 11  reloc  74  preem  74  prot   0  ev +0.84  ent 0.375  ( 1446s)
+------------------------------------------------------------------------------
+  first 20 episodes : -18.59
+  last  20 episodes : -7.91   (change +10.68)
+  best update mean  : +2.44
+  wall time         : 1446s
+  saved             : D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\mappo_A3_entropy.pth
+                      D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\mappo_A3_entropy_best.pth
+                      D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\mappo_A3_entropy_history.csv
+                      D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\mappo_A3_entropy_updates.csv
+  greedy, TRAIN window, 5 episodes: reward +4.23  success 0.725  reloc 55.4

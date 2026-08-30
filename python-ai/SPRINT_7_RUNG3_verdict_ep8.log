@@ -1,0 +1,90 @@
+==============================================================================
+SPRINT 7 RUNG 3 -- SCORING SPRINT_7_RUNG3_dilution_ep8.json
+==============================================================================
+  prereg SPRINT_7_RUNG3_PREREGISTRATION.md md5 972dc323bc4a8d98ca0c5ad3273540ad
+  OWN batch 8 episodes, null draws 200
+
+------------------------------------------------------------------------------
+D1 -- hypothesis (A): does g_hi CONTAIN useful directional signal?
+------------------------------------------------------------------------------
+  D1a cos(g_hi,g_synth) > 0.0 (need 9/9): 8/9 cells
+     A0: OWN +0.94495 PASS | RAN +0.78298 PASS | UNI +0.19500 PASS
+     R2: OWN +0.87342 PASS | RAN +0.81116 PASS | UNI +0.90822 PASS
+     R3: OWN -0.24495 fail | RAN +0.56524 PASS | UNI +0.20726 PASS
+  D1b vs cardinality-matched null, p < 0.05 (need 7/9): 8/9 cells
+     A0: OWN 0.0000 PASS | RAN 0.0000 PASS | UNI 0.0000 PASS
+     R2: OWN 0.0000 PASS | RAN 0.0000 PASS | UNI 0.0000 PASS
+     R3: OWN 0.6300 fail | RAN 0.0000 PASS | UNI 0.0000 PASS
+
+  D1a FAIL   D1b PASS   ==> D1 FAIL
+
+------------------------------------------------------------------------------
+D2 -- hypothesis (B): is the update DOMINATED by low-risk mass?
+     (D2 pass = g_hi does NOT control the update)
+------------------------------------------------------------------------------
+  D2a n_hi/n_dec < 0.1 (need 9/9): 9/9 cells
+     A0: OWN 0.0614 PASS | RAN 0.0434 PASS | UNI 0.0485 PASS
+     R2: OWN 0.0542 PASS | RAN 0.0434 PASS | UNI 0.0485 PASS
+     R3: OWN 0.0333 PASS | RAN 0.0434 PASS | UNI 0.0485 PASS
+  D2b ||g_hi||/||g_full|| < 0.5 (need 7/9): 9/9 cells
+     A0: OWN 0.2129 PASS | RAN 0.1189 PASS | UNI 0.0788 PASS
+     R2: OWN 0.3529 PASS | RAN 0.0412 PASS | UNI 0.3479 PASS
+     R3: OWN 0.1673 PASS | RAN 0.0384 PASS | UNI 0.0753 PASS
+  D2c cos(g_full,g_lo) > 0.9 (need 7/9)  <- OPERATIVE: 9/9 cells
+     A0: OWN +0.97930 PASS | RAN +0.99329 PASS | UNI +0.99840 PASS
+     R2: OWN +0.93573 PASS | RAN +0.99922 PASS | UNI +0.94393 PASS
+     R3: OWN +0.98675 PASS | RAN +0.99937 PASS | UNI +0.99818 PASS
+
+  D2a PASS   D2b PASS   D2c PASS   ==> D2 PASS
+
+------------------------------------------------------------------------------
+D3 -- COMPETING-GRADIENT interference (distinct from dilution)
+------------------------------------------------------------------------------
+  D3 cos(g_hi,g_lo) < -0.1 (need 5/9): 2/9 cells
+     A0: OWN +0.30493 fail | RAN +0.21421 fail | UNI +0.68604 fail
+     R2: OWN -0.00126 fail | RAN +0.17732 fail | UNI -0.31487 PASS
+     R3: OWN -0.23331 PASS | RAN +0.07934 fail | UNI +0.58415 fail
+
+  ==> D3 FAIL
+
+------------------------------------------------------------------------------
+D4 -- does the decomposition EXPLAIN the A0/R2/R3 ordering?
+     behavioural fact to reproduce on OWN: R2 > R3 > A0
+     UNION Delta: R2 +0.1579  R3 +0.1242  A0 +0.0191
+------------------------------------------------------------------------------
+       ||g_hi||/||g_lo||: A0 +0.2329  R2 +0.3770  R3 +0.1631   -> R2 > A0 > R3   fail
+     ||g_hi||/||g_full||: A0 +0.2129  R2 +0.3529  R3 +0.1673   -> R2 > A0 > R3   fail
+     cos(g_full,g_synth): A0 +0.4993  R2 +0.3013  R3 -0.6571   -> A0 > R2 > R3   fail
+
+  ==> D4 FAIL
+  No measured quantity reproduces the behavioural ordering, so
+  the decomposition does not account for the R3 degradation.
+
+------------------------------------------------------------------------------
+D5 -- analytical sensitivity (DESCRIPTIVE; does NOT gate the verdict)
+     'materially change' = cos(g(w),g(1)) < 0.9
+     'align better'      = cos(g(w),synth) > cos(g(1),synth) + 0.1
+------------------------------------------------------------------------------
+        cell        w*       w=1       w=2       w=4       w=8      w=16   (cos vs synth; base at w=1)
+      A0/OWN    -1.481   +0.4993   +0.6253   +0.7729   +0.8812   +0.9288   material@['8', '16'] better@['2', '4', '8', '16']
+   A0/RANDOM    -0.612   +0.1501   +0.2328   +0.3682   +0.5362   +0.6690   material@['8', '16'] better@['4', '8', '16']
+    A0/UNION    -3.705   +0.0723   +0.0828   +0.1001   +0.1240   +0.1493   material@- better@-
+      R2/OWN    +0.023   +0.3013   +0.5202   +0.7242   +0.8270   +0.8606   material@['4', '8', '16'] better@['2', '4', '8', '16']
+   R2/RANDOM    +3.329   -0.0778   -0.0440   +0.0217   +0.1420   +0.3297   material@['16'] better@['8', '16']
+    R2/UNION    +1.456   -0.1439   +0.1617   +0.5518   +0.7810   +0.8623   material@['4', '8', '16'] better@['2', '4', '8', '16']
+      R3/OWN   -15.032   -0.6571   -0.6967   -0.7182   -0.6360   -0.4829   material@['4', '8', '16'] better@['16']
+   R3/RANDOM    +1.367   -0.0080   +0.0137   +0.0560   +0.1350   +0.2621   material@['16'] better@['8', '16']
+    R3/UNION    +9.832   -0.1379   -0.1165   -0.0787   -0.0205   +0.0500   material@['16'] better@['8', '16']
+
+  cells where w=16 aligns better by >0.1: 8/9
+  cells whose alignment numerator flips sign at some w in (0,16]: 5/9
+
+==============================================================================
+VERDICT: FALSIFIED -- DOES NOT EXPLAIN R3
+  because the high-risk gradient carries no reliable directional signal (D1 failed); and no measured quantity reproduces the observed A0/R2/R3 ordering, so this mechanism does not account for the degradation it was invoked to explain
+
+GO for a future TRAINING rung requires D1 AND D2 AND D4:
+  D1 FAIL  D2 PASS  D4 FAIL   ==> NO-GO for a training rung
+  D5 magnitudes may inform a future design but cannot create a GO (prereg S7 D5).
+==============================================================================
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG3_verdict_ep8.json

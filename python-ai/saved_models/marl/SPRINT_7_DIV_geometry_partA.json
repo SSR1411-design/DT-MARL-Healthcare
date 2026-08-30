@@ -1,0 +1,157 @@
+{
+ "probe": "DIV-2 displacement geometry",
+ "ref_arm": "R2",
+ "arms": {
+  "A0": "mappo_A0_cpu_repro.pth",
+  "R2": "mappo_R2_mc_target.pth",
+  "R2_best": "mappo_R2_mc_target_best.pth",
+  "R3": "R3_batch32.pth",
+  "R3_best": "R3_batch32_best.pth"
+ },
+ "args": {
+  "device": "cpu",
+  "clusters": 32,
+  "start_seed": 20260825,
+  "random_seed": 31337,
+  "skip_function": true,
+  "tag": "partA"
+ },
+ "part_a_parameter_space": {
+  "seed": 20260818,
+  "d_actor": 233000,
+  "d_critic": 194049,
+  "theta0_determinism_max_abs_diff": [
+   0.0,
+   0.0
+  ],
+  "chance_cosine_actor": 0.0020716769761626045,
+  "displacement": {
+   "A0": {
+    "actor_norm": 5.532108769446974,
+    "critic_norm": 9.784420680501329,
+    "actor_norm_over_ref": 0.8964725168747033
+   },
+   "R2": {
+    "actor_norm": 6.170974196435044,
+    "critic_norm": 9.993614287522892,
+    "actor_norm_over_ref": 1.0
+   },
+   "R2_best": {
+    "actor_norm": 6.170974196435044,
+    "critic_norm": 9.993614287522892,
+    "actor_norm_over_ref": 1.0
+   },
+   "R3": {
+    "actor_norm": 4.547133304108462,
+    "critic_norm": 10.327774511543568,
+    "actor_norm_over_ref": 0.7368582592251526
+   },
+   "R3_best": {
+    "actor_norm": 3.9510389877692718,
+    "critic_norm": 9.155411504281675,
+    "actor_norm_over_ref": 0.6402617904401183
+   }
+  },
+  "actor_decomposition_vs_ref": {
+   "A0": {
+    "proj_fraction": 0.16719214671567936,
+    "cosine": 0.18650002489596368,
+    "residual_fraction": 0.880743867187475
+   },
+   "R2": {
+    "proj_fraction": 1.0000000000000917,
+    "cosine": 1.0000000000000917,
+    "residual_fraction": 9.170427111707314e-14
+   },
+   "R2_best": {
+    "proj_fraction": 1.0000000000000917,
+    "cosine": 1.0000000000000917,
+    "residual_fraction": 9.170427111707314e-14
+   },
+   "R3": {
+    "proj_fraction": 0.12441899688101582,
+    "cosine": 0.16885065115759076,
+    "residual_fraction": 0.7262781887152736
+   },
+   "R3_best": {
+    "proj_fraction": 0.09899965906962774,
+    "cosine": 0.15462371884096818,
+    "residual_fraction": 0.6325616395275507
+   }
+  },
+  "actor_cosine_matrix": {
+   "A0": {
+    "A0": 1.000000000000088,
+    "R2": 0.18650002489596368,
+    "R2_best": 0.18650002489596368,
+    "R3": 0.16478982594713834,
+    "R3_best": 0.19002234424431697
+   },
+   "R2": {
+    "A0": 0.18650002489596368,
+    "R2": 1.0000000000000917,
+    "R2_best": 1.0000000000000917,
+    "R3": 0.16885065115759076,
+    "R3_best": 0.15462371884096818
+   },
+   "R2_best": {
+    "A0": 0.18650002489596368,
+    "R2": 1.0000000000000917,
+    "R2_best": 1.0000000000000917,
+    "R3": 0.16885065115759076,
+    "R3_best": 0.15462371884096818
+   },
+   "R3": {
+    "A0": 0.16478982594713834,
+    "R2": 0.16885065115759076,
+    "R2_best": 0.16885065115759076,
+    "R3": 1.0000000000001528,
+    "R3_best": 0.9300155506898967
+   },
+   "R3_best": {
+    "A0": 0.19002234424431697,
+    "R2": 0.15462371884096818,
+    "R2_best": 0.15462371884096818,
+    "R3": 0.9300155506898967,
+    "R3_best": 1.0000000000002378
+   }
+  },
+  "adam_actor": {
+   "A0": {
+    "steps": 1428.0,
+    "lr_saved": 9.333333333333316e-06,
+    "grad_moment_norm": 0.07564555102983854,
+    "update_norm": 0.0007459134089645708,
+    "update_over_displacement": 0.0001348334676794754
+   },
+   "R2": {
+    "steps": 1392.0,
+    "lr_saved": 9.333333333333316e-06,
+    "grad_moment_norm": 0.018702294874278456,
+    "update_norm": 0.00039541473389923204,
+    "update_over_displacement": 6.40765495547951e-05
+   },
+   "R2_best": {
+    "steps": 1392.0,
+    "lr_saved": 9.333333333333316e-06,
+    "grad_moment_norm": 0.018702294874278456,
+    "update_norm": 0.00039541473389923204,
+    "update_over_displacement": 6.40765495547951e-05
+   },
+   "R3": {
+    "steps": 1440.0,
+    "lr_saved": 9.333333333333316e-06,
+    "grad_moment_norm": 0.06370187275343599,
+    "update_norm": 0.0011993830843503226,
+    "update_over_displacement": 0.00026376686235845485
+   },
+   "R3_best": {
+    "steps": 872.0,
+    "lr_saved": 0.00028933333333333334,
+    "grad_moment_norm": 0.044618332713391384,
+    "update_norm": 0.013267610152548,
+    "update_over_displacement": 0.003358005373679898
+   }
+  }
+ }
+}

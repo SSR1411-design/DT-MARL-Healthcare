@@ -1,0 +1,65 @@
+==============================================================================
+SPRINT 6 — MAPPO TRAINING
+==============================================================================
+DT-MARL environment (trace-driven replay of the CloudSim Digital Twin)
+  agents            : 10 (one per edge node)
+  topology          : ring topology, n=10, offsets=[-2, -1, 1, 2], degree=4, plus 1 cloud tier (id -2)
+  obs dim / agent   : 48
+  centralized state : 489
+  actions           : 4 (STAY, MIGRATE_TO_NEIGHBOR_EDGE, MIGRATE_TO_CLOUD, PREEMPTIVE_REROUTE)
+  decision interval : 2.0 s (2 recorded ticks)
+  episode           : 400 steps = 800 s of cluster time
+  trace             : 10 nodes x 1500 ticks
+  episode starts    : ticks [9, 491]
+  risk              : risk_source=oof calibrated=False min=0.0145 max=0.9585 mean=0.0785 distinct=203 first_valid_tick=9
+                      Leakage-safe out-of-fold sigmoid scores: every window scored by a model that never trained on its temporal block. UNCALIBRATED (pools 5 folds).
+  workload          : 40 healthcare tasks, Sprint-5 criticality
+
+MAPPO (centralised training, decentralised execution)
+  actors            : 10 x MLP(48 -> [128, 128] -> 4), separate=True
+  centralised critic: MLP(489+10 -> [256, 256] -> 1)
+  clip=0.2 value_clip=0.2 ent=0.02 vf=0.5
+  gamma=0.999 lambda=0.995 epochs=4 minibatches=4
+  lr_actor=0.0007 lr_critic=0.001 grad_clip=0.5
+  device=cpu
+  independence      : 10 independent actors (233,000 params total, 23,300 each), 1 centralised critic (194,049 params)
+
+  episodes          : 600 (8 per PPO update = 75 updates)
+  train start window: ticks [9, 491] (first 70% of the usable range; evaluate.py uses the rest)
+  seed              : 20260818
+==============================================================================
+  ep    1/600  reward    +13.93  success 0.750  lost  6  reloc  87  preem  86  prot  11  ev +nan  ent nan  (    2s)
+  ep   25/600  reward    -19.19  success 0.600  lost 16  reloc  82  preem  81  prot   3  ev +0.10  ent 0.644  (   61s)
+  ep   50/600  reward    -28.14  success 0.550  lost 17  reloc  88  preem  88  prot   7  ev +0.28  ent 0.715  (  122s)
+  ep   75/600  reward    -15.06  success 0.675  lost 13  reloc  79  preem  78  prot   6  ev +0.50  ent 0.663  (  187s)
+  ep  100/600  reward    -16.30  success 0.750  lost  9  reloc  85  preem  85  prot  14  ev +0.55  ent 0.625  (  255s)
+  ep  125/600  reward    -19.19  success 0.675  lost 11  reloc  80  preem  79  prot   6  ev +0.63  ent 0.570  (  315s)
+  ep  150/600  reward    -13.89  success 0.700  lost 10  reloc  74  preem  73  prot   9  ev +0.69  ent 0.513  (  374s)
+  ep  175/600  reward    -14.98  success 0.675  lost 12  reloc  76  preem  72  prot   5  ev +0.73  ent 0.417  (  435s)
+  ep  200/600  reward     -9.52  success 0.700  lost 11  reloc  87  preem  87  prot  12  ev +0.73  ent 0.335  (  496s)
+  ep  225/600  reward     -9.18  success 0.800  lost  8  reloc  75  preem  74  prot   4  ev +0.77  ent 0.296  (  556s)
+  ep  250/600  reward    -10.38  success 0.750  lost  9  reloc  87  preem  87  prot   7  ev +0.78  ent 0.352  (  615s)
+  ep  275/600  reward    -13.24  success 0.600  lost 15  reloc  83  preem  83  prot   8  ev +0.79  ent 0.387  (  675s)
+  ep  300/600  reward     -6.73  success 0.775  lost  7  reloc  75  preem  73  prot  14  ev +0.82  ent 0.365  (  735s)
+  ep  325/600  reward     -0.31  success 0.600  lost 16  reloc  73  preem  72  prot   9  ev +0.84  ent 0.343  (  795s)
+  ep  350/600  reward     -9.59  success 0.750  lost  6  reloc  86  preem  85  prot  12  ev +0.81  ent 0.322  (  856s)
+  ep  375/600  reward    -15.33  success 0.675  lost 13  reloc  67  preem  67  prot   0  ev +0.85  ent 0.319  (  916s)
+  ep  400/600  reward     -4.61  success 0.825  lost  5  reloc  81  preem  81  prot  12  ev +0.86  ent 0.385  (  977s)
+  ep  425/600  reward    -14.58  success 0.625  lost 13  reloc  73  preem  73  prot   4  ev +0.86  ent 0.352  ( 1037s)
+  ep  450/600  reward    -11.50  success 0.700  lost 10  reloc  83  preem  83  prot   8  ev +0.84  ent 0.339  ( 1096s)
+  ep  475/600  reward    -13.70  success 0.750  lost  8  reloc  79  preem  76  prot  13  ev +0.87  ent 0.312  ( 1156s)
+  ep  500/600  reward    -10.64  success 0.750  lost  7  reloc  76  preem  76  prot   9  ev +0.85  ent 0.361  ( 1215s)
+  ep  525/600  reward    -10.36  success 0.725  lost 10  reloc  80  preem  79  prot   5  ev +0.85  ent 0.344  ( 1275s)
+  ep  550/600  reward     -8.27  success 0.875  lost  5  reloc  73  preem  73  prot  14  ev +0.85  ent 0.378  ( 1334s)
+  ep  575/600  reward     -8.53  success 0.750  lost  8  reloc  71  preem  71  prot   2  ev +0.87  ent 0.318  ( 1394s)
+  ep  600/600  reward     -4.63  success 0.725  lost 11  reloc  64  preem  64  prot   3  ev +0.86  ent 0.356  ( 1455s)
+------------------------------------------------------------------------------
+  first 20 episodes : -18.97
+  last  20 episodes : -6.70   (change +12.27)
+  best update mean  : +3.20
+  wall time         : 1455s
+  saved             : D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\mappo_A1_cpu_bugfix.pth
+                      D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\mappo_A1_cpu_bugfix_best.pth
+                      D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\mappo_A1_cpu_bugfix_history.csv
+                      D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\mappo_A1_cpu_bugfix_updates.csv
+  greedy, TRAIN window, 5 episodes: reward +33.05  success 0.790  reloc 29.0

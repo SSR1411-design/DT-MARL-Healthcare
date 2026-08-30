@@ -1,0 +1,1150 @@
+{
+  "probe": "SPRINT_7_RUNG2_75_edgeshare",
+  "what": "reconcile the Rung 2 (2.7%->8.1%) vs Rung 2.5 (R2 3.7%, A0 6.6%) high-risk EDGE-share discrepancy by changing ONE definitional element at a time; plus a per-risk-bucket policy census under a single fixed definition",
+  "production_metric_definition": {
+    "source": "marl/rollout.py:run_episode (shared by train.py and evaluate.py, so training and evaluation cannot diverge)",
+    "risk_source": "env.risk_at(i); identical to obs[...,12] (env.py:463)",
+    "decision_rule": "masks.sum(axis=1) > 1  -- NO has_task filter",
+    "bucketing": "min(int(risk*5), 4); 'high risk' = buckets 3+4 i.e. risk >= 0.6",
+    "policy": "MappoPolicy(greedy=True) -> act_greedy (mappo.py:569)",
+    "starts": "rollout.episode_starts over the HELD-OUT eval window [491, 698], 8 episodes"
+  },
+  "rung2_5_metric_definition": {
+    "source": "marl/_diag_rung2_5_actor_stall.py saturation_census",
+    "risk_source": "obs[...,12] (same values)",
+    "decision_rule": "masks.sum > 1 AND obs[...,15] >= 0.5 (has_task)",
+    "threshold": "risk > 0.50",
+    "policy": "stochastic (agent.act)",
+    "starts": "TRAINING window, 8 episodes"
+  },
+  "differences": [
+    "start window (eval [491,698] vs train [9,491]) -- DISJOINT regions of the trace",
+    "threshold (bucket >= 0.6 vs > 0.50)",
+    "has_task filter (absent vs present)",
+    "greedy vs stochastic action selection"
+  ],
+  "production_reference": {
+    "A0": {
+      "source": "mappo_A0_cpu_repro_eval.json",
+      "eval_start_window": [
+        491,
+        698
+      ],
+      "eval_starts": [
+        491,
+        521,
+        550,
+        580,
+        609,
+        639,
+        668,
+        698
+      ],
+      "n_eval_starts": 8,
+      "risk_action_table": [
+        [
+          9341,
+          61,
+          798,
+          0
+        ],
+        [
+          3,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          216,
+          9,
+          21,
+          0
+        ],
+        [
+          271,
+          6,
+          23,
+          0
+        ]
+      ],
+      "highrisk_counts": {
+        "STAY": 487,
+        "MIGRATE_EDGE": 15,
+        "MIGRATE_CLOUD": 44,
+        "PREEMPT_REROUTE": 0
+      },
+      "highrisk_n": 546,
+      "highrisk_EDGE_share": 0.027472527472527472,
+      "all_decision_entries": 10751
+    },
+    "R2": {
+      "source": "mappo_R2_mc_target_eval.json",
+      "eval_start_window": [
+        491,
+        698
+      ],
+      "eval_starts": [
+        491,
+        521,
+        550,
+        580,
+        609,
+        639,
+        668,
+        698
+      ],
+      "n_eval_starts": 8,
+      "risk_action_table": [
+        [
+          6705,
+          235,
+          489,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          179,
+          13,
+          16,
+          0
+        ],
+        [
+          143,
+          18,
+          15,
+          0
+        ]
+      ],
+      "highrisk_counts": {
+        "STAY": 322,
+        "MIGRATE_EDGE": 31,
+        "MIGRATE_CLOUD": 31,
+        "PREEMPT_REROUTE": 0
+      },
+      "highrisk_n": 384,
+      "highrisk_EDGE_share": 0.08072916666666667,
+      "all_decision_entries": 7815
+    }
+  },
+  "ladder": {
+    "A0": {
+      "D0_prod_eval_greedy_maskonly_bucket>=0.6": {
+        "n": 546,
+        "EDGE": 15,
+        "share": 0.027472527472527472,
+        "counts": {
+          "STAY": 487,
+          "MIGRATE_EDGE": 15,
+          "MIGRATE_CLOUD": 44,
+          "PREEMPT_REROUTE": 0
+        },
+        "wilson95": [
+          0.016718157199419,
+          0.0448295095591947
+        ]
+      },
+      "D1_TRAINwindow_greedy_maskonly_bucket>=0.6": {
+        "n": 579,
+        "EDGE": 10,
+        "share": 0.017271157167530225,
+        "counts": {
+          "STAY": 522,
+          "MIGRATE_EDGE": 10,
+          "MIGRATE_CLOUD": 47,
+          "PREEMPT_REROUTE": 0
+        },
+        "wilson95": [
+          0.009407898598918928,
+          0.031497665886931515
+        ]
+      },
+      "D2_train_greedy_maskonly_risk>0.50": {
+        "n": 581,
+        "EDGE": 10,
+        "share": 0.01721170395869191,
+        "counts": {
+          "STAY": 523,
+          "MIGRATE_EDGE": 10,
+          "MIGRATE_CLOUD": 48,
+          "PREEMPT_REROUTE": 0
+        },
+        "wilson95": [
+          0.009375422814613723,
+          0.03139025567695684
+        ]
+      },
+      "D3_train_greedy_HASTASK_risk>0.50": {
+        "n": 581,
+        "EDGE": 10,
+        "share": 0.01721170395869191,
+        "counts": {
+          "STAY": 523,
+          "MIGRATE_EDGE": 10,
+          "MIGRATE_CLOUD": 48,
+          "PREEMPT_REROUTE": 0
+        },
+        "wilson95": [
+          0.009375422814613723,
+          0.03139025567695684
+        ]
+      },
+      "D4_train_STOCHASTIC_HASTASK_risk>0.50": {
+        "per_seed": [
+          {
+            "n": 241,
+            "EDGE": 25,
+            "share": 0.1037344398340249,
+            "counts": {
+              "STAY": 193,
+              "MIGRATE_EDGE": 25,
+              "MIGRATE_CLOUD": 23,
+              "PREEMPT_REROUTE": 0
+            },
+            "wilson95": [
+              0.07125580572076332,
+              0.1486475518531654
+            ]
+          },
+          {
+            "n": 239,
+            "EDGE": 18,
+            "share": 0.07531380753138076,
+            "counts": {
+              "STAY": 194,
+              "MIGRATE_EDGE": 18,
+              "MIGRATE_CLOUD": 27,
+              "PREEMPT_REROUTE": 0
+            },
+            "wilson95": [
+              0.048167712195755184,
+              0.11589594919400367
+            ]
+          },
+          {
+            "n": 225,
+            "EDGE": 18,
+            "share": 0.08,
+            "counts": {
+              "STAY": 179,
+              "MIGRATE_EDGE": 18,
+              "MIGRATE_CLOUD": 28,
+              "PREEMPT_REROUTE": 0
+            },
+            "wilson95": [
+              0.051200698396742704,
+              0.12290000466669324
+            ]
+          }
+        ],
+        "share_mean": 0.08634941578846855,
+        "share_min": 0.07531380753138076,
+        "share_max": 0.1037344398340249,
+        "n_total": 705,
+        "EDGE_total": 61
+      },
+      "X_evalwindow_greedy_HASTASK_risk>0.50": {
+        "n": 547,
+        "EDGE": 15,
+        "share": 0.027422303473491772,
+        "counts": {
+          "STAY": 488,
+          "MIGRATE_EDGE": 15,
+          "MIGRATE_CLOUD": 44,
+          "PREEMPT_REROUTE": 0
+        },
+        "wilson95": [
+          0.016687467086288828,
+          0.04474846576819279
+        ]
+      }
+    },
+    "R2": {
+      "D0_prod_eval_greedy_maskonly_bucket>=0.6": {
+        "n": 384,
+        "EDGE": 31,
+        "share": 0.08072916666666667,
+        "counts": {
+          "STAY": 322,
+          "MIGRATE_EDGE": 31,
+          "MIGRATE_CLOUD": 31,
+          "PREEMPT_REROUTE": 0
+        },
+        "wilson95": [
+          0.0574539506886641,
+          0.11230989836247007
+        ]
+      },
+      "D1_TRAINwindow_greedy_maskonly_bucket>=0.6": {
+        "n": 371,
+        "EDGE": 9,
+        "share": 0.02425876010781671,
+        "counts": {
+          "STAY": 327,
+          "MIGRATE_EDGE": 9,
+          "MIGRATE_CLOUD": 35,
+          "PREEMPT_REROUTE": 0
+        },
+        "wilson95": [
+          0.012814067685864652,
+          0.045454457216586724
+        ]
+      },
+      "D2_train_greedy_maskonly_risk>0.50": {
+        "n": 373,
+        "EDGE": 9,
+        "share": 0.024128686327077747,
+        "counts": {
+          "STAY": 328,
+          "MIGRATE_EDGE": 9,
+          "MIGRATE_CLOUD": 36,
+          "PREEMPT_REROUTE": 0
+        },
+        "wilson95": [
+          0.012745084612467539,
+          0.04521419339833115
+        ]
+      },
+      "D3_train_greedy_HASTASK_risk>0.50": {
+        "n": 373,
+        "EDGE": 9,
+        "share": 0.024128686327077747,
+        "counts": {
+          "STAY": 328,
+          "MIGRATE_EDGE": 9,
+          "MIGRATE_CLOUD": 36,
+          "PREEMPT_REROUTE": 0
+        },
+        "wilson95": [
+          0.012745084612467539,
+          0.04521419339833115
+        ]
+      },
+      "D4_train_STOCHASTIC_HASTASK_risk>0.50": {
+        "per_seed": [
+          {
+            "n": 247,
+            "EDGE": 20,
+            "share": 0.08097165991902834,
+            "counts": {
+              "STAY": 204,
+              "MIGRATE_EDGE": 20,
+              "MIGRATE_CLOUD": 23,
+              "PREEMPT_REROUTE": 0
+            },
+            "wilson95": [
+              0.0530260664977363,
+              0.12175149649691522
+            ]
+          },
+          {
+            "n": 228,
+            "EDGE": 19,
+            "share": 0.08333333333333333,
+            "counts": {
+              "STAY": 187,
+              "MIGRATE_EDGE": 19,
+              "MIGRATE_CLOUD": 22,
+              "PREEMPT_REROUTE": 0
+            },
+            "wilson95": [
+              0.0539966820808377,
+              0.12647776404796723
+            ]
+          },
+          {
+            "n": 285,
+            "EDGE": 26,
+            "share": 0.0912280701754386,
+            "counts": {
+              "STAY": 238,
+              "MIGRATE_EDGE": 26,
+              "MIGRATE_CLOUD": 21,
+              "PREEMPT_REROUTE": 0
+            },
+            "wilson95": [
+              0.06301695588035267,
+              0.13031214271087468
+            ]
+          }
+        ],
+        "share_mean": 0.08517768780926675,
+        "share_min": 0.08097165991902834,
+        "share_max": 0.0912280701754386,
+        "n_total": 760,
+        "EDGE_total": 65
+      },
+      "X_evalwindow_greedy_HASTASK_risk>0.50": {
+        "n": 385,
+        "EDGE": 31,
+        "share": 0.08051948051948052,
+        "counts": {
+          "STAY": 323,
+          "MIGRATE_EDGE": 31,
+          "MIGRATE_CLOUD": 31,
+          "PREEMPT_REROUTE": 0
+        },
+        "wilson95": [
+          0.05730317570180531,
+          0.11202408448984988
+        ]
+      }
+    }
+  },
+  "bucket_census": {
+    "A0": {
+      "train_greedy": [
+        {
+          "lo": 0.0,
+          "hi": 0.1,
+          "n": 9182,
+          "taken_EDGE_share": 0.010781964713570028,
+          "taken_STAY_share": 0.9113482901328687,
+          "p_edge_mean": 0.18049166749545795,
+          "p_edge_p50": 0.07670179754495621,
+          "p_edge_p95": 0.4584141120314598,
+          "p_stay_mean": 0.752641191564872,
+          "maxp_mean": 0.8137652423777265,
+          "maxp_p50": 0.8432539105415344,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.41560553677523265,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0786321062949247
+        },
+        {
+          "lo": 0.1,
+          "hi": 0.2,
+          "n": 18,
+          "taken_EDGE_share": 0.05555555555555555,
+          "taken_STAY_share": 0.8888888888888888,
+          "p_edge_mean": 0.20305366934432337,
+          "p_edge_p50": 0.07067250460386276,
+          "p_edge_p95": 0.48575798869132975,
+          "p_stay_mean": 0.7425635176607304,
+          "maxp_mean": 0.8068122135268317,
+          "maxp_p50": 0.929327517747879,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.39492620834732256,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0555555555555554
+        },
+        {
+          "lo": 0.2,
+          "hi": 0.4,
+          "n": 4,
+          "taken_EDGE_share": 0.0,
+          "taken_STAY_share": 1.0,
+          "p_edge_mean": 0.036028217524290085,
+          "p_edge_p50": 0.03603735193610191,
+          "p_edge_p95": 0.03642966505140066,
+          "p_stay_mean": 0.9639717638492584,
+          "maxp_mean": 0.9639717638492584,
+          "maxp_p50": 0.9639626145362854,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.1551077524209952,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0
+        },
+        {
+          "lo": 0.4,
+          "hi": 0.6,
+          "n": 2,
+          "taken_EDGE_share": 0.0,
+          "taken_STAY_share": 0.5,
+          "p_edge_mean": 0.01863684196723625,
+          "p_edge_p50": 0.01863684196723625,
+          "p_edge_p95": 0.03449623702908866,
+          "p_stay_mean": 0.4961215313524008,
+          "maxp_mean": 0.9671123623847961,
+          "maxp_p50": 0.9671123623847961,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.14667132610988656,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.5
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.8,
+          "n": 244,
+          "taken_EDGE_share": 0.01639344262295082,
+          "taken_STAY_share": 0.9016393442622951,
+          "p_edge_mean": 0.14115980587953122,
+          "p_edge_p50": 0.07384352013468742,
+          "p_edge_p95": 0.38704571276903155,
+          "p_stay_mean": 0.782733138459811,
+          "maxp_mean": 0.8565525879136852,
+          "maxp_p50": 0.9260384440422058,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.35039519994724533,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0860655737704916
+        },
+        {
+          "lo": 0.8,
+          "hi": 1.01,
+          "n": 335,
+          "taken_EDGE_share": 0.01791044776119403,
+          "taken_STAY_share": 0.9014925373134328,
+          "p_edge_mean": 0.11422271686328102,
+          "p_edge_p50": 0.0662536472082138,
+          "p_edge_p95": 0.41913637816905974,
+          "p_stay_mean": 0.8110350669931565,
+          "maxp_mean": 0.8831269362969185,
+          "maxp_p50": 0.9331840872764587,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.30859269172050746,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.080597014925373
+        }
+      ],
+      "eval_greedy": [
+        {
+          "lo": 0.0,
+          "hi": 0.1,
+          "n": 10175,
+          "taken_EDGE_share": 0.005995085995085995,
+          "taken_STAY_share": 0.9158722358722359,
+          "p_edge_mean": 0.2003578070196076,
+          "p_edge_p50": 0.1967742145061493,
+          "p_edge_p95": 0.45965737402439116,
+          "p_stay_mean": 0.7353235364665051,
+          "maxp_mean": 0.7916714537495184,
+          "maxp_p50": 0.8017646074295044,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.4370333404212862,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.078918918918919
+        },
+        {
+          "lo": 0.1,
+          "hi": 0.2,
+          "n": 25,
+          "taken_EDGE_share": 0.0,
+          "taken_STAY_share": 0.88,
+          "p_edge_mean": 0.09088634578511119,
+          "p_edge_p50": 0.06932699680328369,
+          "p_edge_p95": 0.38804711997508895,
+          "p_stay_mean": 0.7987188240885734,
+          "maxp_mean": 0.9001369214057923,
+          "maxp_p50": 0.9304590821266174,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.28558116733427935,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.12
+        },
+        {
+          "lo": 0.2,
+          "hi": 0.4,
+          "n": 4,
+          "taken_EDGE_share": 0.25,
+          "taken_STAY_share": 0.75,
+          "p_edge_mean": 0.1998098473995924,
+          "p_edge_p50": 0.070463377982378,
+          "p_edge_p95": 0.5122390720993278,
+          "p_stay_mean": 0.800190158188343,
+          "maxp_mean": 0.8452773094177246,
+          "maxp_p50": 0.9295366108417511,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.3588157680560874,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0
+        },
+        {
+          "lo": 0.4,
+          "hi": 0.6,
+          "n": 1,
+          "taken_EDGE_share": 0.0,
+          "taken_STAY_share": 1.0,
+          "p_edge_mean": 0.051160406321287155,
+          "p_edge_p50": 0.051160406321287155,
+          "p_edge_p95": 0.051160406321287155,
+          "p_stay_mean": 0.948839545249939,
+          "maxp_mean": 0.948839545249939,
+          "maxp_p50": 0.948839545249939,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.20191796338857249,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.8,
+          "n": 246,
+          "taken_EDGE_share": 0.036585365853658534,
+          "taken_STAY_share": 0.8780487804878049,
+          "p_edge_mean": 0.20651885014968144,
+          "p_edge_p50": 0.08960361033678055,
+          "p_edge_p95": 0.4420881047844887,
+          "p_stay_mean": 0.7225021146298424,
+          "maxp_mean": 0.7881475295720062,
+          "maxp_p50": 0.793779730796814,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.45048046511345446,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0853658536585367
+        },
+        {
+          "lo": 0.8,
+          "hi": 1.01,
+          "n": 300,
+          "taken_EDGE_share": 0.02,
+          "taken_STAY_share": 0.9033333333333333,
+          "p_edge_mean": 0.10391571527114138,
+          "p_edge_p50": 0.06657835841178894,
+          "p_edge_p95": 0.3820176005363464,
+          "p_stay_mean": 0.8263664734115204,
+          "maxp_mean": 0.892763108809789,
+          "maxp_p50": 0.9331713616847992,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.2997268869072874,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0766666666666667
+        }
+      ],
+      "train_stoch_seed0": [
+        {
+          "lo": 0.0,
+          "hi": 0.1,
+          "n": 3150,
+          "taken_EDGE_share": 0.12634920634920635,
+          "taken_STAY_share": 0.7863492063492064,
+          "p_edge_mean": 0.1258534535896107,
+          "p_edge_p50": 0.06046292744576931,
+          "p_edge_p95": 0.3897364273667334,
+          "p_stay_mean": 0.7868713619719658,
+          "maxp_mean": 0.8699998766278464,
+          "maxp_p50": 0.937729150056839,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.3274817265605001,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.10031746031746
+        },
+        {
+          "lo": 0.1,
+          "hi": 0.2,
+          "n": 5,
+          "taken_EDGE_share": 0.4,
+          "taken_STAY_share": 0.6,
+          "p_edge_mean": 0.147466029971838,
+          "p_edge_p50": 0.055429231375455856,
+          "p_edge_p95": 0.344360077381134,
+          "p_stay_mean": 0.8525339484214782,
+          "maxp_mean": 0.8525339484214782,
+          "maxp_p50": 0.9445707201957703,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.35665219171029156,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0
+        },
+        {
+          "lo": 0.2,
+          "hi": 0.4,
+          "n": 5,
+          "taken_EDGE_share": 0.0,
+          "taken_STAY_share": 1.0,
+          "p_edge_mean": 0.03638729155063629,
+          "p_edge_p50": 0.03636995330452919,
+          "p_edge_p95": 0.03702282086014748,
+          "p_stay_mean": 0.9636127352714539,
+          "maxp_mean": 0.9636127352714539,
+          "maxp_p50": 0.9636300802230835,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.1562839585674463,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0
+        },
+        {
+          "lo": 0.4,
+          "hi": 0.6,
+          "n": 2,
+          "taken_EDGE_share": 0.0,
+          "taken_STAY_share": 0.5,
+          "p_edge_mean": 0.01886942860437557,
+          "p_edge_p50": 0.01886942860437557,
+          "p_edge_p95": 0.034938151639653366,
+          "p_stay_mean": 0.4958889838308096,
+          "maxp_mean": 0.966879814863205,
+          "maxp_p50": 0.966879814863205,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.1474326662738331,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.5
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.8,
+          "n": 109,
+          "taken_EDGE_share": 0.08256880733944955,
+          "taken_STAY_share": 0.8348623853211009,
+          "p_edge_mean": 0.09125627153723953,
+          "p_edge_p50": 0.07177526503801346,
+          "p_edge_p95": 0.2675074577331537,
+          "p_stay_mean": 0.828968202045888,
+          "maxp_mean": 0.9082606068444908,
+          "maxp_p50": 0.9282246828079224,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.2773694062137392,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.091743119266055
+        },
+        {
+          "lo": 0.8,
+          "hi": 1.01,
+          "n": 130,
+          "taken_EDGE_share": 0.12307692307692308,
+          "taken_STAY_share": 0.7769230769230769,
+          "p_edge_mean": 0.10779782278248323,
+          "p_edge_p50": 0.0634281113743782,
+          "p_edge_p95": 0.39158826768398286,
+          "p_stay_mean": 0.7899785622811089,
+          "maxp_mean": 0.8895410620249234,
+          "maxp_p50": 0.9361737370491028,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.2921059820397427,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.1076923076923078
+        }
+      ]
+    },
+    "R2": {
+      "train_greedy": [
+        {
+          "lo": 0.0,
+          "hi": 0.1,
+          "n": 7591,
+          "taken_EDGE_share": 0.03359241206692135,
+          "taken_STAY_share": 0.9046238967197998,
+          "p_edge_mean": 0.059715748751512115,
+          "p_edge_p50": 0.0034682461991906166,
+          "p_edge_p95": 0.4526720196008682,
+          "p_stay_mean": 0.8616269363389508,
+          "maxp_mean": 0.9014781119677094,
+          "maxp_p50": 0.9817200303077698,
+          "frac_maxp_gt_099": 0.44065340534843894,
+          "entropy_mean": 0.20642285919555672,
+          "frac_entropy_lt_001": 0.20787774996706626,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.1321301541298907
+        },
+        {
+          "lo": 0.1,
+          "hi": 0.2,
+          "n": 6,
+          "taken_EDGE_share": 0.16666666666666666,
+          "taken_STAY_share": 0.6666666666666666,
+          "p_edge_mean": 0.14281376264989376,
+          "p_edge_p50": 0.08650979399681091,
+          "p_edge_p95": 0.4220270086079836,
+          "p_stay_mean": 0.7753103921810786,
+          "maxp_mean": 0.7897368321816126,
+          "maxp_p50": 0.9084491729736328,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.4193924371067113,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.1666666666666665
+        },
+        {
+          "lo": 0.2,
+          "hi": 0.4,
+          "n": 5,
+          "taken_EDGE_share": 0.0,
+          "taken_STAY_share": 1.0,
+          "p_edge_mean": 0.0018506481079384684,
+          "p_edge_p50": 0.0018257293850183487,
+          "p_edge_p95": 0.0019037958700209856,
+          "p_stay_mean": 0.9981493473052978,
+          "maxp_mean": 0.9981493473052978,
+          "maxp_p50": 0.9981743097305298,
+          "frac_maxp_gt_099": 1.0,
+          "entropy_mean": 0.013493134281225802,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0
+        },
+        {
+          "lo": 0.4,
+          "hi": 0.6,
+          "n": 2,
+          "taken_EDGE_share": 0.0,
+          "taken_STAY_share": 0.5,
+          "p_edge_mean": 0.0010487998515600339,
+          "p_edge_p50": 0.0010487998515600339,
+          "p_edge_p95": 0.0018089956036419607,
+          "p_stay_mean": 0.5555929280817509,
+          "maxp_mean": 0.9424115121364594,
+          "maxp_p50": 0.9424115121364594,
+          "frac_maxp_gt_099": 0.5,
+          "entropy_mean": 0.18429102126528424,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.5
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.8,
+          "n": 191,
+          "taken_EDGE_share": 0.02617801047120419,
+          "taken_STAY_share": 0.8586387434554974,
+          "p_edge_mean": 0.07481596725134981,
+          "p_edge_p50": 0.026495425030589104,
+          "p_edge_p95": 0.4023525267839432,
+          "p_stay_mean": 0.8050361038502598,
+          "maxp_mean": 0.8766088593380613,
+          "maxp_p50": 0.9100765585899353,
+          "frac_maxp_gt_099": 0.27225130890052357,
+          "entropy_mean": 0.2898602814964169,
+          "frac_entropy_lt_001": 0.09424083769633508,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.18848167539267
+        },
+        {
+          "lo": 0.8,
+          "hi": 1.01,
+          "n": 180,
+          "taken_EDGE_share": 0.022222222222222223,
+          "taken_STAY_share": 0.9055555555555556,
+          "p_edge_mean": 0.07617887079929157,
+          "p_edge_p50": 0.08913350850343704,
+          "p_edge_p95": 0.4400295406579971,
+          "p_stay_mean": 0.854747990746465,
+          "maxp_mean": 0.8997093985478083,
+          "maxp_p50": 0.9091838300228119,
+          "frac_maxp_gt_099": 0.3,
+          "entropy_mean": 0.2558263458042664,
+          "frac_entropy_lt_001": 0.07777777777777778,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.1
+        }
+      ],
+      "eval_greedy": [
+        {
+          "lo": 0.0,
+          "hi": 0.1,
+          "n": 7422,
+          "taken_EDGE_share": 0.03112368633791431,
+          "taken_STAY_share": 0.9029911075181891,
+          "p_edge_mean": 0.061256336974086036,
+          "p_edge_p50": 0.01730707287788391,
+          "p_edge_p95": 0.3533238589763641,
+          "p_stay_mean": 0.8703839946523152,
+          "maxp_mean": 0.912628707571577,
+          "maxp_p50": 0.9816167950630188,
+          "frac_maxp_gt_099": 0.4159256265157639,
+          "entropy_mean": 0.1992817599744264,
+          "frac_entropy_lt_001": 0.1812180005389383,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.106305578011318
+        },
+        {
+          "lo": 0.1,
+          "hi": 0.2,
+          "n": 7,
+          "taken_EDGE_share": 0.5714285714285714,
+          "taken_STAY_share": 0.42857142857142855,
+          "p_edge_mean": 0.3388552378330912,
+          "p_edge_p50": 0.5181087851524353,
+          "p_edge_p95": 0.5295708775520325,
+          "p_stay_mean": 0.6611447760037014,
+          "maxp_mean": 0.6885349154472351,
+          "maxp_p50": 0.5306230187416077,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.5270687448143143,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0
+        },
+        {
+          "lo": 0.2,
+          "hi": 0.4,
+          "n": 1,
+          "taken_EDGE_share": 1.0,
+          "taken_STAY_share": 0.0,
+          "p_edge_mean": 0.5322253704071045,
+          "p_edge_p50": 0.5322253704071045,
+          "p_edge_p95": 0.5322253704071045,
+          "p_stay_mean": 0.4677746593952179,
+          "maxp_mean": 0.5322253704071045,
+          "maxp_p50": 0.5322253704071045,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.6910687841045362,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0
+        },
+        {
+          "lo": 0.4,
+          "hi": 0.6,
+          "n": 1,
+          "taken_EDGE_share": 0.0,
+          "taken_STAY_share": 1.0,
+          "p_edge_mean": 0.08350548893213272,
+          "p_edge_p50": 0.08350548893213272,
+          "p_edge_p95": 0.08350548893213272,
+          "p_stay_mean": 0.9164944887161255,
+          "maxp_mean": 0.9164944887161255,
+          "maxp_p50": 0.9164944887161255,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.28724862068547335,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.8,
+          "n": 208,
+          "taken_EDGE_share": 0.0625,
+          "taken_STAY_share": 0.8605769230769231,
+          "p_edge_mean": 0.1542570304430298,
+          "p_edge_p50": 0.09218109399080276,
+          "p_edge_p95": 0.5331431120634078,
+          "p_stay_mean": 0.7896697765860993,
+          "maxp_mean": 0.8325378198463184,
+          "maxp_p50": 0.9072411954402924,
+          "frac_maxp_gt_099": 0.14423076923076922,
+          "entropy_mean": 0.3770734003784572,
+          "frac_entropy_lt_001": 0.14423076923076922,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0865384615384617
+        },
+        {
+          "lo": 0.8,
+          "hi": 1.01,
+          "n": 176,
+          "taken_EDGE_share": 0.10227272727272728,
+          "taken_STAY_share": 0.8125,
+          "p_edge_mean": 0.17154594978207818,
+          "p_edge_p50": 0.09473501518368721,
+          "p_edge_p95": 0.5662402361631393,
+          "p_stay_mean": 0.7752322108400139,
+          "maxp_mean": 0.8187594346024774,
+          "maxp_p50": 0.9015208184719086,
+          "frac_maxp_gt_099": 0.045454545454545456,
+          "entropy_mean": 0.40986213569486657,
+          "frac_entropy_lt_001": 0.045454545454545456,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.085227272727273
+        }
+      ],
+      "train_stoch_seed0": [
+        {
+          "lo": 0.0,
+          "hi": 0.1,
+          "n": 5651,
+          "taken_EDGE_share": 0.05591930631746594,
+          "taken_STAY_share": 0.8777207573880729,
+          "p_edge_mean": 0.056058831136975636,
+          "p_edge_p50": 0.001923993811942637,
+          "p_edge_p95": 0.5054968893527985,
+          "p_stay_mean": 0.8771432599458541,
+          "maxp_mean": 0.9285893151768961,
+          "maxp_p50": 0.9949973821640015,
+          "frac_maxp_gt_099": 0.5367191647496018,
+          "entropy_mean": 0.1569629936732481,
+          "frac_entropy_lt_001": 0.23287913643602903,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.094673509113431
+        },
+        {
+          "lo": 0.1,
+          "hi": 0.2,
+          "n": 5,
+          "taken_EDGE_share": 0.2,
+          "taken_STAY_share": 0.8,
+          "p_edge_mean": 0.1683595858514309,
+          "p_edge_p50": 0.0910857543349266,
+          "p_edge_p95": 0.4578842848539352,
+          "p_stay_mean": 0.8316404163837433,
+          "maxp_mean": 0.8513988614082336,
+          "maxp_p50": 0.9089142680168152,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.3394998266650369,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0
+        },
+        {
+          "lo": 0.2,
+          "hi": 0.4,
+          "n": 4,
+          "taken_EDGE_share": 0.0,
+          "taken_STAY_share": 1.0,
+          "p_edge_mean": 0.0018537632713560015,
+          "p_edge_p50": 0.0018553687259554863,
+          "p_edge_p95": 0.0018883760727476328,
+          "p_stay_mean": 0.9981462210416794,
+          "maxp_mean": 0.9981462210416794,
+          "maxp_p50": 0.9981446266174316,
+          "frac_maxp_gt_099": 1.0,
+          "entropy_mean": 0.013512925609898039,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.0
+        },
+        {
+          "lo": 0.4,
+          "hi": 0.6,
+          "n": 2,
+          "taken_EDGE_share": 0.0,
+          "taken_STAY_share": 0.5,
+          "p_edge_mean": 0.0010383886547060683,
+          "p_edge_p50": 0.0010383886547060683,
+          "p_edge_p95": 0.0017892143296194263,
+          "p_stay_mean": 0.555603388696909,
+          "maxp_mean": 0.9424219727516174,
+          "maxp_p50": 0.9424219727516174,
+          "frac_maxp_gt_099": 0.5,
+          "entropy_mean": 0.18422566268532303,
+          "frac_entropy_lt_001": 0.0,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.5
+        },
+        {
+          "lo": 0.6,
+          "hi": 0.8,
+          "n": 123,
+          "taken_EDGE_share": 0.056910569105691054,
+          "taken_STAY_share": 0.8536585365853658,
+          "p_edge_mean": 0.059461331634064835,
+          "p_edge_p50": 0.004953851457685232,
+          "p_edge_p95": 0.48807901293038947,
+          "p_stay_mean": 0.8490736413050474,
+          "maxp_mean": 0.9256045270741471,
+          "maxp_p50": 0.9745161533355713,
+          "frac_maxp_gt_099": 0.44715447154471544,
+          "entropy_mean": 0.19212709083569435,
+          "frac_entropy_lt_001": 0.14634146341463414,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.1219512195121952
+        },
+        {
+          "lo": 0.8,
+          "hi": 1.01,
+          "n": 122,
+          "taken_EDGE_share": 0.10655737704918032,
+          "taken_STAY_share": 0.8032786885245902,
+          "p_edge_mean": 0.08283672475191138,
+          "p_edge_p50": 0.0049416967667639256,
+          "p_edge_p95": 0.5437169790267944,
+          "p_stay_mean": 0.8429887741193419,
+          "maxp_mean": 0.8958456545579628,
+          "maxp_p50": 0.9769035279750824,
+          "frac_maxp_gt_099": 0.48360655737704916,
+          "entropy_mean": 0.22751867623436695,
+          "frac_entropy_lt_001": 0.11475409836065574,
+          "frac_legal_edge": 1.0,
+          "n_legal_mean": 2.1147540983606556
+        }
+      ]
+    }
+  },
+  "saturation_target": {
+    "A0": {
+      "train_greedy": {
+        "n_highrisk": 581,
+        "n_saturated": 0,
+        "frac_saturated": 0.0
+      },
+      "train_stoch_seed0": {
+        "n_highrisk": 241,
+        "n_saturated": 0,
+        "frac_saturated": 0.0
+      },
+      "eval_greedy": {
+        "n_highrisk": 547,
+        "n_saturated": 0,
+        "frac_saturated": 0.0
+      }
+    },
+    "R2": {
+      "train_greedy": {
+        "n_highrisk": 373,
+        "n_saturated": 107,
+        "frac_saturated": 0.2868632707774799,
+        "saturated_argmax": {
+          "STAY": 107,
+          "MIGRATE_EDGE": 0,
+          "MIGRATE_CLOUD": 0,
+          "PREEMPT_REROUTE": 0
+        },
+        "saturated_argmax_share": {
+          "STAY": 1.0,
+          "MIGRATE_EDGE": 0.0,
+          "MIGRATE_CLOUD": 0.0,
+          "PREEMPT_REROUTE": 0.0
+        }
+      },
+      "train_stoch_seed0": {
+        "n_highrisk": 247,
+        "n_saturated": 115,
+        "frac_saturated": 0.46558704453441296,
+        "saturated_argmax": {
+          "STAY": 115,
+          "MIGRATE_EDGE": 0,
+          "MIGRATE_CLOUD": 0,
+          "PREEMPT_REROUTE": 0
+        },
+        "saturated_argmax_share": {
+          "STAY": 1.0,
+          "MIGRATE_EDGE": 0.0,
+          "MIGRATE_CLOUD": 0.0,
+          "PREEMPT_REROUTE": 0.0
+        }
+      },
+      "eval_greedy": {
+        "n_highrisk": 385,
+        "n_saturated": 38,
+        "frac_saturated": 0.0987012987012987,
+        "saturated_argmax": {
+          "STAY": 38,
+          "MIGRATE_EDGE": 0,
+          "MIGRATE_CLOUD": 0,
+          "PREEMPT_REROUTE": 0
+        },
+        "saturated_argmax_share": {
+          "STAY": 1.0,
+          "MIGRATE_EDGE": 0.0,
+          "MIGRATE_CLOUD": 0.0,
+          "PREEMPT_REROUTE": 0.0
+        }
+      }
+    }
+  },
+  "episodes": 8,
+  "stoch_seeds": 3
+}

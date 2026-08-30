@@ -40,11 +40,19 @@ public class NetworkFailureManager {
     private boolean randomLinkFailuresEnabled = false;
     private double randomLinkFailureProbabilityPerTick = 0.0;
 
-    private final Random random = new Random();
+    private final Random random;
 
     public NetworkFailureManager(DigitalTwinManager digitalTwin, FailureManager failureManager) {
+        this(digitalTwin, failureManager, 0L);
+    }
+
+    /** @param seed explicit RNG seed so a run is reproducible. */
+    public NetworkFailureManager(DigitalTwinManager digitalTwin,
+                                 FailureManager failureManager,
+                                 long seed) {
         this.digitalTwin = digitalTwin;
         this.failureManager = failureManager;
+        this.random = new Random(seed);
     }
 
     // ==========================================

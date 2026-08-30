@@ -1,0 +1,106 @@
+==============================================================================
+SPRINT 7 DIVERGENCE — part 6: MATCHED-BUFFER CRITIC COMPARISON
+        both critics vs the SAME target on the SAME states
+        EXPLORATORY. Offline; no optimiser, no writes.
+==============================================================================
+  loaded R2   mappo_R2_mc_target.pth     native rollout_episodes=8  critic_target=None
+  loaded R3   R3_batch32.pth             native rollout_episodes=32  critic_target=None
+
+==============================================================================
+  COLUMN: buffer collected by R2 at 32 episodes
+==============================================================================
+  T=12684  entries=126840  decision=22098  hi=1069  lo=20997
+  truncated episodes (target uses boot there) = 26 of 32
+  start ticks = [158, 202, 32, 228, 343, 164, 277, 205, 258, 44, 184, 122, 236, 328, 178, 487, 174, 234, 386, 425, 486, 186, 41, 29, 373, 309, 359, 26, 212, 104, 263, 22]
+
+  explained variance   (target is IDENTICAL across the two rows)
+  critic     all_entries     decision           hi           lo      hi_EDGE      hi_STAY      lo_EDGE
+  R2              0.7078       0.7497       0.7924       0.7467       0.5005       0.7875       0.4478  <- diagonal
+  R3              0.5785       0.6980       0.7834       0.6920       0.3563       0.7811       0.2106
+
+  mean |target - V|
+  critic     all_entries     decision           hi           lo      hi_EDGE      hi_STAY      lo_EDGE
+  R2              2.8540       3.7740       4.1874       3.7516       3.1034       4.2567       3.5015
+  R3              3.4474       4.7307       4.3848       4.7487       3.6871       4.4246       3.9993
+
+  mean (target - V)   [sign = systematic under/over-valuation]
+  critic     all_entries     decision           hi           lo      hi_EDGE      hi_STAY      lo_EDGE
+  R2             +0.0114      +0.6327      -0.2572      +0.6789      -0.1595      -0.2916      -1.0093
+  R3             +0.3574      +2.5430      +1.4116      +2.6036      +0.7831      +1.4332      -1.7934
+
+  regime separation on this column   (hi minus lo; target gap is the truth)
+    target  hi-lo = -0.0879
+    R2   V  hi-lo = +0.8482   gap error = +0.9361   hi ev - lo ev = +0.0457
+    R3   V  hi-lo = +1.1041   gap error = +1.1920   hi ev - lo ev = +0.0914
+
+  HOME ADVANTAGE  ev(R2's critic) - ev(R3's critic) on R2's own buffer
+  cluster bootstrap, 10000 replicates, clusters = episodes, critics paired within a replicate
+    regime      delta ev                95% CI   frac>0  clusters
+    hi           +0.0090   [-0.0107,+0.0335]   0.7969        32
+    lo           +0.0547   [+0.0231,+0.0933]   0.9997        32
+    hi_EDGE      +0.1443   [+0.0140,+0.3413]   0.9839        26
+    lo_EDGE      +0.2372   [+0.0876,+0.4108]   0.9993        32
+    decision     +0.0517   [+0.0216,+0.0880]   0.9997        32
+    lo - hi      +0.0457   [+0.0131,+0.0823]   0.9963        32
+    ^ positive = the home critic's advantage is CONCENTRATED in the low-risk bulk
+
+==============================================================================
+  COLUMN: buffer collected by R3 at 32 episodes
+==============================================================================
+  T=12554  entries=125540  decision=19301  hi=847  lo=18420
+  truncated episodes (target uses boot there) = 22 of 32
+  start ticks = [158, 202, 32, 228, 343, 164, 277, 205, 258, 44, 184, 122, 236, 328, 178, 487, 174, 234, 386, 425, 486, 186, 41, 29, 373, 309, 359, 26, 212, 104, 263, 22]
+
+  explained variance   (target is IDENTICAL across the two rows)
+  critic     all_entries     decision           hi           lo      hi_EDGE      hi_STAY      lo_EDGE
+  R2              0.4884       0.5372       0.6171       0.5325       0.4212       0.5846       0.3940
+  R3              0.6575       0.7056       0.6083       0.7113       0.5049       0.5708       0.5411  <- diagonal
+
+  mean |target - V|
+  critic     all_entries     decision           hi           lo      hi_EDGE      hi_STAY      lo_EDGE
+  R2              3.5738       5.2275       5.3353       5.2218       3.7052       5.5561       4.0021
+  R3              2.8627       4.0389       5.4307       3.9723       3.4132       5.7326       3.2709
+
+  mean (target - V)   [sign = systematic under/over-valuation]
+  critic     all_entries     decision           hi           lo      hi_EDGE      hi_STAY      lo_EDGE
+  R2             -0.2509      +0.6260      -1.2666      +0.7166      -0.7238      -1.4167      -1.7265
+  R3             +0.0356      +0.1443      -0.9295      +0.1962      +0.9553      -1.2219      -0.2393
+
+  regime separation on this column   (hi minus lo; target gap is the truth)
+    target  hi-lo = +1.4983
+    R2   V  hi-lo = +3.4815   gap error = +1.9831   hi ev - lo ev = +0.0846
+    R3   V  hi-lo = +2.6240   gap error = +1.1257   hi ev - lo ev = -0.1030
+
+  HOME ADVANTAGE  ev(R3's critic) - ev(R2's critic) on R3's own buffer
+  cluster bootstrap, 10000 replicates, clusters = episodes, critics paired within a replicate
+    regime      delta ev                95% CI   frac>0  clusters
+    hi           -0.0089   [-0.0576,+0.0394]   0.3439        32
+    lo           +0.1788   [+0.1192,+0.2441]   1.0000        32
+    hi_EDGE      +0.0837   [-0.0289,+0.2523]   0.9233        25
+    lo_EDGE      +0.1471   [+0.0862,+0.2188]   1.0000        32
+    decision     +0.1684   [+0.1111,+0.2312]   1.0000        32
+    lo - hi      +0.1876   [+0.1304,+0.2541]   1.0000        32
+    ^ positive = the home critic's advantage is CONCENTRATED in the low-risk bulk
+
+==============================================================================
+  2x2 SUMMARY: hi explained variance MINUS lo explained variance
+  (negative = the critic fits high-risk states WORSE than low-risk)
+==============================================================================
+  critic            buffer R2         buffer R3
+  R2                  +0.0457           +0.0846
+  R3                  +0.0914           -0.1030
+
+  critic            hi ev @R2         hi ev @R3
+  R2                   0.7924            0.6171
+  R3                   0.7834            0.6083
+
+==============================================================================
+  HOME ADVANTAGE BY REGIME  (own critic minus other critic, on own
+  buffer). Read DOWN: is the arm's critic better than its rival's
+  everywhere, or only in the low-risk bulk?
+==============================================================================
+  owner              hi          lo     lo - hi                lo-hi CI
+  R2            +0.0090     +0.0547     +0.0457   [+0.0131,+0.0823]
+  R3            -0.0089     +0.1788     +0.1876   [+0.1304,+0.2541]
+
+wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_DIV_critic_main.json

@@ -1,0 +1,155 @@
+==============================================================================
+SPRINT 7 DIVERGENCE — part 5: SAMPLING DISTRIBUTION OF THE HIGH-RISK
+        LEARNING SIGNAL AT 8 vs 32 EPISODES  (policy held fixed)
+        EXPLORATORY. Offline; no optimiser, no writes.
+==============================================================================
+
+==============================================================================
+  R2   (mappo_R2_mc_target.pth)   native rollout_episodes=8
+==============================================================================
+  building the 128-episode population buffer ...
+    T=50356  episodes=128  decision=93016
+
+  quantity                     population     native@8
+  z_hi_EDGE                       -0.0846       0.2988
+  z_hi_STAY                       -0.3157      -0.6092
+  contrast                         0.2312       0.9080
+  channel_drive_hi_EDGE           -0.0002       0.0006
+  z_lo_EDGE                       -0.2810      -0.3889
+  n_hi_EDGE                      270.0000      10.0000
+  pool_std_raw                     3.5280       3.1041
+  raw_mean_hi                     -0.8190      -1.2980
+
+  sampling distribution over 4000 episode subsets drawn WITHOUT replacement
+
+  z_hi_EDGE
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8         -0.0951    0.2626   -0.6533   -0.0785    0.3901   0.3648
+    32        -0.0894    0.1110   -0.3085   -0.0884    0.1209   0.2140
+    sd ratio 8/32 = 2.364   (pure 1/sqrt(n) prediction 2.000)
+    native@8 value +0.2988 sits at +1.50 sd of the n=8 law
+
+  z_hi_STAY
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8         -0.2862    0.2745   -0.7790   -0.3128    0.3171   0.1445
+    32        -0.3106    0.1169   -0.5245   -0.3155   -0.0578   0.0073
+    sd ratio 8/32 = 2.350   (pure 1/sqrt(n) prediction 2.000)
+    native@8 value -0.6092 sits at -1.18 sd of the n=8 law
+
+  contrast
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8          0.1912    0.3429   -0.4898    0.1998    0.8501   0.7218
+    32         0.2212    0.1456   -0.0667    0.2234    0.4974   0.9315
+    sd ratio 8/32 = 2.356   (pure 1/sqrt(n) prediction 2.000)
+    native@8 value +0.9080 sits at +2.09 sd of the n=8 law
+
+  channel_drive_hi_EDGE
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8         -0.0003    0.0007   -0.0018   -0.0002    0.0011   0.3648
+    32        -0.0003    0.0003   -0.0009   -0.0003    0.0004   0.2140
+    sd ratio 8/32 = 2.293   (pure 1/sqrt(n) prediction 2.000)
+    native@8 value +0.0006 sits at +1.17 sd of the n=8 law
+
+  z_lo_EDGE
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8         -0.2859    0.1435   -0.5871   -0.2803   -0.0107   0.0203
+    32        -0.2836    0.0633   -0.4096   -0.2835   -0.1612   0.0000
+    sd ratio 8/32 = 2.268   (pure 1/sqrt(n) prediction 2.000)
+    native@8 value -0.3889 sits at -0.72 sd of the n=8 law
+
+  n_hi_EDGE
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8         16.8380    4.1637    9.0000   17.0000   25.0000   1.0000
+    32        67.4682    7.4808   53.0000   67.0000   82.0000   1.0000
+    sd ratio 8/32 = 0.557   (pure 1/sqrt(n) prediction 2.000)
+    native@8 value +10.0000 sits at -1.64 sd of the n=8 law
+
+  pool_std_raw
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8          3.4964    0.3202    2.9252    3.4736    4.2076   1.0000
+    32         3.5203    0.1481    3.2433    3.5149    3.8165   1.0000
+    sd ratio 8/32 = 2.162   (pure 1/sqrt(n) prediction 2.000)
+    native@8 value +3.1041 sits at -1.23 sd of the n=8 law
+
+  raw_mean_hi
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8         -0.7020    0.8956   -2.2393   -0.7755    1.2535   0.2130
+    32        -0.7965    0.3913   -1.5292   -0.8081    0.0340   0.0300
+    sd ratio 8/32 = 2.289   (pure 1/sqrt(n) prediction 2.000)
+    native@8 value -1.2980 sits at -0.67 sd of the n=8 law
+
+==============================================================================
+  R3   (R3_batch32.pth)   native rollout_episodes=32
+==============================================================================
+  building the 128-episode population buffer ...
+    T=50067  episodes=128  decision=76690
+
+  quantity                     population    native@32
+  z_hi_EDGE                        0.0044       0.1049
+  z_hi_STAY                       -0.3679      -0.3652
+  contrast                         0.3723       0.4701
+  channel_drive_hi_EDGE            0.0000       0.0004
+  z_lo_EDGE                       -0.1793      -0.1527
+  n_hi_EDGE                      341.0000      74.0000
+  pool_std_raw                     3.5060       3.4099
+  raw_mean_hi                     -0.9184      -0.8654
+
+  sampling distribution over 4000 episode subsets drawn WITHOUT replacement
+
+  z_hi_EDGE
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8          0.0023    0.2738   -0.5789    0.0104    0.5190   0.5170
+    32         0.0037    0.1184   -0.2330    0.0045    0.2321   0.5160
+    sd ratio 8/32 = 2.313   (pure 1/sqrt(n) prediction 2.000)
+    native@32 value +0.1049 sits at +0.85 sd of the n=32 law
+
+  z_hi_STAY
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8         -0.3340    0.2972   -0.8992   -0.3435    0.2818   0.1293
+    32        -0.3620    0.1298   -0.6075   -0.3660   -0.0937   0.0053
+    sd ratio 8/32 = 2.289   (pure 1/sqrt(n) prediction 2.000)
+    native@32 value -0.3652 sits at -0.02 sd of the n=32 law
+
+  contrast
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8          0.3363    0.3648   -0.4376    0.3468    1.0028   0.8307
+    32         0.3657    0.1589    0.0441    0.3690    0.6603   0.9865
+    sd ratio 8/32 = 2.295   (pure 1/sqrt(n) prediction 2.000)
+    native@32 value +0.4701 sits at +0.66 sd of the n=32 law
+
+  channel_drive_hi_EDGE
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8          0.0000    0.0012   -0.0023    0.0000    0.0024   0.5170
+    32         0.0000    0.0005   -0.0010    0.0000    0.0011   0.5160
+    sd ratio 8/32 = 2.282   (pure 1/sqrt(n) prediction 2.000)
+    native@32 value +0.0004 sits at +0.73 sd of the n=32 law
+
+  z_lo_EDGE
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8         -0.1807    0.1058   -0.3985   -0.1762    0.0151   0.0348
+    32        -0.1797    0.0471   -0.2759   -0.1790   -0.0877   0.0000
+    sd ratio 8/32 = 2.247   (pure 1/sqrt(n) prediction 2.000)
+    native@32 value -0.1527 sits at +0.57 sd of the n=32 law
+
+  n_hi_EDGE
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8         21.4728    5.6685   11.0000   21.0000   33.0000   1.0000
+    32        85.2322   10.4082   65.0000   85.0000  106.0000   1.0000
+    sd ratio 8/32 = 0.545   (pure 1/sqrt(n) prediction 2.000)
+    native@32 value +74.0000 sits at -1.08 sd of the n=32 law
+
+  pool_std_raw
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8          3.4751    0.3310    2.9035    3.4497    4.2065   1.0000
+    32         3.5017    0.1511    3.2209    3.4964    3.8055   1.0000
+    sd ratio 8/32 = 2.191   (pure 1/sqrt(n) prediction 2.000)
+    native@32 value +3.4099 sits at -0.61 sd of the n=32 law
+
+  raw_mean_hi
+    n_eps        mean        sd      2.5%       50%     97.5%   frac>0
+    8         -0.8348    1.0311   -2.9876   -0.8023    1.1155   0.2055
+    32        -0.9094    0.4587   -1.8026   -0.9112    0.0213   0.0270
+    sd ratio 8/32 = 2.248   (pure 1/sqrt(n) prediction 2.000)
+    native@32 value -0.8654 sits at +0.10 sd of the n=32 law
+
+wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_DIV_variance_main.json

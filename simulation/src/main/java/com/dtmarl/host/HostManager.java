@@ -12,12 +12,18 @@ import java.util.List;
 
 public class HostManager {
 
+    /**
+     * Number of edge hosts. Raised from 3 to 10 so the failure dataset
+     * contains enough independent nodes for leave-one-node-out validation
+     * (with 3 nodes a single held-out node was a third of the data).
+     */
+    public static final int HOST_COUNT = 10;
+
     public List<Host> createHosts() {
 
         List<Host> hosts = new ArrayList<>();
 
-        // Create 3 Hosts
-        for (int hostId = 0; hostId < 3; hostId++) {
+        for (int hostId = 0; hostId < HOST_COUNT; hostId++) {
 
             List<Pe> peList = new ArrayList<>();
 

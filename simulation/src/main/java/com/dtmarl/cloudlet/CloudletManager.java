@@ -35,8 +35,18 @@ public class CloudletManager {
     /** Number of healthcare tasks to create. */
     public static final int TASK_COUNT = 40;
 
-    /** Cloudlet length in Million Instructions (MI). */
-    public static final long TASK_LENGTH_MI = 40000;
+    /**
+     * Cloudlet length in Million Instructions (MI).
+     *
+     * Raised from 40 000 so the workload keeps the (now 10-host) cluster busy
+     * for ~1000+ simulated seconds. The failure dataset needs a long enough
+     * run for wear to accumulate, for failures to happen and for repaired
+     * hosts to fail again; at 40 000 MI the cluster went idle after a few
+     * hundred ticks and the remaining telemetry was zero-load. Nothing else
+     * about the Sprint 5 workload (task count, patient mapping, criticality,
+     * deadlines, priority ordering) is changed.
+     */
+    public static final long TASK_LENGTH_MI = 600000;
 
     /** Number of CPU cores (PEs) each task requires. */
     public static final int TASK_PES = 2;
