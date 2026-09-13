@@ -1,0 +1,5 @@
+action,count,source_artifact
+STAY,9832,python-ai/saved_models/marl/mappo_eval.json
+MIGRATE_TO_NEIGHBOR_EDGE,77,python-ai/saved_models/marl/mappo_eval.json
+MIGRATE_TO_CLOUD,842,python-ai/saved_models/marl/mappo_eval.json
+PREEMPTIVE_REROUTE,0,python-ai/saved_models/marl/mappo_eval.json

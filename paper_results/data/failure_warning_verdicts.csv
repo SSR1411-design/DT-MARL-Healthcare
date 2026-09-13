@@ -1,0 +1,4 @@
+verdict,n_events,source_artifact
+EARLY_WARNING,23,python-ai/saved_models/host_lead_time.csv
+MISSED,7,python-ai/saved_models/host_lead_time.csv
+STANDING_ALARM,2,python-ai/saved_models/host_lead_time.csv

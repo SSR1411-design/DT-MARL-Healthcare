@@ -1,0 +1,8 @@
+| policy | episode_reward | task_success_rate | relocations | tasks_protected_before_failure | lost | failed_critical_tasks | n_episodes | source_artifact | action_counts_note |
+|---|---|---|---|---|---|---|---|---|---|
+| mappo-greedy | 20.62051386272651 | 0.71875 | 35.875 | 3.25 | 11.25 | 4.375 | 8 | python-ai/saved_models/marl/mappo_eval.json | Recorded for mappo-greedy only: STAY=9832; MIGRATE_TO_NEIGHBOR_EDGE=77; MIGRATE_TO_CLOUD=842; PREEMPTIVE_REROUTE=0 |
+| static-no-migration | -37.05666842006758 | 0.459375 | 0.0 | 0.0 | 21.625 | 8.125 | 8 | python-ai/saved_models/marl/mappo_eval.json | Recorded for mappo-greedy only: STAY=9832; MIGRATE_TO_NEIGHBOR_EDGE=77; MIGRATE_TO_CLOUD=842; PREEMPTIVE_REROUTE=0 |
+| random-legal | -8.111257395983557 | 0.6468750000000001 | 84.75 | 10.0 | 12.5 | 5.125 | 8 | python-ai/saved_models/marl/mappo_eval.json | Recorded for mappo-greedy only: STAY=9832; MIGRATE_TO_NEIGHBOR_EDGE=77; MIGRATE_TO_CLOUD=842; PREEMPTIVE_REROUTE=0 |
+| reactive-threshold | -0.08757935015455587 | 0.578125 | 17.75 | 12.125 | 14.125 | 4.625 | 8 | python-ai/saved_models/marl/mappo_eval.json | Recorded for mappo-greedy only: STAY=9832; MIGRATE_TO_NEIGHBOR_EDGE=77; MIGRATE_TO_CLOUD=842; PREEMPTIVE_REROUTE=0 |
+| risk-threshold@0.18 | 76.49634085006255 | 0.8468749999999999 | 36.25 | 30.25 | 3.375 | 0.75 | 8 | python-ai/saved_models/marl/mappo_eval.json | Recorded for mappo-greedy only: STAY=9832; MIGRATE_TO_NEIGHBOR_EDGE=77; MIGRATE_TO_CLOUD=842; PREEMPTIVE_REROUTE=0 |
+| risk-threshold@0.5 | 76.98908700227912 | 0.84375 | 35.5 | 29.625 | 3.375 | 0.75 | 8 | python-ai/saved_models/marl/mappo_eval.json | Recorded for mappo-greedy only: STAY=9832; MIGRATE_TO_NEIGHBOR_EDGE=77; MIGRATE_TO_CLOUD=842; PREEMPTIVE_REROUTE=0 |

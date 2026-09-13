@@ -1,0 +1,14 @@
+result_group,metric,value,source_artifact
+Pooled OOF,observations,14910.0,host_metrics.json
+Pooled OOF,positive windows,320.0,host_metrics.json
+Pooled OOF,PR-AUC,0.28633907099836514,host_metrics.json
+Pooled OOF,ROC-AUC,0.8159414624742974,host_metrics.json
+Pooled OOF,F1 at threshold 0.18,0.47297297297297297,host_metrics.json
+Pooled OOF,precision at threshold 0.18,0.36971830985915494,host_metrics.json
+Pooled OOF,recall at threshold 0.18,0.65625,host_metrics.json
+Lead time,EARLY_WARNING events,23.0,host_lead_time.csv
+Lead time,mean lead seconds (EARLY_WARNING),8.391304347826082,host_lead_time.csv
+Lead time,median lead seconds (EARLY_WARNING),10.0,host_lead_time.csv
+Lead time,EARLY_WARNING events,23.0,host_lead_time.csv
+Lead time,MISSED events,7.0,host_lead_time.csv
+Lead time,STANDING_ALARM events,2.0,host_lead_time.csv
