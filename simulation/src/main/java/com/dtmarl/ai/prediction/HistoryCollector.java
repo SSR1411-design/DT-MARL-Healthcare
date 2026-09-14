@@ -5,6 +5,7 @@ import com.dtmarl.ai.digitaltwin.EdgeNode;
 import com.dtmarl.ai.digitaltwin.NetworkLink;
 import com.dtmarl.failure.FailureEvent;
 import com.dtmarl.failure.FailureManager;
+import com.dtmarl.failure.HostDegradationManager;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,6 +30,14 @@ public class HistoryCollector {
 
     private final int windowSize;
 
+    /**
+     * Optional source of LATENT host health, used only to fill the audit_*
+     * columns of the export (see {@link #setHealthAuditSource}). Null-safe:
+     * without it the audit columns are written as unknown/-1 and the
+     * observable columns plus the label are unaffected.
+     */
+    private HostDegradationManager healthAuditSource;
+
     // Rolling window per node, most-recent-last.
     private final Map<Integer, Deque<TelemetrySnapshot>> windows = new HashMap<>();
 
@@ -43,6 +52,19 @@ public class HistoryCollector {
         this.digitalTwin = digitalTwin;
         this.failureManager = failureManager;
         this.windowSize = windowSize;
+    }
+
+    /**
+     * Attaches the latent-wear source used for the audit_* export columns.
+     *
+     * This exists so the generated dataset can be VERIFIED (does degradation
+     * really precede failure? do trajectories differ?) without those latent
+     * values ever entering the observable feature block. The Python pipeline
+     * selects features by an explicit name whitelist and the audit_ prefix
+     * keeps them out of it.
+     */
+    public void setHealthAuditSource(HostDegradationManager source) {
+        this.healthAuditSource = source;
     }
 
     /**
@@ -64,7 +86,11 @@ public class HistoryCollector {
                     link != null ? link.getBandwidthMbps() : 0,
                     link != null ? link.getLatencyMs() : 0,
                     link != null ? link.getPacketLossPercent() : 0,
-                    link != null && link.isUnderAttack()
+                    link != null && link.isUnderAttack(),
+                    node.getHealthState(),
+                    healthAuditSource != null
+                            ? healthAuditSource.getWear(node.getId())
+                            : -1.0
             );
 
             allSnapshots.add(snap);
@@ -89,10 +115,46 @@ public class HistoryCollector {
     }
 
     /**
-     * Exports every collected snapshot with a binary "willFailSoon"
-     * label: 1 if a HOST_FAILURE or NETWORK_FAILURE event for that
-     * node occurs within `lookaheadSeconds` after this snapshot's time,
-     * else 0. This is the supervised label Sprint 4's model trains on.
+     * Exports every collected snapshot with a binary "willFailSoon" label.
+     *
+     * ------------------------------------------------------------------
+     * LABEL DEFINITION (this is the ONLY place labels are produced)
+     * ------------------------------------------------------------------
+     * For a snapshot of node n at time t:
+     *
+     *   willFailSoon = 1  iff  there exists a HOST_FAILURE or
+     *                          NETWORK_FAILURE event for node n at time f
+     *                          with  t &lt; f &lt;= t + lookaheadSeconds
+     *   willFailSoon = 0  otherwise
+     *
+     * Properties that make this a legitimate supervised target:
+     *
+     *   * It is computed RETROSPECTIVELY, after the simulation has finished,
+     *     from the event log - never during feature generation.
+     *   * It shares no code, no random draw and no parameter with the
+     *     degradation model that produced the features. Nothing in
+     *     HostDegradationManager can observe it.
+     *   * The failure instants it reads were themselves decided by a hazard
+     *     draw on the tick they occurred, so no "scheduled failure time"
+     *     existed at feature-generation time that could have been encoded.
+     *   * The comparison is strict on the left (t &lt; f), so the failure tick
+     *     itself and every tick after it are labelled 0 - a post-mortem row
+     *     is not a prediction opportunity.
+     *
+     * The label is therefore predictable ONLY to the extent that the
+     * simulated telemetry genuinely trends towards failure, which is exactly
+     * what is being tested.
+     *
+     * ------------------------------------------------------------------
+     * COLUMNS
+     * ------------------------------------------------------------------
+     * 1..14  observable telemetry (TelemetrySnapshot.csvHeader())
+     * 15     willFailSoon                 - the target
+     * 16+    audit_* - LATENT ground truth for validation and plotting only.
+     *        These describe the simulator's internal state, including the
+     *        realised failure time, and MUST NOT be used as model inputs.
+     *        The audit_ prefix keeps them out of the Python feature
+     *        whitelists by construction.
      */
     public void exportLabeledCsv(String filePath, double lookaheadSeconds) {
 
@@ -112,9 +174,13 @@ public class HistoryCollector {
             }
         }
 
+        int positives = 0;
+
         try (FileWriter writer = new FileWriter(filePath)) {
 
-            writer.write(TelemetrySnapshot.csvHeader() + ",willFailSoon\n");
+            writer.write(TelemetrySnapshot.csvHeader() + ",willFailSoon"
+                    + ",audit_healthState,audit_wear,audit_nextFailureTime"
+                    + ",audit_secondsToFailure,audit_predictionHorizon\n");
 
             for (TelemetrySnapshot snap : allSnapshots) {
 
@@ -130,12 +196,40 @@ public class HistoryCollector {
                     }
                 }
 
-                writer.write(snap.toCsvRow() + "," + (willFailSoon ? 1 : 0) + "\n");
+                if (willFailSoon) {
+                    positives++;
+                }
+
+                // ---- audit block (not features) --------------------------
+                // Next failure of this node strictly after t, at any distance.
+                double nextFailure = -1;
+
+                for (double t : failTimes) {
+                    if (t > snap.time && (nextFailure < 0 || t < nextFailure)) {
+                        nextFailure = t;
+                    }
+                }
+
+                double secondsToFailure = nextFailure < 0
+                        ? -1
+                        : nextFailure - snap.time;
+
+                writer.write(String.format(
+                        "%s,%d,%s,%.4f,%.2f,%.2f,%.2f",
+                        snap.toCsvRow(),
+                        willFailSoon ? 1 : 0,
+                        snap.healthState,
+                        snap.wear,
+                        nextFailure,
+                        secondsToFailure,
+                        lookaheadSeconds) + "\n");
             }
 
             System.out.println(
                     "\nLabeled failure-prediction dataset exported to: " + filePath +
-                    " (" + allSnapshots.size() + " rows, lookahead=" + lookaheadSeconds + "s)"
+                    " (" + allSnapshots.size() + " rows, lookahead=" + lookaheadSeconds + "s, "
+                    + positives + " positive / " + (allSnapshots.size() - positives)
+                    + " negative)"
             );
 
         } catch (IOException e) {

@@ -1,0 +1,28 @@
+==============================================================================
+SPRINT 7 RUNG 0 — MEASUREMENT ONLY (no training, no fix)
+==============================================================================
+  checkpoint    : D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\mappo_A0_cpu_repro.pth
+  kind=final episode=600 train mean reward=+14.55
+  gamma=0.999 lambda=0.995 minibatches=4 epochs=4
+  device        : cpu
+
+------------------------------------------------------------------------------
+D3 — high-risk sample census per PPO update (no retraining)
+------------------------------------------------------------------------------
+  update 01 (init) : bit_exact=True useful_highrisk_EDGE=35
+  update 57 (best ): useful_highrisk_EDGE=25  per_mb_mean=6.25  zero_mb_frac=0.00
+  update 75 (final): useful_highrisk_EDGE=22  per_mb_mean=4.40  zero_mb_frac=0.20
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\diag_S7_D3_sample_census.json
+------------------------------------------------------------------------------
+D4 — PPO update instrumentation (dry-run on deepcopies)
+------------------------------------------------------------------------------
+  update_01_init         replica ok=True (max|d|=0.00e+00)  grad_actor=0.1972  k1=+0.003540  k3=0.007094  clip=0.1081
+    grad norms: {'all_decision': 0.12116729468107224, 'highrisk_EDGE': 0.04518808051943779, 'highrisk_not_EDGE': 0.03350907936692238, 'lowrisk_EDGE': 0.28696557879447937, 'lowrisk_not_EDGE': 0.327025830745697, 'entropy_term': 6.707076681777835e-05}
+    entries   : {'all_decision': 1240, 'highrisk_EDGE': 35, 'highrisk_not_EDGE': 32, 'lowrisk_EDGE': 478, 'lowrisk_not_EDGE': 690, 'entropy_term': 1240}
+  update_57_best         replica ok=True (max|d|=0.00e+00)  grad_actor=0.0994  k1=+0.000507  k3=0.000087  clip=0.0013
+    grad norms: {'all_decision': 0.031086981296539307, 'highrisk_EDGE': 0.01603027619421482, 'highrisk_not_EDGE': 0.016231421381235123, 'lowrisk_EDGE': 0.1663297861814499, 'lowrisk_not_EDGE': 0.1708005666732788, 'entropy_term': 0.012293828651309013}
+    entries   : {'all_decision': 3829, 'highrisk_EDGE': 25, 'highrisk_not_EDGE': 327, 'lowrisk_EDGE': 386, 'lowrisk_not_EDGE': 3080, 'entropy_term': 3829}
+  update_75_final        replica ok=True (max|d|=0.00e+00)  grad_actor=0.3043  k1=+0.000359  k3=0.000002  clip=0.0000
+    grad norms: {'all_decision': 0.05560899153351784, 'highrisk_EDGE': 0.01833001710474491, 'highrisk_not_EDGE': 0.019812200218439102, 'lowrisk_EDGE': 0.11645950376987457, 'lowrisk_not_EDGE': 0.10587413609027863, 'entropy_term': 0.012756437994539738}
+    entries   : {'all_decision': 3333, 'highrisk_EDGE': 22, 'highrisk_not_EDGE': 180, 'lowrisk_EDGE': 398, 'lowrisk_not_EDGE': 2723, 'entropy_term': 3333}
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\diag_S7_D4_ppo_update.json

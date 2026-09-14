@@ -1,0 +1,78 @@
+{
+ "what": "mb_size = T // n_mb then range(0, T, mb_size) yields n_mb + 1 chunks whenever n_mb does not divide T; the extra tail chunk has T mod mb_size timesteps",
+ "status": "MEASURED AND DOCUMENTED ONLY -- NOT FIXED, and isolated from the Rung 1 critic experiment so it cannot confound it",
+ "configured_minibatches": 4,
+ "ppo_epochs": 4,
+ "scanned_T_range": [
+  3000,
+  3299
+ ],
+ "frac_T_producing_extra_chunk": 0.75,
+ "tail_size_min": 1,
+ "tail_size_max": 3,
+ "tail_size_median": 2.0,
+ "observed_in_rung0_D4": {
+  "update_01_init": {
+   "n_minibatch_steps": 20,
+   "distinct_sizes": [
+    2,
+    791
+   ],
+   "n_degenerate": 4,
+   "degenerate_sizes": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "degenerate_grad_norms": [
+    0.0,
+    0.6230817437171936,
+    0.0,
+    0.0
+   ],
+   "degenerate_clipped": 1,
+   "substantive_grad_norm_mean": 0.20752379391342402,
+   "substantive_grad_norm_max": 0.2854815125465393,
+   "ratio_degenerate_to_substantive": 3.002459293786497
+  },
+  "update_57_best": {
+   "n_minibatch_steps": 16,
+   "distinct_sizes": [
+    793
+   ],
+   "n_degenerate": 0,
+   "degenerate_sizes": [],
+   "degenerate_grad_norms": [],
+   "degenerate_clipped": 0,
+   "substantive_grad_norm_mean": 0.09938393835909665,
+   "substantive_grad_norm_max": 0.18179604411125183,
+   "ratio_degenerate_to_substantive": null
+  },
+  "update_75_final": {
+   "n_minibatch_steps": 20,
+   "distinct_sizes": [
+    1,
+    782
+   ],
+   "n_degenerate": 4,
+   "degenerate_sizes": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "degenerate_grad_norms": [
+    0.12453193217515945,
+    0.0,
+    0.0,
+    4.423489570617676
+   ],
+   "degenerate_clipped": 1,
+   "substantive_grad_norm_mean": 0.09613569127395749,
+   "substantive_grad_norm_max": 0.1415831595659256,
+   "ratio_degenerate_to_substantive": 46.01297927959009
+  }
+ },
+ "note": "A tail chunk of 1-2 timesteps yields an actor gradient ~40-46x the substantive minibatches' and is gradient-clipped, so it contributes a clipped near-single-sample step at 1 in every n_mb+1 actor updates."
+}

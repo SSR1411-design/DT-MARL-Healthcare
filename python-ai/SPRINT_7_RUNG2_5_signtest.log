@@ -1,0 +1,61 @@
+==============================================================================
+SPRINT 7 RUNG 2.5 -- item E: offline advantage / sign test
+       (NO PPO TRAINING; offline causal diagnostic only)
+==============================================================================
+  model        : mappo_R2_mc_target.pth
+  critic_target: mc  gamma=0.999 lambda=0.995
+
+-- phase A: fit dataset (stochastic, truncation-bearing) ------
+  fit dataset : 15823 timesteps x 10 agents, state_dim=489
+  episodes    : kept 40, dropped 0 (continuation censored by trace end)
+  end classes : {'trunc': 31, 'both': 1, 'term': 8}  -> bootstrapped 32
+  split       : train 12684 / val 3139 timesteps
+    target M_R2   : mean +1.6440 sd 7.4729 mean|.| 5.1044
+    target M_cont : mean +1.6543 sd 7.2548 mean|.| 4.9469
+    target M_rew  : mean +1.4806 sd 7.1212 mean|.| 4.8062
+  MAD vs continuation-MC: R2 target 0.4193   reward-only 0.2171
+
+-- phase B: fit fresh critics (common held-out yardstick) -----
+    M_R2: best val continuation-MC MSE 13.1789 at epoch 42 (83 epochs)
+    M_cont: best val continuation-MC MSE 13.0520 at epoch 42 (83 epochs)
+    M_rew: best val continuation-MC MSE 13.0335 at epoch 32 (73 epochs)
+
+-- phase C: residual vs risk (target = continuation-MC) -------
+    C0     : EV_val 0.69307  hi-risk residual -0.7424  lo->hi swing -0.7756  hi-only slope -0.88077
+    M_R2   : EV_val 0.74753  hi-risk residual -0.2263  lo->hi swing +0.0532  hi-only slope -0.10459
+    M_cont : EV_val 0.74865  hi-risk residual -0.1318  lo->hi swing +0.0927  hi-only slope -0.70973
+    M_rew  : EV_val 0.74859  hi-risk residual -0.3636  lo->hi swing -0.2157  hi-only slope -0.47636
+
+-- phase D: deviation pairs (Rung 0's EXACT set) --------------
+  loaded 583 states from diag_S7_D1_advantage_fidelity.json
+  window     : 0.00-0.70 ticks [9, 491]
+  starts     : [9, 41, 73, 105, 138, 170, 202, 234, 266, 298, 330, 362, 395, 427, 459, 491]
+  baseline mean reward +4.2472  (18s)
+  gae replica vs MAPPO.compute_gae: ok=True max|dadv|=0.00e+00
+  greedy baseline episode lengths: [369, 372, 376, 378, 398, 399, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400]
+  of these, truncated (>= 400 steps): 10
+  => on Rung 0's own pairs the three targets coincide exactly;
+     the arms differ ONLY through their fitted critics.
+    100/583 states, 100 replays, 121s
+    200/583 states, 200 replays, 239s
+    300/583 states, 300 replays, 355s
+    400/583 states, 462 replays, 568s
+    500/583 states, 662 replays, 816s
+  replay mismatches: 0 / 745
+  usable states 583, forced replays 745, mismatches 0
+
+-- sign agreement, high-risk bucket --------------------------
+  [a_true_team]
+    C0      hi 0.5285 (n=263)   all 0.5348 (n=559)   spearman_hi 0.05634
+    M_R2    hi 0.4980 (n=263)   all 0.5134 (n=559)   spearman_hi 0.07426
+    M_cont  hi 0.5171 (n=263)   all 0.5420 (n=559)   spearman_hi 0.08140
+    M_rew   hi 0.5133 (n=263)   all 0.5152 (n=559)   spearman_hi 0.08893
+  [a_true_own]
+    C0      hi 0.5627 (n=263)   all 0.5474 (n=559)   spearman_hi 0.05770
+    M_R2    hi 0.4942 (n=263)   all 0.4937 (n=559)   spearman_hi 0.04917
+    M_cont  hi 0.5133 (n=263)   all 0.5152 (n=559)   spearman_hi 0.05914
+    M_rew   hi 0.5019 (n=263)   all 0.4919 (n=559)   spearman_hi 0.06662
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_5_signtest.json
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_5_signtest.json
+==============================================================================

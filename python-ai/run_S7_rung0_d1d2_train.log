@@ -1,0 +1,44 @@
+==============================================================================
+SPRINT 7 RUNG 0 — MEASUREMENT ONLY (no training, no fix)
+==============================================================================
+  checkpoint    : D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\mappo_A0_cpu_repro.pth
+  kind=final episode=600 train mean reward=+14.55
+  gamma=0.999 lambda=0.995 minibatches=4 epochs=4
+  device        : cpu
+
+------------------------------------------------------------------------------
+D1 + D2 — true vs GAE advantage; GAE horizon and critic residual
+------------------------------------------------------------------------------
+  window        : train ticks [9, 491]
+  baselines     : 16 episodes, starts [9, 41, 73, 105, 138, 170, 202, 234, 266, 298, 330, 362, 395, 427, 459, 491]
+  baseline mean reward +13.072   (19s)
+  gae replica vs MAPPO.compute_gae: ok=True max|dadv|=0.00e+00
+  block 0: 8 eps, T=2989, decision_frac=0.3126, adv_mu=+0.7509 adv_sd=5.4077
+  block 1: 8 eps, T=2886, decision_frac=0.3533, adv_mu=+0.1066 adv_sd=6.3995
+
+  pool sizes (available -> sampled):
+    pool A risk_hi :   1007 ->  150
+    pool A risk_lo :  16760 ->  150
+    pool A risk_mid:     38 ->   38
+    pool B risk_hi :     91 ->   80
+    pool B risk_lo :   1422 ->   80
+    pool B risk_mid:      2 ->    2
+    pool C risk_hi :     21 ->   21
+    pool C risk_lo :    195 ->   60
+    pool C risk_mid:      2 ->    2
+    PREEMPTIVE_REROUTE legal in 16 decision entries
+
+  forced replays to run: ~1166
+    pool A risk_hi: 150 states done (150 replays, 205s)
+    pool A risk_lo: 150 states done (300 replays, 383s)
+    pool A risk_mid: 38 states done (338 replays, 429s)
+    pool B risk_hi: 80 states done (498 replays, 620s)
+    pool B risk_lo: 80 states done (658 replays, 813s)
+    pool B risk_mid: 2 states done (662 replays, 818s)
+    pool C risk_hi: 21 states done (683 replays, 843s)
+    pool C risk_lo: 60 states done (743 replays, 914s)
+    pool C risk_mid: 2 states done (745 replays, 916s)
+
+  replay mismatches: 0 / 745
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\diag_S7_D1_advantage_fidelity.json
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\diag_S7_D2_horizon_residual.json

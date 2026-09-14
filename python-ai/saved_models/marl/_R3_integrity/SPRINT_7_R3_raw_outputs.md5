@@ -1,0 +1,6 @@
+d9f8a3dfbe1caf3b57402b9ef05313e3 *saved_models/marl/R3_batch32.pth
+c0e35a21191fe35b7f5064224d053c07 *saved_models/marl/R3_batch32_best.pth
+9f63a8ecde43ccaad2a75bc7e1a187f8 *saved_models/marl/R3_batch32_config.json
+d04b5e93ed1d9a492841744312ffedcc *saved_models/marl/R3_batch32_history.csv
+7fcf40d42c3e699b0f76866bf7670b80 *saved_models/marl/R3_batch32_updates.csv
+dc84cccbbbbb93cfcb9ab88a84b429bc *run_R3_batch32_train.log

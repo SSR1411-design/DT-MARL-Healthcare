@@ -1,0 +1,15 @@
+==============================================================================
+SPRINT 7 RUNG 0 — MEASUREMENT ONLY (no training, no fix)
+==============================================================================
+  checkpoint    : saved_models/marl/mappo_R2_mc_target.pth
+  kind=final episode=600 train mean reward=+4.68
+  gamma=0.999 lambda=0.995 minibatches=4 epochs=4
+  device        : cpu
+
+------------------------------------------------------------------------------
+D3 — high-risk sample census per PPO update (no retraining)
+------------------------------------------------------------------------------
+  update 01 (init) : bit_exact=True useful_highrisk_EDGE=37
+  update 75 (best ): useful_highrisk_EDGE=8  per_mb_mean=1.60  zero_mb_frac=0.30
+  update 75 (final): useful_highrisk_EDGE=8  per_mb_mean=1.60  zero_mb_frac=0.30
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\diag_S7_D3_sample_census_R2_mc_target.json

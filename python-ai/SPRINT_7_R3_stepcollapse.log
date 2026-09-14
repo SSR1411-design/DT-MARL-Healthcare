@@ -1,0 +1,72 @@
+==============================================================================
+SPRINT 7 RUNG 2.75 -- item B: WHY the actor's trust region
+        collapsed DURING TRAINING (schedule vs sharpening)
+        CSVs only -- no model, no rollout, nothing loaded
+==============================================================================
+  every prior actor diagnostic in this project measured the FINAL
+  checkpoint, i.e. the BOTTOM of this collapse, and so could not
+  distinguish 'the actor cannot move' from 'the actor was annealed
+  and sharpened until it stopped moving'.
+
+-- A0 (mappo_A0_cpu_repro_updates.csv, 75 updates) --------
+   clip_frac        0.1081 -> 0.0000   quartiles 0.06102 0.03105 0.00556 0.00058
+   lr_scale         1.0000 -> 0.0133   quartiles 0.88667 0.64000 0.38667 0.13333
+   entropy          0.7165 -> 0.3329   quartiles 0.66634 0.54686 0.35442 0.30438
+   clip_frac/lr_scale (lr-free)          quartiles 0.06888 0.04793 0.01423 0.00326
+
+   ATTRIBUTION of the clip_frac collapse (Q1 mean / Q4 mean)
+      total                          105.4x
+      due to the lr SCHEDULE           6.7x
+      due to SHARPENING (lr-free)     15.8x
+      product check                  105.4x   matches total: True
+      DOMINANT CAUSE: sharpening
+   trust region engaged (clip_frac>0.01) in 38/75 updates (51%); last at update 52
+   lr-free utilisation vs entropy: spearman +0.7896   log-log slope +3.235 (R2 0.508)
+   CEILING on an lr-only fix: final-quartile clip_frac at lr_scale=1 would be 0.00434 vs 0.06882 early (15.8x short)
+
+-- R2 (mappo_R2_mc_target_updates.csv, 75 updates) --------
+   clip_frac        0.1625 -> 0.0000   quartiles 0.04256 0.01886 0.00268 0.00004
+   lr_scale         1.0000 -> 0.0133   quartiles 0.88667 0.64000 0.38667 0.13333
+   entropy          0.8599 -> 0.1380   quartiles 0.57511 0.27843 0.18128 0.16110
+   clip_frac/lr_scale (lr-free)          quartiles 0.04634 0.02769 0.00598 0.00020
+
+   ATTRIBUTION of the clip_frac collapse (Q1 mean / Q4 mean)
+      total                         1010.8x
+      due to the lr SCHEDULE           6.7x
+      due to SHARPENING (lr-free)    152.0x
+      product check                 1010.8x   matches total: True
+      DOMINANT CAUSE: sharpening
+   trust region engaged (clip_frac>0.01) in 28/75 updates (37%); last at update 40
+   lr-free utilisation vs entropy: spearman +0.8681   log-log slope +1.939 (R2 0.568)
+   CEILING on an lr-only fix: final-quartile clip_frac at lr_scale=1 would be 0.00032 vs 0.04800 early (152.0x short)
+
+-- R3 (R3_batch32_updates.csv, 75 updates) --------
+   clip_frac        0.0766 -> 0.0000   quartiles 0.03550 0.01357 0.00531 0.00076
+   lr_scale         1.0000 -> 0.0133   quartiles 0.88667 0.64000 0.38667 0.13333
+   entropy          0.7877 -> 0.2659   quartiles 0.50397 0.37139 0.35258 0.29226
+   clip_frac/lr_scale (lr-free)          quartiles 0.03972 0.02181 0.01380 0.00321
+
+   ATTRIBUTION of the clip_frac collapse (Q1 mean / Q4 mean)
+      total                           46.5x
+      due to the lr SCHEDULE           6.7x
+      due to SHARPENING (lr-free)      7.0x
+      product check                   46.5x   matches total: True
+      DOMINANT CAUSE: sharpening
+   trust region engaged (clip_frac>0.01) in 25/75 updates (33%); last at update 47
+   lr-free utilisation vs entropy: spearman +0.6850   log-log slope +2.217 (R2 0.186)
+   CEILING on an lr-only fix: final-quartile clip_frac at lr_scale=1 would be 0.00572 vs 0.04004 early (7.0x short)
+
+==============================================================================
+SUMMARY -- what an lr-only intervention could and could not recover
+==============================================================================
+   arm     total  schedule   sharpen      dominant  lr-only ceiling
+    A0    105.4x      6.7x     15.8x    sharpening            15.8x
+    R2   1010.8x      6.7x    152.0x    sharpening           152.0x
+    R3     46.5x      6.7x      7.0x    sharpening             7.0x
+
+  read: 'sharpen' is the factor that the annealing schedule does
+        NOT explain. Where it exceeds 'schedule', raising the
+        learning rate addresses the smaller of the two causes.
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_75_stepcollapse_R3.json
+==============================================================================

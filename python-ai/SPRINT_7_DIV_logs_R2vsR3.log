@@ -1,0 +1,111 @@
+
+==============================================================================
+S1  CONFIGURATION INVARIANTS  R2 vs R3
+==============================================================================
+  config fields compared      : 99
+  differing                   : 5
+      config.train.episodes                                           600  ->  2400
+      config.train.rollout_episodes                                     8  ->  32
+      config.train.tag                                 mappo_R2_mc_target  ->  R3_batch32
+      episodes                                                        600  ->  2400
+      wall_time_s                                                  1585.6  ->  5806.0
+
+==============================================================================
+S2  EPISODE-LEVEL IDENTITY AND EXACT DIVERGENCE ONSET
+==============================================================================
+  start ticks nested (R2 == R3[:600])          : True
+  identical episode prefix length             : 8 episodes
+  FIRST divergent episode                     : 9
+  rollout_episodes                            : 8 vs 32
+  -> first update lands after episode          : 8 vs 32
+  -> so divergence must begin at episode       : 9
+
+==============================================================================
+S3  LR SCHEDULE IDENTITY
+==============================================================================
+  updates                     : 75 vs 75
+  max |lr_scale_a - lr_scale_b|: 0.00e+00
+  lr_scale range              : 1.0000 -> 0.0133
+
+==============================================================================
+S4  UPDATE-INDEX-ALIGNED TRAJECTORIES (LR matched, experience NOT)
+==============================================================================
+  metric               A Q1      A Q4      B Q1      B Q4   B-A mean  onset
+  mean_reward      -16.7603    1.1071  -16.1128   -8.5106    -6.1149     47
+  actor_loss        -0.0297    0.0099   -0.0200    0.0138     0.0063   None
+  critic_loss       16.3066    8.7250   19.4712   10.0003     2.4104   None
+  entropy            0.5751    0.1611    0.5040    0.2923     0.0831   None
+  approx_kl          0.0040   -0.0003    0.0037    0.0003     0.0002   None
+  clip_frac          0.0426    0.0000    0.0355    0.0008    -0.0022   None
+  adv_std            3.6595    2.8615    3.9825    3.0000     0.2249   None
+  value_mean        -0.5167    1.3014    0.5474    1.2902    -0.2658     10
+  decision_frac      0.0601    0.1787    0.0687    0.1345    -0.0447     25
+  lr_scale           0.8867    0.1333    0.8867    0.1333     0.0000   None
+  explained_var      0.3001    0.7020    0.2969    0.6564    -0.0246     34
+
+==============================================================================
+S5  EPISODE-ALIGNED TRAJECTORIES (experience matched, LR NOT)
+==============================================================================
+  rollout ratio 4x -> B update v <-> mean of A updates 4v-3..4v, v=1..18
+  metric           A block mean  B value mean        B-A
+  mean_reward           -6.1399      -16.1128    -9.9729
+  actor_loss            -0.0059       -0.0200    -0.0140
+  critic_loss           12.2802       19.4712     7.1910
+  entropy                0.3014        0.5040     0.2026
+  approx_kl              0.0014        0.0037     0.0023
+  clip_frac              0.0163        0.0355     0.0192
+  adv_std                3.2589        3.9825     0.7236
+  value_mean             0.9302        0.5474    -0.3828
+  decision_frac          0.1377        0.0687    -0.0690
+  lr_scale               0.5267        0.8867     0.3600
+  explained_var          0.5612        0.2969    -0.2643
+
+  updates applied by episode 600 : A=75  B=18  (ratio 4.17x)
+
+==============================================================================
+S6  MATCHED-PAIR BEHAVIOURAL DIVERGENCE (exact, same env per index)
+==============================================================================
+  matched pairs (same start tick, same env realisation): 600
+  metric             A mean     B mean        B-A  z_paired         +/-/=  z_sign onset ep
+  reward            -5.6727   -15.6812   -10.0085    -12.59  179/ 413/  8   -9.62     None
+  success_rate       0.7229     0.6931    -0.0298    -11.48  150/ 361/ 89   -9.33     None
+  lost              10.1267    11.1600     1.0333      8.95  345/ 168/ 87    7.81     None
+  critical_lost      4.1050     4.3667     0.2617      2.82  266/ 228/106    1.71     None
+  relocations       74.9833    81.0483     6.0650     22.10  469/  97/ 34   15.64      454
+  preemptive        74.0783    80.1733     6.0950     22.43  476/  92/ 32   16.11      454
+  sla                1.4683     1.5883     0.1200      1.78  241/ 190/169    2.46     None
+  protected          8.7433     8.4417    -0.3017     -1.68  246/ 289/ 65   -1.86     None
+  energy          2118.3129  2080.5571   -37.7558     -7.12  231/ 361/  8   -5.34     None
+  infeasible        14.5600     1.6983   -12.8617    -34.51   19/ 540/ 41  -22.04      130
+
+==============================================================================
+S7  ACROSS-UPDATE VARIABILITY vs THE 1/sqrt(N) PURE-NOISE PREDICTION
+==============================================================================
+  adv_std         mean    3.2357 /    3.4606   detrended sd   0.1832 /   0.0998   ratio  0.545 (pure-noise prediction 0.500)
+  decision_frac   mean    0.1392 /    0.0945   detrended sd   0.0085 /   0.0041   ratio  0.479 (pure-noise prediction 0.500)
+  critic_loss     mean   12.0751 /   14.4855   detrended sd   1.7026 /   1.3776   ratio  0.809 (pure-noise prediction 0.500)
+  explained_var   mean    0.5675 /    0.5428   detrended sd   0.0316 /   0.0254   ratio  0.806 (pure-noise prediction 0.500)
+  entropy         mean    0.2953 /    0.3784   detrended sd   0.0341 /   0.0388   ratio  1.138 (pure-noise prediction 0.500)
+  approx_kl       mean    0.0013 /    0.0015   detrended sd   0.0032 /   0.0030   ratio  0.944 (pure-noise prediction 0.500)
+  clip_frac       mean    0.0157 /    0.0135   detrended sd   0.0159 /   0.0127   ratio  0.797 (pure-noise prediction 0.500)
+
+==============================================================================
+S8  CUMULATIVE MOVEMENT PROXIES
+==============================================================================
+  mappo_R2_mc_target     sum_k1    0.0992  sum|k1|   0.1533  k1<0 on  26 updates  clip engaged  53/75 (last 61)  entropy 0.8599->0.1380
+  R3_batch32             sum_k1    0.1121  sum|k1|   0.1528  k1<0 on  21 updates  clip engaged  58/75 (last 60)  entropy 0.7877->0.2659
+
+==============================================================================
+S9  IS B SIMPLY LESS FAR ALONG A'S PATH?  (progress-clock matching)
+==============================================================================
+  metric             B final  closest A update    A value
+  entropy             0.2659                25     0.2746
+  critic_loss         9.4207                70     9.4464
+  explained_var       0.6822                44     0.6828
+  adv_std             2.8730                63     2.8852
+  decision_frac       0.1493                27     0.1504
+  mean_reward        -4.4836                56    -4.6479
+  value_mean          1.0388                67     1.0261
+  -> matched A-update indices: [25, 27, 44, 56, 63, 67, 70]  median 56
+
+wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_DIV_logs_R2vsR3.json

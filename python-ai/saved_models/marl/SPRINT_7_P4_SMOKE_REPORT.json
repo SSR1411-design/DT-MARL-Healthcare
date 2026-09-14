@@ -1,0 +1,152 @@
+{
+  "probe": "_phase4_smoke.py",
+  "prereg": "SPRINT_7_PHASE4_PREREG.md",
+  "what": "mechanical smoke test of the Phase 4 instrumentation; NOT a scientific run and its numbers must not be interpreted",
+  "config": {
+    "episodes": 6,
+    "rollout_episodes": 3,
+    "episode_steps": 5,
+    "seed": 999,
+    "critic_target": "mc",
+    "device": "cpu"
+  },
+  "driver_rc": 0,
+  "checks": [
+    {
+      "check": 2,
+      "name": "checkpoint count is correct",
+      "pass": true,
+      "parts": [
+        {
+          "pass": true,
+          "detail": "3 checkpoint files (want 3)"
+        },
+        {
+          "pass": true,
+          "detail": "3 manifest rows (want 3)"
+        },
+        {
+          "pass": true,
+          "detail": "2 updates observed (want 2)"
+        }
+      ]
+    },
+    {
+      "check": 3,
+      "name": "checkpoint filenames are unique",
+      "pass": true,
+      "parts": [
+        {
+          "pass": true,
+          "detail": "3 distinct filenames on disk"
+        },
+        {
+          "pass": true,
+          "detail": "3 distinct filenames in the manifest"
+        },
+        {
+          "pass": true,
+          "detail": "indices contiguous from 000: [0, 1, 2]"
+        }
+      ]
+    },
+    {
+      "check": 1,
+      "name": "saving occurs at the intended update boundary",
+      "pass": true,
+      "parts": [
+        {
+          "pass": true,
+          "detail": "u000 is the pre-update state at entry to update 1: e32afe736c3c == freshly seeded MAPPO after train.py:129's probe e32afe736c3c"
+        },
+        {
+          "pass": true,
+          "detail": "and that probe is not a no-op, so the check is not vacuous: bare construction hashes b6ecb7d53880"
+        },
+        {
+          "pass": true,
+          "detail": "weights differ from the previous checkpoint at u[1, 2] (want [1, 2]) -- so each save is POST-update"
+        },
+        {
+          "pass": true,
+          "detail": "u002 weights == final P4_SMOKE.pth -- the last save sits on the last update boundary and nothing ran after it"
+        },
+        {
+          "pass": true,
+          "detail": "episode bookkeeping [0, 3, 6] (want [0, 3, 6])"
+        },
+        {
+          "pass": true,
+          "detail": "buffer_T at each update [None, 15, 15] (want None then 3x5=15)"
+        }
+      ]
+    },
+    {
+      "check": 4,
+      "name": "torch.save does not alter RNG state",
+      "pass": true,
+      "parts": [
+        {
+          "pass": true,
+          "detail": "independent measurement: saving a real 5 MB checkpoint left both the torch and the numpy global generator bit-identical"
+        },
+        {
+          "pass": true,
+          "detail": "the driver's own runtime guard passed on 3/3 saves"
+        }
+      ]
+    },
+    {
+      "check": 5,
+      "name": "the driver does not modify production source",
+      "pass": true,
+      "parts": [
+        {
+          "pass": true,
+          "detail": "all 7 forbidden files hash-identical across the run (changed: [])"
+        },
+        {
+          "pass": true,
+          "detail": "MAPPO.update is the original function object again after uninstall"
+        }
+      ]
+    },
+    {
+      "check": 6,
+      "name": "checkpoints load successfully",
+      "pass": true,
+      "parts": [
+        {
+          "pass": true,
+          "detail": "MAPPO.load succeeded on all 3 checkpoints (failures: [])"
+        }
+      ]
+    },
+    {
+      "check": 7,
+      "name": "optimizer state present, existing schema preserved",
+      "pass": true,
+      "parts": [
+        {
+          "pass": true,
+          "detail": "top-level keys identical to mappo_R2_mc_target.pth for every checkpoint (mismatches: []); keys ['actor', 'critic', 'extra', 'mappo_cfg', 'n_agents', 'obs_dim', 'opt_actor', 'opt_critic', 'state_dim']"
+        },
+        {
+          "pass": true,
+          "detail": "Adam state non-empty in u001..u002 (empty in: [])"
+        },
+        {
+          "pass": true,
+          "detail": "u000 Adam state is empty, as it must be: no step has been taken yet"
+        },
+        {
+          "pass": true,
+          "detail": "extra reproduces train.py's schema except the documented, unreachable mean_reward (missing: ['mean_reward'])"
+        }
+      ]
+    }
+  ],
+  "passed": 7,
+  "total": 7,
+  "artifacts_removed_after_test": true
+}

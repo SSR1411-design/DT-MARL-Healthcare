@@ -1,0 +1,283 @@
+{
+  "probe": "SPRINT_7_RUNG2_75_coherence",
+  "what": "is the actor's advantage signal WEAK or INCOHERENT? full-batch policy-gradient norms and directions under four advantage vectors of MATCHED L2 mass, at the checkpoint's own parameters",
+  "why": {
+    "motivation": "the plasticity probe moved theta as far with a sparse +/-1 synthetic advantage (mean|A| ~ 0.061) as production moved it with a dense unit-variance one (mean|A| ~ 0.8), which SUGGESTS cancellation; this measures it on one buffer instead of inferring it across two scripts",
+    "exactness": "at the checkpoint's own parameters new_lp == old_lp so ratio == 1 exactly, min(s1,s2) == A, and the PPO actor loss reduces exactly to the vanilla policy gradient, which is LINEAR in A -- so matched-mass comparison is assumption-free",
+    "entropy_excluded": "the entropy term is advantage-independent; including it would add an identical vector to every condition and inflate every cosine"
+  },
+  "conditions": {
+    "real": "production's compute_gae, normalised over decision entries exactly as mappo.py:360-366",
+    "synth": "+1 on MIGRATE_EDGE / -1 on STAY at risk > 0.50, 0 elsewhere, then rescaled to real's L2 mass; the perfectly-coherent reference direction",
+    "shuffled": "real's own values PERMUTED among decision entries; preserves the marginal distribution of A exactly and destroys only the state-action correspondence -- the null",
+    "real_hi": "real zeroed outside high-risk entries, rescaled to real's L2 mass"
+  },
+  "not_a_fix": [
+    "no optimiser is constructed and no parameter is written",
+    "synth presupposes MIGRATE_EDGE is correct at high risk, which a training run cannot know; it is a reference DIRECTION, not a proposed target",
+    "production code is unmodified"
+  ],
+  "buffer": {
+    "episodes": 32,
+    "starts": "training_start_ticks (train.py's own RNG draw)",
+    "policy": "stochastic, torch.manual_seed(TRAIN_SEED + j)"
+  },
+  "n_perms": 200,
+  "per_arm": {
+    "A0": {
+      "T": 12523,
+      "start_ticks": [
+        158,
+        202,
+        32,
+        228,
+        343,
+        164,
+        277,
+        205,
+        258,
+        44,
+        184,
+        122,
+        236,
+        328,
+        178,
+        487,
+        174,
+        234,
+        386,
+        425,
+        486,
+        186,
+        41,
+        29,
+        373,
+        309,
+        359,
+        26,
+        212,
+        104,
+        263,
+        22
+      ],
+      "truncated": 20,
+      "n_decision": 13144,
+      "n_highrisk": 850,
+      "highrisk_frac_of_decision": 0.06466828971393791,
+      "adv_pre_norm": {
+        "mean": 0.1226484552025795,
+        "sd": 3.0953369140625
+      },
+      "adv_post_norm_decision": {
+        "mean": 9.287150604109229e-09,
+        "sd": 1.0
+      },
+      "mass_real_L2": 114.64727783203125,
+      "synth_scale": 4.128920720826419,
+      "real_hi_scale": 3.7527369550696283,
+      "synth_support": {
+        "n_edge_pos": 70,
+        "n_stay_neg": 701
+      },
+      "grad_norms": {
+        "real": 0.026258869096636772,
+        "synth_coherent": 0.165885791182518,
+        "real_highrisk_only": 0.0412939116358757,
+        "shuffled_null_mean": 0.02838869469705969,
+        "shuffled_null_sd": 0.006773890027284622,
+        "shuffled_null_min": 0.013968574814498425,
+        "shuffled_null_max": 0.05479389429092407
+      },
+      "ratios": {
+        "real_over_synth": 0.15829486606086177,
+        "real_over_shuffled": 0.9249762758326641,
+        "real_hi_over_synth": 0.24892976873734493,
+        "z_vs_shuffled_null": -0.31441691433492003,
+        "perm_p_norm": 0.59
+      },
+      "cosines": {
+        "real_vs_synth": 0.40227970480918884,
+        "real_hi_vs_synth": 0.912979245185852,
+        "shuffled_vs_synth_mean": 0.016075579353782815,
+        "shuffled_vs_synth_sd": 0.3291963590225921,
+        "shuffled_abs_p95": 0.5863703161478038,
+        "perm_p_two_sided": 0.245,
+        "n_perms": 200
+      },
+      "scale_check": {
+        "dtheta_per_update_rung2_5": 0.010596,
+        "note": "for reading ||g|| against the movement it actually produced in production"
+      }
+    },
+    "R2": {
+      "T": 12684,
+      "start_ticks": [
+        158,
+        202,
+        32,
+        228,
+        343,
+        164,
+        277,
+        205,
+        258,
+        44,
+        184,
+        122,
+        236,
+        328,
+        178,
+        487,
+        174,
+        234,
+        386,
+        425,
+        486,
+        186,
+        41,
+        29,
+        373,
+        309,
+        359,
+        26,
+        212,
+        104,
+        263,
+        22
+      ],
+      "truncated": 26,
+      "n_decision": 22098,
+      "n_highrisk": 1071,
+      "highrisk_frac_of_decision": 0.04846592451805593,
+      "adv_pre_norm": {
+        "mean": 0.04836353287100792,
+        "sd": 2.7436399459838867
+      },
+      "adv_post_norm_decision": {
+        "mean": -1.3810108612233307e-08,
+        "sd": 1.0
+      },
+      "mass_real_L2": 148.65396118164062,
+      "synth_scale": 4.748576462618134,
+      "real_hi_scale": 3.8224673964018603,
+      "synth_support": {
+        "n_edge_pos": 69,
+        "n_stay_neg": 911
+      },
+      "grad_norms": {
+        "real": 0.01817508228123188,
+        "synth_coherent": 0.1091524064540863,
+        "real_highrisk_only": 0.012070824392139912,
+        "shuffled_null_mean": 0.01594303471967578,
+        "shuffled_null_sd": 0.0035514536576427757,
+        "shuffled_null_min": 0.008216142654418945,
+        "shuffled_null_max": 0.028929611667990685
+      },
+      "ratios": {
+        "real_over_synth": 0.16651105432913216,
+        "real_over_shuffled": 1.1400014238695386,
+        "real_hi_over_synth": 0.1105868829123558,
+        "z_vs_shuffled_null": 0.6284884378971706,
+        "perm_p_norm": 0.225
+      },
+      "cosines": {
+        "real_vs_synth": -0.23720192909240723,
+        "real_hi_vs_synth": 0.5363940596580505,
+        "shuffled_vs_synth_mean": -0.010922858519479632,
+        "shuffled_vs_synth_sd": 0.28192150926905934,
+        "shuffled_abs_p95": 0.5357900261878964,
+        "perm_p_two_sided": 0.37,
+        "n_perms": 200
+      },
+      "scale_check": {
+        "dtheta_per_update_rung2_5": 0.00543,
+        "note": "for reading ||g|| against the movement it actually produced in production"
+      }
+    },
+    "R3": {
+      "T": 12554,
+      "start_ticks": [
+        158,
+        202,
+        32,
+        228,
+        343,
+        164,
+        277,
+        205,
+        258,
+        44,
+        184,
+        122,
+        236,
+        328,
+        178,
+        487,
+        174,
+        234,
+        386,
+        425,
+        486,
+        186,
+        41,
+        29,
+        373,
+        309,
+        359,
+        26,
+        212,
+        104,
+        263,
+        22
+      ],
+      "truncated": 22,
+      "n_decision": 19301,
+      "n_highrisk": 849,
+      "highrisk_frac_of_decision": 0.04398735816797057,
+      "adv_pre_norm": {
+        "mean": 0.057038068771362305,
+        "sd": 2.755936861038208
+      },
+      "adv_post_norm_decision": {
+        "mean": -1.067269295162987e-08,
+        "sd": 1.0
+      },
+      "mass_real_L2": 138.9280242919922,
+      "synth_scale": 4.974421219995101,
+      "real_hi_scale": 3.4182020230935826,
+      "synth_support": {
+        "n_edge_pos": 74,
+        "n_stay_neg": 706
+      },
+      "grad_norms": {
+        "real": 0.04304107278585434,
+        "synth_coherent": 0.10908154398202896,
+        "real_highrisk_only": 0.053996969014406204,
+        "shuffled_null_mean": 0.02122868531383574,
+        "shuffled_null_sd": 0.0049894397520661975,
+        "shuffled_null_min": 0.01123607624322176,
+        "shuffled_null_max": 0.03545009717345238
+      },
+      "ratios": {
+        "real_over_synth": 0.3945770403923261,
+        "real_over_shuffled": 2.0274959164712114,
+        "real_hi_over_synth": 0.4950147114098617,
+        "z_vs_shuffled_null": 4.371710764316932,
+        "perm_p_norm": 0.0
+      },
+      "cosines": {
+        "real_vs_synth": -0.24367991089820862,
+        "real_hi_vs_synth": 0.4505120813846588,
+        "shuffled_vs_synth_mean": -0.022750171536172273,
+        "shuffled_vs_synth_sd": 0.2922157375837032,
+        "shuffled_abs_p95": 0.5239583402872083,
+        "perm_p_two_sided": 0.425,
+        "n_perms": 200
+      },
+      "scale_check": {
+        "dtheta_per_update_rung2_5": null,
+        "note": "for reading ||g|| against the movement it actually produced in production"
+      }
+    }
+  }
+}

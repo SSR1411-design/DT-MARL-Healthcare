@@ -1,0 +1,50 @@
+==============================================================================
+SPRINT 6.5 PHASE 2b — IS THE NEGATIVE MIGRATE_EDGE ADVANTAGE TRUE?
+==============================================================================
+  checkpoint  : D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\mappo.pth
+  episodes    : 6   starts [491, 532, 574, 615, 657, 698]
+  policy      : greedy (argmax over legal), as evaluate.py reports
+
+------------------------------------------------------------------------------
+P7  CONTENTION AUDIT — why do relocations get refused?
+------------------------------------------------------------------------------
+  relocation attempts        : 688 (114.7/episode)
+  env-reported infeasible/ep : 79.3
+  applied edge/ep            : 9.7   cloud/ep 25.7
+
+  action                           n  refused  refused%  legal@mask contention
+  overall                        688      476     69.2%         476        476
+  MIGRATE_TO_NEIGHBOR_EDGE        58        0      0.0%           0          0
+  MIGRATE_TO_CLOUD               630      476     75.6%         476        476
+  PREEMPTIVE_REROUTE               0        -         -           -          -
+  high_risk_attempts              42       29     69.0%          29         29
+
+------------------------------------------------------------------------------
+P8  IMMEDIATE REWARD TERMS BY ACTION (per decision, post-scale)
+------------------------------------------------------------------------------
+  key                            complete progress     lost      sla migratio   energy infeasib overload   expose     team     TOTAL      n
+  MIGRATE_TO_CLOUD|risk_high       0.0000   0.0000   0.0000   0.0000  -0.8000   0.0000   0.0000   0.0000   0.0000  -0.0012   -0.8012      1
+  MIGRATE_TO_CLOUD|risk_low        0.0000   0.0481   0.0000   0.0000  -0.8000  -0.0137   0.0000   0.0000   0.0000  -0.0004   -0.7660    153
+  MIGRATE_TO_NEIGHBOR_EDGE|risk_high   0.0000   0.0000   0.0000   0.0000  -0.4000   0.0000   0.0000   0.0000   0.0000   0.0018   -0.3982     12
+  MIGRATE_TO_NEIGHBOR_EDGE|risk_low   0.0000   0.0003   0.0000   0.0000  -0.4000  -0.0001   0.0000   0.0000   0.0000  -0.0035   -0.4033     46
+  STAY|risk_high                   0.0048   0.0174  -0.3194   0.0000   0.0000  -0.0079  -0.0037   0.0000  -0.0228  -0.0076   -0.3392    390
+  STAY|risk_low                    0.0445   0.0342  -0.0206   0.0000   0.0000  -0.0114  -0.0030   0.0000  -0.0015  -0.0007    0.0415   7544
+
+------------------------------------------------------------------------------
+P9  EXACT COUNTERFACTUAL — true A(s,a) by deterministic replay
+------------------------------------------------------------------------------
+  candidate STAY decisions   : 360 high-risk, 7006 low-risk
+  deviations run             : 180 (replay mismatches 0)
+  baseline episode reward    : 19.98
+
+  deviation                             n   mean dR      SE      sd   median   P(>0)   dLost  saved   dInf
+  MIGRATE_TO_NEIGHBOR_EDGE|risk_high   45     3.048   0.698   4.627    4.789    0.62   -0.49   0.51   1.40
+  MIGRATE_TO_CLOUD|risk_high           45    -0.050   0.000   0.000   -0.050    0.00    0.00   0.00   1.00
+  MIGRATE_TO_NEIGHBOR_EDGE|risk_low    45    -0.705   0.674   4.472   -0.325    0.24    0.04   0.13   0.13
+  MIGRATE_TO_CLOUD|risk_low            45    -0.050   0.000   0.000   -0.050    0.00    0.00   0.00   1.00
+
+  dR = change in TOTAL episode reward from step s onward, caused by
+  overriding ONE agent's action at ONE step and then following the
+  same greedy policy. This is the true advantage, not an estimate.
+
+  written: saved_models/marl/diag_counterfactual.json

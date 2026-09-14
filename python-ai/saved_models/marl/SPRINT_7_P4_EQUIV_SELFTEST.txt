@@ -1,0 +1,69 @@
+SERIALIZATION STRUCTURE of mappo_R2_mc_target.pth
+  file            : 5207250 bytes  md5 00da5284504cee8c1687866b315d6194
+  archive stem    : 'mappo_R2_mc_target'   271 members (265 tensor storages)
+  non-storage     : ['.data/serialization_id', '.format_version', '.storage_alignment', 'byteorder', 'data.pkl', 'version']
+  top-level keys  : ['actor', 'critic', 'opt_actor', 'opt_critic', 'mappo_cfg', 'n_agents', 'obs_dim', 'state_dim', 'extra']
+     actor       OrderedDict[60]
+     critic      OrderedDict[7]
+     opt_actor   dict[2]
+     opt_critic  dict[2]
+     mappo_cfg   dict[17]
+     n_agents    int = 10
+     obs_dim     int = 48
+     state_dim   int = 489
+     extra       dict[4]
+  graph           : 93 container nodes, 476 leaves, 0 opaque
+  leaf kinds      : {'bool': 19, 'float': 65, 'int': 110, 'none': 4, 'str': 13, 'tensor': 265}
+  opaque leaves   : none
+  tag leaf        : extra.config.train.tag = 'mappo_R2_mc_target'
+  config leaves   : 95 others, all compared exactly
+
+PHASE 4.1 SELF-TEST -- equivalence machinery, no training required
+  [PASS] A      loaded mappo_R2_mc_target.pth: md5 00da5284504cee8c1687866b315d6194 == pre-registered reference
+  [PASS] I6     torch.load -> torch.save under the SAME basename reproduces the original md5 exactly (00da5284504cee8c1687866b315d6194)
+  [PASS] B      saved an equivalent payload as R2_traj_repro.pth (tag and stem both 'R2_traj_repro'), 5205895 bytes
+  [PASS] C      literal whole-file md5 DIFFERS: 99fa9d599143fd5658b02e849c7e77d6 != 00da5284504cee8c1687866b315d6194  -- so a literal-identity criterion is unsatisfiable by construction
+  [PASS] D1a    L1 raw: 271 members, names identical modulo stem ('mappo_R2_mc_target' vs 'R2_traj_repro'); 265/265 tensor storages byte-identical with NO normalisation; content differs only in ['.data/serialization_id', 'data.pkl']
+  [PASS] D1b    L1 normalised: 0 of 271 members differ (differing: none)
+  [PASS] D1c    L2 structural: 476 leaves + 93 nodes compared exactly; 0 differences; 1 normalised ['extra.config.train.tag']; 0 opaque leaves; allowlist accounted True
+            NORM extra.config.train.tag: 'mappo_R2_mc_target' -> 'R2_traj_repro'
+  [PASS] D1d    L3 whole-file: normalised md5 00da5284504cee8c1687866b315d6194 vs pre-registered 00da5284504cee8c1687866b315d6194   (literal cand md5 99fa9d599143fd5658b02e849c7e77d6 != ref)
+  [PASS] D      L1+L2+L3 all exact on a payload-equivalent file
+  [PASS] E0     leaf comparator separates +0.0 from -0.0 (torch.equal calls them equal) and calls NaN equal to an identically-encoded NaN (torch.equal does not)
+  [PASS] E1  1-ULP flip in an actor weight
+            expect=detect L2 diffs=1 normalised=0 L3 flags=True  first diff at actor.actors.0.0.weight
+  [PASS] E2  1-ULP change in extra.mean_reward
+            expect=detect L2 diffs=1 normalised=0 L3 flags=True  first diff at extra.mean_reward
+  [PASS] E3  a config field other than tag (train.seed +1)
+            expect=detect L2 diffs=1 normalised=0 L3 flags=True  first diff at extra.config.train.seed
+  [PASS] E4  1-ULP change in mappo_cfg.gamma
+            expect=detect L2 diffs=1 normalised=0 L3 flags=True  first diff at mappo_cfg.gamma
+  [PASS] E5  1-ULP flip in opt_actor.state[0].exp_avg (optimiser moment)
+            expect=detect L2 diffs=1 normalised=0 L3 flags=True  first diff at opt_actor.state.0.exp_avg
+  [PASS] E6  optimiser step count (state[0].step + 1)
+            expect=detect L2 diffs=1 normalised=0 L3 flags=True  first diff at opt_actor.state.0.step
+  [PASS] E7  optimiser lr in opt_critic.param_groups[0]
+            expect=detect L2 diffs=1 normalised=0 L3 flags=True  first diff at opt_critic.param_groups[0].lr
+  [PASS] E8  scalar metadata n_agents + 1
+            expect=detect L2 diffs=1 normalised=0 L3 flags=True  first diff at n_agents
+  [PASS] E9  sign bit flipped in a critic bias element (covers 0.0 -> -0.0)
+            expect=detect L2 diffs=1 normalised=0 L3 flags=True  first diff at critic.net.0.bias
+  [PASS] E10 NaN injected into one actor bias element
+            expect=detect L2 diffs=1 normalised=0 L3 flags=True  first diff at actor.actors.0.0.bias
+  [PASS] E11 dict key ORDER reversed in extra (schema drift)
+            expect=detect L2 diffs=1 normalised=0 L3 flags=True  first diff at extra
+  [PASS] E12 tensor dtype float32 -> float64 in a critic bias
+            expect=detect L2 diffs=1 normalised=0 L3 flags=True  first diff at critic.net.0.bias
+  [PASS] E13 an extra top-level key added
+            expect=detect L2 diffs=2 normalised=0 L3 flags=True  first diff at 
+  [PASS] E14 extra.config.train.tag ONLY (the one allowed normalisation)
+            expect=normal L2 diffs=0 normalised=1 L3 flags=False  first diff at -
+  [PASS] E15 tag AND a 1-ULP weight flip together
+            expect=detect L2 diffs=1 normalised=1 L3 flags=True  first diff at actor.actors.0.0.weight
+  [PASS] E      15/15 mutation cases behaved as specified (14 must be detected, 1 must be normalised)
+  [PASS] N1     allowlist is exactly ONE literal leaf path -- 1/476 leaves (0.21%) -- and the graph matches the pre-registered census (476 leaves, 93 nodes, 0 of unrecognised type)
+  [PASS] N2     all 265 tensor-storage members (one per tensor, of 271 total) are compared as raw bytes with NO normalisation applied to them at any point -- criterion *a
+  [PASS] N3     the tag's measured blast radius is 2 container members (the pickle stream and its content hash); the stem's is member NAMES only
+  [PASS] RO     the original R2 checkpoint is unmodified: md5 00da5284504cee8c1687866b315d6194
+--------------------------------------------------------------------------
+  15/15 criteria passed

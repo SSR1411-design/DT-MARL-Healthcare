@@ -1,0 +1,150 @@
+==============================================================================
+SPRINT 7 DIVERGENCE — part 4: UPDATE CONTENT / DATA DISTRIBUTION
+        offline; each arm's own on-policy buffer via the existing
+        _diag_rung2_75_coherence.build; no optimiser, no writes
+==============================================================================
+
+  building A0       (mappo_A0_cpu_repro.pth) ...
+    T=3100  decision=3452  hi=212  episodes=8
+
+  building R2       (mappo_R2_mc_target.pth) ...
+    T=3200  decision=4967  hi=269  episodes=8
+
+  building R2_b32   (mappo_R2_mc_target.pth, forced 32 episodes) ...
+    T=12684  decision=22098  hi=1069  episodes=32
+
+  building R3_best  (R3_batch32_best.pth) ...
+    T=12552  decision=10817  hi=584  episodes=32
+
+  building R3       (R3_batch32.pth) ...
+    T=12554  decision=19301  hi=847  episodes=32
+
+==============================================================================
+C1  UPDATE OCCUPANCY AND ACTION FREQUENCY (each arm's own buffer)
+==============================================================================
+
+  size and risk occupancy
+  metric                                         A0         R2     R2_b32    R3_best         R3
+  rollout_episodes                                8          8         32         32         32
+  timesteps T                                  3100       3200      12684      12552      12554
+  decision entries                             3452       4967      22098      10817      19301
+  decision_frac                              0.1114     0.1552     0.1742     0.0862     0.1537
+  hi (risk>=0.6) decision                       212        269       1069        584        847
+  lo (risk<0.2) decision                       3233       4689      20997      10202      18420
+  hi share of decision                       0.0614     0.0542     0.0484     0.0540     0.0439
+
+  selected-action fraction, ALL decision entries
+  metric                                         A0         R2     R2_b32    R3_best         R3
+  STAY                                       0.7998     0.8581     0.8697     0.7612     0.8519
+  MIGRATE_EDGE                               0.1228     0.0729     0.0647     0.1569     0.0832
+  MIGRATE_CLOUD                              0.0771     0.0689     0.0656     0.0807     0.0646
+
+  ON-OWN-DISTRIBUTION selected EDGE (not P1/P2)
+  metric                                         A0         R2     R2_b32    R3_best         R3
+  at high risk                               0.0660     0.0372     0.0645     0.1284     0.0874
+  at low risk                                0.1265     0.0751     0.0648     0.1590     0.0831
+  hi - lo                                   -0.0605    -0.0379    -0.0002    -0.0306     0.0043
+
+==============================================================================
+C2  REWARD, CRITIC ERROR AND TD RESIDUAL BY RISK BUCKET
+==============================================================================
+
+  bucket = all
+  metric                                         A0         R2     R2_b32    R3_best         R3
+  mean reward                               -0.0622    -0.0573    -0.0453    -0.1244    -0.0659
+  mean return (arm's target)                 9.6444     7.8473     7.0992     9.2726     5.6370
+  mean V(s)                                  8.6878     6.7858     6.4664     7.0952     5.4927
+  mean (ret - V)                             0.9566     1.0616     0.6327     2.1773     0.1443
+  mean |ret - V|                             3.0181     3.6640     3.7740     5.5382     4.0389
+  explained variance                         0.8589     0.7808     0.7497     0.7214     0.7056
+  mean TD residual                          -0.0534    -0.0646    -0.0531    -0.1234    -0.0675
+  mean |TD residual|                         0.2667     0.2812     0.2756     0.3894     0.3463
+
+  bucket = hi
+  metric                                         A0         R2     R2_b32    R3_best         R3
+  mean reward                               -0.1814    -0.1644    -0.1572    -0.1681    -0.1464
+  mean return (arm's target)                 9.2338     6.6075     6.9964    11.4485     7.0458
+  mean V(s)                                  8.8074     7.9812     7.2536     9.2527     7.9753
+  mean (ret - V)                             0.4264    -1.3737    -0.2572     2.1958    -0.9295
+  mean |ret - V|                             3.4830     4.3820     4.1874     5.4705     5.4307
+  explained variance                         0.9003     0.8155     0.7924     0.7175     0.6083
+  mean TD residual                          -0.1348    -0.0909    -0.0852    -0.1527    -0.0639
+  mean |TD residual|                         0.3097     0.3445     0.3436     0.3743     0.4035
+
+  bucket = lo
+  metric                                         A0         R2     R2_b32    R3_best         R3
+  mean reward                               -0.0546    -0.0514    -0.0395    -0.1223    -0.0624
+  mean return (arm's target)                 9.6260     7.8921     7.0843     9.1129     5.5475
+  mean V(s)                                  8.6458     6.6896     6.4054     6.9392     5.3513
+  mean (ret - V)                             0.9803     1.2024     0.6789     2.1737     0.1962
+  mean |ret - V|                             2.9790     3.6208     3.7516     5.5399     3.9723
+  explained variance                         0.8543     0.7814     0.7467     0.7211     0.7113
+  mean TD residual                          -0.0481    -0.0626    -0.0511    -0.1222    -0.0672
+  mean |TD residual|                         0.2643     0.2774     0.2720     0.3907     0.3433
+
+==============================================================================
+C3  ADVANTAGE DISTRIBUTION AND PER-SAMPLE GRADIENT WEIGHT
+==============================================================================
+
+  normalisation pool (mappo.py:363-366)
+  metric                                         A0         R2     R2_b32    R3_best         R3
+  pool size (decision entries)                 3452       4967      22098      10817      19301
+  pool mean raw adv                          0.9566     0.4770     0.3035     1.7528     0.1445
+  pool std raw adv                           4.3969     3.1041     3.2968     4.7833     3.4099
+  1/(std+1e-8)                               0.2274     0.3222     0.3033     0.2091     0.2933
+
+  raw GAE by bucket
+  metric                                         A0         R2     R2_b32    R3_best         R3
+  hi raw std                                 4.6896     3.4203     3.7855     4.4800     4.6397
+  lo raw std                                 4.3660     3.0495     3.2588     4.7954     3.3311
+  hi raw mean                                0.4264    -1.2980    -0.6882     1.2323    -0.8654
+  lo raw mean                                0.9803     0.5792     0.3541     1.7787     0.1922
+  hi raw p99                                10.5996     5.3420     6.8781    10.6811    10.0831
+  hi raw p1                                 -7.5225    -6.2690    -9.3894    -7.2109   -10.4516
+
+  NORMALISED advantage = gradient weight
+  metric                                         A0         R2     R2_b32    R3_best         R3
+  z(hi, EDGE)                                0.1611     0.2988    -0.1461    -0.1979     0.1049
+  z(hi, STAY)                               -0.1528    -0.6092    -0.3230    -0.1044    -0.3652
+  z(hi,EDGE) - z(hi,STAY)                    0.3139     0.9080     0.1769    -0.0935     0.4701
+  z(lo, EDGE)                               -0.2763    -0.3889    -0.3418    -0.5087    -0.1527
+  |adv| mass share hi                        0.0707     0.0780     0.0626     0.0547     0.0638
+  |adv| mass share hi&EDGE                   0.0036     0.0019     0.0028     0.0061     0.0033
+  signed mass share hi&EDGE                  0.0009     0.0008    -0.0006    -0.0017     0.0005
+
+==============================================================================
+C4  WITHIN-UPDATE EPISODE HETEROGENEITY
+==============================================================================
+
+  
+  metric                                         A0         R2     R2_b32    R3_best         R3
+  episodes pooled per update                      8          8         32         32         32
+  start-tick span                               311        311        465        465        465
+  hi&EDGE per episode (mean)                 1.7500     1.2500     2.1562     2.3438     2.3125
+  hi&EDGE per episode (sd)                   2.1065     1.5612     1.7159     1.9139     2.0982
+  frac episodes with 0 hi&EDGE               0.2500     0.3750     0.1875     0.1875     0.2188
+  hi&EDGE mass PR (eff. eps)                 3.6329     2.1514    14.4208    14.6440    14.8571
+  PR / n_episodes                            0.4541     0.2689     0.4507     0.4576     0.4643
+  between-ep sd of mean z                    0.2814     0.2000     0.2206     0.2820     0.2260
+  between-ep CV of hi count                  0.5246     0.7895     0.6603     0.6823     0.5865
+
+==============================================================================
+C5  EXACT MINIBATCH DECOMPOSITION AND REUSE
+==============================================================================
+
+  
+  metric                                         A0         R2     R2_b32    R3_best         R3
+  T                                            3100       3200      12684      12552      12554
+  mb_size = T//4                                775        800       3171       3138       3138
+  chunks per epoch                                4          4          4          4          5
+  tail chunk size                               775        800       3171       3138          2
+  tail / T                                   0.2500     0.2500     0.2500     0.2500     0.0002
+  minibatches per update                         16         16         16         16         20
+  timestep rows per update                    12400      12800      50736      50208      50216
+  grad passes per decision                        4          4          4          4          4
+  hi&EDGE per minibatch (mean)               3.5000     2.5000    17.2500    18.7500    14.8000
+  hi&EDGE per minibatch (min)                0.0000     0.0000    10.0000    14.0000     0.0000
+  frac minibatches with 0                    0.0625     0.0625     0.0000     0.0000     0.2000
+  |adv| share hi&EDGE per mb                 0.0036     0.0019     0.0028     0.0061     0.0028
+
+wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_DIV_content_main.json

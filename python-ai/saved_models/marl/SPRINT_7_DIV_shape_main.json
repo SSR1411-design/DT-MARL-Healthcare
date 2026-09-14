@@ -1,0 +1,463 @@
+{
+ "probe": "DIV-3 reality and shape of the high-risk deficit",
+ "ref_arm": "R2",
+ "args": {
+  "device": "cpu",
+  "clusters": 32,
+  "start_seed": 20260825,
+  "random_seed": 31337,
+  "boot": 10000,
+  "boot_seed": 7,
+  "tag": "main"
+ },
+ "results": {
+  "RANDOM": {
+   "E1_bootstrap": {
+    "A0": {
+     "hi": {
+      "proj_frac_point": 0.45421494759530384,
+      "proj_frac_ci95": [
+       0.18478577496635035,
+       0.660270771464585
+      ],
+      "cosine_point": 0.28080292667319984,
+      "cosine_ci95": [
+       0.1047809366589448,
+       0.4399946916743366
+      ],
+      "n_clusters": 32
+     },
+     "lo": {
+      "proj_frac_point": 0.699167655173178,
+      "proj_frac_ci95": [
+       0.6755577241647669,
+       0.7231355942088532
+      ],
+      "cosine_point": 0.7114740081672551,
+      "cosine_ci95": [
+       0.6932747443242094,
+       0.7290211536005229
+      ],
+      "n_clusters": 32
+     },
+     "hi_minus_lo": {
+      "point": -0.24495270757787418,
+      "ci95": [
+       -0.5137692991025782,
+       -0.03857347853178572
+      ],
+      "frac_replicates_negative": 0.9922
+     }
+    },
+    "R3": {
+     "hi": {
+      "proj_frac_point": 0.1598559426763676,
+      "proj_frac_ci95": [
+       0.004629619403718999,
+       0.2657079060985354
+      ],
+      "cosine_point": 0.17632043839843345,
+      "cosine_ci95": [
+       0.004251611174846887,
+       0.3487316504392039
+      ],
+      "n_clusters": 32
+     },
+     "lo": {
+      "proj_frac_point": 0.6858142637552053,
+      "proj_frac_ci95": [
+       0.6697818438649472,
+       0.7006728679621375
+      ],
+      "cosine_point": 0.7647400498326793,
+      "cosine_ci95": [
+       0.7458767624765893,
+       0.7822132463359772
+      ],
+      "n_clusters": 32
+     },
+     "hi_minus_lo": {
+      "point": -0.5259583210788377,
+      "ci95": [
+       -0.682192841906619,
+       -0.42094258920700417
+      ],
+      "frac_replicates_negative": 1.0
+     }
+    },
+    "R3_best": {
+     "hi": {
+      "proj_frac_point": 0.16769085010633045,
+      "proj_frac_ci95": [
+       0.04625695343712251,
+       0.27776223451836546
+      ],
+      "cosine_point": 0.2300068816452892,
+      "cosine_ci95": [
+       0.055238947081052175,
+       0.4034705154501815
+      ],
+      "n_clusters": 32
+     },
+     "lo": {
+      "proj_frac_point": 0.5617071591950468,
+      "proj_frac_ci95": [
+       0.5412505815031173,
+       0.5813648162075623
+      ],
+      "cosine_point": 0.7587381225380917,
+      "cosine_ci95": [
+       0.7380235646503499,
+       0.7774457714575403
+      ],
+      "n_clusters": 32
+     },
+     "hi_minus_lo": {
+      "point": -0.3940163090887163,
+      "ci95": [
+       -0.5143228573155972,
+       -0.2811882302563255
+      ],
+      "frac_replicates_negative": 1.0
+     }
+    }
+   },
+   "E2_shape": {
+    "A0": {
+     "hi": {
+      "norm": 8.460104563869095,
+      "uniform_norm": 5.95168024323925,
+      "uniform_share": 0.7034996078721447,
+      "argmax_EDGE": 18,
+      "argmax_flips_vs_theta0": 84,
+      "n": 216
+     },
+     "lo": {
+      "norm": 38.03368914543277,
+      "uniform_norm": 24.643125910693442,
+      "uniform_share": 0.6479288878989191,
+      "argmax_EDGE": 165,
+      "argmax_flips_vs_theta0": 2420,
+      "n": 4757
+     }
+    },
+    "R2": {
+     "hi": {
+      "norm": 5.230171605035699,
+      "uniform_norm": 1.995279837171229,
+      "uniform_share": 0.38149414356694133,
+      "argmax_EDGE": 100,
+      "argmax_flips_vs_theta0": 152,
+      "n": 216
+     },
+     "lo": {
+      "norm": 38.703136596022794,
+      "uniform_norm": 25.053212708221317,
+      "uniform_share": 0.6473173730006118,
+      "argmax_EDGE": 835,
+      "argmax_flips_vs_theta0": 3107,
+      "n": 4757
+     }
+    },
+    "R2_best": {
+     "hi": {
+      "norm": 5.230171605035699,
+      "uniform_norm": 1.995279837171229,
+      "uniform_share": 0.38149414356694133,
+      "argmax_EDGE": 100,
+      "argmax_flips_vs_theta0": 152,
+      "n": 216
+     },
+     "lo": {
+      "norm": 38.703136596022794,
+      "uniform_norm": 25.053212708221317,
+      "uniform_share": 0.6473173730006118,
+      "argmax_EDGE": 835,
+      "argmax_flips_vs_theta0": 3107,
+      "n": 4757
+     }
+    },
+    "R3": {
+     "hi": {
+      "norm": 4.741787281590498,
+      "uniform_norm": 3.2237511303755992,
+      "uniform_share": 0.679859921783392,
+      "argmax_EDGE": 0,
+      "argmax_flips_vs_theta0": 67,
+      "n": 216
+     },
+     "lo": {
+      "norm": 34.70873944084138,
+      "uniform_norm": 26.797902511806228,
+      "uniform_share": 0.7720793939371201,
+      "argmax_EDGE": 21,
+      "argmax_flips_vs_theta0": 2283,
+      "n": 4757
+     }
+    },
+    "R3_best": {
+     "hi": {
+      "norm": 3.8131551385623084,
+      "uniform_norm": 1.6084400964259256,
+      "uniform_share": 0.42181344266846776,
+      "argmax_EDGE": 72,
+      "argmax_flips_vs_theta0": 138,
+      "n": 216
+     },
+     "lo": {
+      "norm": 28.65261183472218,
+      "uniform_norm": 18.378407554329822,
+      "uniform_share": 0.6414217196094585,
+      "argmax_EDGE": 627,
+      "argmax_flips_vs_theta0": 2884,
+      "n": 4757
+     }
+    },
+    "theta0": {
+     "hi": {
+      "norm": 0.0,
+      "uniform_norm": 0.0,
+      "uniform_share": NaN,
+      "argmax_EDGE": 18,
+      "argmax_flips_vs_theta0": 0,
+      "n": 216
+     },
+     "lo": {
+      "norm": 0.0,
+      "uniform_norm": 0.0,
+      "uniform_share": NaN,
+      "argmax_EDGE": 1759,
+      "argmax_flips_vs_theta0": 0,
+      "n": 4757
+     }
+    }
+   },
+   "n_hi": 216,
+   "n_lo": 4757
+  },
+  "UNION": {
+   "E1_bootstrap": {
+    "A0": {
+     "hi": {
+      "proj_frac_point": 0.3457834679071754,
+      "proj_frac_ci95": [
+       0.30277424165470457,
+       0.3879707661773962
+      ],
+      "cosine_point": 0.30425348902130006,
+      "cosine_ci95": [
+       0.2685756540852377,
+       0.3410563320097475
+      ],
+      "n_clusters": 64
+     },
+     "lo": {
+      "proj_frac_point": 0.5964951694295193,
+      "proj_frac_ci95": [
+       0.5894588443627677,
+       0.6036675076222923
+      ],
+      "cosine_point": 0.7278050971646839,
+      "cosine_ci95": [
+       0.7087270836976801,
+       0.7481811920976054
+      ],
+      "n_clusters": 64
+     },
+     "hi_minus_lo": {
+      "point": -0.2507117015223439,
+      "ci95": [
+       -0.2952551219376141,
+       -0.20700464156001658
+      ],
+      "frac_replicates_negative": 1.0
+     }
+    },
+    "R3": {
+     "hi": {
+      "proj_frac_point": 0.21469749824978182,
+      "proj_frac_ci95": [
+       0.19060752237863057,
+       0.23728882932457548
+      ],
+      "cosine_point": 0.22689002865561508,
+      "cosine_ci95": [
+       0.18756860984944676,
+       0.27119176770593256
+      ],
+      "n_clusters": 64
+     },
+     "lo": {
+      "proj_frac_point": 0.7123981149785368,
+      "proj_frac_ci95": [
+       0.7024289471257114,
+       0.7224515704908206
+      ],
+      "cosine_point": 0.775881396861022,
+      "cosine_ci95": [
+       0.752369547899886,
+       0.8003780449017736
+      ],
+      "n_clusters": 64
+     },
+     "hi_minus_lo": {
+      "point": -0.497700616728755,
+      "ci95": [
+       -0.5151966090548262,
+       -0.4811141370337346
+      ],
+      "frac_replicates_negative": 1.0
+     }
+    },
+    "R3_best": {
+     "hi": {
+      "proj_frac_point": 0.06460538578189999,
+      "proj_frac_ci95": [
+       0.04702068573759444,
+       0.08086125806726548
+      ],
+      "cosine_point": 0.10142693277465324,
+      "cosine_ci95": [
+       0.06834721364016542,
+       0.13890914518838232
+      ],
+      "n_clusters": 64
+     },
+     "lo": {
+      "proj_frac_point": 0.48875437268547506,
+      "proj_frac_ci95": [
+       0.48003919036926995,
+       0.4975254196448049
+      ],
+      "cosine_point": 0.7243468106157194,
+      "cosine_ci95": [
+       0.7083736584664876,
+       0.7407750275656991
+      ],
+      "n_clusters": 64
+     },
+     "hi_minus_lo": {
+      "point": -0.42414898690357505,
+      "ci95": [
+       -0.43900023241819536,
+       -0.41020705815291497
+      ],
+      "frac_replicates_negative": 1.0
+     }
+    }
+   },
+   "E2_shape": {
+    "A0": {
+     "hi": {
+      "norm": 28.806516474132007,
+      "uniform_norm": 20.778447519044747,
+      "uniform_share": 0.7213106637764968,
+      "argmax_EDGE": 628,
+      "argmax_flips_vs_theta0": 1643,
+      "n": 3592
+     },
+     "lo": {
+      "norm": 126.50779468405791,
+      "uniform_norm": 98.45793746603047,
+      "uniform_share": 0.7782756604991852,
+      "argmax_EDGE": 1496,
+      "argmax_flips_vs_theta0": 31514,
+      "n": 70621
+     }
+    },
+    "R2": {
+     "hi": {
+      "norm": 25.346738514858732,
+      "uniform_norm": 15.076484653632674,
+      "uniform_share": 0.5948096495647579,
+      "argmax_EDGE": 1136,
+      "argmax_flips_vs_theta0": 2116,
+      "n": 3592
+     },
+     "lo": {
+      "norm": 154.35668639224411,
+      "uniform_norm": 123.83492721971949,
+      "uniform_share": 0.8022647422285023,
+      "argmax_EDGE": 12559,
+      "argmax_flips_vs_theta0": 42116,
+      "n": 70621
+     }
+    },
+    "R2_best": {
+     "hi": {
+      "norm": 25.346738514858732,
+      "uniform_norm": 15.076484653632674,
+      "uniform_share": 0.5948096495647579,
+      "argmax_EDGE": 1136,
+      "argmax_flips_vs_theta0": 2116,
+      "n": 3592
+     },
+     "lo": {
+      "norm": 154.35668639224411,
+      "uniform_norm": 123.83492721971949,
+      "uniform_share": 0.8022647422285023,
+      "argmax_EDGE": 12559,
+      "argmax_flips_vs_theta0": 42116,
+      "n": 70621
+     }
+    },
+    "R3": {
+     "hi": {
+      "norm": 23.98466508279884,
+      "uniform_norm": 18.136349654720892,
+      "uniform_share": 0.7561643905433475,
+      "argmax_EDGE": 0,
+      "argmax_flips_vs_theta0": 1015,
+      "n": 3592
+     },
+     "lo": {
+      "norm": 141.72708981687924,
+      "uniform_norm": 124.19573893979789,
+      "uniform_share": 0.8763020471263961,
+      "argmax_EDGE": 292,
+      "argmax_flips_vs_theta0": 30354,
+      "n": 70621
+     }
+    },
+    "R3_best": {
+     "hi": {
+      "norm": 16.144980186905684,
+      "uniform_norm": 9.162597847236052,
+      "uniform_share": 0.5675199189570599,
+      "argmax_EDGE": 709,
+      "argmax_flips_vs_theta0": 1724,
+      "n": 3592
+     },
+     "lo": {
+      "norm": 104.15246442974055,
+      "uniform_norm": 73.76460151145366,
+      "uniform_share": 0.708236736550905,
+      "argmax_EDGE": 8871,
+      "argmax_flips_vs_theta0": 38931,
+      "n": 70621
+     }
+    },
+    "theta0": {
+     "hi": {
+      "norm": 0.0,
+      "uniform_norm": 0.0,
+      "uniform_share": NaN,
+      "argmax_EDGE": 830,
+      "argmax_flips_vs_theta0": 0,
+      "n": 3592
+     },
+     "lo": {
+      "norm": 0.0,
+      "uniform_norm": 0.0,
+      "uniform_share": NaN,
+      "argmax_EDGE": 27855,
+      "argmax_flips_vs_theta0": 0,
+      "n": 70621
+     }
+    }
+   },
+   "n_hi": 3592,
+   "n_lo": 70621
+  }
+ }
+}

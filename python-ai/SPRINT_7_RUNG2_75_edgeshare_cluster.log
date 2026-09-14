@@ -1,0 +1,31 @@
+==============================================================================
+SPRINT 7 RUNG 2.75 -- item A addendum 2: CLUSTER-AWARE inference
+        episode is the sample unit, not the decision entry
+==============================================================================
+
+  train window     : [9, 491]
+  distinct starts  : 32  [26, 46, 71, 77, 78, 85, 115, 158, 185, 197, 228, 243, 244, 256, 270, 282, 293, 323, 361, 369, 383, 416, 420, 438, 445, 448, 458, 464, 471, 480, 482, 487]
+  torch seed       : 4242 (identical for both arms)
+
+  A0: 32 episodes, 803 high-risk entries, 77 EDGE
+      episode share  mean 0.0975  sd 0.0857  range 0.0000-0.3077  (32 episodes with high-risk entries)
+      truncated 15/32   mean length 389.8
+
+  R2: 32 episodes, 852 high-risk entries, 83 EDGE
+      episode share  mean 0.1114  sd 0.0938  range 0.0000-0.3846  (32 episodes with high-risk entries)
+      truncated 21/32   mean length 394.9
+
+==============================================================================
+A0 vs R2, SAME data, three inferences
+==============================================================================
+  pooled                 A0 77/803 = 0.0959   R2 83/852 = 0.0974   diff +0.0015
+  naive  (entry as unit) SE 0.01453  z +0.11  p 0.9163  ns
+  cluster bootstrap      SE 0.01492  z +0.10  p 0.9185  CI95 [-0.0261, +0.0329]  ns
+  paired per-episode     mean +0.0139 (sd 0.1103, n=32)  t +0.71  p 0.4765
+  sign test              R2 higher in 17 episodes, A0 higher in 14  p_exact 0.7201
+
+  DESIGN EFFECT = 1.05   -> effective n is A0 762 / R2 808, not 803 / 852
+  the naive test overstates its precision by 1.03x in SE terms
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_75_edgeshare_cluster_main.json
+==============================================================================

@@ -1,10 +1,21 @@
 package com.dtmarl.ai.prediction;
 
+import com.dtmarl.ai.digitaltwin.EdgeNode;
+
 /**
  * One tick's worth of telemetry for a single node, combining compute
  * (EdgeNode) and network (NetworkLink) state. This is the raw feature
  * vector that both the rolling history buffer and the CSV exporter
  * work with.
+ *
+ * The 14 fields written by {@link #toCsvRow()} are the OBSERVABLE ones - the
+ * only ones a real monitoring agent could read, and therefore the only ones
+ * a predictor may consume.
+ *
+ * {@link #healthState} and {@link #wear} are LATENT ground truth carried
+ * alongside for validation. They are excluded from toCsvRow() on purpose and
+ * are exported only into the clearly-marked audit_* block appended by
+ * {@link HistoryCollector#exportLabeledCsv}.
  */
 public class TelemetrySnapshot {
 
@@ -25,13 +36,18 @@ public class TelemetrySnapshot {
     public final double linkPacketLossPercent;
     public final boolean underAttack;
 
+    // ---- latent, audit-only: NEVER part of toCsvRow() ---------------------
+    public final EdgeNode.HealthState healthState;
+    public final double wear;
+
     public TelemetrySnapshot(double time, int nodeId,
                               double cpuUsage, double ramUsage,
                               double bandwidthUsage, double energyConsumption,
                               int runningTasks, boolean active, boolean degraded,
                               boolean linkUp, double linkBandwidthMbps,
                               double linkLatencyMs, double linkPacketLossPercent,
-                              boolean underAttack) {
+                              boolean underAttack,
+                              EdgeNode.HealthState healthState, double wear) {
 
         this.time = time;
         this.nodeId = nodeId;
@@ -47,6 +63,8 @@ public class TelemetrySnapshot {
         this.linkLatencyMs = linkLatencyMs;
         this.linkPacketLossPercent = linkPacketLossPercent;
         this.underAttack = underAttack;
+        this.healthState = healthState;
+        this.wear = wear;
     }
 
     /**

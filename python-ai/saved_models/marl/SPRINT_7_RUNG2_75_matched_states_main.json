@@ -1,0 +1,2931 @@
+{
+  "probe": "SPRINT_7_RUNG2_75_matched_states",
+  "what": "both actors evaluated at the SAME recorded states, so the on-policy state distribution cannot carry the high-risk EDGE contrast; plus a risk-response curve on fixed state sets as an unconfounded replacement for the share metric",
+  "confound_being_addressed": {
+    "where": "the Rung 2 headline metric itself, and every high-risk EDGE share quoted since Sprint 6",
+    "what": "each arm's share is computed on its OWN trajectory; denominators differ (2174 vs 1418 high-risk entries) and episode lengths differ (A0 374.2 with 0/32 truncated; R2 392.1 with 17/32), so a policy difference and a state-distribution difference are not separable",
+    "why_it_is_structural": "risk is high at a host BECAUSE tasks remain on it; STAY keeps an agent in a high-risk state and MIGRATE_EDGE removes it from one, so conditioning on 'in a high-risk state' selects for 'just chose STAY'. The metric has its own outcome in the denominator.",
+    "not_a_computation_error": "both figures use the same definition and are reproduced EXACTLY on the diagonal here; the defect is identification, not arithmetic",
+    "resolution": [
+      "cross-evaluate pi_A0 and pi_R2 at identical states, paired within state, clustered by episode",
+      "add a policy-independent (uniform-legal) state source",
+      "score risk RESPONSE on a fixed state set instead of a share on a policy-dependent one"
+    ]
+  },
+  "definition": {
+    "window": "eval",
+    "policy": "greedy (deterministic)",
+    "decision_rule": "mask.sum(-1) > 1",
+    "threshold": "min(int(risk*5), 4) >= 3",
+    "starts": "same construction and seed as _diag_rung2_75_edgeshare_cluster --cell production",
+    "random_source": "uniform over legal actions; depends on neither arm. CAVEAT: visits states off-manifold for both, so it is a neutral reference, not a realistic one.",
+    "union_source": "A0's recorded states pooled with R2's, episode ids kept disjoint. Symmetric by construction and fully on-manifold for both arms, at the cost of containing both arms' selection effects rather than none.",
+    "risk_bins": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0001
+    ]
+  },
+  "not_a_fix": "forward passes only; no optimiser, no gradient, no write to any checkpoint; production code unmodified",
+  "n_clusters": 32,
+  "start_ticks": [
+    495,
+    498,
+    506,
+    507,
+    517,
+    520,
+    521,
+    524,
+    536,
+    553,
+    563,
+    572,
+    580,
+    583,
+    590,
+    591,
+    594,
+    597,
+    603,
+    615,
+    621,
+    636,
+    648,
+    650,
+    651,
+    652,
+    668,
+    672,
+    687,
+    688,
+    690,
+    694
+  ],
+  "diagonal_parity_vs_headline": {
+    "A0": {
+      "expected_EDGE": 60,
+      "expected_n": 2174,
+      "got_EDGE": 60,
+      "got_n": 2174,
+      "match": true
+    },
+    "R2": {
+      "expected_EDGE": 122,
+      "expected_n": 1418,
+      "got_EDGE": 122,
+      "got_n": 1418,
+      "match": true
+    }
+  },
+  "by_state_source": {
+    "A0": {
+      "source": "A0",
+      "n_decision": 43519,
+      "n_highrisk": 2174,
+      "highrisk_frac_of_decision": 0.049955191985109955,
+      "truncated": 0,
+      "mean_length": 374.15625,
+      "risk_within_highrisk": {
+        "mean": 0.7755006551742554,
+        "p25": 0.6212795972824097,
+        "p50": 0.8449633717536926,
+        "p75": 0.9481146335601807
+      },
+      "evaluated": {
+        "A0": {
+          "p_edge_mean": 0.14940858400748527,
+          "p_stay_mean": 0.7785574469617683,
+          "maxp_mean": 0.8467195071177188,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.3653402279886719,
+          "frac_argmax_edge": 0.027598896044158234,
+          "argmax_counts": {
+            "STAY": 1936,
+            "MIGRATE_EDGE": 60,
+            "MIGRATE_CLOUD": 178,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.14940858400748527,
+            "se_cluster": 0.00249131728433206,
+            "ci95": [
+              0.1447052775856245,
+              0.1545343743596663
+            ],
+            "n": 2174
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.027598896044158234,
+            "se_cluster": 0.00291686505131197,
+            "ci95": [
+              0.021890755928978028,
+              0.033166742389822805
+            ],
+            "n": 2174
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 41219,
+              "risk_mean": 0.049228277057409286,
+              "p_edge": 0.20258959987926226,
+              "frac_argmax_edge": 0.005992382153861084
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 107,
+              "risk_mean": 0.14024800062179565,
+              "p_edge": 0.08801756413636085,
+              "frac_argmax_edge": 0.028037383177570093
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 15,
+              "risk_mean": 0.23580169677734375,
+              "p_edge": 0.20546725628276666,
+              "frac_argmax_edge": 0.26666666666666666
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 1,
+              "risk_mean": 0.36990734934806824,
+              "p_edge": 0.5930531620979309,
+              "frac_argmax_edge": 1.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 3,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.05148776868979136,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 986,
+              "risk_mean": 0.6233986616134644,
+              "p_edge": 0.20552272566192278,
+              "frac_argmax_edge": 0.032454361054766734
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 560,
+              "risk_mean": 0.8456969261169434,
+              "p_edge": 0.09771847064216023,
+              "frac_argmax_edge": 0.02857142857142857
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 628,
+              "risk_mean": 0.9517152905464172,
+              "p_edge": 0.10739890218154041,
+              "frac_argmax_edge": 0.01910828025477707
+            }
+          ],
+          "spearman_risk_vs_p_edge": -0.007628663182705414,
+          "p_edge_risk_lt_02": 0.20229295351076568,
+          "p_edge_risk_ge_06": 0.14940858400748527,
+          "risk_response_high_minus_low": -0.052884369503280404,
+          "risk_response_cluster": {
+            "delta": -0.052884369503280404,
+            "se_cluster": 0.002592388636955297,
+            "ci95": [
+              -0.05796638317081673,
+              -0.04775520218787317
+            ],
+            "z": -20.399861637023655,
+            "p_value": 0.0,
+            "n_hi": 2174,
+            "n_lo": 41326,
+            "n_clusters": 32
+          },
+          "is_own_state_source": true
+        },
+        "R2": {
+          "p_edge_mean": 0.3837058979296811,
+          "p_stay_mean": 0.5740362339564826,
+          "maxp_mean": 0.681021997850755,
+          "frac_maxp_gt_099": 0.04461821527138914,
+          "entropy_mean": 0.5758644287455684,
+          "frac_argmax_edge": 0.46642134314627415,
+          "argmax_counts": {
+            "STAY": 1005,
+            "MIGRATE_EDGE": 1014,
+            "MIGRATE_CLOUD": 155,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.3837058979296811,
+            "se_cluster": 0.0064303894568174015,
+            "ci95": [
+              0.3712356468945672,
+              0.39660634808983575
+            ],
+            "n": 2174
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.46642134314627415,
+            "se_cluster": 0.011444081252402136,
+            "ci95": [
+              0.44449499545040944,
+              0.4888273348424747
+            ],
+            "n": 2174
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 41219,
+              "risk_mean": 0.049228277057409286,
+              "p_edge": 0.19981585550556047,
+              "frac_argmax_edge": 0.27853659720032026
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 107,
+              "risk_mean": 0.14024800062179565,
+              "p_edge": 0.5185150443532757,
+              "frac_argmax_edge": 0.9158878504672897
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 15,
+              "risk_mean": 0.23580169677734375,
+              "p_edge": 0.39131957590579985,
+              "frac_argmax_edge": 0.6666666666666666
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 1,
+              "risk_mean": 0.36990734934806824,
+              "p_edge": 0.08923373371362686,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 3,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.0822393794854482,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 986,
+              "risk_mean": 0.6233986616134644,
+              "p_edge": 0.3490949952367454,
+              "frac_argmax_edge": 0.3509127789046653
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 560,
+              "risk_mean": 0.8456969261169434,
+              "p_edge": 0.43518646295113805,
+              "frac_argmax_edge": 0.6410714285714286
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 628,
+              "risk_mean": 0.9517152905464172,
+              "p_edge": 0.3921409833488191,
+              "frac_argmax_edge": 0.49203821656050956
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.08748781354182077,
+          "p_edge_risk_lt_02": 0.20064102158034886,
+          "p_edge_risk_ge_06": 0.3837058979296811,
+          "risk_response_high_minus_low": 0.18306487634933222,
+          "risk_response_cluster": {
+            "delta": 0.18306487634933222,
+            "se_cluster": 0.006761821122542893,
+            "ci95": [
+              0.16975493084616636,
+              0.19618979562329683
+            ],
+            "z": 27.073309546598548,
+            "p_value": 0.0,
+            "n_hi": 2174,
+            "n_lo": 41326,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        },
+        "A1": {
+          "p_edge_mean": 0.3239338956040732,
+          "p_stay_mean": 0.6296519063851815,
+          "maxp_mean": 0.6540089282100093,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.6270579584752962,
+          "frac_argmax_edge": 0.004139834406623735,
+          "argmax_counts": {
+            "STAY": 2035,
+            "MIGRATE_EDGE": 9,
+            "MIGRATE_CLOUD": 130,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.3239338956040732,
+            "se_cluster": 0.0021422691141521647,
+            "ci95": [
+              0.31948654299329265,
+              0.32795964113276266
+            ],
+            "n": 2174
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.004139834406623735,
+            "se_cluster": 0.0011642431965604794,
+            "ci95": [
+              0.0018569886705142539,
+              0.006442705936493327
+            ],
+            "n": 2174
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 41219,
+              "risk_mean": 0.049228277057409286,
+              "p_edge": 0.2399933199041709,
+              "frac_argmax_edge": 0.0007763410077876707
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 107,
+              "risk_mean": 0.14024800062179565,
+              "p_edge": 0.3600805852318478,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 15,
+              "risk_mean": 0.23580169677734375,
+              "p_edge": 0.3372743745644887,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 1,
+              "risk_mean": 0.36990734934806824,
+              "p_edge": 0.15032534301280975,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 3,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.4242389102776845,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 986,
+              "risk_mean": 0.6233986616134644,
+              "p_edge": 0.27449689205248534,
+              "frac_argmax_edge": 0.009127789046653144
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 560,
+              "risk_mean": 0.8456969261169434,
+              "p_edge": 0.3744189515709877,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 628,
+              "risk_mean": 0.9517152905464172,
+              "p_edge": 0.35653461878941317,
+              "frac_argmax_edge": 0.0
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.0651089932797198,
+          "p_edge_risk_lt_02": 0.24030424613439064,
+          "p_edge_risk_ge_06": 0.3239338956040732,
+          "risk_response_high_minus_low": 0.08362964946968257,
+          "risk_response_cluster": {
+            "delta": 0.08362964946968257,
+            "se_cluster": 0.002059225970023,
+            "ci95": [
+              0.07945733203874933,
+              0.0875789297792786
+            ],
+            "z": 40.6121769476074,
+            "p_value": 0.0,
+            "n_hi": 2174,
+            "n_lo": 41326,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        },
+        "A2": {
+          "p_edge_mean": 0.49244555937539247,
+          "p_stay_mean": 0.4587705577376685,
+          "maxp_mean": 0.6109345417809026,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.6756874900587473,
+          "frac_argmax_edge": 0.47930082796688134,
+          "argmax_counts": {
+            "STAY": 956,
+            "MIGRATE_EDGE": 1042,
+            "MIGRATE_CLOUD": 176,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.49244555937539247,
+            "se_cluster": 0.003039538226284339,
+            "ci95": [
+              0.48659722855582577,
+              0.4985494362063545
+            ],
+            "n": 2174
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.47930082796688134,
+            "se_cluster": 0.009612512990958628,
+            "ci95": [
+              0.4607929001667143,
+              0.4986062688697652
+            ],
+            "n": 2174
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 41219,
+              "risk_mean": 0.049228277057409286,
+              "p_edge": 0.4954972810529519,
+              "frac_argmax_edge": 0.6349984230573279
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 107,
+              "risk_mean": 0.14024800062179565,
+              "p_edge": 0.45143436717095775,
+              "frac_argmax_edge": 0.2803738317757009
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 15,
+              "risk_mean": 0.23580169677734375,
+              "p_edge": 0.3197803194324175,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 1,
+              "risk_mean": 0.36990734934806824,
+              "p_edge": 0.22847795486450195,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 3,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.5382223327954611,
+              "frac_argmax_edge": 1.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 986,
+              "risk_mean": 0.6233986616134644,
+              "p_edge": 0.4628600617209506,
+              "frac_argmax_edge": 0.36511156186612576
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 560,
+              "risk_mean": 0.8456969261169434,
+              "p_edge": 0.5039202029417668,
+              "frac_argmax_edge": 0.5214285714285715
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 628,
+              "risk_mean": 0.9517152905464172,
+              "p_edge": 0.5286645088819372,
+              "frac_argmax_edge": 0.6210191082802548
+            }
+          ],
+          "spearman_risk_vs_p_edge": -0.00731892982631498,
+          "p_edge_risk_lt_02": 0.4953831947202467,
+          "p_edge_risk_ge_06": 0.49244555937539247,
+          "risk_response_high_minus_low": -0.0029376353448542503,
+          "risk_response_cluster": {
+            "delta": -0.0029376353448542503,
+            "se_cluster": 0.003096618079747671,
+            "ci95": [
+              -0.008918382414763625,
+              0.0033963753107350593
+            ],
+            "z": -0.9486592370130529,
+            "p_value": 0.342793952428438,
+            "n_hi": 2174,
+            "n_lo": 41326,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        },
+        "A3": {
+          "p_edge_mean": 0.41638467131352197,
+          "p_stay_mean": 0.5278585104832105,
+          "maxp_mean": 0.687354263106726,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.6223509471218148,
+          "frac_argmax_edge": 0.3845446182152714,
+          "argmax_counts": {
+            "STAY": 1160,
+            "MIGRATE_EDGE": 836,
+            "MIGRATE_CLOUD": 178,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.41638467131352197,
+            "se_cluster": 0.00442180499762531,
+            "ci95": [
+              0.40763873674949047,
+              0.42476675764068567
+            ],
+            "n": 2174
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.3845446182152714,
+            "se_cluster": 0.011564797228553145,
+            "ci95": [
+              0.36281179138321995,
+              0.4074930890601338
+            ],
+            "n": 2174
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 41219,
+              "risk_mean": 0.049228277057409286,
+              "p_edge": 0.3322541939401855,
+              "frac_argmax_edge": 0.14815982920497828
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 107,
+              "risk_mean": 0.14024800062179565,
+              "p_edge": 0.44101723339234555,
+              "frac_argmax_edge": 0.6448598130841121
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 15,
+              "risk_mean": 0.23580169677734375,
+              "p_edge": 0.4808380603790283,
+              "frac_argmax_edge": 0.6666666666666666
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 1,
+              "risk_mean": 0.36990734934806824,
+              "p_edge": 0.30810096859931946,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 3,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.3642764389514923,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 986,
+              "risk_mean": 0.6233986616134644,
+              "p_edge": 0.44343613216967054,
+              "frac_argmax_edge": 0.44726166328600403
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 560,
+              "risk_mean": 0.8456969261169434,
+              "p_edge": 0.4033534585963935,
+              "frac_argmax_edge": 0.3732142857142857
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 628,
+              "risk_mean": 0.9517152905464172,
+              "p_edge": 0.38553234443044776,
+              "frac_argmax_edge": 0.2961783439490446
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.029358085155940093,
+          "p_edge_risk_lt_02": 0.33253579983529713,
+          "p_edge_risk_ge_06": 0.41638467131352197,
+          "risk_response_high_minus_low": 0.08384887147822484,
+          "risk_response_cluster": {
+            "delta": 0.08384887147822484,
+            "se_cluster": 0.0035431626145424606,
+            "ci95": [
+              0.07688653469241129,
+              0.09064430139475992
+            ],
+            "z": 23.664979737051244,
+            "p_value": 0.0,
+            "n_hi": 2174,
+            "n_lo": 41326,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        }
+      },
+      "paired_within_state_R2_minus_A0": {
+        "mean": 0.23429731392219583,
+        "se_cluster": 0.006898246911996157,
+        "ci95": [
+          0.22118758566645988,
+          0.2478873602688767
+        ],
+        "z": 33.96476190418021,
+        "p_value": 0.0,
+        "frac_entries_R2_higher": 0.8781048758049678,
+        "median": 0.15500955434981734
+      }
+    },
+    "R2": {
+      "source": "R2",
+      "n_decision": 30718,
+      "n_highrisk": 1418,
+      "highrisk_frac_of_decision": 0.04616185949606094,
+      "truncated": 17,
+      "mean_length": 392.125,
+      "risk_within_highrisk": {
+        "mean": 0.7561712861061096,
+        "p25": 0.6213122606277466,
+        "p50": 0.6798977553844452,
+        "p75": 0.8808184862136841
+      },
+      "evaluated": {
+        "A0": {
+          "p_edge_mean": 0.33660991050801153,
+          "p_stay_mean": 0.6055232839992504,
+          "maxp_mean": 0.6944785237270282,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.554918436022654,
+          "frac_argmax_edge": 0.4005641748942172,
+          "argmax_counts": {
+            "STAY": 740,
+            "MIGRATE_EDGE": 568,
+            "MIGRATE_CLOUD": 110,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.33660991050801153,
+            "se_cluster": 0.009429988635670296,
+            "ci95": [
+              0.3182823333122898,
+              0.3548028344256692
+            ],
+            "n": 1418
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.4005641748942172,
+            "se_cluster": 0.018890417615026113,
+            "ci95": [
+              0.36313206823845123,
+              0.4375056900946831
+            ],
+            "n": 1418
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 29262,
+              "risk_mean": 0.048867907375097275,
+              "p_edge": 0.20670780478147135,
+              "frac_argmax_edge": 0.042136559360262456
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 33,
+              "risk_mean": 0.1412547379732132,
+              "p_edge": 0.31070364371055004,
+              "frac_argmax_edge": 0.3939393939393939
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 3,
+              "risk_mean": 0.22915585339069366,
+              "p_edge": 0.06831391155719757,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 2,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.05132303573191166,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 765,
+              "risk_mean": 0.6336544156074524,
+              "p_edge": 0.3620885512621136,
+              "frac_argmax_edge": 0.3869281045751634
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 325,
+              "risk_mean": 0.8494572639465332,
+              "p_edge": 0.33359871386192164,
+              "frac_argmax_edge": 0.49230769230769234
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 328,
+              "risk_mean": 0.9494867920875549,
+              "p_edge": 0.280169296889387,
+              "frac_argmax_edge": 0.34146341463414637
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.06350627808751633,
+          "p_edge_risk_lt_02": 0.20682495319193933,
+          "p_edge_risk_ge_06": 0.33660991050801153,
+          "risk_response_high_minus_low": 0.1297849573160722,
+          "risk_response_cluster": {
+            "delta": 0.1297849573160722,
+            "se_cluster": 0.00987457384935278,
+            "ci95": [
+              0.11083529487157097,
+              0.1492536275053037
+            ],
+            "z": 13.143347682247455,
+            "p_value": 0.0,
+            "n_hi": 1418,
+            "n_lo": 29295,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        },
+        "R2": {
+          "p_edge_mean": 0.17210983549167858,
+          "p_stay_mean": 0.7822069644202887,
+          "maxp_mean": 0.8162026525342414,
+          "frac_maxp_gt_099": 0.10648801128349789,
+          "entropy_mean": 0.39937863309812077,
+          "frac_argmax_edge": 0.08603667136812412,
+          "argmax_counts": {
+            "STAY": 1196,
+            "MIGRATE_EDGE": 122,
+            "MIGRATE_CLOUD": 100,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.17210983549167858,
+            "se_cluster": 0.004988479071244272,
+            "ci95": [
+              0.16304883383419902,
+              0.18236086266338844
+            ],
+            "n": 1418
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.08603667136812412,
+            "se_cluster": 0.00733456988821941,
+            "ci95": [
+              0.07258022716632856,
+              0.10112538609606515
+            ],
+            "n": 1418
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 29262,
+              "risk_mean": 0.048867907375097275,
+              "p_edge": 0.059655537508845925,
+              "frac_argmax_edge": 0.03284122753058574
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 33,
+              "risk_mean": 0.1412547379732132,
+              "p_edge": 0.3514805016192523,
+              "frac_argmax_edge": 0.5757575757575758
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 3,
+              "risk_mean": 0.22915585339069366,
+              "p_edge": 0.5293160080909729,
+              "frac_argmax_edge": 1.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 2,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.08203892037272453,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 765,
+              "risk_mean": 0.6336544156074524,
+              "p_edge": 0.16471736898426623,
+              "frac_argmax_edge": 0.058823529411764705
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 325,
+              "risk_mean": 0.8494572639465332,
+              "p_edge": 0.13729043077032727,
+              "frac_argmax_edge": 0.08923076923076922
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 328,
+              "risk_mean": 0.9494867920875549,
+              "p_edge": 0.2238523458959762,
+              "frac_argmax_edge": 0.14634146341463414
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.08673116198045654,
+          "p_edge_risk_lt_02": 0.059984270187311305,
+          "p_edge_risk_ge_06": 0.17210983549167858,
+          "risk_response_high_minus_low": 0.11212556530436726,
+          "risk_response_cluster": {
+            "delta": 0.11212556530436726,
+            "se_cluster": 0.004845560698515997,
+            "ci95": [
+              0.10321070504201739,
+              0.12231483287840335
+            ],
+            "z": 23.13985362699241,
+            "p_value": 0.0,
+            "n_hi": 1418,
+            "n_lo": 29295,
+            "n_clusters": 32
+          },
+          "is_own_state_source": true
+        },
+        "A1": {
+          "p_edge_mean": 0.23288823055413424,
+          "p_stay_mean": 0.7134979798633222,
+          "maxp_mean": 0.7509155160995734,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.5221198069059282,
+          "frac_argmax_edge": 0.0,
+          "argmax_counts": {
+            "STAY": 1338,
+            "MIGRATE_EDGE": 0,
+            "MIGRATE_CLOUD": 80,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.23288823055413424,
+            "se_cluster": 0.007608173790899336,
+            "ci95": [
+              0.2178256428509333,
+              0.24758854860722582
+            ],
+            "n": 1418
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.0,
+            "se_cluster": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "n": 1418
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 29262,
+              "risk_mean": 0.048867907375097275,
+              "p_edge": 0.20386669707746566,
+              "frac_argmax_edge": 3.41740140796938e-05
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 33,
+              "risk_mean": 0.1412547379732132,
+              "p_edge": 0.2587045936873465,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 3,
+              "risk_mean": 0.22915585339069366,
+              "p_edge": 0.37905097007751465,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 2,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.4296547919511795,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 765,
+              "risk_mean": 0.6336544156074524,
+              "p_edge": 0.2080087392925729,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 325,
+              "risk_mean": 0.8494572639465332,
+              "p_edge": 0.24941223901338302,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 328,
+              "risk_mean": 0.9494867920875549,
+              "p_edge": 0.2745422185597396,
+              "frac_argmax_edge": 0.0
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.018770037593380747,
+          "p_edge_risk_lt_02": 0.2039284704377021,
+          "p_edge_risk_ge_06": 0.23288823055413424,
+          "risk_response_high_minus_low": 0.028959760116432143,
+          "risk_response_cluster": {
+            "delta": 0.028959760116432143,
+            "se_cluster": 0.00656750454002905,
+            "ci95": [
+              0.016048456398211567,
+              0.04142576366266368
+            ],
+            "z": 4.409553117157654,
+            "p_value": 1.0358414992417408e-05,
+            "n_hi": 1418,
+            "n_lo": 29295,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        },
+        "A2": {
+          "p_edge_mean": 0.36768867224139623,
+          "p_stay_mean": 0.5836465812862256,
+          "maxp_mean": 0.6579492004491042,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.6317607822662449,
+          "frac_argmax_edge": 0.2997179125528914,
+          "argmax_counts": {
+            "STAY": 883,
+            "MIGRATE_EDGE": 425,
+            "MIGRATE_CLOUD": 110,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.36768867224139623,
+            "se_cluster": 0.007560310121287823,
+            "ci95": [
+              0.353081416859615,
+              0.3825122870587162
+            ],
+            "n": 1418
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.2997179125528914,
+            "se_cluster": 0.021225330376502746,
+            "ci95": [
+              0.2591529246654303,
+              0.3426394809290663
+            ],
+            "n": 1418
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 29262,
+              "risk_mean": 0.048867907375097275,
+              "p_edge": 0.4293540137988026,
+              "frac_argmax_edge": 0.5709452532294443
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 33,
+              "risk_mean": 0.1412547379732132,
+              "p_edge": 0.33158581139463367,
+              "frac_argmax_edge": 0.030303030303030304
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 3,
+              "risk_mean": 0.22915585339069366,
+              "p_edge": 0.38683491945266724,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 2,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.5388162136077881,
+              "frac_argmax_edge": 1.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 765,
+              "risk_mean": 0.6336544156074524,
+              "p_edge": 0.3612936632208575,
+              "frac_argmax_edge": 0.25359477124183005
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 325,
+              "risk_mean": 0.8494572639465332,
+              "p_edge": 0.34595532816189983,
+              "frac_argmax_edge": 0.3076923076923077
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 328,
+              "risk_mean": 0.9494867920875549,
+              "p_edge": 0.40413842445648296,
+              "frac_argmax_edge": 0.39939024390243905
+            }
+          ],
+          "spearman_risk_vs_p_edge": -0.012057793141214778,
+          "p_edge_risk_lt_02": 0.42924388064709285,
+          "p_edge_risk_ge_06": 0.36768867224139623,
+          "risk_response_high_minus_low": -0.061555208405696615,
+          "risk_response_cluster": {
+            "delta": -0.061555208405696615,
+            "se_cluster": 0.0074083738771218875,
+            "ci95": [
+              -0.07591598761288387,
+              -0.046831802676217976
+            ],
+            "z": -8.308869048278982,
+            "p_value": 0.0,
+            "n_hi": 1418,
+            "n_lo": 29295,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        },
+        "A3": {
+          "p_edge_mean": 0.384713391569799,
+          "p_stay_mean": 0.5655574338518514,
+          "maxp_mean": 0.6764024714236535,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.6396040358786729,
+          "frac_argmax_edge": 0.20380818053596614,
+          "argmax_counts": {
+            "STAY": 1019,
+            "MIGRATE_EDGE": 289,
+            "MIGRATE_CLOUD": 110,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.384713391569799,
+            "se_cluster": 0.00451581478836319,
+            "ci95": [
+              0.37647824658578666,
+              0.39370219296682385
+            ],
+            "n": 1418
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.20380818053596614,
+            "se_cluster": 0.013702888192743026,
+            "ci95": [
+              0.17752949869071485,
+              0.23163147974484408
+            ],
+            "n": 1418
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 29262,
+              "risk_mean": 0.048867907375097275,
+              "p_edge": 0.27929770429696404,
+              "frac_argmax_edge": 0.08909165470576173
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 33,
+              "risk_mean": 0.1412547379732132,
+              "p_edge": 0.4561554961132281,
+              "frac_argmax_edge": 0.5454545454545454
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 3,
+              "risk_mean": 0.22915585339069366,
+              "p_edge": 0.5601641138394674,
+              "frac_argmax_edge": 1.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 2,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.3650081604719162,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 765,
+              "risk_mean": 0.6336544156074524,
+              "p_edge": 0.3862089171421294,
+              "frac_argmax_edge": 0.22091503267973855
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 325,
+              "risk_mean": 0.8494572639465332,
+              "p_edge": 0.3453297303043879,
+              "frac_argmax_edge": 0.11076923076923077
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 328,
+              "risk_mean": 0.9494867920875549,
+              "p_edge": 0.42024879659548764,
+              "frac_argmax_edge": 0.25609756097560976
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.036099637739761735,
+          "p_edge_risk_lt_02": 0.2794969296640894,
+          "p_edge_risk_ge_06": 0.384713391569799,
+          "risk_response_high_minus_low": 0.1052164619057096,
+          "risk_response_cluster": {
+            "delta": 0.1052164619057096,
+            "se_cluster": 0.006365782738413552,
+            "ci95": [
+              0.09244956815185289,
+              0.11722349835090959
+            ],
+            "z": 16.528440606493447,
+            "p_value": 0.0,
+            "n_hi": 1418,
+            "n_lo": 29295,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        }
+      },
+      "paired_within_state_R2_minus_A0": {
+        "mean": -0.16450007501633296,
+        "se_cluster": 0.010007804323110625,
+        "ci95": [
+          -0.18371358577621058,
+          -0.14482843267263676
+        ],
+        "z": -16.437179395730137,
+        "p_value": 0.0,
+        "frac_entries_R2_higher": 0.41960507757404797,
+        "median": -0.21388277152436785
+      }
+    },
+    "RANDOM": {
+      "source": "RANDOM",
+      "n_decision": 4975,
+      "n_highrisk": 216,
+      "highrisk_frac_of_decision": 0.043417085427135675,
+      "truncated": 26,
+      "mean_length": 397.34375,
+      "risk_within_highrisk": {
+        "mean": 0.7884482741355896,
+        "p25": 0.6213060021400452,
+        "p50": 0.8449633717536926,
+        "p75": 0.9481079578399658
+      },
+      "evaluated": {
+        "A0": {
+          "p_edge_mean": 0.12607829922840377,
+          "p_stay_mean": 0.6502620045751057,
+          "maxp_mean": 0.8573092474705644,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.3664072839707867,
+          "frac_argmax_edge": 0.08333333333333333,
+          "argmax_counts": {
+            "STAY": 141,
+            "MIGRATE_EDGE": 18,
+            "MIGRATE_CLOUD": 57,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.12607829922840377,
+            "se_cluster": 0.01422340333007745,
+            "ci95": [
+              0.0982058239458661,
+              0.15399812170133004
+            ],
+            "n": 216
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.08333333333333333,
+            "se_cluster": 0.027107262443832728,
+            "ci95": [
+              0.03157776197249881,
+              0.13726389638424166
+            ],
+            "n": 216
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 4739,
+              "risk_mean": 0.0498645193874836,
+              "p_edge": 0.15262589697847376,
+              "frac_argmax_edge": 0.03460645705845115
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 18,
+              "risk_mean": 0.14593559503555298,
+              "p_edge": 0.12324665334179169,
+              "frac_argmax_edge": 0.05555555555555555
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 2,
+              "risk_mean": 0.22915586829185486,
+              "p_edge": 0.06971754133701324,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 90,
+              "risk_mean": 0.6257936358451843,
+              "p_edge": 0.162706262689446,
+              "frac_argmax_edge": 0.1111111111111111
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 56,
+              "risk_mean": 0.8480998277664185,
+              "p_edge": 0.10566278266196605,
+              "frac_argmax_edge": 0.07142857142857142
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 70,
+              "risk_mean": 0.9498542547225952,
+              "p_edge": 0.09531761660307114,
+              "frac_argmax_edge": 0.05714285714285714
+            }
+          ],
+          "spearman_risk_vs_p_edge": -0.02862684704716602,
+          "p_edge_risk_lt_02": 0.15251472893444173,
+          "p_edge_risk_ge_06": 0.12607829922840377,
+          "risk_response_high_minus_low": -0.02643642970603796,
+          "risk_response_cluster": {
+            "delta": -0.02643642970603796,
+            "se_cluster": 0.014243159709075368,
+            "ci95": [
+              -0.05428606539594632,
+              0.000810427946925234
+            ],
+            "z": -1.856079005362368,
+            "p_value": 0.06344229775873522,
+            "n_hi": 216,
+            "n_lo": 4757,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        },
+        "R2": {
+          "p_edge_mean": 0.3449149296362453,
+          "p_stay_mean": 0.5229197275238456,
+          "maxp_mean": 0.648484292405623,
+          "frac_maxp_gt_099": 0.018518518518518517,
+          "entropy_mean": 0.6378952860273704,
+          "frac_argmax_edge": 0.46296296296296297,
+          "argmax_counts": {
+            "STAY": 69,
+            "MIGRATE_EDGE": 100,
+            "MIGRATE_CLOUD": 47,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.3449149296362453,
+            "se_cluster": 0.02629421540031026,
+            "ci95": [
+              0.2942493409320659,
+              0.3976200851192159
+            ],
+            "n": 216
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.46296296296296297,
+            "se_cluster": 0.05531927131590658,
+            "ci95": [
+              0.35964804252009336,
+              0.5723404759647291
+            ],
+            "n": 216
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 4739,
+              "risk_mean": 0.0498645193874836,
+              "p_edge": 0.14134999147094215,
+              "frac_argmax_edge": 0.17366533023844694
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 18,
+              "risk_mean": 0.14593559503555298,
+              "p_edge": 0.4440634755624665,
+              "frac_argmax_edge": 0.6666666666666666
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 2,
+              "risk_mean": 0.22915586829185486,
+              "p_edge": 0.523964911699295,
+              "frac_argmax_edge": 1.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 90,
+              "risk_mean": 0.6257936358451843,
+              "p_edge": 0.2960340538294986,
+              "frac_argmax_edge": 0.37777777777777777
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 56,
+              "risk_mean": 0.8480998277664185,
+              "p_edge": 0.3625831376827721,
+              "frac_argmax_edge": 0.5892857142857143
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 70,
+              "risk_mean": 0.9498542547225952,
+              "p_edge": 0.39362720352198394,
+              "frac_argmax_edge": 0.4714285714285714
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.07767287224860583,
+          "p_edge_risk_lt_02": 0.14249542824068093,
+          "p_edge_risk_ge_06": 0.3449149296362453,
+          "risk_response_high_minus_low": 0.2024195013955644,
+          "risk_response_cluster": {
+            "delta": 0.2024195013955644,
+            "se_cluster": 0.02620867459340736,
+            "ci95": [
+              0.15344307045377492,
+              0.25542480488983965
+            ],
+            "z": 7.72337802410206,
+            "p_value": 1.1324274851176597e-14,
+            "n_hi": 216,
+            "n_lo": 4757,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        },
+        "A1": {
+          "p_edge_mean": 0.3173355990374047,
+          "p_stay_mean": 0.5240822008603977,
+          "maxp_mean": 0.6206025986207856,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.6876083022617545,
+          "frac_argmax_edge": 0.013888888888888888,
+          "argmax_counts": {
+            "STAY": 161,
+            "MIGRATE_EDGE": 3,
+            "MIGRATE_CLOUD": 52,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.3173355990374047,
+            "se_cluster": 0.016722847041429883,
+            "ci95": [
+              0.2843506763745651,
+              0.35026181623759073
+            ],
+            "n": 216
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.013888888888888888,
+            "se_cluster": 0.007685435915400307,
+            "ci95": [
+              0.0,
+              0.03083927517144281
+            ],
+            "n": 216
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 4739,
+              "risk_mean": 0.0498645193874836,
+              "p_edge": 0.17941959409831934,
+              "frac_argmax_edge": 0.0006330449461911796
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 18,
+              "risk_mean": 0.14593559503555298,
+              "p_edge": 0.2955114920106199,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 2,
+              "risk_mean": 0.22915586829185486,
+              "p_edge": 0.41295288503170013,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 90,
+              "risk_mean": 0.6257936358451843,
+              "p_edge": 0.29272995293140414,
+              "frac_argmax_edge": 0.03333333333333333
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 56,
+              "risk_mean": 0.8480998277664185,
+              "p_edge": 0.3262498324371076,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 70,
+              "risk_mean": 0.9498542547225952,
+              "p_edge": 0.34184004302535737,
+              "frac_argmax_edge": 0.0
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.08310741638348781,
+          "p_edge_risk_lt_02": 0.17985887393065514,
+          "p_edge_risk_ge_06": 0.3173355990374047,
+          "risk_response_high_minus_low": 0.13747672510674958,
+          "risk_response_cluster": {
+            "delta": 0.13747672510674958,
+            "se_cluster": 0.016864701733791006,
+            "ci95": [
+              0.1051730820205267,
+              0.17059858130736566
+            ],
+            "z": 8.151743640463796,
+            "p_value": 4.440892098500626e-16,
+            "n_hi": 216,
+            "n_lo": 4757,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        },
+        "A2": {
+          "p_edge_mean": 0.37790028330076625,
+          "p_stay_mean": 0.44489703489536486,
+          "maxp_mean": 0.6365605384387352,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.6937757729577249,
+          "frac_argmax_edge": 0.2916666666666667,
+          "argmax_counts": {
+            "STAY": 97,
+            "MIGRATE_EDGE": 63,
+            "MIGRATE_CLOUD": 56,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.37790028330076625,
+            "se_cluster": 0.021778818614030727,
+            "ci95": [
+              0.3359509617960381,
+              0.4206267566930035
+            ],
+            "n": 216
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.2916666666666667,
+            "se_cluster": 0.06443790342571318,
+            "ci95": [
+              0.17084300425896298,
+              0.4205607476635514
+            ],
+            "n": 216
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 4739,
+              "risk_mean": 0.0498645193874836,
+              "p_edge": 0.3382544016297358,
+              "frac_argmax_edge": 0.37117535345009495
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 18,
+              "risk_mean": 0.14593559503555298,
+              "p_edge": 0.30714716348383164,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 2,
+              "risk_mean": 0.22915586829185486,
+              "p_edge": 0.38379888236522675,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 90,
+              "risk_mean": 0.6257936358451843,
+              "p_edge": 0.376739243666331,
+              "frac_argmax_edge": 0.2777777777777778
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 56,
+              "risk_mean": 0.8480998277664185,
+              "p_edge": 0.38416112520332846,
+              "frac_argmax_edge": 0.3392857142857143
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 70,
+              "risk_mean": 0.9498542547225952,
+              "p_edge": 0.3743843750229904,
+              "frac_argmax_edge": 0.2714285714285714
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.01004651592172468,
+          "p_edge_risk_lt_02": 0.3381366950317483,
+          "p_edge_risk_ge_06": 0.37790028330076625,
+          "risk_response_high_minus_low": 0.039763588269017935,
+          "risk_response_cluster": {
+            "delta": 0.039763588269017935,
+            "se_cluster": 0.02123885122251862,
+            "ci95": [
+              -0.001063639777454943,
+              0.08280397537064048
+            ],
+            "z": 1.8722099351050752,
+            "p_value": 0.06117756512579198,
+            "n_hi": 216,
+            "n_lo": 4757,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        },
+        "A3": {
+          "p_edge_mean": 0.38340091456969577,
+          "p_stay_mean": 0.44958775828557984,
+          "maxp_mean": 0.6406905226133488,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.7029984707318765,
+          "frac_argmax_edge": 0.3611111111111111,
+          "argmax_counts": {
+            "STAY": 81,
+            "MIGRATE_EDGE": 78,
+            "MIGRATE_CLOUD": 57,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.38340091456969577,
+            "se_cluster": 0.019504741159079384,
+            "ci95": [
+              0.3460323146508737,
+              0.4226339008773661
+            ],
+            "n": 216
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.3611111111111111,
+            "se_cluster": 0.05647409921608249,
+            "ci95": [
+              0.25742125843019087,
+              0.47739255981399525
+            ],
+            "n": 216
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 4739,
+              "risk_mean": 0.0498645193874836,
+              "p_edge": 0.25030736916343704,
+              "frac_argmax_edge": 0.12787507913061827
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 18,
+              "risk_mean": 0.14593559503555298,
+              "p_edge": 0.4772666585114267,
+              "frac_argmax_edge": 0.6666666666666666
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 2,
+              "risk_mean": 0.22915586829185486,
+              "p_edge": 0.5690145790576935,
+              "frac_argmax_edge": 1.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 90,
+              "risk_mean": 0.6257936358451843,
+              "p_edge": 0.3826672286209133,
+              "frac_argmax_edge": 0.35555555555555557
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 56,
+              "risk_mean": 0.8480998277664185,
+              "p_edge": 0.3624724776351026,
+              "frac_argmax_edge": 0.32142857142857145
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 70,
+              "risk_mean": 0.9498542547225952,
+              "p_edge": 0.40108697462294784,
+              "frac_argmax_edge": 0.4
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.03489341438329698,
+          "p_edge_risk_lt_02": 0.2511661598315606,
+          "p_edge_risk_ge_06": 0.38340091456969577,
+          "risk_response_high_minus_low": 0.13223475473813517,
+          "risk_response_cluster": {
+            "delta": 0.13223475473813517,
+            "se_cluster": 0.021349367022132408,
+            "ci95": [
+              0.09176446279555102,
+              0.17637124015236652
+            ],
+            "z": 6.193848960535944,
+            "p_value": 5.871250152722496e-10,
+            "n_hi": 216,
+            "n_lo": 4757,
+            "n_clusters": 32
+          },
+          "is_own_state_source": false
+        }
+      },
+      "paired_within_state_R2_minus_A0": {
+        "mean": 0.21883663040784154,
+        "se_cluster": 0.034793379868452476,
+        "ci95": [
+          0.15585921183135765,
+          0.2907252977826374
+        ],
+        "z": 6.289605414455956,
+        "p_value": 3.1827385171823153e-10,
+        "frac_entries_R2_higher": 0.8287037037037037,
+        "median": 0.3338493974879384
+      }
+    },
+    "UNION": {
+      "source": "UNION",
+      "n_decision": 74237,
+      "n_highrisk": 3592,
+      "highrisk_frac_of_decision": 0.04838557592575131,
+      "truncated": 17,
+      "mean_length": 383.140625,
+      "risk_within_highrisk": {
+        "mean": 0.7678701281547546,
+        "p25": 0.6212878823280334,
+        "p50": 0.8449633717536926,
+        "p75": 0.948102667927742
+      },
+      "evaluated": {
+        "A0": {
+          "p_edge_mean": 0.22330933038213624,
+          "p_stay_mean": 0.7102494171466928,
+          "maxp_mean": 0.7866199206901021,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.44017928672141166,
+          "frac_argmax_edge": 0.17483296213808464,
+          "argmax_counts": {
+            "STAY": 2676,
+            "MIGRATE_EDGE": 628,
+            "MIGRATE_CLOUD": 288,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.22330933038213624,
+            "se_cluster": 0.011989133529932548,
+            "ci95": [
+              0.20107805035154513,
+              0.24765016861145697
+            ],
+            "n": 3592
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.17483296213808464,
+            "se_cluster": 0.023737597623379295,
+            "ci95": [
+              0.13053478830702603,
+              0.22273068444257815
+            ],
+            "n": 3592
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 70481,
+              "risk_mean": 0.04907866194844246,
+              "p_edge": 0.20429937856984132,
+              "frac_argmax_edge": 0.020998566989685163
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 140,
+              "risk_mean": 0.14048530161380768,
+              "p_edge": 0.14050785432170546,
+              "frac_argmax_edge": 0.11428571428571428
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 18,
+              "risk_mean": 0.23469407856464386,
+              "p_edge": 0.18260836549517181,
+              "frac_argmax_edge": 0.2222222222222222
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 1,
+              "risk_mean": 0.36990734934806824,
+              "p_edge": 0.5930531620979309,
+              "frac_argmax_edge": 1.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 5,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.05142187550663948,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 1751,
+              "risk_mean": 0.6278793811798096,
+              "p_edge": 0.2739252708270547,
+              "frac_argmax_edge": 0.18732153055396916
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 885,
+              "risk_mean": 0.8470776677131653,
+              "p_edge": 0.1843411588302082,
+              "frac_argmax_edge": 0.19887005649717515
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 956,
+              "risk_mean": 0.9509506821632385,
+              "p_edge": 0.16667577400598987,
+              "frac_argmax_edge": 0.1297071129707113
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.023209182492196456,
+          "p_edge_risk_lt_02": 0.2041729174124697,
+          "p_edge_risk_ge_06": 0.22330933038213624,
+          "risk_response_high_minus_low": 0.019136412969666533,
+          "risk_response_cluster": {
+            "delta": 0.019136412969666533,
+            "se_cluster": 0.011803997636882035,
+            "ci95": [
+              -0.002001448756781739,
+              0.043378714279021895
+            ],
+            "z": 1.6211806845736811,
+            "p_value": 0.10497889397654747,
+            "n_hi": 3592,
+            "n_lo": 70621,
+            "n_clusters": 64
+          },
+          "is_own_state_source": false
+        },
+        "R2": {
+          "p_edge_mean": 0.3001749356420732,
+          "p_stay_mean": 0.6562149911384639,
+          "maxp_mean": 0.7343867440481893,
+          "frac_maxp_gt_099": 0.06904231625835189,
+          "entropy_mean": 0.5061938111987754,
+          "frac_argmax_edge": 0.31625835189309576,
+          "argmax_counts": {
+            "STAY": 2201,
+            "MIGRATE_EDGE": 1136,
+            "MIGRATE_CLOUD": 255,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.3001749356420732,
+            "se_cluster": 0.013726927277544406,
+            "ci95": [
+              0.2731721565080104,
+              0.3264446874124247
+            ],
+            "n": 3592
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.31625835189309576,
+            "se_cluster": 0.024052517377544397,
+            "ci95": [
+              0.2674016488628588,
+              0.36201916409489393
+            ],
+            "n": 3592
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 70481,
+              "risk_mean": 0.04907866194844246,
+              "p_edge": 0.14162469440895764,
+              "frac_argmax_edge": 0.17652984492274515
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 140,
+              "risk_mean": 0.14048530161380768,
+              "p_edge": 0.479142616423113,
+              "frac_argmax_edge": 0.8357142857142857
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 18,
+              "risk_mean": 0.23469407856464386,
+              "p_edge": 0.4143189812699954,
+              "frac_argmax_edge": 0.7222222222222222
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 1,
+              "risk_mean": 0.36990734934806824,
+              "p_edge": 0.08923373371362686,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 5,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.08215919584035873,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 1751,
+              "risk_mean": 0.6278793811798096,
+              "p_edge": 0.26854166337886615,
+              "frac_argmax_edge": 0.22330097087378642
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 885,
+              "risk_mean": 0.8470776677131653,
+              "p_edge": 0.3257896149751341,
+              "frac_argmax_edge": 0.4384180790960452
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 956,
+              "risk_mean": 0.9509506821632385,
+              "p_edge": 0.33440178556165123,
+              "frac_argmax_edge": 0.37343096234309625
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.08595931900613019,
+          "p_edge_risk_lt_02": 0.1422937943803823,
+          "p_edge_risk_ge_06": 0.3001749356420732,
+          "risk_response_high_minus_low": 0.1578811412616909,
+          "risk_response_cluster": {
+            "delta": 0.1578811412616909,
+            "se_cluster": 0.006790970205940366,
+            "ci95": [
+              0.1445059597703848,
+              0.17100340521873303
+            ],
+            "z": 23.248687076197918,
+            "p_value": 0.0,
+            "n_hi": 3592,
+            "n_lo": 70621,
+            "n_clusters": 64
+          },
+          "is_own_state_source": false
+        },
+        "A1": {
+          "p_edge_mean": 0.28799214921186456,
+          "p_stay_mean": 0.6627514977609626,
+          "maxp_mean": 0.6922643685128482,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.5856319287227189,
+          "frac_argmax_edge": 0.0025055679287305124,
+          "argmax_counts": {
+            "STAY": 3373,
+            "MIGRATE_EDGE": 9,
+            "MIGRATE_CLOUD": 210,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.28799214921186456,
+            "se_cluster": 0.006366896795458502,
+            "ci95": [
+              0.27481163735544484,
+              0.29953288884328105
+            ],
+            "n": 3592
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.0025055679287305124,
+            "se_cluster": 0.0007354300552350648,
+            "ci95": [
+              0.0011344299489506524,
+              0.004010340958617287
+            ],
+            "n": 3592
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 70481,
+              "risk_mean": 0.04907866194844246,
+              "p_edge": 0.22499442322070162,
+              "frac_argmax_edge": 0.00046821129098622324
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 140,
+              "risk_mean": 0.14048530161380768,
+              "p_edge": 0.3361848157963582,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 18,
+              "risk_mean": 0.23469407856464386,
+              "p_edge": 0.3442371404833264,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 1,
+              "risk_mean": 0.36990734934806824,
+              "p_edge": 0.15032534301280975,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 5,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.42640526294708253,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 1751,
+              "risk_mean": 0.6278793811798096,
+              "p_edge": 0.24544866997291195,
+              "frac_argmax_edge": 0.005139920045688178
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 885,
+              "risk_mean": 0.8470776677131653,
+              "p_edge": 0.32851253170520067,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 956,
+              "risk_mean": 0.9509506821632385,
+              "p_edge": 0.3284033350286047,
+              "frac_argmax_edge": 0.0
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.04530801678056707,
+          "p_edge_risk_lt_02": 0.22521484851856757,
+          "p_edge_risk_ge_06": 0.28799214921186456,
+          "risk_response_high_minus_low": 0.06277730069329698,
+          "risk_response_cluster": {
+            "delta": 0.06277730069329698,
+            "se_cluster": 0.004439648298361076,
+            "ci95": [
+              0.053598934842741724,
+              0.07098035134031483
+            ],
+            "z": 14.140151758523668,
+            "p_value": 0.0,
+            "n_hi": 3592,
+            "n_lo": 70621,
+            "n_clusters": 64
+          },
+          "is_own_state_source": false
+        },
+        "A2": {
+          "p_edge_mean": 0.4431957637223276,
+          "p_stay_mean": 0.5080673844016309,
+          "maxp_mean": 0.6294943374355546,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.6583467128680442,
+          "frac_argmax_edge": 0.4084075723830735,
+          "argmax_counts": {
+            "STAY": 1839,
+            "MIGRATE_EDGE": 1467,
+            "MIGRATE_CLOUD": 286,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.4431957637223276,
+            "se_cluster": 0.008299008952740317,
+            "ci95": [
+              0.4262888561256529,
+              0.4586028892218787
+            ],
+            "n": 3592
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.4084075723830735,
+            "se_cluster": 0.014625481901163999,
+            "ci95": [
+              0.37871324214356983,
+              0.4356654981340328
+            ],
+            "n": 3592
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 70481,
+              "risk_mean": 0.04907866194844246,
+              "p_edge": 0.4680362023728747,
+              "frac_argmax_edge": 0.6084051020842497
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 140,
+              "risk_mean": 0.14048530161380768,
+              "p_edge": 0.4231843504522528,
+              "frac_argmax_edge": 0.22142857142857142
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 18,
+              "risk_mean": 0.23469407856464386,
+              "p_edge": 0.3309560861024592,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 1,
+              "risk_mean": 0.36990734934806824,
+              "p_edge": 0.22847795486450195,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 5,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.5384598851203919,
+              "frac_argmax_edge": 1.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 1751,
+              "risk_mean": 0.6278793811798096,
+              "p_edge": 0.41848639247333713,
+              "frac_argmax_edge": 0.3163906339234723
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 885,
+              "risk_mean": 0.8470776677131653,
+              "p_edge": 0.4459105031301746,
+              "frac_argmax_edge": 0.4429378531073446
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 956,
+              "risk_mean": 0.9509506821632385,
+              "p_edge": 0.4859400782422416,
+              "frac_argmax_edge": 0.5449790794979079
+            }
+          ],
+          "spearman_risk_vs_p_edge": -0.010509544593802966,
+          "p_edge_risk_lt_02": 0.4679472874712323,
+          "p_edge_risk_ge_06": 0.4431957637223276,
+          "risk_response_high_minus_low": -0.024751523748904714,
+          "risk_response_cluster": {
+            "delta": -0.024751523748904714,
+            "se_cluster": 0.0056018203168427105,
+            "ci95": [
+              -0.0361817437952106,
+              -0.014335933058333566
+            ],
+            "z": -4.418478699590838,
+            "p_value": 9.939807410042079e-06,
+            "n_hi": 3592,
+            "n_lo": 70621,
+            "n_clusters": 64
+          },
+          "is_own_state_source": false
+        },
+        "A3": {
+          "p_edge_mean": 0.4038819222387449,
+          "p_stay_mean": 0.5427407692072452,
+          "maxp_mean": 0.683030866501326,
+          "frac_maxp_gt_099": 0.0,
+          "entropy_mean": 0.6291618824940935,
+          "frac_argmax_edge": 0.313195991091314,
+          "argmax_counts": {
+            "STAY": 2179,
+            "MIGRATE_EDGE": 1125,
+            "MIGRATE_CLOUD": 288,
+            "PREEMPT_REROUTE": 0
+          },
+          "p_edge_cluster": {
+            "mean": 0.4038819222387449,
+            "se_cluster": 0.003765428293621266,
+            "ci95": [
+              0.39665112994109497,
+              0.41123129528396235
+            ],
+            "n": 3592
+          },
+          "frac_argmax_edge_cluster": {
+            "mean": 0.313195991091314,
+            "se_cluster": 0.013943835425491071,
+            "ci95": [
+              0.2859668533975344,
+              0.3400924878821455
+            ],
+            "n": 3592
+          },
+          "risk_curve": [
+            {
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 70481,
+              "risk_mean": 0.04907866194844246,
+              "p_edge": 0.31026794516678013,
+              "frac_argmax_edge": 0.12363615726224089
+            },
+            {
+              "lo": 0.1,
+              "hi": 0.2,
+              "n": 140,
+              "risk_mean": 0.14048530161380768,
+              "p_edge": 0.4445855381765536,
+              "frac_argmax_edge": 0.6214285714285714
+            },
+            {
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 18,
+              "risk_mean": 0.23469407856464386,
+              "p_edge": 0.4940590692891015,
+              "frac_argmax_edge": 0.7222222222222222
+            },
+            {
+              "lo": 0.3,
+              "hi": 0.4,
+              "n": 1,
+              "risk_mean": 0.36990734934806824,
+              "p_edge": 0.30810096859931946,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.4,
+              "hi": 0.5,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.5,
+              "hi": 0.6,
+              "n": 5,
+              "risk_mean": 0.5303665995597839,
+              "p_edge": 0.36456912755966187,
+              "frac_argmax_edge": 0.0
+            },
+            {
+              "lo": 0.6,
+              "hi": 0.7,
+              "n": 1751,
+              "risk_mean": 0.6278793811798096,
+              "p_edge": 0.4184339508469584,
+              "frac_argmax_edge": 0.34837235865219873
+            },
+            {
+              "lo": 0.7,
+              "hi": 0.8,
+              "n": 0,
+              "risk_mean": null,
+              "p_edge": null,
+              "frac_argmax_edge": null
+            },
+            {
+              "lo": 0.8,
+              "hi": 0.9,
+              "n": 885,
+              "risk_mean": 0.8470776677131653,
+              "p_edge": 0.3820453097885948,
+              "frac_argmax_edge": 0.2768361581920904
+            },
+            {
+              "lo": 0.9,
+              "hi": 1.0,
+              "n": 956,
+              "risk_mean": 0.9509506821632385,
+              "p_edge": 0.39744342843686314,
+              "frac_argmax_edge": 0.2824267782426778
+            }
+          ],
+          "spearman_risk_vs_p_edge": 0.032341681602025205,
+          "p_edge_risk_lt_02": 0.3105342181312152,
+          "p_edge_risk_ge_06": 0.4038819222387449,
+          "risk_response_high_minus_low": 0.09334770410752974,
+          "risk_response_cluster": {
+            "delta": 0.09334770410752974,
+            "se_cluster": 0.003748347947448808,
+            "ci95": [
+              0.08611858122245086,
+              0.10077549422068076
+            ],
+            "z": 24.903692350936588,
+            "p_value": 0.0,
+            "n_hi": 3592,
+            "n_lo": 70621,
+            "n_clusters": 64
+          },
+          "is_own_state_source": false
+        }
+      },
+      "paired_within_state_R2_minus_A0": {
+        "mean": 0.07686560525993696,
+        "se_cluster": 0.024586305822491977,
+        "ci95": [
+          0.02635260235202675,
+          0.12310444375037913
+        ],
+        "z": 3.126358462100434,
+        "p_value": 0.0017698567592665526,
+        "frac_entries_R2_higher": 0.6971046770601337,
+        "median": 0.04580318630905822
+      }
+    }
+  },
+  "sign_of_R2_minus_A0_by_source": {
+    "A0": true,
+    "R2": false,
+    "RANDOM": true,
+    "UNION": true
+  },
+  "sign_consistent_across_sources": false,
+  "sign_consistent_across_own_state_sources": false,
+  "sign_consistent_across_neutral_sources": true,
+  "neutral_sources": [
+    "RANDOM",
+    "UNION"
+  ],
+  "risk_response_on_neutral_sources": {
+    "RANDOM": {
+      "A0": -0.02643642970603796,
+      "R2": 0.2024195013955644,
+      "A1": 0.13747672510674958,
+      "A2": 0.039763588269017935,
+      "A3": 0.13223475473813517
+    },
+    "UNION": {
+      "A0": 0.019136412969666533,
+      "R2": 0.1578811412616909,
+      "A1": 0.06277730069329698,
+      "A2": -0.024751523748904714,
+      "A3": 0.09334770410752974
+    }
+  },
+  "arms_scored": [
+    "A0",
+    "R2",
+    "A1",
+    "A2",
+    "A3"
+  ],
+  "arms_generating_state_sources": [
+    "A0",
+    "R2"
+  ],
+  "calibration_of_primary_metric": {
+    "what": "the proposed primary metric (risk response) computed for every arm that ALREADY EXISTS, on the neutral state sets",
+    "why": "a GO threshold for the next rung has to be set against the spread this metric already shows across completed training runs, otherwise the threshold is invented",
+    "no_new_training": "A1/A2/A3 are existing Sprint 7 checkpoints scored with forward passes only; they generate no state source, so they cannot shift the state sets",
+    "per_state_set": {
+      "RANDOM": {
+        "per_arm": {
+          "A0": -0.02643642970603796,
+          "R2": 0.2024195013955644,
+          "A1": 0.13747672510674958,
+          "A2": 0.039763588269017935,
+          "A3": 0.13223475473813517
+        },
+        "n_arms": 5,
+        "min": -0.02643642970603796,
+        "max": 0.2024195013955644,
+        "range": 0.22885593110160235,
+        "mean": 0.09709162796068582,
+        "sd_across_arms": 0.09014660492679351,
+        "best_arm": "R2",
+        "n_arms_positive": 4,
+        "median_ci_halfwidth": 0.04193380757404771
+      },
+      "UNION": {
+        "per_arm": {
+          "A0": 0.019136412969666533,
+          "R2": 0.1578811412616909,
+          "A1": 0.06277730069329698,
+          "A2": -0.024751523748904714,
+          "A3": 0.09334770410752974
+        },
+        "n_arms": 5,
+        "min": -0.024751523748904714,
+        "max": 0.1578811412616909,
+        "range": 0.1826326650105956,
+        "mean": 0.06167820705665589,
+        "sd_across_arms": 0.06989111569290689,
+        "best_arm": "R2",
+        "n_arms_positive": 4,
+        "median_ci_halfwidth": 0.010922905368438518
+      }
+    }
+  },
+  "conclusion": {
+    "metric_as_used_since_sprint6": "NOT identified: the paired within-state contrast reverses sign between A0's own state set (+) and R2's own state set (-), so the on-policy high-risk EDGE share does not measure a property of the policy. Both the Rung 2 'win' and the Rung 2.5 'loss' fail as policy-quality claims.",
+    "direction_on_neutral_sets": "on the two state sets that privilege neither arm (uniform-random and pooled), R2's pi(EDGE) at high risk exceeds A0's consistently -- so the confound invalidated the METRIC, not the direction of the policy difference",
+    "recommended_primary_metric": "risk RESPONSE on a FIXED, policy-independent state set: pi(MIGRATE_EDGE | risk>=0.6) - pi(MIGRATE_EDGE | risk<0.2), plus Spearman(risk, pi(EDGE)) over decision entries. No policy appears in the state distribution, so the quantity is identified."
+  }
+}
