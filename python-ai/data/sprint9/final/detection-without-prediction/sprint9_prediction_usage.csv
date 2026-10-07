@@ -1,0 +1,21 @@
+run_id,baseline_name,episode,episode_start_tick,risk_source,prediction_used,uncertainty_used,oof_loaded,live_predictor_loaded,offline_only_note
+detection-without-prediction,detection-without-prediction,1,491,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,2,502,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,3,513,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,4,524,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,5,535,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,6,545,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,7,556,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,8,567,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,9,578,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,10,589,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,11,600,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,12,611,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,13,622,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,14,633,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,15,644,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,16,654,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,17,665,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,18,676,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,19,687,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+detection-without-prediction,detection-without-prediction,20,698,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.

@@ -12,7 +12,6 @@ import com.dtmarl.cloudlet.CloudletManager;
 import com.dtmarl.datacenter.DatacenterManager;
 import com.dtmarl.failure.DeviceFailureManager;
 import com.dtmarl.failure.FailureManager;
-import com.dtmarl.failure.HostDegradationConfig;
 import com.dtmarl.failure.HostDegradationManager;
 import com.dtmarl.failure.NetworkFailureManager;
 import com.dtmarl.healthcare.CriticalityManager;
@@ -58,8 +57,21 @@ public class SimulationManager {
     public static final int PROGRESS_PRINT_INTERVAL = 100;
 
     private final CloudSimPlus simulation;
+    private final Sprint11ScenarioConfig scenario;
 
     public SimulationManager() {
+        this(Sprint11ScenarioConfig.r2Defaults());
+    }
+
+    /** Runs one explicitly configured Sprint 11 physical scenario. */
+    public SimulationManager(Sprint11ScenarioConfig scenario) {
+
+        this.scenario = scenario;
+        try {
+            scenario.prepareOutputDirectory();
+        } catch (java.io.IOException exception) {
+            throw new IllegalStateException("cannot prepare isolated scenario output directory", exception);
+        }
 
         simulation = new CloudSimPlus();
 
@@ -68,7 +80,7 @@ public class SimulationManager {
         // ==========================================
 
         HostManager hostManager =
-                new HostManager();
+                new HostManager(scenario.getHostCount());
 
         List<Host> hosts =
                 hostManager.createHosts();
@@ -87,8 +99,8 @@ public class SimulationManager {
                 new DigitalTwinManager();
 
         digitalTwin.mirrorHosts(hosts);
-        digitalTwin.mirrorNetworkLinks(hosts.size());
-        digitalTwin.mirrorDevices(DEVICE_COUNT, hosts.size());
+        digitalTwin.mirrorNetworkLinks(hosts.size(), scenario.getBandwidthMbps());
+        digitalTwin.mirrorDevices(scenario.getDeviceCount(), hosts.size());
 
         // ==========================================
         // Create Failure Managers
@@ -98,13 +110,13 @@ public class SimulationManager {
         // not perturb the others' random streams.
 
         FailureManager failureManager =
-                new FailureManager(hosts, digitalTwin, SIM_SEED);
+                new FailureManager(hosts, digitalTwin, scenario.getSimulatorSeed());
 
         NetworkFailureManager networkFailureManager =
-                new NetworkFailureManager(digitalTwin, failureManager, SIM_SEED + 1);
+                new NetworkFailureManager(digitalTwin, failureManager, scenario.getSimulatorSeed() + 1);
 
         DeviceFailureManager deviceFailureManager =
-                new DeviceFailureManager(digitalTwin, failureManager, SIM_SEED + 2);
+                new DeviceFailureManager(digitalTwin, failureManager, scenario.getSimulatorSeed() + 2);
 
         // ==========================================
         // Progressive host degradation (the failure-generation model)
@@ -119,37 +131,10 @@ public class SimulationManager {
         //
         // Everything here is configuration; nothing is hardcoded in the loop.
 
-        HostDegradationConfig degradationConfig = new HostDegradationConfig()
-                // ~1 fault onset per host per ~1700 ticks * susceptibility,
-                // so over a ~1200-tick run most hosts develop at least one.
-                .setFaultOnsetProbabilityPerTick(0.0018)
-                .setEpisodeWearPerTick(0.010)
-                .setBaseWearPerTick(0.00015)
-                .setWearNoiseSigma(0.45)
-                .setSeverityRange(0.5, 2.0)
-                .setSusceptibilityRange(0.6, 1.8)
-                .setDegradingWearThreshold(0.25)
-                .setCriticalWearThreshold(0.70)
-                .setHazardScale(0.010)
-                .setHazardShape(4.0)
-                // A minority of real failures have no usable precursor at all
-                // (PSU pop, kernel panic, OOM-kill storm). Keeping them in
-                // means the dataset's Bayes-optimal recall stays honestly
-                // below 100% instead of every failure being foreseeable.
-                // NOTE: at 0.10 this seed happened to draw 0 abrupt episodes
-                // out of 29 (a ~5% tail event), which would have made every
-                // single failure predictable. 0.15 is the design value and
-                // makes the task harder, not easier.
-                .setAbruptFailureProbability(0.15)
-                .setAbruptWearMultiplier(40.0)
-                .setTelemetryNoisePercent(2.5)
-                .setRecoveryEnabled(true)
-                .setRepairTicksRange(12, 45)
-                .setImperfectRepairRetention(0.30);
-
         HostDegradationManager hostDegradationManager =
                 new HostDegradationManager(
-                        digitalTwin, failureManager, degradationConfig, SIM_SEED + 3);
+                        digitalTwin, failureManager, scenario.getDegradationConfig(),
+                        scenario.getSimulatorSeed() + 3);
 
         // Overload is now a genuine SYMPTOM: baseline CPU sits near 50% and
         // only a developing fault pushes it past this threshold. (It used to
@@ -197,7 +182,7 @@ public class SimulationManager {
 
         brokerManager.getBroker()
                 .submitVmList(
-                        vmManager.createVms()
+                        vmManager.createVms(hosts.size())
                 );
 
         // ==========================================
@@ -214,7 +199,8 @@ public class SimulationManager {
                 new CriticalityManager();
 
         CloudletManager cloudletManager =
-                new CloudletManager(criticalityManager);
+                new CloudletManager(criticalityManager, scenario.getTaskCount(),
+                        scenario.getPatientCount());
 
         List<HealthcareTask> healthcareTasks =
                 cloudletManager.createHealthcareTasks();
@@ -222,12 +208,14 @@ public class SimulationManager {
         // Mirror the workload into the Digital Twin (task layer).
         digitalTwin.mirrorTasks(healthcareTasks);
 
-        // Failure-prediction seam. Picks up simulation/predicted_risk.csv if the
-        // Python side has exported it (marl/export_risk_csv.py); otherwise falls
-        // back to the inert Sprint 5 placeholder, so a checkout without the
-        // export behaves exactly as Sprint 5 did.
+        // Failure-prediction seam. The historical no-argument R2 path keeps
+        // its legacy export behaviour.  An isolated Sprint 11 trace must use
+        // the inert gateway: no existing risk CSV can be aligned to a trace
+        // that has not yet been generated.
         PredictionGateway predictionGateway =
-                PredictionGateways.fromDefaultLocation(simulation::clock);
+                scenario.allowsLegacyDefaultRiskExport()
+                        ? PredictionGateways.fromDefaultLocation(simulation::clock)
+                        : PredictionGateways.forRiskExport(null, simulation::clock);
 
         TaskPriorityRanker priorityRanker =
                 new TaskPriorityRanker();
@@ -288,7 +276,7 @@ public class SimulationManager {
             // down, after every VM has been destroyed. Every host then reports
             // 0% CPU / 0 tasks while still flagged active, which is a shutdown
             // artifact rather than telemetry, so it is not recorded.
-            if (t > MAX_SIMULATION_SECONDS) {
+            if (t > scenario.getMaxSimulationSeconds()) {
                 return;
             }
 
@@ -341,7 +329,7 @@ public class SimulationManager {
             // report all 40 tasks as QUEUED on node -1. No Sprint 5 logic is
             // changed; this only stops the teardown tick from overwriting the
             // last real placement.
-            if (info.getTime() > MAX_SIMULATION_SECONDS) {
+            if (info.getTime() > scenario.getMaxSimulationSeconds()) {
                 return;
             }
 
@@ -367,7 +355,7 @@ public class SimulationManager {
         // Start Simulation
         // ==========================================
 
-        simulation.terminateAt(MAX_SIMULATION_SECONDS);
+        simulation.terminateAt(scenario.getMaxSimulationSeconds());
 
         simulation.start();
 
@@ -410,9 +398,12 @@ public class SimulationManager {
         // labeled telemetry-history datasets (host + device).
         // ==========================================
 
-        failureManager.exportEventsToCsv("failure_log.csv");
-        historyCollector.exportLabeledCsv("failure_history.csv", 10.0);
-        deviceHistoryCollector.exportLabeledCsv("device_failure_history.csv", 10.0);
+        failureManager.exportEventsToCsv(
+                scenario.getOutputDirectory().resolve("failure_log.csv").toString());
+        historyCollector.exportLabeledCsv(
+                scenario.getOutputDirectory().resolve("failure_history.csv").toString(), 10.0);
+        deviceHistoryCollector.exportLabeledCsv(
+                scenario.getOutputDirectory().resolve("device_failure_history.csv").toString(), 10.0);
     }
 
     public CloudSimPlus getSimulation() {

@@ -1,0 +1,3 @@
+scenario_id,policy,policy_kind,priority_bin,mean_response_time_s,stddev,sample_count,standard_error,ci95_low,ci95_high,ci95_status,trial_ids
+s11-d15e537cb76b5836,reactive-no-digital-twin,baseline,high,317.49106741212006,5.329551442226415,4,2.6647757211132075,309.01175106753783,325.9703837567023,t_interval_95,2;3;4;5
+s11-d15e537cb76b5836,reactive-no-digital-twin,baseline,medium,360.13873015873014,2.168632728620936,4,1.084316364310468,356.68843548749425,363.58902482996604,t_interval_95,2;3;4;5

@@ -69,6 +69,8 @@ public class CloudletManager {
     public static final int PATIENT_COUNT = 10;
 
     private final CriticalityProvider criticalityProvider;
+    private final int taskCount;
+    private final int patientCount;
 
     /**
      * Creates a cloudlet manager that scores tasks with the given provider.
@@ -77,7 +79,17 @@ public class CloudletManager {
      *                            onto each task (must not be null)
      */
     public CloudletManager(CriticalityProvider criticalityProvider) {
+        this(criticalityProvider, TASK_COUNT, PATIENT_COUNT);
+    }
+
+    /** Controlled physical workload scale for an isolated scenario. */
+    public CloudletManager(CriticalityProvider criticalityProvider, int taskCount, int patientCount) {
+        if (taskCount <= 0 || patientCount <= 0 || patientCount > taskCount) {
+            throw new IllegalArgumentException("invalid task/patient counts");
+        }
         this.criticalityProvider = criticalityProvider;
+        this.taskCount = taskCount;
+        this.patientCount = patientCount;
     }
 
     /**
@@ -92,9 +104,9 @@ public class CloudletManager {
 
         List<HealthcareTask> tasks = new ArrayList<>();
 
-        for (int taskId = 0; taskId < TASK_COUNT; taskId++) {
+        for (int taskId = 0; taskId < taskCount; taskId++) {
 
-            int patientId = taskId % PATIENT_COUNT;
+            int patientId = taskId % patientCount;
             Patient patient = buildPatient(patientId);
 
             double deadline = BASE_DEADLINE_SECONDS
@@ -140,8 +152,8 @@ public class CloudletManager {
 
         // Spread signals across [0,1] / a plausible age range using the id,
         // so different patients get different — but fixed — criticality.
-        double fraction = PATIENT_COUNT > 0
-                ? (double) patientId / PATIENT_COUNT
+        double fraction = patientCount > 0
+                ? (double) patientId / patientCount
                 : 0.0;
 
         patient.setAttribute(CriticalityManager.ATTR_HSI, fraction);

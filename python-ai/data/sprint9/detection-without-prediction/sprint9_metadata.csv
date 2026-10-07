@@ -1,0 +1,2 @@
+run_id,baseline_name,episode,episode_start_tick,risk_source,uses_digital_twin,uses_prediction,uses_uncertainty,uses_marl,seed,node_count,task_count,recovery_mode,training_loss_status,checkpoint
+detection-without-prediction,detection-without-prediction,1,491,zero,False,False,False,False,20260818,10,40,observed failure -> immediate requeue/restart,N/A (heuristic baseline),

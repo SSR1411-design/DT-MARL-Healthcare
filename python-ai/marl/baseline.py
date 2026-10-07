@@ -21,6 +21,12 @@ without them a learned result cannot be interpreted:
 
 Every policy takes (env, obs, masks) and returns one action per agent. All of
 them respect the action mask, so no policy gets credit for an illegal move.
+
+Sprint 9 adds `DetectionRecoveryPolicy`.  It deliberately requests no
+proactive relocation: the environment's opt-in detection-recovery hook acts
+only after its current availability physics observes a host outage.  Keeping
+the action policy inert makes the causal boundary explicit: recovery is
+failure detection -> restart/requeue, never prediction -> anticipation.
 """
 
 import numpy as np
@@ -102,6 +108,24 @@ class ReactiveThresholdPolicy(BasePolicy):
         return a
 
 
+class DetectionRecoveryPolicy(BasePolicy):
+    """Detection-only self-healing control for Sprint 9 Baseline 3.
+
+    The policy always selects ``STAY``.  A real recovery action is performed
+    only by ``DTMarlEnv(detection_recovery=True)`` after the current transition
+    observes a host outage.  That environment hook restarts affected work on a
+    currently healthy edge node and appends a RecoveryRecord.  This class never
+    reads risk, prediction windows, future trace values, or failure labels.
+    """
+
+    name = "detection-recovery-no-prediction"
+    uses_predicted_risk = False
+
+    def act(self, env, obs, masks):
+        del env, obs
+        return np.zeros(masks.shape[0], dtype=np.int64)
+
+
 class RiskThresholdPolicy(BasePolicy):
     """
     HEURISTIC REFERENCE (not a Sprint 9 baseline).
@@ -146,8 +170,10 @@ BASELINES = {
     "static": NoMigrationPolicy,
     "random": RandomPolicy,
     "reactive": ReactiveThresholdPolicy,
+    "detection-recovery": DetectionRecoveryPolicy,
     "risk-threshold": RiskThresholdPolicy,
 }
 
 __all__ = ["BasePolicy", "NoMigrationPolicy", "RandomPolicy",
-           "ReactiveThresholdPolicy", "RiskThresholdPolicy", "BASELINES"]
+           "ReactiveThresholdPolicy", "DetectionRecoveryPolicy",
+           "RiskThresholdPolicy", "BASELINES"]

@@ -1,0 +1,1157 @@
+{
+  "bandwidth_mbps": 100.0,
+  "checkpoint_compatibility": "not_applicable",
+  "checkpoint_hash": "",
+  "checkpoint_id": "",
+  "device_count": 10,
+  "distribution_observations": [
+    {
+      "metric": "avg_task_latency_s",
+      "sample_unit": "nested_evaluation_window",
+      "value": 328.25
+    },
+    {
+      "metric": "physical_energy_j",
+      "sample_unit": "nested_evaluation_window",
+      "value": 966480.3169784546
+    },
+    {
+      "metric": "episode_reward",
+      "sample_unit": "nested_evaluation_window",
+      "value": 3.37273927917704
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "avg_task_latency_s",
+      "sample_unit": "nested_evaluation_window",
+      "value": 309.5238095238095
+    },
+    {
+      "metric": "physical_energy_j",
+      "sample_unit": "nested_evaluation_window",
+      "value": 935561.3940200806
+    },
+    {
+      "metric": "episode_reward",
+      "sample_unit": "nested_evaluation_window",
+      "value": -15.115571388741955
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "avg_task_latency_s",
+      "sample_unit": "nested_evaluation_window",
+      "value": 344.57142857142856
+    },
+    {
+      "metric": "physical_energy_j",
+      "sample_unit": "nested_evaluation_window",
+      "value": 968534.2407073972
+    },
+    {
+      "metric": "episode_reward",
+      "sample_unit": "nested_evaluation_window",
+      "value": 46.45516989636235
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "avg_task_latency_s",
+      "sample_unit": "nested_evaluation_window",
+      "value": 338.06666666666666
+    },
+    {
+      "metric": "physical_energy_j",
+      "sample_unit": "nested_evaluation_window",
+      "value": 977615.0740127561
+    },
+    {
+      "metric": "episode_reward",
+      "sample_unit": "nested_evaluation_window",
+      "value": 58.26795354497153
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "avg_task_latency_s",
+      "sample_unit": "nested_evaluation_window",
+      "value": 321.46666666666664
+    },
+    {
+      "metric": "physical_energy_j",
+      "sample_unit": "nested_evaluation_window",
+      "value": 971301.9388885496
+    },
+    {
+      "metric": "episode_reward",
+      "sample_unit": "nested_evaluation_window",
+      "value": 57.36608938104473
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.0
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.1
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.2
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.3
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.4
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.5
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.6
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.7
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.8
+    },
+    {
+      "metric": "HSI",
+      "sample_unit": "task_within_nested_evaluation_window",
+      "value": 0.9
+    }
+  ],
+  "edge_node_count": 10,
+  "episode_end": 1498,
+  "episode_start": 9,
+  "episode_starts": [
+    9,
+    181,
+    354,
+    526,
+    698
+  ],
+  "evaluation_protocol": "5 deterministic nested evaluation windows within one independently seeded simulator trial; windows are not independent trials",
+  "failure_intensity": 1.0,
+  "failure_mode": "progressive_stochastic_wear",
+  "failure_parameters": {
+    "abrupt_failure_probability": 0.15,
+    "abrupt_wear_multiplier": 40.0,
+    "background_wear_per_tick": 0.00015,
+    "critical_wear_threshold": 0.7,
+    "degrading_wear_threshold": 0.25,
+    "fault_episode_wear_per_tick": 0.01,
+    "fault_onset_probability_per_tick": 0.0018,
+    "hazard_scale": 0.01,
+    "hazard_shape": 4.0,
+    "imperfect_repair_retention": 0.3,
+    "repair_ticks_max": 45,
+    "repair_ticks_min": 12,
+    "severity_max": 2.0,
+    "severity_min": 0.5,
+    "susceptibility_max": 1.8,
+    "susceptibility_min": 0.6,
+    "wear_noise_sigma": 0.45
+  },
+  "host_count": 10,
+  "metrics": {
+    "HSI": 0.45,
+    "avg_task_latency_s": 328.37571428571425,
+    "energy_reward_cost": 2446.4453974060048,
+    "episode_reward": 30.06927614256274,
+    "mean_bandwidth_utilization_pct": 2.29014253616333,
+    "mean_cpu_utilization_pct": 48.89433364868164,
+    "mean_ram_utilization_pct": 24.552610778808592,
+    "physical_energy_j": 963898.5929214476,
+    "task_success_rate": 0.665
+  },
+  "patient_count": 10,
+  "policy": "reactive-no-digital-twin",
+  "policy_kind": "baseline",
+  "priority_response_time_s": [
+    {
+      "mean_response_time_s": 310.61092731829575,
+      "nested_window_count": 5,
+      "priority_bin": "high"
+    },
+    {
+      "mean_response_time_s": 361.670202020202,
+      "nested_window_count": 5,
+      "priority_bin": "medium"
+    }
+  ],
+  "python_seed": 6359510075030991886,
+  "record_type": "trial_result",
+  "risk_alignment_status": "unavailable",
+  "risk_artifact_hash": "",
+  "risk_artifact_id": "",
+  "scenario_id": "s11-d15e537cb76b5836",
+  "schema_version": "sprint11.v1",
+  "simulator_seed": 1632074838491586500,
+  "task_count": 40,
+  "trace_hash": "e13dce0ce28acbdb5dd9e1b35d4e457995c3fc3489c6afd1b09a526c7cc0ba08",
+  "trace_id": "failure_history.csv",
+  "trace_path": "D:\\MY_GURL\\RESEARCH_PAPER\\DT-MARL-Healthcare\\python-ai\\data\\sprint11\\trials\\s11-d15e537cb76b5836\\trial-004\\reactive-no-digital-twin\\simulator_output\\failure_history.csv",
+  "trial_id": 4,
+  "uncertainty_gate_status": "not_available_reserved_zero_interface"
+}

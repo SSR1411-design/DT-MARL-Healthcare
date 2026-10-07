@@ -449,7 +449,7 @@ public class HostDegradationManager {
             double loss = config.getMaxPacketLossPercent() * mode.getPacketLossWeight()
                     * Math.pow(response, 1.4) * amplitude;
 
-            double linkBw = NetworkLink.NORMAL_BANDWIDTH_MBPS * (1.0
+            double linkBw = link.getNominalBandwidthMbps() * (1.0
                     - config.getBandwidthFadeFraction() * mode.getBandwidthFadeWeight()
                       * response * amplitude);
 
@@ -458,7 +458,7 @@ public class HostDegradationManager {
                     jitter(loss, noise) + Math.abs(random.nextGaussian()) * PACKET_LOSS_NOISE_FLOOR,
                     0.0, 100.0));
             link.setBandwidthMbps(clamp(jitter(linkBw, noise),
-                    0.0, NetworkLink.NORMAL_BANDWIDTH_MBPS));
+                    0.0, link.getNominalBandwidthMbps()));
         }
     }
 

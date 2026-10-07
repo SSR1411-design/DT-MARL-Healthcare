@@ -1,0 +1,7 @@
+{
+  "ci": "95% t interval when n >= 2",
+  "graph": "energy_vs_task_count",
+  "independent_sample_unit": "simulator trial",
+  "input": "data\\sprint11\\aggregated\\task-count-baseline-completed-trials-002-005\\trial_metric_aggregates.csv",
+  "metric": "physical_energy_j"
+}

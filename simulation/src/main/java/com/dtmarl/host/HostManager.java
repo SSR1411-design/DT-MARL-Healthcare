@@ -19,11 +19,25 @@ public class HostManager {
      */
     public static final int HOST_COUNT = 10;
 
+    private final int hostCount;
+
+    public HostManager() {
+        this(HOST_COUNT);
+    }
+
+    /** Creates a controlled physical host scale without changing R2 defaults. */
+    public HostManager(int hostCount) {
+        if (hostCount <= 0) {
+            throw new IllegalArgumentException("hostCount must be positive");
+        }
+        this.hostCount = hostCount;
+    }
+
     public List<Host> createHosts() {
 
         List<Host> hosts = new ArrayList<>();
 
-        for (int hostId = 0; hostId < HOST_COUNT; hostId++) {
+        for (int hostId = 0; hostId < hostCount; hostId++) {
 
             List<Pe> peList = new ArrayList<>();
 

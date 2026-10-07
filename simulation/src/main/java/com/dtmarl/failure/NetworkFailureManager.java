@@ -217,7 +217,7 @@ public class NetworkFailureManager {
             // Sprint 4's prediction model tell this apart from a clean
             // hardware failure (both flatline) or normal degradation
             // (single metric, no spike).
-            link.setBandwidthMbps(NetworkLink.NORMAL_BANDWIDTH_MBPS * 5);
+            link.setBandwidthMbps(link.getNominalBandwidthMbps() * 5);
             link.setLatencyMs(NetworkLink.NORMAL_LATENCY_MS * 8);
             link.setPacketLossPercent(40);
             link.setUnderAttack(true);

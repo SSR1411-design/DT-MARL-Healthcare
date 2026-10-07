@@ -34,11 +34,23 @@ def episode_starts(env, n, seed=0):
     return [int(round(lo + k * (hi - lo) / (n - 1))) for k in range(n)]
 
 
-def run_episode(env, policy, start_tick, seed=None, collect_actions=False):
-    """One episode. Returns (metrics, action_histogram, risk_action_table)."""
+def run_episode(env, policy, start_tick, seed=None, collect_actions=False,
+                observer=None):
+    """
+    One episode. Returns (metrics, action_histogram, risk_action_table).
+
+    ``observer`` is an optional evaluation-only instrumentation hook.  It sees
+    the environment immediately before and after each real transition; it
+    neither supplies actions nor changes any environment state.  Keeping this
+    hook here lets Sprint 8 record the same rollout that evaluation uses rather
+    than reproducing a second, potentially divergent stepping loop.
+    """
     obs, state, masks = env.reset(episode_start_tick=start_tick, seed=seed)
     if hasattr(policy, "reset"):
         policy.reset()
+    if observer is not None:
+        observer.on_episode_start(env, start_tick=start_tick, seed=seed,
+                                  policy_name=getattr(policy, "name", "policy"))
     hist = np.zeros(env.n_actions, dtype=np.int64)
     # (risk bucket, action) contingency over DECISION steps only — the
     # behaviour probe for "do agents act differently as risk changes?"
@@ -66,9 +78,18 @@ def run_episode(env, policy, start_tick, seed=None, collect_actions=False):
                 table[b, a] += 1
                 if sevs[i] >= 0.0:
                     sev_table[1 if sevs[i] >= 0.5 else 0, a] += 1
+        if observer is not None:
+            observer.before_step(env, actions=actions, observations=obs,
+                                 action_masks=masks)
         obs, state, rew, done, info = env.step(actions)
+        if observer is not None:
+            observer.after_step(env, actions=actions, rewards=rew, done=done,
+                                info=info)
         masks = info["action_masks"]
-    return env.episode_metrics(), hist, table, sev_table
+    metrics = env.episode_metrics()
+    if observer is not None:
+        observer.on_episode_end(env, metrics=metrics)
+    return metrics, hist, table, sev_table
 
 
 def run_episodes(env, policy, starts, seed=0, collect_actions=False):

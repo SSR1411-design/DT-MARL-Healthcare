@@ -156,11 +156,38 @@ class MigrationRecord:
     task_survived: Optional[bool] = None
 
 
+@dataclass(frozen=True)
+class RecoveryRecord:
+    """One post-detection requeue/restart attempt in Sprint 9 Baseline 3.
+
+    The record is created only after ``trace.any_down_during`` has observed a
+    failure in the transition that just elapsed.  ``recovery_latency_s`` is
+    therefore exactly zero for this baseline's explicitly requested immediate
+    recovery semantics; it is a defined controller behaviour, never sampled.
+    """
+
+    detection_step: int
+    failure_window_start_tick: int
+    failure_window_end_tick: int
+    detection_tick: int
+    detection_time_s: float
+    task_id: int
+    patient_id: int
+    source_node: int
+    destination_node: int
+    recovery_tick: int
+    recovery_time_s: float
+    recovery_latency_s: float
+    succeeded: bool
+    reason: str
+
+
 class DTMarlEnv:
     """reset() / step(actions) multi-agent environment."""
 
     def __init__(self, cfg: EnvConfig = None, rcfg: RewardConfig = None,
-                 verbose: bool = False, trace=None, risk=None):
+                 verbose: bool = False, trace=None, risk=None,
+                 detection_recovery: bool = False):
         """
         `trace` and `risk` are INJECTION HOOKS used only by the test suite:
         tests_env.py passes a future-corrupted trace to prove no observation
@@ -174,6 +201,19 @@ class DTMarlEnv:
 
         self.trace = load_trace(self.cfg.trace_csv) if trace is None else trace
         self.risk = build_risk_provider(self.cfg) if risk is None else risk
+        self.detection_recovery = bool(detection_recovery)
+        if self.detection_recovery:
+            # Baseline 3 must be mechanically unable to consume OOF/live risk.
+            # These checks protect against an accidentally predictive recovery
+            # run rather than relying on a caller's metadata declaration.
+            if self.risk.source != "zero":
+                raise ValueError(
+                    "detection_recovery requires risk_source='zero'; "
+                    "prediction-driven recovery is not this baseline")
+            if self.cfg.dest_w_risk != 0.0 or self.rcfg.P_risk_expose != 0.0:
+                raise ValueError(
+                    "detection_recovery requires dest_w_risk=0 and "
+                    "P_risk_expose=0")
         self.n_agents = min(self.cfg.n_edge_nodes, self.trace.n_nodes)
         self.topology = Topology(self.n_agents, self.cfg.neighbour_offsets)
         self.selector = DestinationSelector(self.cfg)
@@ -258,6 +298,8 @@ class DTMarlEnv:
         self.inbound = np.zeros(self.n_agents + 1, dtype=np.int64)  # last = cloud
 
         self.migrations: List[MigrationRecord] = []
+        self.recovery_records: List[RecoveryRecord] = []
+        self._recovered_this_transition = set()
         self.ep = dict(completed=0, lost=0, sla_breaches=0, infeasible=0,
                        stay=0, migrate_edge=0, migrate_cloud=0, reroute=0,
                        energy=0.0, reward=0.0, progress=0.0,
@@ -350,7 +392,8 @@ class DTMarlEnv:
     # candidate views (observable-only)
     # =====================================================================
 
-    def _candidate(self, node: int) -> CandidateView:
+    def _candidate(self, node: int, step: int = None,
+                   risk_override: float = None) -> CandidateView:
         if node == CLOUD_NODE_ID:
             return CandidateView(
                 node_id=CLOUD_NODE_ID,
@@ -367,11 +410,12 @@ class DTMarlEnv:
                 is_cloud=True)
         return CandidateView(
             node_id=node,
-            risk=self.risk_at(node),
-            observed_up=self.observed_up(node),
+            risk=(self.risk_at(node, step) if risk_override is None
+                  else float(risk_override)),
+            observed_up=self.observed_up(node, step),
             free_capacity_fraction=self._free_fraction(node),
             load_fraction=self._load_fraction(node),
-            link_latency_norm=self._link_latency_norm(node))
+            link_latency_norm=self._link_latency_norm(node, step))
 
     def _edge_candidates(self, source: int) -> List[CandidateView]:
         return [self._candidate(j) for j in self.topology.neighbours(source)]
@@ -541,6 +585,7 @@ class DTMarlEnv:
             raise ValueError(f"expected {self.n_agents} actions, got {actions.shape[0]}")
 
         ev = [self._blank_event() for _ in range(self.n_agents)]
+        self._recovered_this_transition = set()
 
         # ---- 1. apply actions -------------------------------------------
         # Sprint 6.5: apply in a rotating order, and re-check the acting
@@ -698,7 +743,12 @@ class DTMarlEnv:
                 down = (False if dest == CLOUD_NODE_ID
                         else self.trace.any_down_during(dest, t_from, t_to))
                 if down:
-                    self._kill(k, ev, reason="destination failed in flight")
+                    if self.detection_recovery:
+                        self._recover_after_observed_failure(
+                            k, dest, t_from, t_to, ev,
+                            reason="destination failed in flight")
+                    else:
+                        self._kill(k, ev, reason="destination failed in flight")
                     continue
                 if self.step_idx + 1 >= t.land_step:
                     self.inbound[self.n_agents if dest == CLOUD_NODE_ID else dest] -= 1
@@ -718,7 +768,81 @@ class DTMarlEnv:
                         t.reward_owner = dest
             elif t.state in (QUEUED, RUNNING) and t.node != CLOUD_NODE_ID:
                 if self.trace.any_down_during(t.node, t_from, t_to):
-                    self._kill(k, ev, reason="host failed under a resident task")
+                    if self.detection_recovery:
+                        self._recover_after_observed_failure(
+                            k, t.node, t_from, t_to, ev,
+                            reason="host failed under a resident task")
+                    else:
+                        self._kill(k, ev, reason="host failed under a resident task")
+
+    def _recovery_candidates(self, failed_node: int, observed_step: int):
+        """Current-state edge candidates for detection-only recovery.
+
+        The selector is intentionally reused, but all candidate risks are
+        hard-zeroed.  Availability and link latency are sampled at the
+        detection boundary (`observed_step`), never at a future trace tick.
+        """
+        return [self._candidate(node, step=observed_step, risk_override=0.0)
+                for node in range(self.n_agents) if node != failed_node]
+
+    def _recover_after_observed_failure(self, k: int, failed_node: int,
+                                        t_from: int, t_to: int,
+                                        ev: List[dict], reason: str):
+        """Immediate requeue/restart after an observed, not predicted, outage."""
+        t = self.tasks[k]
+        observed_step = self.step_idx + 1
+        detection_time = float(self.trace.times[t_to])
+
+        # Remove the task from its failed placement before testing capacity.
+        if t.state in (QUEUED, RUNNING):
+            if 0 <= t.node < self.n_agents and k in self.residents[t.node]:
+                self.residents[t.node].remove(k)
+        elif t.state == IN_FLIGHT:
+            inbound = self.n_agents if t.dest == CLOUD_NODE_ID else t.dest
+            if 0 <= inbound < len(self.inbound):
+                self.inbound[inbound] -= 1
+            # `_kill` must not decrement the same in-flight reservation a
+            # second time if no destination is currently feasible.
+            t.state = QUEUED
+            t.node = -1
+            t.dest = -1
+
+        chosen = self.selector.select(
+            self._recovery_candidates(failed_node, observed_step))
+        destination = chosen.node_id if chosen is not None else -1
+        succeeded = destination >= 0
+        if succeeded:
+            # Explicit semantics approved for Baseline 3: restart rather than
+            # preserve partially computed state. The original deadline and any
+            # already-recorded SLA breach remain part of the task history.
+            t.remaining_mi = t.spec.length_mi
+            t.start_step = -1
+            t.finish_step = -1
+            t.lost_step = -1
+            t.wan_latency_ms = 0.0
+            self.place_task(k, destination, state=QUEUED)
+            self._recovered_this_transition.add(k)
+        else:
+            # No currently healthy capacity exists. Preserve the real loss
+            # semantics and record the failed immediate recovery attempt.
+            self._kill(k, ev, reason=f"{reason}; no healthy recovery destination")
+
+        self.recovery_records.append(RecoveryRecord(
+            detection_step=observed_step,
+            failure_window_start_tick=t_from,
+            failure_window_end_tick=t_to,
+            detection_tick=t_to,
+            detection_time_s=detection_time,
+            task_id=t.spec.task_id,
+            patient_id=t.spec.patient_id,
+            source_node=failed_node,
+            destination_node=destination,
+            recovery_tick=t_to,
+            recovery_time_s=detection_time,
+            recovery_latency_s=0.0,
+            succeeded=succeeded,
+            reason=reason,
+        ))
 
     def _kill(self, k: int, ev: List[dict], reason: str = ""):
         t = self.tasks[k]
@@ -818,6 +942,10 @@ class DTMarlEnv:
 
     def _advance_compute(self, t_from: int, t_to: int, ev: List[dict]):
         for k, t in enumerate(self.tasks):
+            # A restarted task becomes eligible at the detected boundary, not
+            # retrospectively during the just-finished failed interval.
+            if k in self._recovered_this_transition:
+                continue
             if t.state != RUNNING:
                 continue
             node = t.node
@@ -933,7 +1061,11 @@ class DTMarlEnv:
             val -= r.P_energy * e["energy"]
             val -= r.P_infeasible * (1.0 if e["infeasible"] else 0.0)
             val -= r.P_overload * max(0.0, loads[i] - self.cfg.overload_target)
-            if e["stayed_resident"]:
+            # A zero coefficient is the explicit no-failure-prediction
+            # configuration.  Besides making the term numerically zero, avoid
+            # querying the risk provider at all so that an A2 evaluation cannot
+            # accidentally consume a prediction through this reward path.
+            if e["stayed_resident"] and r.P_risk_expose != 0.0:
                 # exposure to the CURRENT predicted risk of staying put
                 k = self._focus[i]
                 s = self.tasks[k].spec.severity if k >= 0 else 0.0
@@ -975,6 +1107,7 @@ class DTMarlEnv:
         crit_all = [t for t in self.tasks if t.spec.severity >= 0.5]
         protected = [m for m in self.migrations
                      if m.source_failed_within_window and m.task_survived]
+        recovery_successes = [r for r in self.recovery_records if r.succeeded]
         return dict(
             episode_reward=self.ep["reward"],
             steps=self.step_idx,
@@ -1003,6 +1136,12 @@ class DTMarlEnv:
             critical_success_rate=(self.ep["critical_completed"] / len(crit_all)
                                    if crit_all else float("nan")),
             infeasible_actions=self.ep["infeasible"],
+            recovery_attempts=len(self.recovery_records),
+            recoveries_succeeded=len(recovery_successes),
+            recoveries_failed=len(self.recovery_records) - len(recovery_successes),
+            mean_recovery_latency_s=(
+                float(np.mean([r.recovery_latency_s for r in recovery_successes]))
+                if recovery_successes else float("nan")),
             action_counts=dict(stay=self.ep["stay"],
                                migrate_edge=self.ep["migrate_edge"],
                                migrate_cloud=self.ep["migrate_cloud"],
@@ -1033,5 +1172,5 @@ class DTMarlEnv:
         ])
 
 
-__all__ = ["DTMarlEnv", "TaskRuntime", "MigrationRecord",
+__all__ = ["DTMarlEnv", "TaskRuntime", "MigrationRecord", "RecoveryRecord",
            "PENDING", "QUEUED", "RUNNING", "IN_FLIGHT", "COMPLETED", "LOST"]

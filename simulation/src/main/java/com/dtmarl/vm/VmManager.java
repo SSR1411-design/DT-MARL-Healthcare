@@ -14,10 +14,19 @@ public class VmManager {
     public static final int VMS_PER_HOST = 2;
 
     public List<Vm> createVms() {
+        return createVms(HostManager.HOST_COUNT);
+    }
+
+    /** One fixed-capacity VM set per controlled physical host. */
+    public List<Vm> createVms(int hostCount) {
+
+        if (hostCount <= 0) {
+            throw new IllegalArgumentException("hostCount must be positive");
+        }
 
         List<Vm> vmList = new ArrayList<>();
 
-        int vmCount = HostManager.HOST_COUNT * VMS_PER_HOST;
+        int vmCount = hostCount * VMS_PER_HOST;
 
         for (int vmId = 0; vmId < vmCount; vmId++) {
 

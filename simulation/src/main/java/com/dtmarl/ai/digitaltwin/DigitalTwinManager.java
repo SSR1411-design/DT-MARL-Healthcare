@@ -51,9 +51,14 @@ public class DigitalTwinManager {
      * each edge node relies on. Independent of host compute state.
      */
     public void mirrorNetworkLinks(int nodeCount) {
+        mirrorNetworkLinks(nodeCount, NetworkLink.NORMAL_BANDWIDTH_MBPS);
+    }
+
+    /** Mirrors links at the scenario's actual physical bandwidth. */
+    public void mirrorNetworkLinks(int nodeCount, double bandwidthMbps) {
 
         for (int i = 0; i < nodeCount; i++) {
-            networkLinks.add(new NetworkLink(i));
+            networkLinks.add(new NetworkLink(i, bandwidthMbps));
         }
 
         System.out.println(
