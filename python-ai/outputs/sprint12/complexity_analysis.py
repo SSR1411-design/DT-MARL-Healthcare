@@ -594,6 +594,7 @@ def write_report(results: dict[str, Any], comparison: list[dict[str, Any]], out_
             ["Independent centralized PPO", "`python-ai/marl/single_agent_ppo.py`"],
             ["Single-agent PPO training", "`python-ai/marl/train_single_agent.py`"],
             ["Sprint 9 baseline protocol", "`docs/SPRINT_9_BASELINES.md`"],
+            ["Declared Python dependencies", "`requirements.txt`"],
             ["Existing MAPPO timing evidence", "`python-ai/run_R2_mc_target_train.log`; `python-ai/saved_models/marl/mappo_R2_mc_target_config.json`"],
             ["Existing single-agent timing evidence", "`python-ai/saved_models/single_agent/sprint9/sprint9_single_agent_config.json`"],
         ]),
@@ -602,7 +603,7 @@ def write_report(results: dict[str, Any], comparison: list[dict[str, Any]], out_
         "",
         "### B. Checkpoints",
         "",
-        "The full exact inventory of every `.pth`, `.pt`, and `.ckpt` file under `python-ai/saved_models/` is machine-readable in `sprint12_complexity_results.json`. The two scheduling checkpoints used for numerical analysis are listed above. This avoids ambiguity between the validated R2 checkpoint and other historical / trajectory checkpoints.",
+        "The full exact inventory of every `.pth`, `.pt`, and `.ckpt` file under `python-ai/saved_models/` is in `sprint12_checkpoint_inventory.csv` (path, bytes, SHA-256), and is repeated in `sprint12_complexity_results.json`. The two scheduling checkpoints used for numerical analysis are listed above. This avoids ambiguity between the validated R2 checkpoint and other historical / trajectory checkpoints.",
         "",
         "### C–E. What existing artifacts support, and limitations",
         "",
@@ -616,6 +617,7 @@ def write_report(results: dict[str, Any], comparison: list[dict[str, Any]], out_
         ]),
         "",
         "Scientific limitations: timing is hardware, PyTorch version, CPU-thread, and implementation dependent; it is not a simulation-step or end-to-end latency. Tanh/masking/argmax/softmax operations are not included in analytical dense FLOPs. Historical MAPPO training says `device=cpu`; historical single-agent training says `device=cuda`, but neither artifact records the exact training CPU/GPU model.",
+        "No pre-existing FLOP profiler, FLOP measurement, or isolated neural-inference timing utility was found in the repository; the Sprint 12 script is therefore additive.",
         "",
         "## MAPPO architecture and parameters",
         "",
@@ -689,6 +691,17 @@ def write_report(results: dict[str, Any], comparison: list[dict[str, Any]], out_
         "",
         "`N/A` means no model, checkpoint, or scientifically appropriate isolated measurement exists; it is not a zero-valued experimental result. The full table with status/provenance columns is `sprint12_complexity_comparison.csv`.",
         "",
+        "## Reproduce",
+        "",
+        "From the repository root in PowerShell:",
+        "",
+        "```powershell",
+        "$env:PYTHONPATH = (Resolve-Path python-ai).Path",
+        "python python-ai/outputs/sprint12/complexity_analysis.py --overwrite",
+        "```",
+        "",
+        "This reloads the two immutable checkpoints and regenerates only Sprint 12 files. Structural counts, hashes, checkpoint sizes, and analytical FLOPs should reproduce exactly; timing statistics are expected to vary modestly with host load.",
+        "",
         "## Validation and preservation",
         "",
         "- The analysis script loads checkpoints with `map_location='cpu'`, calls `eval()`, and never calls a training/update method.",
@@ -703,6 +716,7 @@ def write_outputs(results: dict[str, Any], out_dir: Path, *, overwrite: bool) ->
     out_dir.mkdir(parents=True, exist_ok=True)
     targets = [
         out_dir / "sprint12_complexity_results.json",
+        out_dir / "sprint12_checkpoint_inventory.csv",
         out_dir / "sprint12_complexity_comparison.csv",
         out_dir / "SPRINT12_COMPLEXITY_ANALYSIS.md",
     ]
@@ -715,6 +729,10 @@ def write_outputs(results: dict[str, Any], out_dir: Path, *, overwrite: bool) ->
     with (out_dir / "sprint12_complexity_results.json").open("w", encoding="utf-8") as handle:
         json.dump(results, handle, indent=2)
         handle.write("\n")
+    with (out_dir / "sprint12_checkpoint_inventory.csv").open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=["path", "bytes", "sha256"])
+        writer.writeheader()
+        writer.writerows(results["checkpoint_inventory"])
     with (out_dir / "sprint12_complexity_comparison.csv").open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(comparison[0]))
         writer.writeheader()
