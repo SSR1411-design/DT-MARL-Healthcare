@@ -1,0 +1,1019 @@
+{
+  "probe": "SPRINT_7_RUNG2_75_offset_R2",
+  "what": "do raw per-state advantage offsets suppress PPO learning? diagnosis only; no centred/matched advantage implemented",
+  "definition": {
+    "offset": "c(s) := gae(s, a_ref); A_true(s, a_ref) == 0 exactly under a greedy baseline, so this is pure estimator error",
+    "decomposition": "gae(s,a) = c(s) + paired(s,a)",
+    "attenuation": "||e_a - pi(.|s)||_2 = exact logit-space norm of d log pi(a|s)/d logits; the state factor multiplying A_hat in the policy gradient",
+    "ppo_uses": "the RAW form (mappo.py:394-402, s1 = ratio * adv[idx])"
+  },
+  "source": {
+    "native": "D:\\MY_GURL\\RESEARCH_PAPER\\DT-MARL-Healthcare\\python-ai\\saved_models\\marl\\SPRINT_7_RUNG2_5_native_dev_R2.json",
+    "model": "saved_models/marl/mappo_R2_mc_target.pth",
+    "critic_target": "mc",
+    "arm": "C0",
+    "n_rows": 547,
+    "n_records": 1432,
+    "greedy_starts": [
+      9,
+      41,
+      73,
+      105,
+      138,
+      170,
+      202,
+      234,
+      266,
+      298,
+      330,
+      362,
+      395,
+      427,
+      459,
+      491
+    ],
+    "rows_without_replay": 0
+  },
+  "C1_C2_C4_C6_estimators": {
+    "team": {
+      "lo": {
+        "n": 388,
+        "true": {
+          "n": 388,
+          "mean": 0.754405217829005,
+          "sd": 5.471129772575782,
+          "median": 0.005563996692346862,
+          "p05": -7.304758760433072,
+          "p95": 10.934401630583855,
+          "mean_abs": 3.4621848304651546
+        },
+        "raw": {
+          "n": 388,
+          "mean": -1.0305213843539511,
+          "sd": 3.979422734857772,
+          "median": -1.1350756883621216,
+          "p05": -7.610789966583252,
+          "p95": 5.105086207389827,
+          "mean_abs": 3.24401637322279
+        },
+        "paired": {
+          "n": 388,
+          "mean": -0.23136060552901982,
+          "sd": 1.6787531814986572,
+          "median": -0.041830360889434814,
+          "p05": -2.4417391777038575,
+          "p95": 3.3043332219123838,
+          "mean_abs": 1.0847940298479013
+        },
+        "offset": {
+          "n": 388,
+          "mean": -0.7991607788249313,
+          "sd": 4.2474730943081545,
+          "median": -0.7292267382144928,
+          "p05": -8.367788124084473,
+          "p95": 5.6469069242477365,
+          "mean_abs": 3.2916359690152417
+        },
+        "mae_raw": 5.064607183835955,
+        "mae_paired": 3.0108869572926094,
+        "corr_raw": 0.03369448031275381,
+        "corr_paired": 0.45029107157928616,
+        "ols_raw": {
+          "slope": 0.024507658668213864,
+          "intercept": -1.049010089930024
+        },
+        "ols_paired": {
+          "slope": 0.13816663110483646,
+          "intercept": -0.3355942329643638
+        },
+        "sign_raw": 0.5154639175257731,
+        "sign_paired": 0.7422680412371134,
+        "var_decomp": {
+          "var_raw": 15.835805302702909,
+          "var_offset": 18.041027686871686,
+          "var_paired": 2.818212244391863,
+          "cov2": -5.023434628560641,
+          "offset_share_of_var": 1.1392554620378152,
+          "paired_share_of_var": 0.17796456766937147
+        },
+        "sd_ratio_offset_over_paired": 2.5301355441163476,
+        "sd_ratio_offset_over_true": 0.7763429622157297,
+        "offset_mean_removable": -0.7991607788249313,
+        "offset_sd_irreducible": 4.2474730943081545,
+        "corr_offset_risk": -0.03263805091338386
+      },
+      "mid": {
+        "n": 30,
+        "true": {
+          "n": 30,
+          "mean": -1.4048722724760523,
+          "sd": 4.4265297423732175,
+          "median": -0.43597672247534724,
+          "p05": -7.933811888418401,
+          "p95": 5.483512142788125,
+          "mean_abs": 3.0979381807740776
+        },
+        "raw": {
+          "n": 30,
+          "mean": 1.407007912794749,
+          "sd": 4.695315860510828,
+          "median": 1.1666725873947144,
+          "p05": -7.711177253723144,
+          "p95": 7.976493787765497,
+          "mean_abs": 3.844396895170212
+        },
+        "paired": {
+          "n": 30,
+          "mean": -0.6717768172423045,
+          "sd": 1.8590423765545354,
+          "median": -0.5956655889749527,
+          "p05": -4.654578727483749,
+          "p95": 2.7235452890396115,
+          "mean_abs": 1.3633647660414379
+        },
+        "offset": {
+          "n": 30,
+          "mean": 2.078784730037053,
+          "sd": 4.487286934439378,
+          "median": 3.14247465133667,
+          "p05": -7.504990696907043,
+          "p95": 7.3210450172424295,
+          "mean_abs": 4.022475069761276
+        },
+        "mae_raw": 5.291441592743295,
+        "mae_paired": 2.9524688544324023,
+        "corr_raw": -0.03264257655842613,
+        "corr_paired": 0.05442648821161018,
+        "ols_raw": {
+          "slope": -0.03462468713935378,
+          "intercept": 1.3583646498895126
+        },
+        "ols_paired": {
+          "slope": 0.02285789407984015,
+          "intercept": -0.6396643956423428
+        },
+        "sign_raw": 0.4666666666666667,
+        "sign_paired": 0.6,
+        "var_decomp": {
+          "var_raw": 22.045991029964533,
+          "var_offset": 20.135744031990356,
+          "var_paired": 3.456038557825535,
+          "cov2": -1.5457915598513556,
+          "offset_share_of_var": 0.9133517293290285,
+          "paired_share_of_var": 0.15676494438957844
+        },
+        "sd_ratio_offset_over_paired": 2.4137625860664413,
+        "sd_ratio_offset_over_true": 1.013725693851,
+        "offset_mean_removable": 2.078784730037053,
+        "offset_sd_irreducible": 4.487286934439378,
+        "corr_offset_risk": 0.3465686067764276
+      },
+      "hi": {
+        "n": 298,
+        "true": {
+          "n": 298,
+          "mean": 1.1887106056667045,
+          "sd": 5.498769882967037,
+          "median": 0.04999995231628418,
+          "p05": -6.063036772433973,
+          "p95": 10.842112719562822,
+          "mean_abs": 3.6199264967465634
+        },
+        "raw": {
+          "n": 298,
+          "mean": -0.1969583861079792,
+          "sd": 4.639222303489172,
+          "median": 0.13975531607866287,
+          "p05": -7.613971734046936,
+          "p95": 6.953466820716852,
+          "mean_abs": 3.7974476911777617
+        },
+        "paired": {
+          "n": 298,
+          "mean": 0.6670291861581722,
+          "sd": 2.4052843169640687,
+          "median": -0.009200334548950195,
+          "p05": -2.73752896785736,
+          "p95": 4.259914797544478,
+          "mean_abs": 1.8203618781228594
+        },
+        "offset": {
+          "n": 298,
+          "mean": -0.8639875722661514,
+          "sd": 5.264302470050246,
+          "median": -0.1828611046075821,
+          "p05": -8.78375473022461,
+          "p95": 7.5802155733108485,
+          "mean_abs": 4.350080548341842
+        },
+        "mae_raw": 5.841774506592558,
+        "mae_paired": 3.213166743774128,
+        "corr_raw": -0.07956539404541234,
+        "corr_paired": 0.3390746397597121,
+        "ols_raw": {
+          "slope": -0.06712802290286243,
+          "intercept": -0.11716259334590903
+        },
+        "ols_paired": {
+          "slope": 0.14831879323057062,
+          "intercept": 0.49072106362530593
+        },
+        "sign_raw": 0.4395973154362416,
+        "sign_paired": 0.7114093959731543,
+        "var_decomp": {
+          "var_raw": 21.522383581191374,
+          "var_offset": 27.712880496177114,
+          "var_paired": 5.785392645433307,
+          "cov2": -11.97588956041905,
+          "offset_share_of_var": 1.287630637732694,
+          "paired_share_of_var": 0.2688081746897783
+        },
+        "sd_ratio_offset_over_paired": 2.1886404168197493,
+        "sd_ratio_offset_over_true": 0.9573600245314727,
+        "offset_mean_removable": -0.8639875722661514,
+        "offset_sd_irreducible": 5.264302470050246,
+        "corr_offset_risk": -0.06887028344193918
+      },
+      "all": {
+        "n": 716,
+        "true": {
+          "n": 716,
+          "mean": 0.8446910849609642,
+          "sd": 5.460971691345504,
+          "median": 0.00587941946213455,
+          "p05": -6.863555612821338,
+          "p95": 10.834354789081692,
+          "mean_abs": 3.5125753570868414
+        },
+        "raw": {
+          "n": 716,
+          "mean": -0.5814604173263525,
+          "sd": 4.3292561089100925,
+          "median": -0.5594542324542999,
+          "p05": -7.627389550209045,
+          "p95": 6.307642459869385,
+          "mean_abs": 3.499510714576148
+        },
+        "paired": {
+          "n": 716,
+          "mean": 0.124097036330456,
+          "sd": 2.07043937290685,
+          "median": -0.014185667037963867,
+          "p05": -2.6939263194799423,
+          "p95": 4.0522191375494,
+          "mean_abs": 1.402610148383856
+        },
+        "offset": {
+          "n": 716,
+          "mean": -0.7055574536568084,
+          "sd": 4.736408005118784,
+          "median": -0.44157953560352325,
+          "p05": -8.597434997558594,
+          "p95": 6.675727605819702,
+          "mean_abs": 3.762783535581873
+        },
+        "mae_raw": 5.397569326920714,
+        "mae_paired": 3.092628344563121,
+        "corr_raw": -0.02470690633697381,
+        "corr_paired": 0.37941723945109485,
+        "ols_raw": {
+          "slope": -0.019586720319595543,
+          "intercept": -0.5649156892887665
+        },
+        "ols_paired": {
+          "slope": 0.14384992922855117,
+          "intercept": 0.002588283538833036
+        },
+        "sign_raw": 0.4818435754189944,
+        "sign_paired": 0.723463687150838,
+        "var_decomp": {
+          "var_raw": 18.742458456535356,
+          "var_offset": 22.433560790953294,
+          "var_paired": 4.286719196882911,
+          "cov2": -7.977821531300852,
+          "offset_share_of_var": 1.196938002716014,
+          "paired_share_of_var": 0.2287170173979051
+        },
+        "sd_ratio_offset_over_paired": 2.2876342418416113,
+        "sd_ratio_offset_over_true": 0.8673196406831769,
+        "offset_mean_removable": -0.7055574536568084,
+        "offset_sd_irreducible": 4.736408005118784,
+        "corr_offset_risk": -0.027871244932435955
+      }
+    },
+    "own": {
+      "lo": {
+        "n": 388,
+        "true": {
+          "n": 388,
+          "mean": -0.16299243342927008,
+          "sd": 3.073071406383951,
+          "median": 0.0025880825974704535,
+          "p05": -4.250134459555925,
+          "p95": 5.017918321768966,
+          "mean_abs": 1.8545393204923972
+        },
+        "raw": {
+          "n": 388,
+          "mean": -1.0305213843539511,
+          "sd": 3.979422734857772,
+          "median": -1.1350756883621216,
+          "p05": -7.610789966583252,
+          "p95": 5.105086207389827,
+          "mean_abs": 3.24401637322279
+        },
+        "paired": {
+          "n": 388,
+          "mean": -0.23136060552901982,
+          "sd": 1.6787531814986572,
+          "median": -0.041830360889434814,
+          "p05": -2.4417391777038575,
+          "p95": 3.3043332219123838,
+          "mean_abs": 1.0847940298479013
+        },
+        "offset": {
+          "n": 388,
+          "mean": -0.7991607788249313,
+          "sd": 4.2474730943081545,
+          "median": -0.7292267382144928,
+          "p05": -8.367788124084473,
+          "p95": 5.6469069242477365,
+          "mean_abs": 3.2916359690152417
+        },
+        "mae_raw": 3.7220972997552333,
+        "mae_paired": 0.8913510541376175,
+        "corr_raw": 0.0738832236758629,
+        "corr_paired": 0.8960554699686785,
+        "ols_raw": {
+          "slope": 0.09567385235811116,
+          "intercept": -1.0149272703425498
+        },
+        "ols_paired": {
+          "slope": 0.48949593813026177,
+          "intercept": -0.15157647141942493
+        },
+        "sign_raw": 0.5463917525773195,
+        "sign_paired": 0.9278350515463918,
+        "var_decomp": {
+          "var_raw": 15.835805302702909,
+          "var_offset": 18.041027686871686,
+          "var_paired": 2.818212244391863,
+          "cov2": -5.023434628560641,
+          "offset_share_of_var": 1.1392554620378152,
+          "paired_share_of_var": 0.17796456766937147
+        },
+        "sd_ratio_offset_over_paired": 2.5301355441163476,
+        "sd_ratio_offset_over_true": 1.3821589324232817,
+        "offset_mean_removable": -0.7991607788249313,
+        "offset_sd_irreducible": 4.2474730943081545,
+        "corr_offset_risk": -0.03263805091338386
+      },
+      "mid": {
+        "n": 30,
+        "true": {
+          "n": 30,
+          "mean": -1.2402102054861557,
+          "sd": 2.6638476866850893,
+          "median": -0.6836561721154553,
+          "p05": -6.4301211625498444,
+          "p95": 3.003643289059858,
+          "mean_abs": 1.9444712991114386
+        },
+        "raw": {
+          "n": 30,
+          "mean": 1.407007912794749,
+          "sd": 4.695315860510828,
+          "median": 1.1666725873947144,
+          "p05": -7.711177253723144,
+          "p95": 7.976493787765497,
+          "mean_abs": 3.844396895170212
+        },
+        "paired": {
+          "n": 30,
+          "mean": -0.6717768172423045,
+          "sd": 1.8590423765545354,
+          "median": -0.5956655889749527,
+          "p05": -4.654578727483749,
+          "p95": 2.7235452890396115,
+          "mean_abs": 1.3633647660414379
+        },
+        "offset": {
+          "n": 30,
+          "mean": 2.078784730037053,
+          "sd": 4.487286934439378,
+          "median": 3.14247465133667,
+          "p05": -7.504990696907043,
+          "p95": 7.3210450172424295,
+          "mean_abs": 4.022475069761276
+        },
+        "mae_raw": 4.600436972218795,
+        "mae_paired": 0.8416070386671656,
+        "corr_raw": 0.23510179290886968,
+        "corr_paired": 0.8955359949320405,
+        "ols_raw": {
+          "slope": 0.4143920024396066,
+          "intercept": 1.9209411032921935
+        },
+        "ols_paired": {
+          "slope": 0.6249754340798398,
+          "intercept": 0.10332409428165296
+        },
+        "sign_raw": 0.5,
+        "sign_paired": 0.9666666666666667,
+        "var_decomp": {
+          "var_raw": 22.045991029964533,
+          "var_offset": 20.135744031990356,
+          "var_paired": 3.456038557825535,
+          "cov2": -1.5457915598513556,
+          "offset_share_of_var": 0.9133517293290285,
+          "paired_share_of_var": 0.15676494438957844
+        },
+        "sd_ratio_offset_over_paired": 2.4137625860664413,
+        "sd_ratio_offset_over_true": 1.6845133289221164,
+        "offset_mean_removable": 2.078784730037053,
+        "offset_sd_irreducible": 4.487286934439378,
+        "corr_offset_risk": 0.3465686067764276
+      },
+      "hi": {
+        "n": 298,
+        "true": {
+          "n": 298,
+          "mean": 0.47152954309524664,
+          "sd": 3.212106322555067,
+          "median": -0.016069019991574285,
+          "p05": -4.650220769938756,
+          "p95": 5.662219070559617,
+          "mean_abs": 2.39334171679638
+        },
+        "raw": {
+          "n": 298,
+          "mean": -0.1969583861079792,
+          "sd": 4.639222303489172,
+          "median": 0.13975531607866287,
+          "p05": -7.613971734046936,
+          "p95": 6.953466820716852,
+          "mean_abs": 3.7974476911777617
+        },
+        "paired": {
+          "n": 298,
+          "mean": 0.6670291861581722,
+          "sd": 2.4052843169640687,
+          "median": -0.009200334548950195,
+          "p05": -2.73752896785736,
+          "p95": 4.259914797544478,
+          "mean_abs": 1.8203618781228594
+        },
+        "offset": {
+          "n": 298,
+          "mean": -0.8639875722661514,
+          "sd": 5.264302470050246,
+          "median": -0.1828611046075821,
+          "p05": -8.78375473022461,
+          "p95": 7.5802155733108485,
+          "mean_abs": 4.350080548341842
+        },
+        "mae_raw": 4.587779087844166,
+        "mae_paired": 0.725690168382805,
+        "corr_raw": -0.013747265986758158,
+        "corr_paired": 0.9254706791327498,
+        "ols_raw": {
+          "slope": -0.019855078435584133,
+          "intercept": -0.18759613004512754
+        },
+        "ols_paired": {
+          "slope": 0.6930094731600918,
+          "intercept": 0.34025474591831634
+        },
+        "sign_raw": 0.4597315436241611,
+        "sign_paired": 0.9463087248322147,
+        "var_decomp": {
+          "var_raw": 21.522383581191374,
+          "var_offset": 27.712880496177114,
+          "var_paired": 5.785392645433307,
+          "cov2": -11.97588956041905,
+          "offset_share_of_var": 1.287630637732694,
+          "paired_share_of_var": 0.2688081746897783
+        },
+        "sd_ratio_offset_over_paired": 2.1886404168197493,
+        "sd_ratio_offset_over_true": 1.6388942150155108,
+        "offset_mean_removable": -0.8639875722661514,
+        "offset_sd_irreducible": 5.264302470050246,
+        "corr_offset_risk": -0.06887028344193918
+      },
+      "all": {
+        "n": 716,
+        "true": {
+          "n": 716,
+          "mean": 0.05596149931179049,
+          "sd": 3.139044966673412,
+          "median": -0.00925037994184108,
+          "p05": -4.608947732647025,
+          "p95": 5.140390516064269,
+          "mean_abs": 2.082557579510774
+        },
+        "raw": {
+          "n": 716,
+          "mean": -0.5814604173263525,
+          "sd": 4.3292561089100925,
+          "median": -0.5594542324542999,
+          "p05": -7.627389550209045,
+          "p95": 6.307642459869385,
+          "mean_abs": 3.499510714576148
+        },
+        "paired": {
+          "n": 716,
+          "mean": 0.124097036330456,
+          "sd": 2.07043937290685,
+          "median": -0.014185667037963867,
+          "p05": -2.6939263194799423,
+          "p95": 4.0522191375494,
+          "mean_abs": 1.402610148383856
+        },
+        "offset": {
+          "n": 716,
+          "mean": -0.7055574536568084,
+          "sd": 4.736408005118784,
+          "median": -0.44157953560352325,
+          "p05": -8.597434997558594,
+          "p95": 6.675727605819702,
+          "mean_abs": 3.762783535581873
+        },
+        "mae_raw": 4.119196968783737,
+        "mae_paired": 0.8203185619322437,
+        "corr_raw": 0.03936957739984396,
+        "corr_paired": 0.8972776051077601,
+        "ols_raw": {
+          "slope": 0.054297082479868815,
+          "intercept": -0.5844989634701814
+        },
+        "ols_paired": {
+          "slope": 0.5918229594561761,
+          "intercept": 0.09097773619214737
+        },
+        "sign_raw": 0.5083798882681564,
+        "sign_paired": 0.9371508379888268,
+        "var_decomp": {
+          "var_raw": 18.742458456535356,
+          "var_offset": 22.433560790953294,
+          "var_paired": 4.286719196882911,
+          "cov2": -7.977821531300852,
+          "offset_share_of_var": 1.196938002716014,
+          "paired_share_of_var": 0.2287170173979051
+        },
+        "sd_ratio_offset_over_paired": 2.2876342418416113,
+        "sd_ratio_offset_over_true": 1.5088691163727321,
+        "offset_mean_removable": -0.7055574536568084,
+        "offset_sd_irreducible": 4.736408005118784,
+        "corr_offset_risk": -0.027871244932435955
+      }
+    }
+  },
+  "C3_ordering": {
+    "team": {
+      "lo": {
+        "n_states": 290,
+        "kendall_raw": {
+          "n": 290,
+          "mean": 0.4850574712643679,
+          "sd": 0.7930681133680155,
+          "median": 1.0,
+          "p05": -1.0,
+          "p95": 1.0,
+          "mean_abs": 0.896551724137931
+        },
+        "kendall_paired": {
+          "n": 290,
+          "mean": 0.4850574712643679,
+          "sd": 0.7930681133680155,
+          "median": 1.0,
+          "p05": -1.0,
+          "p95": 1.0,
+          "mean_abs": 0.896551724137931
+        },
+        "frac_exact_order_raw": 0.6689655172413793,
+        "frac_exact_order_paired": 0.6689655172413793,
+        "note": "the reference action is INCLUDED in each ranking; that is where raw carries the offset and paired carries 0"
+      },
+      "mid": {
+        "n_states": 27,
+        "kendall_raw": {
+          "n": 27,
+          "mean": 0.16049382716049385,
+          "sd": 0.9886984034983006,
+          "median": 1.0,
+          "p05": -1.0,
+          "p95": 1.0,
+          "mean_abs": 0.9753086419753086
+        },
+        "kendall_paired": {
+          "n": 27,
+          "mean": 0.16049382716049385,
+          "sd": 0.9886984034983006,
+          "median": 1.0,
+          "p05": -1.0,
+          "p95": 1.0,
+          "mean_abs": 0.9753086419753086
+        },
+        "frac_exact_order_raw": 0.5555555555555556,
+        "frac_exact_order_paired": 0.5555555555555556,
+        "note": "the reference action is INCLUDED in each ranking; that is where raw carries the offset and paired carries 0"
+      },
+      "hi": {
+        "n_states": 230,
+        "kendall_raw": {
+          "n": 230,
+          "mean": 0.32753623188405795,
+          "sd": 0.8920182032372723,
+          "median": 1.0,
+          "p05": -1.0,
+          "p95": 1.0,
+          "mean_abs": 0.9246376811594204
+        },
+        "kendall_paired": {
+          "n": 230,
+          "mean": 0.32753623188405795,
+          "sd": 0.8920182032372723,
+          "median": 1.0,
+          "p05": -1.0,
+          "p95": 1.0,
+          "mean_abs": 0.9246376811594204
+        },
+        "frac_exact_order_raw": 0.6130434782608696,
+        "frac_exact_order_paired": 0.6130434782608696,
+        "note": "the reference action is INCLUDED in each ranking; that is where raw carries the offset and paired carries 0"
+      },
+      "all": {
+        "n_states": 547,
+        "kendall_raw": {
+          "n": 547,
+          "mean": 0.40280316879951245,
+          "sd": 0.8497457442840713,
+          "median": 1.0,
+          "p05": -1.0,
+          "p95": 1.0,
+          "mean_abs": 0.9122486288848263
+        },
+        "kendall_paired": {
+          "n": 547,
+          "mean": 0.40280316879951245,
+          "sd": 0.8497457442840713,
+          "median": 1.0,
+          "p05": -1.0,
+          "p95": 1.0,
+          "mean_abs": 0.9122486288848263
+        },
+        "frac_exact_order_raw": 0.6398537477148081,
+        "frac_exact_order_paired": 0.6398537477148081,
+        "note": "the reference action is INCLUDED in each ranking; that is where raw carries the offset and paired carries 0"
+      }
+    },
+    "own": {
+      "lo": {
+        "n_states": 290,
+        "kendall_raw": {
+          "n": 290,
+          "mean": 0.8390804597701149,
+          "sd": 0.5099599282805677,
+          "median": 1.0,
+          "p05": -1.0,
+          "p95": 1.0,
+          "mean_abs": 0.9724137931034482
+        },
+        "kendall_paired": {
+          "n": 290,
+          "mean": 0.8390804597701149,
+          "sd": 0.5099599282805677,
+          "median": 1.0,
+          "p05": -1.0,
+          "p95": 1.0,
+          "mean_abs": 0.9724137931034482
+        },
+        "frac_exact_order_raw": 0.896551724137931,
+        "frac_exact_order_paired": 0.896551724137931,
+        "note": "the reference action is INCLUDED in each ranking; that is where raw carries the offset and paired carries 0"
+      },
+      "mid": {
+        "n_states": 27,
+        "kendall_raw": {
+          "n": 27,
+          "mean": 0.9259259259259259,
+          "sd": 0.38490017945975047,
+          "median": 1.0,
+          "p05": 1.0,
+          "p95": 1.0,
+          "mean_abs": 1.0
+        },
+        "kendall_paired": {
+          "n": 27,
+          "mean": 0.9259259259259259,
+          "sd": 0.38490017945975047,
+          "median": 1.0,
+          "p05": 1.0,
+          "p95": 1.0,
+          "mean_abs": 1.0
+        },
+        "frac_exact_order_raw": 0.9629629629629629,
+        "frac_exact_order_paired": 0.9629629629629629,
+        "note": "the reference action is INCLUDED in each ranking; that is where raw carries the offset and paired carries 0"
+      },
+      "hi": {
+        "n_states": 230,
+        "kendall_raw": {
+          "n": 230,
+          "mean": 0.8782608695652174,
+          "sd": 0.4499834161214125,
+          "median": 1.0,
+          "p05": -0.3333333333333333,
+          "p95": 1.0,
+          "mean_abs": 0.9797101449275362
+        },
+        "kendall_paired": {
+          "n": 230,
+          "mean": 0.8782608695652174,
+          "sd": 0.4499834161214125,
+          "median": 1.0,
+          "p05": -0.3333333333333333,
+          "p95": 1.0,
+          "mean_abs": 0.9797101449275362
+        },
+        "frac_exact_order_raw": 0.9260869565217391,
+        "frac_exact_order_paired": 0.9260869565217391,
+        "note": "the reference action is INCLUDED in each ranking; that is where raw carries the offset and paired carries 0"
+      },
+      "all": {
+        "n_states": 547,
+        "kendall_raw": {
+          "n": 547,
+          "mean": 0.8598415600243754,
+          "sd": 0.47981025715245557,
+          "median": 1.0,
+          "p05": -1.0,
+          "p95": 1.0,
+          "mean_abs": 0.9768433881779404
+        },
+        "kendall_paired": {
+          "n": 547,
+          "mean": 0.8598415600243754,
+          "sd": 0.47981025715245557,
+          "median": 1.0,
+          "p05": -1.0,
+          "p95": 1.0,
+          "mean_abs": 0.9768433881779404
+        },
+        "frac_exact_order_raw": 0.9122486288848263,
+        "frac_exact_order_paired": 0.9122486288848263,
+        "note": "the reference action is INCLUDED in each ranking; that is where raw carries the offset and paired carries 0"
+      }
+    }
+  },
+  "C5_policy_gradient": {
+    "lo": {
+      "n": 290,
+      "offset_abs": {
+        "n": 290,
+        "mean": 3.19742466711664,
+        "sd": 2.727558738357513,
+        "median": 2.5485209226608276,
+        "p05": 0.22873704358935357,
+        "p95": 8.59286346435547,
+        "mean_abs": 3.19742466711664
+      },
+      "attenuation": {
+        "n": 290,
+        "mean": 0.2767894044613271,
+        "sd": 0.27738287819426405,
+        "median": 0.1604124632884687,
+        "p05": 0.001227498559957444,
+        "p95": 0.6993491258288406,
+        "mean_abs": 0.2767894044613271
+      },
+      "pi_ref": {
+        "n": 290,
+        "mean": 0.8018066620004588,
+        "sd": 0.19881601490135878,
+        "median": 0.8864663541316986,
+        "p05": 0.5028132855892181,
+        "p95": 0.9991320610046387,
+        "mean_abs": 0.8018066620004588
+      },
+      "push_offset_driven": {
+        "n": 290,
+        "mean": 0.8508211803163059,
+        "sd": 1.3202035749909813,
+        "median": 0.3542406680533708,
+        "p05": 0.0008958072442203523,
+        "p95": 2.978248176596739,
+        "mean_abs": 0.8508211803163059
+      },
+      "push_if_matched": {
+        "n": 290,
+        "mean": 0.21330633072098082,
+        "sd": 0.4507247469320217,
+        "median": 0.024990713074811616,
+        "p05": 0.0011737270197976434,
+        "p95": 1.107111948941217,
+        "mean_abs": 0.21330633072098082
+      },
+      "ratio_offset_push_over_matched_push": 3.9887291551099717,
+      "frac_saturated_pi_ref_gt_099": 0.2620689655172414,
+      "frac_attenuation_lt_0_02": 0.2620689655172414,
+      "share_of_total_push_from_unsaturated": 0.9980698334774146,
+      "note": "A_true(ref) == 0 by construction, so on an on-policy entry whose action is the greedy one the ENTIRE policy-gradient push is the offset. Valid under the greedy-baseline truth definition used in Rungs 0-2.5; in stochastic training the sampled action is not always greedy, so read this as the greedy-entry subset, not the whole batch."
+    },
+    "mid": {
+      "n": 27,
+      "offset_abs": {
+        "n": 27,
+        "mean": 3.8928352528148227,
+        "sd": 2.7097007277833196,
+        "median": 3.9144554138183594,
+        "p05": 0.4370103895664215,
+        "p95": 8.59204773902893,
+        "mean_abs": 3.8928352528148227
+      },
+      "attenuation": {
+        "n": 27,
+        "mean": 0.09244871304846168,
+        "sd": 0.06806611441432597,
+        "median": 0.11391014522478263,
+        "p05": 0.0025567128323656643,
+        "p95": 0.16002461727767908,
+        "mean_abs": 0.09244871304846168
+      },
+      "pi_ref": {
+        "n": 27,
+        "mean": 0.9343122972382439,
+        "sd": 0.048990122005036434,
+        "median": 0.9194533824920654,
+        "p05": 0.886742228269577,
+        "p95": 0.9981921434402465,
+        "mean_abs": 0.9343122972382439
+      },
+      "push_offset_driven": {
+        "n": 27,
+        "mean": 0.320241125925516,
+        "sd": 0.41842680754351363,
+        "median": 0.15265099244902847,
+        "p05": 0.00836934202540043,
+        "p95": 1.3107350976029213,
+        "mean_abs": 0.320241125925516
+      },
+      "push_if_matched": {
+        "n": 27,
+        "mean": 0.14242958988014567,
+        "sd": 0.17919822907339902,
+        "median": 0.06980933566176405,
+        "p05": 0.0013937899345922741,
+        "p95": 0.5640000717187686,
+        "mean_abs": 0.14242958988014567
+      },
+      "ratio_offset_push_over_matched_push": 2.2484171034614264,
+      "frac_saturated_pi_ref_gt_099": 0.25925925925925924,
+      "frac_attenuation_lt_0_02": 0.25925925925925924,
+      "share_of_total_push_from_unsaturated": 0.9893553416200261,
+      "note": "A_true(ref) == 0 by construction, so on an on-policy entry whose action is the greedy one the ENTIRE policy-gradient push is the offset. Valid under the greedy-baseline truth definition used in Rungs 0-2.5; in stochastic training the sampled action is not always greedy, so read this as the greedy-entry subset, not the whole batch."
+    },
+    "hi": {
+      "n": 230,
+      "offset_abs": {
+        "n": 230,
+        "mean": 4.310321632967047,
+        "sd": 3.025986249157441,
+        "median": 3.8613295555114746,
+        "p05": 0.44616591781377796,
+        "p95": 9.44798913002014,
+        "mean_abs": 4.310321632967047
+      },
+      "attenuation": {
+        "n": 230,
+        "mean": 0.22776461815575286,
+        "sd": 0.23287890072909187,
+        "median": 0.13619254392722877,
+        "p05": 0.0012573976494214812,
+        "p95": 0.6803190973984159,
+        "mean_abs": 0.22776461815575286
+      },
+      "pi_ref": {
+        "n": 230,
+        "mean": 0.8356820011916368,
+        "sd": 0.16975998118311372,
+        "median": 0.9036973416805267,
+        "p05": 0.4972491055727005,
+        "p95": 0.9991108536720276,
+        "mean_abs": 0.8356820011916368
+      },
+      "push_offset_driven": {
+        "n": 230,
+        "mean": 0.8435418613633153,
+        "sd": 1.319732575447362,
+        "median": 0.4519762756039096,
+        "p05": 0.005508582850922983,
+        "p95": 2.8308828539176334,
+        "mean_abs": 0.8435418613633153
+      },
+      "push_if_matched": {
+        "n": 230,
+        "mean": 0.39879857147969044,
+        "sd": 0.6713555517522598,
+        "median": 0.11646645487995454,
+        "p05": 0.0027883640625621115,
+        "p95": 2.087912463198571,
+        "mean_abs": 0.39879857147969044
+      },
+      "ratio_offset_push_over_matched_push": 2.1152078309444855,
+      "frac_saturated_pi_ref_gt_099": 0.19130434782608696,
+      "frac_attenuation_lt_0_02": 0.19130434782608696,
+      "share_of_total_push_from_unsaturated": 0.9962462020067593,
+      "note": "A_true(ref) == 0 by construction, so on an on-policy entry whose action is the greedy one the ENTIRE policy-gradient push is the offset. Valid under the greedy-baseline truth definition used in Rungs 0-2.5; in stochastic training the sampled action is not always greedy, so read this as the greedy-entry subset, not the whole batch."
+    },
+    "all": {
+      "n": 547,
+      "offset_abs": {
+        "n": 547,
+        "mean": 3.699695943093687,
+        "sd": 2.9018523304887682,
+        "median": 3.0300393104553223,
+        "p05": 0.2620561122894287,
+        "p95": 9.24274187088011,
+        "mean_abs": 3.699695943093687
+      },
+      "attenuation": {
+        "n": 547,
+        "mean": 0.24707660826675779,
+        "sd": 0.2559300846918308,
+        "median": 0.14307213976534874,
+        "p05": 0.001241365926515486,
+        "p95": 0.694822434707939,
+        "mean_abs": 0.24707660826675779
+      },
+      "pi_ref": {
+        "n": 547,
+        "mean": 0.8225909036190898,
+        "sd": 0.18450537743469667,
+        "median": 0.8988327383995056,
+        "p05": 0.5020916938781739,
+        "p95": 0.9991222500801087,
+        "mean_abs": 0.8225909036190898
+      },
+      "push_offset_driven": {
+        "n": 547,
+        "mean": 0.8215708972674227,
+        "sd": 1.2940085059918978,
+        "median": 0.38204447423436877,
+        "p05": 0.0017306439719834293,
+        "p95": 2.8922405926103374,
+        "mean_abs": 0.8215708972674227
+      },
+      "push_if_matched": {
+        "n": 547,
+        "mean": 0.28780275370416303,
+        "sd": 0.5543272843614209,
+        "median": 0.07120170415899175,
+        "p05": 0.0013577693098066363,
+        "p95": 1.5738005666370964,
+        "mean_abs": 0.28780275370416303
+      },
+      "ratio_offset_push_over_matched_push": 2.8546318153436725,
+      "frac_saturated_pi_ref_gt_099": 0.23217550274223034,
+      "frac_attenuation_lt_0_02": 0.23217550274223034,
+      "share_of_total_push_from_unsaturated": 0.9971148672716346,
+      "note": "A_true(ref) == 0 by construction, so on an on-policy entry whose action is the greedy one the ENTIRE policy-gradient push is the offset. Valid under the greedy-baseline truth definition used in Rungs 0-2.5; in stochastic training the sampled action is not always greedy, so read this as the greedy-entry subset, not the whole batch."
+    }
+  },
+  "rung2_5_noise_floor_for_crosscheck": {
+    "C0": {
+      "lo": {
+        "n": 290,
+        "mean": -0.8814290815065133,
+        "sd": 4.1061575998360915,
+        "median": -0.8856264650821686,
+        "frac_positive": 0.39655172413793105,
+        "se": 0.24153868234329945
+      },
+      "mid": {
+        "n": 27,
+        "mean": 2.4009380495106734,
+        "sd": 4.057116856984127,
+        "median": 3.3054637908935547,
+        "frac_positive": 0.7407407407407407,
+        "se": 0.7956660777957034
+      },
+      "hi": {
+        "n": 230,
+        "mean": -0.8694613545161226,
+        "sd": 5.190345946057903,
+        "median": -0.3160025179386139,
+        "frac_positive": 0.4782608695652174,
+        "se": 0.3429877143951732
+      },
+      "all": {
+        "n": 547,
+        "mean": -0.7143788260307292,
+        "sd": 4.645725507783892,
+        "median": -0.6329270601272583,
+        "frac_positive": 0.44789762340036565,
+        "se": 0.19881869763817053
+      }
+    }
+  }
+}

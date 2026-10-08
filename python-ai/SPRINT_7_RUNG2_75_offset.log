@@ -1,0 +1,41 @@
+==============================================================================
+SPRINT 7 RUNG 2.75 -- item C: per-state advantage OFFSET vs PPO
+        DIAGNOSIS ONLY -- no advantage change is implemented
+==============================================================================
+  native rows : 547  from SPRINT_7_RUNG2_5_native_dev_R2.json
+  model       : saved_models/marl/mappo_R2_mc_target.pth  critic_target=mc
+  arm         : C0 (the checkpoint's own deployed critic)
+  greedy replays: [9, 41, 73, 105, 138, 170, 202, 234, 266, 298, 330, 362, 395, 427, 459, 491]  (rows missing a replay: 0)
+  (state, deviating action) records: 1432 (716 per truth definition)
+
+-- C1/C4  estimator vs truth, HIGH-RISK bucket ----------------
+  [team] n=298
+    true    mean  +1.1887  sd  5.4988
+    raw     mean  -0.1970  sd  4.6392   MAE  5.8418  r -0.0795  sign 0.4396
+    paired  mean  +0.6670  sd  2.4053   MAE  3.2132  r 0.33907  sign 0.7114
+    offset  mean  -0.8640  sd  5.2643   SD(offset)/SD(paired) = 2.19x
+    Var(raw)=21.522 = Var(offset) 27.713 (128.8%) + Var(paired) 5.785 (26.9%) + 2Cov -11.976
+  [own] n=298
+    true    mean  +0.4715  sd  3.2121
+    raw     mean  -0.1970  sd  4.6392   MAE  4.5878  r -0.0137  sign 0.4597
+    paired  mean  +0.6670  sd  2.4053   MAE  0.7257  r 0.92547  sign 0.9463
+    offset  mean  -0.8640  sd  5.2643   SD(offset)/SD(paired) = 2.19x
+    Var(raw)=21.522 = Var(offset) 27.713 (128.8%) + Var(paired) 5.785 (26.9%) + 2Cov -11.976
+
+-- C3  within-state action ORDERING (ref action included) ------
+  [team] hi  states= 230  tau raw +0.3275  paired +0.3275   exact-order raw 0.6130  paired 0.6130
+  [team] lo  states= 290  tau raw +0.4851  paired +0.4851   exact-order raw 0.6690  paired 0.6690
+  [team] all states= 547  tau raw +0.4028  paired +0.4028   exact-order raw 0.6399  paired 0.6399
+  [own] hi  states= 230  tau raw +0.8783  paired +0.8783   exact-order raw 0.9261  paired 0.9261
+  [own] lo  states= 290  tau raw +0.8391  paired +0.8391   exact-order raw 0.8966  paired 0.8966
+  [own] all states= 547  tau raw +0.8598  paired +0.8598   exact-order raw 0.9122  paired 0.9122
+
+-- C5  PPO policy-gradient link -------------------------------
+  bucket     n  |offset|    atten   pi_ref  push_off push_match  off/match  sat>.99
+  lo       290    3.1974   0.2768   0.8018    0.8508     0.2133       3.99   0.2621
+  mid       27    3.8928   0.0924   0.9343    0.3202     0.1424       2.25   0.2593
+  hi       230    4.3103   0.2278   0.8357    0.8435     0.3988       2.12   0.1913
+  all      547    3.6997   0.2471   0.8226    0.8216     0.2878       2.85   0.2322
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_75_offset_R2.json
+==============================================================================

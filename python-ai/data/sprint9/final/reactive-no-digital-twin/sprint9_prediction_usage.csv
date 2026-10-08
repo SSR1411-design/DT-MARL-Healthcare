@@ -1,0 +1,21 @@
+run_id,baseline_name,episode,episode_start_tick,risk_source,prediction_used,uncertainty_used,oof_loaded,live_predictor_loaded,offline_only_note
+reactive-no-digital-twin,reactive-no-digital-twin,1,491,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,2,502,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,3,513,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,4,524,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,5,535,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,6,545,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,7,556,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,8,567,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,9,578,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,10,589,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,11,600,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,12,611,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,13,622,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,14,633,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,15,644,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,16,654,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,17,665,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,18,676,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,19,687,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.
+reactive-no-digital-twin,reactive-no-digital-twin,20,698,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.

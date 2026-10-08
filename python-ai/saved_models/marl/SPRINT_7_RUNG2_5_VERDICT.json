@@ -1,0 +1,331 @@
+{
+  "probe": "SPRINT_7_RUNG2_5_verdict",
+  "what": "Consolidated machine-readable verdict for Sprint 7 Rung 2.5 (truncation target isolation). Diagnostic only: no PPO training was run, no reward/actor/GAE/value-clip/horizon/action-space/observation-space/risk-predictor change was made, Rung 3 was NOT launched.",
+  "rung": "2.5",
+  "date": "2026-08-25",
+
+  "integrity": {
+    "artifacts_verified": 23,
+    "artifacts_failed": 0,
+    "code_files_verified": 23,
+    "code_files_failed": 0,
+    "production_files_changed": [],
+    "a0_checkpoint_untouched": true,
+    "r2_checkpoint_untouched": true,
+    "manifests": [
+      "_rung2_5_integrity/SPRINT_7_RUNG2_5_artifacts_before.md5",
+      "_rung2_5_integrity/SPRINT_7_RUNG2_5_code_before.md5"
+    ],
+    "disclosed_naming_deviation": "All new ARTIFACTS and LOGS carry the required SPRINT_7_RUNG2_5_ prefix. The four new SCRIPTS follow the repo's existing _diag_rungN_ convention instead, so they sit next to _diag_rung0.py / _diag_rung1_critic.py."
+  },
+
+  "A_target_decomposition": {
+    "episodes": 200,
+    "model": "mappo_R2_mc_target.pth",
+    "end_classes": {"term": 64, "both": 6, "trunc": 130},
+    "would_bootstrap_by_trainpy_rule": 136,
+    "would_bootstrap_frac": 0.68,
+    "training_log_reference": "377/600 = 0.628",
+    "bootstrap_magnitude_share": {
+      "t0":     {"mean_abs_boot": 0.407, "mean_abs_reward_only": 6.289, "share_mean": 0.094, "share_p50": 0.058, "share_p95": 0.320},
+      "t_mid":  {"mean_abs_boot": 0.497, "mean_abs_reward_only": 5.188, "share_mean": 0.135, "share_p50": 0.086, "share_p95": 0.475},
+      "t_last": {"mean_abs_boot": 0.607, "mean_abs_reward_only": 0.045, "share_mean": 0.967, "share_p50": 0.999, "share_p95": 1.000}
+    },
+    "brief_premise_check": {
+      "brief_claim": "gamma^400 ~ 0.67 implies the target is mostly critic-controlled",
+      "verdict": "REFUTED at episode start",
+      "why": "gamma^400 is discount survival, not share of target magnitude; 400 steps of two-sided reward accumulate to mean|.| ~ 6.3 against a bootstrap of ~0.4, so the critic controls ~9.4% at t=0"
+    },
+    "boundary_V_vs_true_tail": {
+      "trunc": {"n_episodes": 130, "V_mean": 0.2760, "V_sd": 0.8589, "true_tail_mean": 0.3536, "true_tail_sd": 0.9729, "mean_abs_error": 0.6778, "frac_true_tail_explained": 0.6589},
+      "both":  {"n_episodes": 6, "V_mean": 0.0870, "true_tail_mean": 0.0000, "mean_abs_error": 0.5668, "frac_true_tail_explained": 0.0000,
+                "note": "true tail is EXACTLY zero, verified by forcing 120 post-terminal steps: sum|reward| = 0.000000. This bootstrap is pure injected bias."}
+    }
+  },
+
+  "B_truncation_stratification": {
+    "term":  {"n": 64,  "length_mean": 377.75, "length_sd": 16.01, "episode_return_mean": -10.5763, "episode_return_sd": 16.92, "target_t0": -1.2854, "reward_only_t0": -1.2854, "boot_V": 0.1205, "boot_contrib_t0": 0.0, "risk_mean": 0.0823, "frac_decision_entries": 0.1922, "n_highrisk_decision": 1598, "highrisk_EDGE_share": 0.1014, "highrisk_STAY_share": 0.7985, "cont_steps_mean": 0},
+    "both":  {"n": 6,   "length_mean": 400.0, "episode_return_mean": 7.4624, "target_t0": 0.0538, "reward_only_t0": -0.0045, "boot_V": 0.0870, "boot_contrib_t0": 0.0583, "risk_mean": 0.0853, "frac_decision_entries": 0.1644, "n_highrisk_decision": 240, "highrisk_EDGE_share": 0.0542, "highrisk_STAY_share": 0.8917, "cont_steps_mean": 0},
+    "trunc": {"n": 130, "length_mean": 400.0, "episode_return_mean": 7.3281, "episode_return_sd": 14.10, "target_t0": 0.2986, "reward_only_t0": 0.1136, "boot_V": 0.2760, "boot_contrib_t0": 0.1850, "risk_mean": 0.0852, "frac_decision_entries": 0.1842, "n_highrisk_decision": 3838, "highrisk_EDGE_share": 0.0724, "highrisk_STAY_share": 0.8390, "cont_steps_mean": 27.12, "cont_steps_sd": 19.76, "cont_steps_p95": 61.1},
+    "dominant_finding": "SELECTION EFFECT the brief did not anticipate: truncated episodes are the GOOD ones (mean return +7.33) and naturally-terminating episodes are the BAD ones (-10.58), an ~18-unit gap. The truncation bootstrap is therefore applied selectively to high-return episodes, so V(s_T) bias is a non-random perturbation correlated with outcome.",
+    "risk_does_not_drive_truncation": "risk means 0.0823 / 0.0853 / 0.0852 across the three classes"
+  },
+
+  "C_critic_dependence_feasibility": {
+    "continuation_mc_exactly_obtainable": true,
+    "truncated_episodes": 130,
+    "continuations_attempted": 130,
+    "reached_genuine_terminal": 130,
+    "censored_by_trace_end": 0,
+    "approximation_or_bounds_needed": false,
+    "mechanism": "ignore the returned `done` flag; env.py:594 computes done as an advisory flag and step never blocks",
+    "why_episode_steps_must_not_be_mutated": "prog = step_idx / cfg.episode_steps feeds the per-agent observation (env.py:445) and global state (env.py:524); mutating the horizon changes observations and therefore the trajectory",
+    "determinism": "self._rng appears only at env.py:192/219/224 and solely selects the episode start; build_patient_tasks (criticality.py:109) has no RNG; an episode is fully determined by episode_start_tick",
+    "verified": ["repeat replays bit-identical", "forced-action replays reproduce rewards exactly", "an intervening episode does not perturb a replay"],
+    "ood_sensitivity_bracket": {"cont_greedy_true_tail": 0.3536, "cont_all_stay_true_tail": 0.3550, "cont_greedy_MAD": 0.5583, "cont_all_stay_MAD": 0.5596, "verdict": "tight bracket; continuation target well-determined"},
+    "honest_limits": [
+      "the FINAL frozen R2 policy is replayed over the training start distribution; this is NOT a reconstruction of the actual training rollouts (per-episode torch RNG states were never saved)",
+      "past step 400 prog > 1.0, so continuation ACTIONS are chosen on out-of-distribution observations; continuation REWARDS are true environment rewards",
+      "the per-episode truncation trend over training is NOT recoverable: history.csv has no length column and train.py:271 prints only a single end-of-run aggregate"
+    ]
+  },
+
+  "D_three_targets": {
+    "n_entries": 520000,
+    "R2": {
+      "target_r2":     {"mean": 1.7756, "sd": 7.4481, "p50": 0.4696, "p95": 15.1043},
+      "reward_only":   {"mean": 1.5483, "sd": 6.9905, "p50": 0.2313, "p95": 13.5608},
+      "continuation":  {"mean": 1.8396, "sd": 7.1970, "p50": 0.3333, "p95": 14.4201},
+      "mad_r2_vs_cont": 0.5583,
+      "mad_r2_vs_cont_frac_of_sd": 0.078,
+      "mad_rewardonly_vs_cont": 0.3307,
+      "mad_rewardonly_vs_cont_frac_of_sd": 0.046,
+      "mean_signed_r2_minus_cont": -0.0639,
+      "corr_r2_cont": 0.9941,
+      "corr_rewardonly_cont": 0.9939
+    },
+    "key_result": "the critic bootstrap is ~1.7x WORSE than ignoring the tail entirely; correlations are near-identical, so the bootstrap adds error without adding rank information",
+    "A0_control": {
+      "episodes": 40,
+      "would_bootstrap_frac": 0.55,
+      "boot_share_t0": 0.4415,
+      "mean_abs_boot_t0": 3.0261,
+      "V_sT_mean": 4.5651,
+      "true_tail_mean": 0.2755,
+      "mean_abs_V_minus_true": 4.2961,
+      "frac_true_tail_explained": 0.0938,
+      "mad_actual_vs_cont": 3.5387,
+      "mad_actual_vs_cont_frac_of_sd": 0.584,
+      "mean_signed_actual_minus_cont": 3.5334,
+      "corr_actual_cont": 0.9634,
+      "mad_rewardonly_vs_cont": 0.3528
+    },
+    "gap_closed_by_R2": 0.87,
+    "remaining_headroom_frac_of_sd": [0.03, 0.08]
+  },
+
+  "E_sign_test": {
+    "is_online_result": false,
+    "disclaimer": "OFFLINE CAUSAL DIAGNOSTIC ONLY. No PPO training, no actor gradient, no production edit. Every fitted critic is a FRESH module.",
+    "rung1_ran_on": "mappo_A0_cpu_repro.pth",
+    "truncation_is_policy_dependent": {
+      "A0_greedy":     {"truncated": 0,  "of": 16, "mean_length": 367.2},
+      "A0_stochastic": {"truncated": 22, "of": 40},
+      "R2_greedy":     {"truncated": 10, "of": 16, "mean_length": 393.2},
+      "R2_stochastic": {"truncated": 136,"of": 200},
+      "mechanism": "the MC target is critic-free only while episodes terminate naturally, and R2's own training moved the policy into the regime where they do not (greedy mean length 367 -> 393). The target's critic-freeness is a property of the POLICY, not of the target, and it self-erodes."
+    },
+    "fit_dataset": {"episodes_kept": 40, "dropped_censored": 0, "timesteps": 15823, "classes": {"trunc": 31, "both": 1, "term": 8}, "mad_R2_vs_cont": 0.4193, "mad_rew_vs_cont": 0.2171},
+    "fits_on_common_continuation_mc_yardstick": {
+      "M_R2":   {"best_val_mse": 13.1789, "best_epoch": 42, "epochs_run": 83},
+      "M_cont": {"best_val_mse": 13.0520, "best_epoch": 42, "epochs_run": 83},
+      "M_rew":  {"best_val_mse": 13.0335, "best_epoch": 32, "epochs_run": 73},
+      "spread_pct": 1.1
+    },
+    "residual_vs_risk_target_continuation_mc": {
+      "C0":     {"ev_val": 0.6931, "hi_residual": -0.7424, "lo_residual": 0.0331,  "lo_to_hi_swing": -0.7756, "hi_only_slope": -0.88077},
+      "M_R2":   {"ev_val": 0.7475, "hi_residual": -0.2263, "lo_residual": 0.0532,  "lo_to_hi_swing": 0.0532,  "hi_only_slope": -0.10459},
+      "M_cont": {"ev_val": 0.7487, "hi_residual": -0.1318, "lo_residual": 0.0927,  "lo_to_hi_swing": 0.0927,  "hi_only_slope": -0.70973},
+      "M_rew":  {"ev_val": 0.7486, "hi_residual": -0.3636, "lo_residual": -0.2157, "lo_to_hi_swing": -0.2157, "hi_only_slope": -0.47636}
+    },
+    "residual_attribution": {
+      "C0_hi_residual": -0.7424,
+      "M_R2_hi_residual": -0.2263,
+      "M_cont_hi_residual": -0.1318,
+      "total_improvement": 0.6106,
+      "from_refitting_alone": 0.5161,
+      "from_refitting_alone_share": 0.845,
+      "from_target_change": 0.0945,
+      "from_target_change_share": 0.155,
+      "interpretation": "C0's high-risk miscalibration is mostly an UNDER-FITTING / distribution-shift artifact, not a target-formulation artifact. This is a THIRD mechanism, distinct from both the Rung 1 target hypothesis and the actor stall."
+    },
+    "rung0_rows": {
+      "n_states": 583, "forced_replays": 745, "replay_mismatches": 0, "gae_replica_max_abs_adv_diff": 0.0,
+      "sign_agreement_hi": {"team": {"C0": 0.5285, "M_R2": 0.4981, "M_cont": 0.5171, "M_rew": 0.5133},
+                            "own":  {"C0": 0.5627, "M_R2": 0.4943, "M_cont": 0.5133, "M_rew": 0.5019}},
+      "paired_sign_agreement_hi": {"team": {"C0": 0.8441, "M_R2": 0.8479, "M_cont": 0.8479, "M_rew": 0.8479},
+                                   "own":  {"C0": 0.9620, "M_R2": 0.9658, "M_cont": 0.9658, "M_rew": 0.9658}},
+      "noise_floor_hi": {"C0": -1.3093, "M_R2": -0.1603, "M_cont": -0.1453, "M_rew": -0.2474},
+      "validity_limit": {
+        "d1_ref_action_matches_baseline": {"A0": 1.0, "R2": 0.676},
+        "d1_legal_all_still_legal": {"A0": 1.0, "R2": 0.470},
+        "what_is_unaffected": "arm-vs-arm and raw-vs-paired contrasts (matched rows; agreement/per_action skip ref_action; noise_floor and the paired statistic read baseline GAE positionally)",
+        "what_is_provisional": "absolute sign-agreement levels and per-action means for R2"
+      }
+    },
+    "r2_native_rows": {
+      "why": "rebuild the deviation set from R2's OWN greedy baselines so ref_action and the legal mask are self-consistent",
+      "selection_rule": "Rung 0's rule verbatim: same 16 start ticks, has_task + >=2-legal filter, pools keyed by the action greedy chose, same risk buckets, caps A=150/B=80/C=60, evenly-spaced np.linspace take (no RNG)",
+      "greedy_baseline_lengths": [369, 372, 376, 378, 398, 399, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400],
+      "greedy_baselines_truncated": 10,
+      "pool_sizes": {"A_hi": 659, "A_lo": 13900, "A_mid": 24, "B_hi": 62, "B_lo": 919, "B_mid": 3, "C_hi": 18, "C_lo": 512, "C_mid": 0},
+      "n_states": 547, "forced_replays": 716, "replay_mismatches": 0, "gae_replica_max_abs_adv_diff": 0.0,
+      "arms_evaluated": ["C0"],
+      "sign_agreement": {
+        "team": {"lo": {"n": 388, "sign": 0.5155, "spearman": 0.0566}, "mid": {"n": 30, "sign": 0.4667, "spearman": 0.0425}, "hi": {"n": 298, "sign": 0.4396, "spearman": -0.1035}, "all": {"n": 716, "sign": 0.4818, "spearman": -0.0175}},
+        "own":  {"lo": {"n": 388, "sign": 0.5464, "spearman": 0.0870}, "mid": {"n": 30, "sign": 0.5000, "spearman": 0.1631}, "hi": {"n": 298, "sign": 0.4597, "spearman": -0.0513}, "all": {"n": 716, "sign": 0.5084, "spearman": 0.0206}}
+      },
+      "paired_sign_agreement": {
+        "team": {"hi": {"raw": 0.4396, "paired": 0.7114, "delta": 0.2718}, "lo": {"raw": 0.5155, "paired": 0.7423, "delta": 0.2268}, "all": {"raw": 0.4818, "paired": 0.7235, "delta": 0.2416}},
+        "own":  {"hi": {"raw": 0.4597, "paired": 0.9463, "delta": 0.4866}, "lo": {"raw": 0.5464, "paired": 0.9278, "delta": 0.3814}, "all": {"raw": 0.5084, "paired": 0.9372, "delta": 0.4288}}
+      },
+      "per_action_highrisk": {
+        "ordering_by_true": ["MIGRATE_TO_CLOUD", "MIGRATE_TO_NEIGHBOR_EDGE", "STAY"],
+        "ordering_by_C0_gae": ["MIGRATE_TO_NEIGHBOR_EDGE", "STAY", "MIGRATE_TO_CLOUD"],
+        "STAY":                     {"n": 80,  "true_team": -0.2630, "se_team": 0.2405, "t_team": -1.09, "true_own": -0.8822, "se_own": 0.2208, "t_own": -3.99, "gae": -0.7668, "se_gae": 0.4471, "t_gae": -1.72},
+        "MIGRATE_TO_NEIGHBOR_EDGE": {"n": 212, "true_team": 1.6227,  "se_team": 0.4295, "t_team": 3.78,  "true_own": 0.8675,  "se_own": 0.2341, "t_own": 3.71,  "gae": 0.1655,  "se_gae": 0.3266, "t_gae": 0.51},
+        "MIGRATE_TO_CLOUD":         {"n": 6,   "true_team": 5.2115,  "se_team": 0.5998, "t_team": 8.69,  "true_own": 4.5311,  "se_own": 0.5578, "t_own": 8.12,  "gae": -5.4068, "se_gae": 1.6960, "t_gae": -3.19}
+      },
+      "noise_floor": {"lo": {"n": 290, "mean": -0.8814, "sd": 4.1062}, "mid": {"n": 27, "mean": 2.4009, "sd": 4.0571}, "hi": {"n": 230, "mean": -0.8695, "sd": 5.1903}, "all": {"n": 547, "mean": -0.7144, "sd": 4.6457}},
+      "findings": [
+        "R2's deployed critic is BELOW chance at high risk on its own states (0.4396 team / 0.4597 own) with NEGATIVE high-risk Spearman (-0.104); the D1-row estimate (0.5285/0.5627) was FLATTERING R2",
+        "sign fidelity degrades monotonically with risk: 0.5155 (lo) -> 0.4667 (mid) -> 0.4396 (hi)",
+        "ground truth is unambiguous and significant under BOTH attributions: at high risk migrating is strongly better than staying (own: STAY -0.8822 t=-3.99 vs EDGE +0.8675 t=+3.71), independently confirming the Sprint 7 premise that the risk signal is real and large",
+        "C0 understates EDGE's true value by ~10x (+0.1655 estimated vs +1.6227 true)",
+        "MIGRATE_TO_CLOUD is significantly inverted: true +5.2115 (t=+8.69) vs gae -5.4068 (t=-3.19); n=6 so suggestive only. The critic is MOST wrong about the action that is MOST valuable.",
+        "the noise-floor offset is large, risk-dependent, and CHANGES SIGN across buckets (+2.40 at mid vs -0.87 at hi), so it cannot be absorbed as a constant baseline"
+      ]
+    },
+    "central_finding": "The advantage-sign information is already present in R2's deployed critic; it is buried under a per-state offset error in V(s). The truncation-target choice moves sign agreement by <= 0.4pp; differencing away the offset moves it by +27 to +49pp -- a ~100x larger effect. PPO's surrogate multiplies log pi(a|s) by the RAW advantage, so it inherits the full offset error rather than the clean paired signal.",
+    "retraction": {
+      "claim": "E.4 (Rung 0 rows): R2's deployed critic assigns high-risk EDGE a significantly negative advantage (-1.1089, t = -2.95), a confirmed sign inversion",
+      "status": "WITHDRAWN",
+      "why": "Rung 0's D1 rows force an action R2's mask marks illegal in 53% of cases; that contamination pushed C0's EDGE estimate down. On R2-native rows C0 gives high-risk EDGE +0.1655 (t=+0.51) -- correctly signed and correctly ranked above STAY.",
+      "what_survives": "below-chance high-risk sign agreement, negative high-risk Spearman, a ~10x understatement of EDGE, and a significant inversion on MIGRATE_TO_CLOUD"
+    }
+  },
+
+  "G_actor_stall": {
+    "gradient_vanished": false,
+    "minibatch_tail_quirk_manifested": false,
+    "minibatch_tail_quirk_note": "T = 8*400 = 3200 is divisible by 4, so exactly 16 minibatches occurred; the quirk was neither triggered nor fixed",
+    "final_policy_replica_update": {
+      "R2": {"actor_grad_norm_total": 6.084e-2, "grad_pg": 6.113e-2, "grad_entropy_incl_coef": 4.786e-3, "param_delta_l2": 5.430e-3, "param_delta_max_abs": 1.433e-4, "param_delta_rms": 1.125e-5, "k1": 6.98e-6, "k3": 8.67e-8, "clip_frac": 0.0, "adv_mean": -0.0011, "adv_sd": 2.652, "critic_target_used": "mc"},
+      "A0": {"actor_grad_norm_total": 1.238e-1, "grad_pg": 1.197e-1, "grad_entropy_incl_coef": 1.282e-2, "param_delta_l2": 1.060e-2, "param_delta_max_abs": 1.439e-4, "param_delta_rms": 2.195e-5, "k1": 1.45e-5, "k3": 9.44e-7, "clip_frac": 0.0, "adv_mean": -0.0124, "adv_sd": 2.935, "critic_target_used": "lambda"}
+    },
+    "ppo_ratio_range": {"R2": [0.9920911, 1.0059656], "A0": [0.9949841, 1.0184942], "clip_band": [0.8, 1.2],
+                        "conclusion": "clip_frac = 0 is the arithmetically inevitable consequence of a ratio pinned at 1; k3 = (r-1) - log r is second-order in (r-1), hence ~1e-8"},
+    "corrections_to_my_rung2_report": [
+      "clip_frac first touches 0 at update 36, is nonzero again through update 61, and is permanently 0 only from update 62 -- NOT '~update 50'. 22 of 75 updates are exactly zero.",
+      "clip_frac -> 0 is NOT an R2 anomaly. A0 does the same thing (12/75 zero updates, last nonzero at 68). It is normal behaviour for this setup at convergence and is NOT the discriminating signal.",
+      "adv_std stays in 2.47-3.93 across all 75 R2 updates -- the advantage signal never vanished."
+    ],
+    "softmax_saturation": {
+      "R2": {"decision_entries": 4967, "max_prob_mean": 0.9107, "max_prob_p50": 0.9948, "max_prob_p95": 0.9991, "frac_maxprob_gt_099": 0.5051, "frac_maxprob_gt_0999": 0.2203, "frac_entropy_lt_001": 0.2424, "mean_entry_entropy": 0.1841, "pct_of_ln4": 13.3},
+      "A0": {"decision_entries": 3452, "max_prob_mean": 0.8767, "max_prob_p50": 0.9382, "max_prob_p95": 0.9651, "frac_maxprob_gt_099": 0.0, "frac_maxprob_gt_0999": 0.0, "frac_entropy_lt_001": 0.0, "mean_entry_entropy": 0.3176, "pct_of_ln4": 22.9},
+      "verdict": "A0 is the decisive control: 0.0000 of A0's entries exceed max-prob 0.99 against 50.5% of R2's. The collapse is SPECIFIC TO R2 -- not a property of the architecture, the task, or the entropy coefficient (identical at 0.02 in both).",
+      "entropy_bonus_cannot_reverse_it": "the entropy-only gradient is 4.79e-03, just 7.8% of R2's total actor gradient, already including entropy_coef = 0.02"
+    },
+    "entropy_trajectory": {
+      "A0": {"1": 0.7165, "10": 0.7145, "30": 0.5322, "50": 0.3457, "60": 0.278, "75": 0.3329, "note": "settles near 0.333 and RECOVERS late"},
+      "R2": {"1": 0.8599, "10": 0.5515, "30": 0.2496, "50": 0.1474, "75": 0.1380, "note": "decays monotonically to 9.95% of ln4 = 1.3863 and is still sagging at the end"}
+    },
+    "diagnosis": "neither normal convergence nor insufficient gradient signal: POLICY COLLAPSE VIA SOFTMAX SATURATION, specific to R2",
+    "highrisk_sparsity_hypothesis": {
+      "verdict": "FAILS",
+      "R2": {"minibatches": 16, "with_zero_highrisk_decision_entries": 0, "with_zero_highrisk_EDGE": 1, "highrisk_per_mb_mean": 67.25, "highrisk_per_mb_min": 57, "highrisk_EDGE_per_mb_mean": 2.50, "highrisk_EDGE_per_mb_min": 0, "highrisk_EDGE_per_mb_max": 6},
+      "A0": {"minibatches": 16, "with_zero_highrisk_decision_entries": 0, "with_zero_highrisk_EDGE": 1, "highrisk_per_mb_mean": 53.00, "highrisk_EDGE_per_mb_mean": 3.50},
+      "why": "every minibatch contains 57-79 high-risk decision entries; only 1 of 16 lacks a high-risk EDGE entry. The '37 -> 8 usable high-risk EDGE samples and 30% zero-high-risk minibatch rate' figures DO NOT REPRODUCE. A0 -- which did not collapse -- had a comparable 3.5 per minibatch."
+    },
+    "unresolved_discrepancy": {
+      "rung2_headline": "high-risk EDGE share 2.7% -> 8.1% (A0 -> R2) at risk > 0.6, greedy",
+      "rung2_5_saturation_census": "at risk > 0.50 over 8 stochastic episodes: R2 3.7% (10/269), A0 6.6% (14/212) -- R2 WORSE, opposite direction",
+      "rung2_5_stratification": "R2 high-risk EDGE share by end-class 0.1014 / 0.0542 / 0.0724 over 200 episodes, spanning both figures",
+      "differences": ["threshold 0.6 vs 0.50", "different episode sets", "greedy vs stochastic", "very small counts (10 and 14 EDGE events)"],
+      "status": "UNRESOLVED. I cannot currently reproduce Rung 2's direction of change and am not selecting the flattering measurement. Treat 'R2 migrates more at high risk' as unresolved."
+    }
+  },
+
+  "H_replica_fix": {
+    "old_replica_defects_found": [
+      {"where": "_diag_rung0.py:1009", "what": "hardcodes agent.compute_gae(buf), so the critic is regressed on the LAMBDA-return even when the checkpoint was trained with critic_target='mc'", "consequence": "the known cause of the D4 replica failure"},
+      {"where": "_diag_rung0.py:276", "what": "calls buf.set_bootstrap(buf.ptr - 1, boot) with no `truncated` argument, which now defaults to True, flagging EVERY replica episode as a time-limit truncation", "consequence": "harmless for compute_gae (ignores the flag) but systematically wrong for compute_mc_returns (reads it)"}
+    ],
+    "fix": "a NEW R2-aware replica was written; _diag_rung0.py was deliberately left untouched so Rung 0's artifacts remain reproducible",
+    "verification": {"critic_target_used_R2": "mc", "critic_target_used_A0": "lambda"},
+    "independent_confirmation_of_freeze": "with the correct MC target, R2's actor still shows k1 = 6.98e-06, k3 = 8.67e-08, clip_frac = 0.000000, actor loss 9.81e-05, param delta L2 5.43e-03. The R2 actor really did stop making meaningful policy updates, and this no longer depends on the stale lambda-target replica."
+  },
+
+  "F_critical_decision": {
+    "q1_how_much_of_r2_target_was_critic_dependent": {
+      "share_of_target_magnitude_t0": 0.094,
+      "share_t_mid": 0.135,
+      "share_t_last": 0.967,
+      "frac_episodes_bootstrapped": 0.68,
+      "deviation_from_critic_free_ideal_frac_of_sd": 0.078,
+      "A0_comparison_frac_of_sd": 0.584,
+      "answer": "far less than the brief assumed"
+    },
+    "q2_does_continuation_mc_materially_change_the_target": {
+      "answer": "NO, not for R2",
+      "mad_frac_of_sd": 0.078, "corr": 0.9941, "mean_signed_bias": -0.0639,
+      "note": "reward-only with NO bootstrap at all is CLOSER to the ideal (0.046) than R2's actual target. It DID matter enormously for A0 (0.584) -- but that gap is already closed."
+    },
+    "q3_does_it_materially_improve_highrisk_sign_agreement": {
+      "answer": "NO",
+      "rung0_rows_hi_team": {"C0": 0.5285, "M_R2": 0.4980, "M_cont": 0.5171, "M_rew": 0.5133},
+      "spread_pp": 3.5,
+      "m_cont_better_than_deployed_critic": false,
+      "native_rows_hi": {"raw_team": 0.4396, "raw_own": 0.4597, "paired_team": 0.7114, "paired_own": 0.9463},
+      "note": "the paired estimator lifts every arm identically -- a ~100x larger effect than the target choice"
+    },
+    "q4_is_rung1_hypothesis_still_supported": {
+      "answer": "PARTLY -- and it is no longer the leading explanation",
+      "supported": [
+        "the self-referential lambda-target genuinely wrecked A0's critic (explained 9.4% of the true boundary tail, inflated it ~16x, contaminated the target by 58.4% of SD)",
+        "R2's critic still gets the high-risk ranking wrong on its OWN states: below-chance sign agreement (0.4396 team / 0.4597 own), negative high-risk Spearman (-0.104), a ~10x understatement of EDGE's true value, and a significant inversion on MIGRATE_TO_CLOUD (n=6, suggestive only)",
+        "the ground-truth risk signal is real and large under both attributions -- the Sprint 7 premise holds"
+      ],
+      "not_supported": [
+        "fixing the REMAINING target dependence does not fix the advantage sign (<= 3.5pp, at chance)",
+        "84.5% of the achievable high-risk calibration gain comes from merely refitting the critic to convergence on R2's OWN target; only 15.5% from changing the target",
+        "the strongest single piece of Rung-1-style evidence I had reported (E.4's 'significantly inverted EDGE, t = -2.95') was RETRACTED once measured on self-consistent rows"
+      ],
+      "independent": "the actor stalled by softmax saturation (50.5% of entries at max-prob > 0.99 vs A0's 0.0000), which no target change addresses"
+    },
+    "q5_is_a_clean_online_rung3_justified": {
+      "go_no_go_rule": "Launch an online Rung 3 whose PRIMARY intervention is the truncation target ONLY IF the offline diagnostic shows continuation-MC improving high-risk sign agreement by >= 5 percentage points over R2's deployed critic under BOTH attributions, OR reducing MAD-to-ideal by >= 25% of target SD.",
+      "measured_sign_agreement_delta_pp": {"team": -1.1, "own": -4.9},
+      "measured_mad_reduction_frac_of_sd": 0.032,
+      "criterion_1_met": false,
+      "criterion_2_met": false,
+      "verdict": "NO-GO for a target-focused Rung 3",
+      "redirect_priority": [
+        "actor-side plasticity: R2's entropy collapsed to 9.95% of ln 4 with half A0's gradient magnitude, while A0 under an identical entropy_coef never saturated at all",
+        "critic value-level calibration: the per-state offset that pairing removes (+27 to +49pp of sign agreement), and the 84.5% of high-risk calibration recoverable by fitting to convergence rather than by changing the target"
+      ],
+      "rung3_launched": false,
+      "scope_note": "designing that intervention is OUT OF SCOPE for this rung"
+    }
+  },
+
+  "three_separated_mechanisms": [
+    {"id": 1, "name": "target formulation (the Rung 1 hypothesis)", "status": "REAL and SEVERE for A0; LARGELY ALREADY FIXED by R2 (87% of the gap closed); remaining headroom 3-8% of target SD"},
+    {"id": 2, "name": "per-state critic value calibration / under-fitting under distribution shift", "status": "NEW, and the largest recoverable term: 84.5% of high-risk residual comes from refitting alone, and pairing away the per-state offset recovers +27 to +49pp of sign agreement"},
+    {"id": 3, "name": "actor-side softmax saturation / policy collapse", "status": "NEW, SPECIFIC TO R2, independent of the critic target: 50.5% of decision entries at max-prob > 0.99 vs A0's 0.0000"}
+  ],
+
+  "superseded_claims_in_earlier_rung2_5_artifacts": [
+    {"artifact": "SPRINT_7_RUNG2_5_signtest.json", "field": "structural_null.finding", "text_asserts": "Rung 0's deviation pairs contain ZERO truncated episodes, so the three targets are identical on them", "status": "FALSE for R2 -- 10 of 16 R2 greedy baselines truncate. It was written assuming A0's 0/16 profile (Rung 1 ran on A0). The companion clause 'the arms differ ONLY through their fitted critics' IS correct and is what the phase measures. Corrected in the report rather than by editing the artifact."}
+  ],
+
+  "invalid_comparisons_flagged": [
+    "explained_var in *_updates.csv is TARGET-RELATIVE (each run's EV is measured against its OWN critic target), so A0's final 0.8229 vs R2's 0.7409 is apples-to-oranges and must NOT be used as evidence that R2's critic is worse"
+  ],
+
+  "constraints_honoured": {
+    "no_production_training": true,
+    "reward_unmodified": true,
+    "actor_unmodified": true,
+    "gae_gamma_lambda_unmodified": true,
+    "value_clipping_unmodified": true,
+    "minibatch_tail_not_fixed": true,
+    "online_episode_horizon_unchanged": true,
+    "action_obs_riskpredictor_env_reward_unchanged": true,
+    "r2_and_a0_artifacts_preserved": true,
+    "all_new_code_diagnostic_and_self_contained": true,
+    "reused_existing_r2_artifacts_where_possible": true,
+    "rung3_not_launched": true,
+    "no_hardcoded_risk_threshold_rule_added": true
+  }
+}

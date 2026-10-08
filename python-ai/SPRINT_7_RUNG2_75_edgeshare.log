@@ -1,0 +1,69 @@
+==============================================================================
+SPRINT 7 RUNG 2.75 -- item A: EDGE-share reconciliation
+        (no training, no gradient, no production edit)
+==============================================================================
+
+-- production reference, recomputed from the eval artifacts -----
+  A0: window [491, 698] starts 8  highrisk n=  546  EDGE 0.0275
+  R2: window [491, 698] starts 8  highrisk n=  384  EDGE 0.0807
+  Rung 2 headline reproduced: A0 0.0275 -> R2 0.0807
+
+-- A0 (mappo_A0_cpu_repro.pth) ----------------------------------
+   eval  greedy    :  10751 decision entries, lens [358, 364, 390, 381, 370, 375, 371, 367]
+   eval  stochastic: [3175, 3397, 3120] entries over 3 seeds
+   train greedy    :   9785 decision entries, lens [373, 363, 390, 388, 367, 335, 349, 358]
+   train stochastic: [3401, 3235, 3424] entries over 3 seeds
+   (135s)
+
+-- R2 (mappo_R2_mc_target.pth) ----------------------------------
+   eval  greedy    :   7815 decision entries, lens [398, 400, 400, 383, 368, 400, 386, 400]
+   eval  stochastic: [5597, 5609, 5699] entries over 3 seeds
+   train greedy    :   7975 decision entries, lens [400, 400, 400, 400, 395, 360, 355, 398]
+   train stochastic: [5907, 5816, 6177] entries over 3 seeds
+   (131s)
+
+==============================================================================
+ITEM A -- definitional ladder, high-risk EDGE share
+==============================================================================
+  rung                                                         A0                 R2
+  D0_prod_eval_greedy_maskonly_bucket>=0.6           0.0275 n=546       0.0807 n=384
+  D1_TRAINwindow_greedy_maskonly_bucket>=0.6         0.0173 n=579       0.0243 n=371
+  D2_train_greedy_maskonly_risk>0.50                 0.0172 n=581       0.0241 n=373
+  D3_train_greedy_HASTASK_risk>0.50                  0.0172 n=581       0.0241 n=373
+  D4_train_STOCHASTIC_HASTASK_risk>0.50              0.0863 n=705       0.0852 n=760
+  X_evalwindow_greedy_HASTASK_risk>0.50              0.0274 n=547       0.0805 n=385
+
+  D0 parity check against the frozen eval artifacts:
+    A0: replica n=546 EDGE=15  artifact n=546 EDGE=15  MATCH
+    R2: replica n=384 EDGE=31  artifact n=384 EDGE=31  MATCH
+
+==============================================================================
+ITEM B (static) -- policy census by risk bucket, train/greedy
+==============================================================================
+
+  [A0] train window, greedy
+    bucket            n   p_edge   p_stay    maxp   >0.99     ent   tookE  legalE
+    0.00-0.10    9182   0.1805   0.7526  0.8138  0.0000  0.4156  0.0108  1.0000
+    0.10-0.20      18   0.2031   0.7426  0.8068  0.0000  0.3949  0.0556  1.0000
+    0.20-0.40       4   0.0360   0.9640  0.9640  0.0000  0.1551  0.0000  1.0000
+    0.40-0.60       2   0.0186   0.4961  0.9671  0.0000  0.1467  0.0000  1.0000
+    0.60-0.80     244   0.1412   0.7827  0.8566  0.0000  0.3504  0.0164  1.0000
+    0.80-1.01     335   0.1142   0.8110  0.8831  0.0000  0.3086  0.0179  1.0000
+
+  [R2] train window, greedy
+    bucket            n   p_edge   p_stay    maxp   >0.99     ent   tookE  legalE
+    0.00-0.10    7591   0.0597   0.8616  0.9015  0.4407  0.2064  0.0336  1.0000
+    0.10-0.20       6   0.1428   0.7753  0.7897  0.0000  0.4194  0.1667  1.0000
+    0.20-0.40       5   0.0019   0.9981  0.9981  1.0000  0.0135  0.0000  1.0000
+    0.40-0.60       2   0.0010   0.5556  0.9424  0.5000  0.1843  0.0000  1.0000
+    0.60-0.80     191   0.0748   0.8050  0.8766  0.2723  0.2899  0.0262  1.0000
+    0.80-1.01     180   0.0762   0.8547  0.8997  0.3000  0.2558  0.0222  1.0000
+
+  saturation at high risk -- WHICH action is it saturated on?
+    A0 train_greedy       n_hi=  581 saturated 0.0000 (0) argmax={}
+    A0 train_stoch_seed0  n_hi=  241 saturated 0.0000 (0) argmax={}
+    R2 train_greedy       n_hi=  373 saturated 0.2869 (107) argmax={'STAY': 107, 'MIGRATE_EDGE': 0, 'MIGRATE_CLOUD': 0, 'PREEMPT_REROUTE': 0}
+    R2 train_stoch_seed0  n_hi=  247 saturated 0.4656 (115) argmax={'STAY': 115, 'MIGRATE_EDGE': 0, 'MIGRATE_CLOUD': 0, 'PREEMPT_REROUTE': 0}
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_75_edgeshare_main.json
+==============================================================================

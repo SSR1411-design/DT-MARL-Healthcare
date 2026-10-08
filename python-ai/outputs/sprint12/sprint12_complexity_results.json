@@ -1,0 +1,1155 @@
+{
+  "sprint": "12",
+  "generated_at_utc": "2026-10-08T03:27:13.582577+00:00",
+  "analysis_scope": "checkpoint-based neural-model analysis and an isolated inference benchmark; no training, simulator run, evaluation matrix, optimizer step, or source checkpoint write",
+  "environment": {
+    "python": "3.11.7 (tags/v3.11.7:fa7a6f2, Dec  4 2023, 19:24:49) [MSC v.1937 64 bit (AMD64)]",
+    "torch": "2.7.1+cu118",
+    "cuda_available": true,
+    "cuda_version": "11.8",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "processor": "Intel64 Family 6 Model 165 Stepping 2, GenuineIntel"
+  },
+  "checkpoint_inventory": [
+    {
+      "path": "python-ai/saved_models/_backup_pre_finalization/failure_predictor.pth",
+      "bytes": 6446925,
+      "sha256": "c1f0bb296ebb0fc07ea77a4e14321489aa70a75e44e96d51c42226222eab86c8"
+    },
+    {
+      "path": "python-ai/saved_models/device_failure_predictor.pth",
+      "bytes": 6444663,
+      "sha256": "ad260e18ea23c84c25c63298653c2cd976f8288e4893c3a55fe0fef2353e9f27"
+    },
+    {
+      "path": "python-ai/saved_models/failure_predictor.pth",
+      "bytes": 6452045,
+      "sha256": "e95bc4302578e50a5c4ff43c1d7df16118acb97bdb4e2b8ac714fe75f3770599"
+    },
+    {
+      "path": "python-ai/saved_models/failure_predictor_legacy.pth",
+      "bytes": 6447269,
+      "sha256": "5bb4f1a1d4d97367195920c87480ac62d88eef7a6bd03bc6a35f3e285859b590"
+    },
+    {
+      "path": "python-ai/saved_models/failure_predictor_OLDDATA.pth",
+      "bytes": 6447309,
+      "sha256": "d2f0bc3143f9ab4dc13f3dc49c714662cf99d35ef23aa24193b85d49a4318a32"
+    },
+    {
+      "path": "python-ai/saved_models/htcf_model.pth",
+      "bytes": 6444341,
+      "sha256": "4b25e984a4996f2394faf2d0b4d1dd4e9f062c368e8cea518eba27c10ff3224f"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo.pth",
+      "bytes": 5193039,
+      "sha256": "0e37c0b359a2dae2f0341023cb70559ec304174ea275b4b704d2086768c60eaf"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_A0_cpu_repro.pth",
+      "bytes": 5207250,
+      "sha256": "54a6b9e8a7e7e867aef2ff4c8bedfb6e2cc13ccec38386522ad94d748b8b0dbb"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_A0_cpu_repro_best.pth",
+      "bytes": 5208669,
+      "sha256": "be292ff5d5621c37678a973d6352998b4c1764f064d3191633b147be9a2b0748"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_A0_CUDA_device_mismatch.pth",
+      "bytes": 5211342,
+      "sha256": "95c37b29eaa485b585ee7057c8cf833cc881f56da89de087ba32d975c3fc9792"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_A0_CUDA_device_mismatch_best.pth",
+      "bytes": 5212697,
+      "sha256": "56a4e594f5e31cdab0660b62b672d9d126b81b0c8f4a639b5d76f9188c9a6d4c"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_A1_cpu_bugfix.pth",
+      "bytes": 5207521,
+      "sha256": "32ec4cbb98ca308c076b112dd5ba427d065140668817e31dcdc71ed971a62b91"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_A1_cpu_bugfix_best.pth",
+      "bytes": 5208940,
+      "sha256": "d4fa66bee591586330afb1633b899c5e01518d08b0d18093d6fd78a18e89e6ee"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_A1_CUDA_killed_at_90ep_best.pth",
+      "bytes": 5210736,
+      "sha256": "b519db0dc43de6af0e26512654e2dae2ea49ef9d6a8f31230a96ee39ff43226c"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_A2_crit_sign.pth",
+      "bytes": 5207250,
+      "sha256": "5346a17ae96ec6241ccacd0a285e17dd64106bd502a20106400baa340d95104f"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_A2_crit_sign_best.pth",
+      "bytes": 5208669,
+      "sha256": "b8cdc106d1da28c5a2f6d39440d391124113a9851959cc712316fb4b865e499c"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_A3_entropy.pth",
+      "bytes": 5206708,
+      "sha256": "6cee144937bdac9227aa8988160c8138060673779403d4f5da5cf747faafe6f1"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_A3_entropy_best.pth",
+      "bytes": 5208063,
+      "sha256": "30b695c78b70223c322a68eb04dd4790948aebe0363d6f564532c3bb6f644d59"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_attrbug_gamma95_killed_best.pth",
+      "bytes": 5204954,
+      "sha256": "930663586c11f63a2de8df6412cf86ba345b6a2597567112e6d9de62dc9d66cf"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_attrbug_gamma99.pth",
+      "bytes": 5193039,
+      "sha256": "9f9bef97b8fceb36f44d17553c343227a9172a8544d93b55f60327158d6c9dc5"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_attrbug_gamma99_best.pth",
+      "bytes": 5204954,
+      "sha256": "20c0c57e404a4895690990dce0c5c6b7c7bbdf85f81cd700ff8f2ec6ea4019b3"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_attrfix_gamma95_killed_best.pth",
+      "bytes": 5204954,
+      "sha256": "c6f06d1cbbaf6390027b2802cab05cc8fb69ec03b036cc8fc35e95287183a671"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_best.pth",
+      "bytes": 5204954,
+      "sha256": "0048b97006d74c9cc2084d51fd549543b26464f470dee5ac371808d88e244a51"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_best_lam95_killed.pth",
+      "bytes": 5204954,
+      "sha256": "fa143cdfb6fe529aac6d6d0611da8cacd5af29da8539589065b9cfb51e820c15"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_g999_lowEV_killed_best.pth",
+      "bytes": 5204954,
+      "sha256": "781a5cb9f4706723313691bb9c44c0d2a8c14355d3a93cf9115fadf7015a8637"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_R2_mc_target.pth",
+      "bytes": 5207250,
+      "sha256": "4f23d1cb91f1edb050337617f512432d0a545920a61f1718c95fd3d898d59060"
+    },
+    {
+      "path": "python-ai/saved_models/marl/mappo_R2_mc_target_best.pth",
+      "bytes": 5208669,
+      "sha256": "f7b06ff8ae3d9c3288004101a8329f203d09fc5e9a82d88957daf696c24a8bee"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_traj_repro.pth",
+      "bytes": 5205895,
+      "sha256": "42a7967b837fe701a978d07350ca26c8cd68059f891c525e33a6e6fba00a476f"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_traj_repro_best.pth",
+      "bytes": 5207250,
+      "sha256": "4b845061ad2103c034156c1521d97c802c57c37d2b6b7d28a293860c895a157d"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u000.pth",
+      "bytes": 1736317,
+      "sha256": "d9b1bc5951e0733ab517ff524b9555a1841d9946e55f066e7712e63369b826c4"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u001.pth",
+      "bytes": 5207826,
+      "sha256": "d28ed7604c07dea5f63f830f11d007718ff9f22cdca6cdc8af9735fb27033836"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u002.pth",
+      "bytes": 5207826,
+      "sha256": "1d2c0fe94ad9b34312f19e231682d946a4d490be9680d4c4f2148cda29e56320"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u003.pth",
+      "bytes": 5207826,
+      "sha256": "2ec39aeb47faf8646f9fba6fbf19f1f7e55431823bcfae7857d6a139e93836b3"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u004.pth",
+      "bytes": 5207826,
+      "sha256": "ebd46ca7c247836f2e1108562772599654e08c58d67a273977e022f17383b84a"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u005.pth",
+      "bytes": 5207826,
+      "sha256": "3c0388d7bd35db59c4ff1b154082f88284561813737d3b661f0798f388817549"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u006.pth",
+      "bytes": 5207826,
+      "sha256": "48c65f85843b7b20cb1f2156f4991c607414f6a19a02a87af508e35cd9e113d6"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u007.pth",
+      "bytes": 5207826,
+      "sha256": "34169eaed15171ed5ee3c772ac9e3fcbdd6b05edb91d9d19485839aa9f0c4bf4"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u008.pth",
+      "bytes": 5207826,
+      "sha256": "be6ad12b01168587260e5a93ecdbf5affae36809f28331a4275aafb2b075d40c"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u009.pth",
+      "bytes": 5207826,
+      "sha256": "ae216f615d261e6a20d07436ee09f81bf39b55c3e0803b5d50136fdd4e82cbe5"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u010.pth",
+      "bytes": 5207826,
+      "sha256": "7634f2b5d57d3c9964bed58dc00291dca63bc45820536718a8a142d5f227a209"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u011.pth",
+      "bytes": 5207826,
+      "sha256": "60d485ff9ce751e0f0ee86bd113186663683f417cd78201cd8243c6dd68a506b"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u012.pth",
+      "bytes": 5207826,
+      "sha256": "f5f5295553fdbb2c8c7d6c8a8dd44b1f651f7a32151c57eb5d00dd7247f35319"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u013.pth",
+      "bytes": 5207826,
+      "sha256": "f021697338e6346d6b89c114a02080ff3332e6488b8a4ce9ef42cdaa1c0c410c"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u014.pth",
+      "bytes": 5207826,
+      "sha256": "01ce4efc65b17776f842e7d28b8016299903f6f337ea767ef8eae61052908bc5"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u015.pth",
+      "bytes": 5207826,
+      "sha256": "cb86537e40ed686c54dba261c28a9e467d6e062d033fa06ef81ee05427ab97fa"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u016.pth",
+      "bytes": 5207826,
+      "sha256": "3a49362594681c232ff9029683a2867a7a195c24b75e92345a93377ce2850e0f"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u017.pth",
+      "bytes": 5207826,
+      "sha256": "a719d84d9dbe37279d03124760c90fe4b905fda44d63e2a3b4b7a6fa17ca7fc1"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u018.pth",
+      "bytes": 5207826,
+      "sha256": "ae670551774b0007585226bc0349989c56adc8505f7e91943948357065ce3e67"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u019.pth",
+      "bytes": 5207826,
+      "sha256": "ea1e176a7235c379257926adbba8fbbfa88157324a1d1ef58a4f2cdc7cd8607f"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u020.pth",
+      "bytes": 5207826,
+      "sha256": "d3daa9a6323b463ccf9c62e63db0cc6c6b80486c545a306bdaf79d477482360c"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u021.pth",
+      "bytes": 5207826,
+      "sha256": "fa1c452951152bb00c544c9e01ae1f9103dcdfb567813518c0e3db13e0e139a4"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u022.pth",
+      "bytes": 5207826,
+      "sha256": "55e616d524bb14457042ad9f73b0619fb1e180c7f84e2cac5b9d19ccda3d4893"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u023.pth",
+      "bytes": 5207826,
+      "sha256": "e3c176c4bbd44a61dbb11058d4aa960e0cffac2bd3d51261e059597be283a43f"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u024.pth",
+      "bytes": 5207826,
+      "sha256": "0a16232e97fbcae20e9ce1b07074a20a74da94d228cdec44ae53340f4705f2de"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u025.pth",
+      "bytes": 5207826,
+      "sha256": "e46592cb025cd5e249cd23d7e261d262bf11fd0e263d8fbea4f673cc7c79d47d"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u026.pth",
+      "bytes": 5207826,
+      "sha256": "6903d33386eb40dc30d96452e4ecbf4e5a034feb0ac2eaa910754912051a1a11"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u027.pth",
+      "bytes": 5207826,
+      "sha256": "418529043e51b69b2afc0f13da786dd496d3dd580469e39af06b99889452ae9b"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u028.pth",
+      "bytes": 5207826,
+      "sha256": "2f6dfd920806b7f897a2c5498c0e9982997016cceade2cc560497782dbe25c06"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u029.pth",
+      "bytes": 5207826,
+      "sha256": "d2a0b84b7bd9bc7b4bc0ddad6c29d2747d63e20b6b746b62e875f2e77e32048c"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u030.pth",
+      "bytes": 5207826,
+      "sha256": "bc22ed02da967d314c1c532767b1860728463bf66772f3b3ed84777ff5b05aa0"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u031.pth",
+      "bytes": 5207826,
+      "sha256": "be2d94e67e1c3d4914e4dbb138e167a22c9a9370aae2f99a815e256c0e31635e"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u032.pth",
+      "bytes": 5207826,
+      "sha256": "6e2a6fa59e13a26b1c9944ded23fca27b29a27252c0e7f5a15d913f6f73dbbe3"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u033.pth",
+      "bytes": 5207826,
+      "sha256": "fda2a80306fcbd7b78296bd5f8745472e6f5f10b63f084995f40ba2581c42700"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u034.pth",
+      "bytes": 5207826,
+      "sha256": "f60dc1b45523319fb45d5c1e0442cfa0d17feac2938f2d6962870d1449e826cc"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u035.pth",
+      "bytes": 5207826,
+      "sha256": "70c9b27ee42f11d9a53cf6e44e2ede11c7948458b68994fea3d9206332a20604"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u036.pth",
+      "bytes": 5207826,
+      "sha256": "7071839d4c845ae786847c0359c513947b316c4bbaa84895b7b426fa33fe6c27"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u037.pth",
+      "bytes": 5207826,
+      "sha256": "c2c73ed5018377a2e4daca6be9aa1b408bc3aff9baf46451bbd145fcf0a29e0d"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u038.pth",
+      "bytes": 5207826,
+      "sha256": "c02197834ce6d6c586d2935e1d31c7a1051f4cc532bb4376f110f8e7360574e6"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u039.pth",
+      "bytes": 5207826,
+      "sha256": "cb28e62b751e41a647d7e9dec56ef13206a7dabb6413e5aae1fefb5e8898ee9d"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u040.pth",
+      "bytes": 5207826,
+      "sha256": "cb925dd534a7e130625d488b99a64e5859f01686bfb9b0a54fa3231798369846"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u041.pth",
+      "bytes": 5207826,
+      "sha256": "ff4fb0f1a92d123ee3c20b69ece23fa886d5284581f469210423343cb45999e2"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u042.pth",
+      "bytes": 5207826,
+      "sha256": "62489550b370cb06f0cf2bb70efded7812d38ec5492a7c99a32227868ce82ee5"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u043.pth",
+      "bytes": 5207826,
+      "sha256": "7def7cf65a3e59050ffcb7529a71b729975bb737a88adb00b5688d096c624af0"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u044.pth",
+      "bytes": 5207826,
+      "sha256": "b04e3d88c1a8a210264d2462eab239bef4667cc44c98f40a82fb40fc8fe5a54c"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u045.pth",
+      "bytes": 5207826,
+      "sha256": "068624571757fefa779b74e46388e9c1f87a17f688e9bd4b0e79d203c6fa7f6f"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u046.pth",
+      "bytes": 5207826,
+      "sha256": "e6b55b3cb80632e959d9faf399524ff86a900234371ae663a5505f30715d312d"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u047.pth",
+      "bytes": 5207826,
+      "sha256": "7434bd6f42f1d70ed887d76578a5f1415742f2532494b200edd665613e14ea2c"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u048.pth",
+      "bytes": 5207826,
+      "sha256": "06cdba97d667f2e1f875d3915c5d4933f9bed528c29fd255d49bf1fcf36d9ab7"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u049.pth",
+      "bytes": 5207826,
+      "sha256": "f12e1cbabf7d98d22ef96f8f89f1da33f952499f1de232c304b0c64061b111fa"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u050.pth",
+      "bytes": 5207826,
+      "sha256": "585515b0bb13831fddc18a7b75f134704d107df7572b6f71f14820918efb1724"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u051.pth",
+      "bytes": 5207826,
+      "sha256": "87a46891a28f502f04c1e14cdb03ab7dfb5e2193c4f402506f2390bb96dc3e5b"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u052.pth",
+      "bytes": 5207826,
+      "sha256": "a8515cb311d819626a16a8c17a98197d9e4bb3df9c30fba09768aebfeef6989e"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u053.pth",
+      "bytes": 5207826,
+      "sha256": "34f1f2b26cd60d54df3105c9340f5aeed208e962f4d35f3f854e48e5244aef6b"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u054.pth",
+      "bytes": 5207826,
+      "sha256": "aaa4500f9d32bf7c7cb35d2f487d6caac3a46d435eed388fc7d8e36b2b3d0dff"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u055.pth",
+      "bytes": 5207826,
+      "sha256": "671f869c6b88fcff37f1666e77689520e11ac2e67ac93e401e1c31c7a871e123"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u056.pth",
+      "bytes": 5207826,
+      "sha256": "03eeda9fcb48c6de2c17f017d8bb2fbc918b90c6231a3d8cf51baca13afdf6af"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u057.pth",
+      "bytes": 5207826,
+      "sha256": "f86fc304b1909e2885b9c2fcbc4520375908f4b6d79e99b6f95a1a2af3eb471a"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u058.pth",
+      "bytes": 5207826,
+      "sha256": "28d7993483f9aaefb2a6147c881706681e9dc0453d3dfc871c1c8e773e12821d"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u059.pth",
+      "bytes": 5207826,
+      "sha256": "ed018a1c491f041ddcc371a811cd8218cb110103f25d0bf8e5f89c8f64b5b9a2"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u060.pth",
+      "bytes": 5207826,
+      "sha256": "b225801f3f754a37b3df82a1c82883a996f50b2dff4fef95f588a098d95a8c96"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u061.pth",
+      "bytes": 5207826,
+      "sha256": "ebbdd5bc1fad46bdbee23e0dc9c998bdab76ece79912a05de24f55032f388569"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u062.pth",
+      "bytes": 5207826,
+      "sha256": "28beb5d8de1a626226a2291232a021fa773b124fc9a359d2733679defc6003a9"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u063.pth",
+      "bytes": 5207826,
+      "sha256": "15313f5674c48430e14822e4456e7153e996dd5df1d0d20a18eddb06fa92e27e"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u064.pth",
+      "bytes": 5207826,
+      "sha256": "24c7b5c3b01b494a586a1079ec0884c590007d9db223a8fd427ca8f905b86192"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u065.pth",
+      "bytes": 5207826,
+      "sha256": "899c0768791a57ff3ee44c2b8cf195d67d7c327a88b4c58e39964ef39e0e05bc"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u066.pth",
+      "bytes": 5207826,
+      "sha256": "bfe0cb914a875009b7a94638c443cd8af59520353bd807d137b80bf8ae175883"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u067.pth",
+      "bytes": 5207826,
+      "sha256": "13b6d1ba509c5121f67ea4c1d66e0d6b0b1dd666968e03efce4157a4251eb58e"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u068.pth",
+      "bytes": 5207826,
+      "sha256": "0bc2b8364695c35bae0067ddb5806a61bb2ad9145d95b6fad4c2fd214168e21e"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u069.pth",
+      "bytes": 5207826,
+      "sha256": "851e8172228c5d0c6c7f2f9efba47c69b0a248715b9f1826216bd81bbcade3d3"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u070.pth",
+      "bytes": 5207826,
+      "sha256": "2b224faad63ce9a376b71e25f76d0167046cc414650a024d8fe6eda686362f4d"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u071.pth",
+      "bytes": 5207826,
+      "sha256": "0dc4661d72ad8096836b394d57c0b82ff631556a7c46a507eefb42bba487b0b4"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u072.pth",
+      "bytes": 5207826,
+      "sha256": "971b16a89e0a2b71d1909a2e8fd8cb1f44d378da1fc6ce715846d8de7068c876"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u073.pth",
+      "bytes": 5207826,
+      "sha256": "28a80e216498a0b6c5b388225fc50c202e391483bd040e95b340d9d1dd0d2ad4"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u074.pth",
+      "bytes": 5207826,
+      "sha256": "753d757f4b38757a8ef656051f03e27f7e7a20ab599eeb52b33d45002ba3d134"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R2_trajectory/R2_trajectory_u075.pth",
+      "bytes": 5207826,
+      "sha256": "665663c1f3fa013e5e0b88c75bebc348c91bc0ce6b52bdd788632b67f09b2377"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R3_batch32.pth",
+      "bytes": 5205082,
+      "sha256": "c4ae6edc0ed8c5a60aa227665d7bdd7d67de7b5f853de6ecd06485bd155d87b4"
+    },
+    {
+      "path": "python-ai/saved_models/marl/R3_batch32_best.pth",
+      "bytes": 5206437,
+      "sha256": "32e3be00be1cbce8a118b354409ea473adfdd3c1b5f3319fbb727312e2aec446"
+    },
+    {
+      "path": "python-ai/saved_models/single_agent/sprint9/sprint9_single_agent.pth",
+      "bytes": 4732369,
+      "sha256": "8eaa0bb9cc67eadbd45f95f7a6536e987901485ae5c7d63091fca149a3465c90"
+    },
+    {
+      "path": "python-ai/saved_models/single_agent/sprint9/sprint9_single_agent_best.pth",
+      "bytes": 4732703,
+      "sha256": "223bf33c14cef2f5eba93c5f3697e8ddb880e4c56e5a348d82656af4f1750cb5"
+    }
+  ],
+  "source_files": {
+    "mappo_definition": "python-ai/marl/mappo.py",
+    "mappo_configuration": "python-ai/marl/config.py",
+    "single_agent_ppo_definition": "python-ai/marl/single_agent_ppo.py",
+    "rule_baselines": "python-ai/marl/baseline.py",
+    "baseline_factory": "python-ai/marl/sprint9_benchmarks.py",
+    "mappo_training": "python-ai/marl/train.py",
+    "single_agent_training": "python-ai/marl/train_single_agent.py",
+    "mappo_evaluation": "python-ai/marl/evaluate.py",
+    "sprint9_baseline_documentation": "docs/SPRINT_9_BASELINES.md"
+  },
+  "mappo": {
+    "checkpoint": {
+      "path": "python-ai/saved_models/marl/mappo_R2_mc_target_best.pth",
+      "bytes": 5208669,
+      "sha256": "f7b06ff8ae3d9c3288004101a8329f203d09fc5e9a82d88957daf696c24a8bee"
+    },
+    "checkpoint_extra": {
+      "config": {
+        "env": {
+          "trace_csv": "D:\\MY_GURL\\RESEARCH_PAPER\\DT-MARL-Healthcare\\simulation\\failure_history.csv",
+          "event_log_csv": "D:\\MY_GURL\\RESEARCH_PAPER\\DT-MARL-Healthcare\\simulation\\failure_log.csv",
+          "risk_source": "oof",
+          "oof_npz": "D:\\MY_GURL\\RESEARCH_PAPER\\DT-MARL-Healthcare\\python-ai\\saved_models\\failure_predictor_oof.npz",
+          "model_path": "D:\\MY_GURL\\RESEARCH_PAPER\\DT-MARL-Healthcare\\python-ai\\saved_models\\failure_predictor.pth",
+          "scaler_path": "D:\\MY_GURL\\RESEARCH_PAPER\\DT-MARL-Healthcare\\python-ai\\saved_models\\failure_predictor_scaler.npz",
+          "meta_path": "D:\\MY_GURL\\RESEARCH_PAPER\\DT-MARL-Healthcare\\python-ai\\saved_models\\failure_predictor_meta.json",
+          "sequence_length": 10,
+          "n_edge_nodes": 10,
+          "vms_per_node": 2,
+          "vm_mips": 2000.0,
+          "queue_capacity": 4,
+          "cloud_slots": 8,
+          "cloud_mips": 4000.0,
+          "cloud_wan_latency_ms": 40.0,
+          "cloud_energy_multiplier": 1.6,
+          "n_tasks": 40,
+          "n_patients": 10,
+          "task_length_mi": 600000.0,
+          "task_pes": 2,
+          "sla_slack_factor": 1.35,
+          "deadline_slack_per_task_s": 5.0,
+          "ticks_per_step": 2,
+          "episode_steps": 400,
+          "task_arrival_span_steps": 220,
+          "random_episode_start": true,
+          "start_frac_lo": 0.0,
+          "start_frac_hi": 0.7,
+          "degraded_throughput_penalty": 0.35,
+          "migration_latency_steps_edge": 15,
+          "migration_latency_steps_cloud": 40,
+          "reroute_latency_steps": 1,
+          "max_migrations_per_task": 3,
+          "reactive_cpu_threshold": 85.0,
+          "reactive_packet_loss_threshold": 20.0,
+          "dest_w_risk": 1.0,
+          "dest_w_free_capacity": 0.6,
+          "dest_w_link_latency": 0.3,
+          "dest_w_load": 0.4,
+          "neighbour_offsets": [
+            -2,
+            -1,
+            1,
+            2
+          ],
+          "energy_norm_w": 250.0,
+          "running_tasks_norm": 8.0,
+          "link_bw_norm_mbps": 500.0,
+          "link_latency_norm_ms": 10000.0,
+          "overload_target": 1.0,
+          "protection_window_steps": 30,
+          "legacy_fixed_apply_order": false,
+          "legacy_dead_migration_criticality": false,
+          "seed": 20260818
+        },
+        "reward": {
+          "R_complete": 10.0,
+          "R_progress": 10.0,
+          "P_task_lost": 20.0,
+          "P_sla": 5.0,
+          "P_migration": 4.0,
+          "P_energy": 0.1,
+          "P_risk_expose": 0.15,
+          "P_infeasible": 0.5,
+          "P_overload": 0.5,
+          "P_balance": 1.0,
+          "w_criticality": 2.0,
+          "w_criticality_migration": 1.0,
+          "migration_cost_edge": 1.0,
+          "migration_cost_cloud": 2.0,
+          "reroute_cost": 0.25,
+          "team_reward_share": 0.3,
+          "reward_scale": 0.1
+        },
+        "mappo": {
+          "actor_hidden": [
+            128,
+            128
+          ],
+          "critic_hidden": [
+            256,
+            256
+          ],
+          "separate_actors": true,
+          "lr_actor": 0.0007,
+          "lr_critic": 0.001,
+          "gamma": 0.999,
+          "gae_lambda": 0.995,
+          "clip_eps": 0.2,
+          "value_clip_eps": 0.2,
+          "entropy_coef": 0.02,
+          "value_coef": 0.5,
+          "max_grad_norm": 0.5,
+          "ppo_epochs": 4,
+          "minibatches": 4,
+          "normalise_advantages": true,
+          "critic_target": "mc",
+          "anneal_lr": true
+        },
+        "train": {
+          "episodes": 600,
+          "rollout_episodes": 8,
+          "seed": 20260818,
+          "device": "cpu",
+          "log_every": 10,
+          "eval_episodes": 20,
+          "out_dir": "D:\\MY_GURL\\RESEARCH_PAPER\\DT-MARL-Healthcare\\python-ai\\saved_models\\marl",
+          "tag": "mappo_R2_mc_target"
+        }
+      },
+      "episode": 600,
+      "mean_reward": 12.653897495678393,
+      "kind": "best"
+    },
+    "architecture": {
+      "n_agents": 10,
+      "actor_parameter_sharing": "none: separate_actors=True; 10 independent actor MLPs",
+      "actor": {
+        "input_observation_dim": 48,
+        "hidden_layers": [
+          128,
+          128
+        ],
+        "activation": "Tanh after each hidden Linear layer",
+        "output_actions": 4
+      },
+      "critic": {
+        "centralized_global_state_dim": 489,
+        "agent_id_one_hot_dim": 10,
+        "effective_input_dim": 499,
+        "hidden_layers": [
+          256,
+          256
+        ],
+        "activation": "Tanh after each hidden Linear layer",
+        "output": "one value per (state, agent-id); forward(state) emits all 10 values"
+      }
+    },
+    "parameters": {
+      "actor_per_agent": {
+        "trainable_parameters": 23300,
+        "raw_parameter_bytes": 93200,
+        "dtype": "torch.float32"
+      },
+      "actors_all_agents": {
+        "trainable_parameters": 233000,
+        "raw_parameter_bytes": 932000,
+        "dtypes": {
+          "torch.float32": 233000
+        },
+        "requires_grad": true
+      },
+      "centralized_critic": {
+        "trainable_parameters": 194049,
+        "raw_parameter_bytes": 776196,
+        "dtypes": {
+          "torch.float32": 194049
+        },
+        "requires_grad": true
+      },
+      "total_trainable_parameters": 427049,
+      "total_raw_parameter_bytes": 1708196,
+      "excluded_non_trainable_buffer": {
+        "name": "CentralisedCritic.eye",
+        "elements": 100,
+        "bytes": 400,
+        "reason": "registered one-hot identity buffer, not a trainable parameter"
+      }
+    },
+    "flops": {
+      "actor_per_agent_forward": {
+        "linear_macs": 23040,
+        "linear_fma_flops": 46080,
+        "bias_additions": 260,
+        "linear_flops_including_bias": 46340
+      },
+      "actor_one_decentralized_decision_all_agents": {
+        "linear_macs": 230400,
+        "linear_fma_flops": 460800,
+        "bias_additions": 2600,
+        "linear_flops_including_bias": 463400
+      },
+      "critic_per_agent_value": {
+        "linear_macs": 193536,
+        "linear_fma_flops": 387072,
+        "bias_additions": 513,
+        "linear_flops_including_bias": 387585
+      },
+      "critic_one_centralized_state_forward_all_agent_values": {
+        "linear_macs": 1935360,
+        "linear_fma_flops": 3870720,
+        "bias_additions": 5130,
+        "linear_flops_including_bias": 3875850
+      },
+      "actor_plus_critic_one_state": {
+        "linear_macs": 2165760,
+        "linear_fma_flops": 4331520,
+        "bias_additions": 7730,
+        "linear_flops_including_bias": 4339250
+      }
+    },
+    "model_size": {
+      "serialized_checkpoint": {
+        "path": "python-ai/saved_models/marl/mappo_R2_mc_target_best.pth",
+        "bytes": 5208669,
+        "sha256": "f7b06ff8ae3d9c3288004101a8329f203d09fc5e9a82d88957daf696c24a8bee"
+      },
+      "raw_trainable_parameter_memory": 1708196,
+      "deployment_actor_only_raw_parameter_memory": 932000,
+      "dtype": "float32 (4 bytes per trainable parameter)",
+      "serialization_note": "The .pth file also contains Adam optimizer states and metadata; it is not a deployment-weight-only artifact."
+    }
+  },
+  "single_agent_ppo": {
+    "checkpoint": {
+      "path": "python-ai/saved_models/single_agent/sprint9/sprint9_single_agent_best.pth",
+      "bytes": 4732703,
+      "sha256": "223bf33c14cef2f5eba93c5f3697e8ddb880e4c56e5a348d82656af4f1750cb5"
+    },
+    "architecture": {
+      "parameter_sharing": "one centralized actor, not ten actor replicas",
+      "actor": {
+        "input_global_state_dim": 489,
+        "hidden_layers": [
+          256,
+          256
+        ],
+        "activation": "Tanh after each hidden Linear layer",
+        "output": "10 x 4 factored action logits"
+      },
+      "critic": {
+        "input_global_state_dim": 489,
+        "hidden_layers": [
+          256,
+          256
+        ],
+        "activation": "Tanh after each hidden Linear layer",
+        "output": "one scalar team value"
+      }
+    },
+    "parameters": {
+      "actor": {
+        "trainable_parameters": 201512,
+        "raw_parameter_bytes": 806048,
+        "dtypes": {
+          "torch.float32": 201512
+        },
+        "requires_grad": true
+      },
+      "critic": {
+        "trainable_parameters": 191489,
+        "raw_parameter_bytes": 765956,
+        "dtypes": {
+          "torch.float32": 191489
+        },
+        "requires_grad": true
+      },
+      "total_trainable_parameters": 393001,
+      "total_raw_parameter_bytes": 1572004
+    },
+    "flops": {
+      "actor_forward": {
+        "linear_macs": 200960,
+        "linear_fma_flops": 401920,
+        "bias_additions": 552,
+        "linear_flops_including_bias": 402472
+      },
+      "critic_forward": {
+        "linear_macs": 190976,
+        "linear_fma_flops": 381952,
+        "bias_additions": 513,
+        "linear_flops_including_bias": 382465
+      },
+      "actor_plus_critic_one_state": {
+        "linear_macs": 391936,
+        "linear_fma_flops": 783872,
+        "bias_additions": 1065,
+        "linear_flops_including_bias": 784937
+      }
+    },
+    "model_size": {
+      "serialized_checkpoint": {
+        "path": "python-ai/saved_models/single_agent/sprint9/sprint9_single_agent_best.pth",
+        "bytes": 4732703,
+        "sha256": "223bf33c14cef2f5eba93c5f3697e8ddb880e4c56e5a348d82656af4f1750cb5"
+      },
+      "raw_trainable_parameter_memory": 1572004,
+      "deployment_actor_only_raw_parameter_memory": 806048,
+      "dtype": "float32 (4 bytes per trainable parameter)",
+      "serialization_note": "The .pth file also contains Adam optimizer states and metadata; it is not a deployment-weight-only artifact."
+    }
+  },
+  "flop_convention": {
+    "definition": "dense Linear MACs plus 2 FLOPs per MAC and one addition per bias",
+    "excluded": [
+      "Tanh nonlinearities",
+      "action masking",
+      "argmax/softmax/categorical sampling",
+      "tensor conversion",
+      "Python-loop overhead",
+      "memory traffic"
+    ],
+    "status": "analytical from actual checkpoint architecture; not a runtime measurement"
+  },
+  "training": {
+    "mappo_r2": {
+      "duration_s": 1585.6,
+      "duration_source": "python-ai/saved_models/marl/mappo_R2_mc_target_config.json",
+      "corroborating_log": "python-ai/run_R2_mc_target_train.log",
+      "episodes": 600,
+      "steps_per_episode": 400,
+      "environment_steps": 240000,
+      "updates": 75,
+      "device_recorded": "cpu",
+      "measurement_status": "observed historical run time (not estimated)"
+    },
+    "single_agent_ppo": {
+      "duration_s": 632.218,
+      "duration_source": "python-ai/saved_models/single_agent/sprint9/sprint9_single_agent_config.json",
+      "episodes": 400,
+      "steps_per_episode": 400,
+      "environment_steps": 160000,
+      "updates": 50,
+      "device_recorded": "cuda",
+      "measurement_status": "observed historical run time (not estimated)"
+    }
+  },
+  "inference_benchmark_protocol": {
+    "scope": "neural model only; excludes environment, simulator, trace I/O, and checkpoint loading",
+    "device": "cpu",
+    "torch_threads_during_measurement": 1,
+    "input": "fixed deterministic float32 linspace tensors with actual checkpoint dimensions; all action masks legal",
+    "measurement_clock": "time.perf_counter_ns",
+    "statistic": "per-call time calculated within each fixed-size batch; summary statistics are across batches",
+    "warmup_iterations": 500,
+    "repeats": 25,
+    "iterations_per_repeat": 400
+  },
+  "inference_benchmark": {
+    "mappo_actor_forward_all_agents": {
+      "warmup_iterations": 500,
+      "repeats": 25,
+      "iterations_per_repeat": 400,
+      "total_measured_calls": 10000,
+      "mean_us": 759.6605199999999,
+      "std_us": 13.473553111852734,
+      "median_us": 755.93325,
+      "p95_us": 772.0155,
+      "raw_batch_means_us": [
+        749.76575,
+        768.5295,
+        748.651,
+        752.76625,
+        757.77,
+        752.125,
+        763.79225,
+        755.93325,
+        760.80875,
+        752.04325,
+        750.40725,
+        760.82,
+        813.30625,
+        753.67475,
+        752.99525,
+        748.138,
+        761.46525,
+        772.887,
+        767.59825,
+        764.16575,
+        748.53175,
+        752.1695,
+        748.5225,
+        767.54475,
+        767.10175
+      ]
+    },
+    "mappo_greedy_policy_decision_all_agents": {
+      "warmup_iterations": 500,
+      "repeats": 25,
+      "iterations_per_repeat": 400,
+      "total_measured_calls": 10000,
+      "mean_us": 1033.03773,
+      "std_us": 58.61185190478047,
+      "median_us": 1009.089,
+      "p95_us": 1125.2147499999999,
+      "raw_batch_means_us": [
+        991.46975,
+        1008.78225,
+        1032.14175,
+        1009.089,
+        1000.03325,
+        1252.21925,
+        1125.2185,
+        1041.6535,
+        1062.379,
+        1004.0515,
+        1001.618,
+        992.218,
+        994.461,
+        1033.0905,
+        995.64875,
+        1027.6185,
+        987.37975,
+        996.23125,
+        1019.755,
+        1043.1855,
+        1002.6235,
+        1055.865,
+        1125.19975,
+        1016.6415,
+        1007.3695
+      ]
+    },
+    "mappo_critic_forward_all_agent_values": {
+      "warmup_iterations": 500,
+      "repeats": 25,
+      "iterations_per_repeat": 400,
+      "total_measured_calls": 10000,
+      "mean_us": 169.89587,
+      "std_us": 8.67306113363144,
+      "median_us": 167.39925,
+      "p95_us": 187.75509999999994,
+      "raw_batch_means_us": [
+        168.91675,
+        170.34275,
+        173.7975,
+        166.1395,
+        165.36925,
+        165.2655,
+        167.39925,
+        168.14175,
+        166.34325,
+        168.37925,
+        165.6765,
+        170.91025,
+        168.949,
+        168.8225,
+        165.30975,
+        166.044,
+        166.36925,
+        168.41525,
+        167.32675,
+        165.05575,
+        166.041,
+        169.04225,
+        203.22275,
+        191.2445,
+        164.8725
+      ]
+    },
+    "single_agent_actor_forward": {
+      "warmup_iterations": 500,
+      "repeats": 25,
+      "iterations_per_repeat": 400,
+      "total_measured_calls": 10000,
+      "mean_us": 76.22225999999999,
+      "std_us": 1.8938814124921701,
+      "median_us": 75.7845,
+      "p95_us": 79.4545,
+      "raw_batch_means_us": [
+        74.312,
+        77.597,
+        77.54325,
+        74.79775,
+        74.75825,
+        77.16825,
+        75.79025,
+        75.3045,
+        75.246,
+        75.2415,
+        74.3535,
+        74.4615,
+        74.79875,
+        75.2255,
+        82.337,
+        75.20675,
+        79.745,
+        74.498,
+        78.2925,
+        76.0845,
+        76.3115,
+        76.0805,
+        75.7845,
+        77.801,
+        76.81725
+      ]
+    },
+    "single_agent_greedy_policy_decision": {
+      "warmup_iterations": 500,
+      "repeats": 25,
+      "iterations_per_repeat": 400,
+      "total_measured_calls": 10000,
+      "mean_us": 137.93745,
+      "std_us": 5.325422049002313,
+      "median_us": 136.94525,
+      "p95_us": 142.1496,
+      "raw_batch_means_us": [
+        160.55775,
+        138.9045,
+        140.071,
+        135.52425,
+        136.78875,
+        134.57875,
+        142.66925,
+        138.9845,
+        134.51875,
+        134.3275,
+        132.097,
+        135.835,
+        132.311,
+        136.3695,
+        135.661,
+        135.93525,
+        140.0495,
+        135.77275,
+        137.65975,
+        139.8745,
+        138.72725,
+        138.48775,
+        138.1375,
+        137.64825,
+        136.94525
+      ]
+    },
+    "single_agent_critic_forward": {
+      "warmup_iterations": 500,
+      "repeats": 25,
+      "iterations_per_repeat": 400,
+      "total_measured_calls": 10000,
+      "mean_us": 74.84882,
+      "std_us": 4.589248345612638,
+      "median_us": 73.75775,
+      "p95_us": 78.6947,
+      "raw_batch_means_us": [
+        72.7315,
+        72.46575,
+        71.214,
+        70.901,
+        70.6885,
+        73.75775,
+        77.8645,
+        72.60675,
+        77.64225,
+        75.29675,
+        75.7175,
+        78.90225,
+        76.4505,
+        94.25125,
+        75.17725,
+        75.00975,
+        75.55575,
+        74.923,
+        72.79975,
+        72.60625,
+        73.89175,
+        72.7335,
+        72.69425,
+        72.2935,
+        73.0455
+      ]
+    }
+  },
+  "baseline_scope": {
+    "implemented_sprint9_baselines": [
+      "reactive-no-digital-twin (ReactiveThresholdPolicy)",
+      "single-agent-ppo (SingleAgentPPO)",
+      "detection-without-prediction (DetectionRecoveryPolicy)"
+    ],
+    "additional_evaluation_references": [
+      "static-no-migration (NoMigrationPolicy)",
+      "random-legal (RandomPolicy)",
+      "risk-threshold (RiskThresholdPolicy; heuristic reference, not Sprint 9 baseline)"
+    ],
+    "not_scheduling_baselines": "python-ai/models contains failure-prediction models (TransformerEncoder, BiLSTM, FailurePredictor, HTCF); they are upstream predictors, not MAPPO scheduling baselines."
+  }
+}

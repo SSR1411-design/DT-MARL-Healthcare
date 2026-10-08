@@ -2,6 +2,29 @@ package com.dtmarl.ai.digitaltwin;
 
 public class EdgeNode {
 
+    /**
+     * Health lifecycle of the mirrored host, following the same "explicit
+     * mode enum on the twin" pattern already used by
+     * {@link DeviceNode.FailureMode}.
+     *
+     * NORMAL     - no active fault mechanism, or one that has not yet
+     *              produced any observable effect (latent incubation).
+     * DEGRADING  - a fault mechanism is measurably affecting telemetry.
+     * CRITICAL   - degradation is severe; failure is likely soon.
+     * FAILED     - host deactivated, telemetry flat-lined.
+     * RECOVERING - repair in progress (host still down, will come back).
+     *
+     * IMPORTANT: this is LATENT GROUND TRUTH maintained by the simulator for
+     * validation and plotting. It is deliberately NOT part of the telemetry
+     * the failure predictor consumes - a real deployment has no oracle that
+     * announces "this host is now DEGRADING", and feeding it to the model
+     * would be circular. See TelemetrySnapshot / HistoryCollector, where it
+     * is written only into the audit_* block of the exported CSV.
+     */
+    public enum HealthState {
+        NORMAL, DEGRADING, CRITICAL, FAILED, RECOVERING
+    }
+
     private int id;
 
     private double cpuUsage;
@@ -21,6 +44,10 @@ public class EdgeNode {
     // "struggling" from "dead" in later sprints (prediction/MARL need this).
     private boolean degraded;
 
+    // Latent health lifecycle (see HealthState). Maintained by
+    // HostDegradationManager / FailureManager, never by syncWithHosts.
+    private HealthState healthState;
+
     public EdgeNode(int id) {
 
         this.id = id;
@@ -38,6 +65,8 @@ public class EdgeNode {
         active = true;
 
         degraded = false;
+
+        healthState = HealthState.NORMAL;
     }
 
     public int getId() {
@@ -98,5 +127,13 @@ public class EdgeNode {
 
     public void setDegraded(boolean degraded) {
         this.degraded = degraded;
+    }
+
+    public HealthState getHealthState() {
+        return healthState;
+    }
+
+    public void setHealthState(HealthState healthState) {
+        this.healthState = healthState;
     }
 }

@@ -12,6 +12,7 @@ package com.dtmarl.ai.digitaltwin;
 public class NetworkLink {
 
     private final int nodeId;
+    private final double nominalBandwidthMbps;
 
     private boolean up;
 
@@ -27,9 +28,18 @@ public class NetworkLink {
     public static final double NORMAL_PACKET_LOSS_PERCENT = 0.0;
 
     public NetworkLink(int nodeId) {
+        this(nodeId, NORMAL_BANDWIDTH_MBPS);
+    }
+
+    /** Per-scenario physical link capacity, distinct from Python normalization. */
+    public NetworkLink(int nodeId, double nominalBandwidthMbps) {
+        if (!Double.isFinite(nominalBandwidthMbps) || nominalBandwidthMbps <= 0) {
+            throw new IllegalArgumentException("nominalBandwidthMbps must be positive");
+        }
         this.nodeId = nodeId;
+        this.nominalBandwidthMbps = nominalBandwidthMbps;
         this.up = true;
-        this.bandwidthMbps = NORMAL_BANDWIDTH_MBPS;
+        this.bandwidthMbps = nominalBandwidthMbps;
         this.latencyMs = NORMAL_LATENCY_MS;
         this.packetLossPercent = NORMAL_PACKET_LOSS_PERCENT;
         this.underAttack = false;
@@ -49,6 +59,10 @@ public class NetworkLink {
 
     public double getBandwidthMbps() {
         return bandwidthMbps;
+    }
+
+    public double getNominalBandwidthMbps() {
+        return nominalBandwidthMbps;
     }
 
     public void setBandwidthMbps(double bandwidthMbps) {
@@ -81,7 +95,7 @@ public class NetworkLink {
 
     public void resetToNormal() {
         this.up = true;
-        this.bandwidthMbps = NORMAL_BANDWIDTH_MBPS;
+        this.bandwidthMbps = nominalBandwidthMbps;
         this.latencyMs = NORMAL_LATENCY_MS;
         this.packetLossPercent = NORMAL_PACKET_LOSS_PERCENT;
         this.underAttack = false;

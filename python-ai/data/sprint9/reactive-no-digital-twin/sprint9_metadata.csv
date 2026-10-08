@@ -1,0 +1,2 @@
+run_id,baseline_name,episode,episode_start_tick,risk_source,uses_digital_twin,uses_prediction,uses_uncertainty,uses_marl,seed,node_count,task_count,recovery_mode,training_loss_status,checkpoint
+reactive-no-digital-twin,reactive-no-digital-twin,1,491,zero,False,False,False,False,20260818,10,40,none,N/A (heuristic baseline),

@@ -1,0 +1,41 @@
+
+==============================================================================
+PART A  PARAMETER-SPACE DISPLACEMENT FROM THE SHARED theta_0
+==============================================================================
+  seed (all arms)          : 20260818
+  theta_0 reproducibility  : actor max|diff| 0.0e+00, critic 0.0e+00  (two independent constructions)
+  actor params             : 233000   critic params: 194049
+  chance cosine 1/sqrt(d)  : actor 0.00207   critic 0.00227
+
+  arm       ||dTheta_actor||  ||dTheta_critic||  actor/R2
+  A0                  5.5321             9.7844    0.8965
+  R2                  6.1710             9.9936    1.0000
+  R2_best             6.1710             9.9936    1.0000
+  R3                  4.5471            10.3278    0.7369
+  R3_best             3.9510             9.1554    0.6403
+
+  decomposition against R2's ACTOR displacement direction
+  arm       proj_frac    cosine  resid_frac
+  A0           0.1672    0.1865      0.8807
+  R2           1.0000    1.0000      0.0000
+  R2_best      1.0000    1.0000      0.0000
+  R3           0.1244    0.1689      0.7263
+  R3_best      0.0990    0.1546      0.6326
+
+  pairwise cosine of ACTOR displacement
+                  A0       R2  R2_best       R3  R3_best
+  A0          1.0000   0.1865   0.1865   0.1648   0.1900
+  R2          0.1865   1.0000   1.0000   0.1689   0.1546
+  R2_best     0.1865   1.0000   1.0000   0.1689   0.1546
+  R3          0.1648   0.1689   0.1689   1.0000   0.9300
+  R3_best     0.1900   0.1546   0.1546   0.9300   1.0000
+
+  Adam actor state at the final checkpoint
+  arm        steps   lr_saved      ||m||  ||update||  ||upd||/||dTheta||
+  A0          1428  9.333e-06  7.565e-02      0.0007             0.00013
+  R2          1392  9.333e-06  1.870e-02      0.0004             0.00006
+  R2_best     1392  9.333e-06  1.870e-02      0.0004             0.00006
+  R3          1440  9.333e-06  6.370e-02      0.0012             0.00026
+  R3_best      872  2.893e-04  4.462e-02      0.0133             0.00336
+
+wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_DIV_geometry_partA.json

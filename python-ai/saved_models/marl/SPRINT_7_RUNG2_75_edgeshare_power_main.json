@@ -1,0 +1,643 @@
+{
+  "probe": "SPRINT_7_RUNG2_75_edgeshare_power",
+  "what": "exact reproduction of the Rung 2.5 high-risk EDGE census, plus two-proportion tests on every A0-vs-R2 contrast in the ladder",
+  "corrections_to_my_earlier_statement_of_the_rung2_5_definition": [
+    "saturation_census applies NO has_task filter -- decision entries are mask.sum(-1) > 1.5 only. I had listed a has_task filter. Ladder step D2->D3 shows it is a bit-exact no-op at high risk (n=581/373 unchanged), so no conclusion moves.",
+    "saturation_census uses training_start_ticks (train.py's own np.random.default_rng(TRAIN_SEED) draw = the literal first 8 training episodes), NOT rollout.episode_starts. The start ticks themselves therefore differ from every main-ladder cell. This is a SIXTH difference, not one of the five I listed."
+  ],
+  "rung2_5_definition_verified_from_source": {
+    "file": "marl/_diag_rung2_5_actor_stall.py:288-347",
+    "decision_rule": "msk[:, i, :].sum(-1) > 1.5",
+    "threshold": "rk[legal, i] > HI_RISK, HI_RISK = 0.50",
+    "policy": "_replay(..., sample=True) with torch.manual_seed(TRAIN_SEED + j)",
+    "starts": "training_start_ticks(env, 8)"
+  },
+  "per_arm": {
+    "A0": {
+      "D5_exact": {
+        "n_decision_entries": 3452,
+        "n_highrisk": 212,
+        "EDGE": 14,
+        "share": 0.0660377358490566,
+        "wilson95": [
+          0.039741371958147295,
+          0.10778106903317079
+        ],
+        "STAY_share": 0.8537735849056604,
+        "episode_lengths": [
+          377,
+          365,
+          400,
+          400,
+          358,
+          400,
+          400,
+          400
+        ],
+        "truncated": 5
+      },
+      "D5_matches_record": true,
+      "rung2_5_on_record": {
+        "n": 212,
+        "EDGE": 14,
+        "share": 0.0660377358490566
+      },
+      "D5s": [
+        {
+          "n_decision_entries": 3203,
+          "n_highrisk": 213,
+          "EDGE": 17,
+          "share": 0.07981220657276995,
+          "wilson95": [
+            0.05042565885791986,
+            0.12408644356254617
+          ],
+          "STAY_share": 0.8356807511737089,
+          "episode_lengths": [
+            392,
+            400,
+            400,
+            397,
+            360,
+            366,
+            389,
+            370
+          ],
+          "truncated": 2
+        },
+        {
+          "n_decision_entries": 3427,
+          "n_highrisk": 205,
+          "EDGE": 19,
+          "share": 0.09268292682926829,
+          "wilson95": [
+            0.06013833482849913,
+            0.14021201277694634
+          ],
+          "STAY_share": 0.8,
+          "episode_lengths": [
+            383,
+            400,
+            388,
+            400,
+            368,
+            400,
+            400,
+            385
+          ],
+          "truncated": 4
+        },
+        {
+          "n_decision_entries": 3461,
+          "n_highrisk": 179,
+          "EDGE": 21,
+          "share": 0.11731843575418995,
+          "wilson95": [
+            0.07802661498767187,
+            0.1726903677019987
+          ],
+          "STAY_share": 0.7988826815642458,
+          "episode_lengths": [
+            400,
+            400,
+            396,
+            400,
+            369,
+            400,
+            400,
+            400
+          ],
+          "truncated": 6
+        },
+        {
+          "n_decision_entries": 3347,
+          "n_highrisk": 191,
+          "EDGE": 18,
+          "share": 0.09424083769633508,
+          "wilson95": [
+            0.060444414620343695,
+            0.14403700894346141
+          ],
+          "STAY_share": 0.7958115183246073,
+          "episode_lengths": [
+            395,
+            400,
+            400,
+            397,
+            391,
+            400,
+            383,
+            400
+          ],
+          "truncated": 4
+        },
+        {
+          "n_decision_entries": 3305,
+          "n_highrisk": 178,
+          "EDGE": 16,
+          "share": 0.0898876404494382,
+          "wilson95": [
+            0.056086378225002585,
+            0.14101641176467128
+          ],
+          "STAY_share": 0.8033707865168539,
+          "episode_lengths": [
+            377,
+            400,
+            388,
+            400,
+            345,
+            400,
+            363,
+            400
+          ],
+          "truncated": 4
+        },
+        {
+          "n_decision_entries": 3208,
+          "n_highrisk": 177,
+          "EDGE": 14,
+          "share": 0.07909604519774012,
+          "wilson95": [
+            0.047698204676212254,
+            0.12837568390149867
+          ],
+          "STAY_share": 0.7853107344632768,
+          "episode_lengths": [
+            400,
+            384,
+            400,
+            400,
+            358,
+            400,
+            396,
+            400
+          ],
+          "truncated": 5
+        },
+        {
+          "n_decision_entries": 3315,
+          "n_highrisk": 204,
+          "EDGE": 23,
+          "share": 0.11274509803921569,
+          "wilson95": [
+            0.0763122768636531,
+            0.16349290517061002
+          ],
+          "STAY_share": 0.7941176470588235,
+          "episode_lengths": [
+            400,
+            370,
+            400,
+            400,
+            365,
+            363,
+            400,
+            400
+          ],
+          "truncated": 5
+        },
+        {
+          "n_decision_entries": 3318,
+          "n_highrisk": 187,
+          "EDGE": 22,
+          "share": 0.11764705882352941,
+          "wilson95": [
+            0.0789887843216564,
+            0.17169814273151368
+          ],
+          "STAY_share": 0.8128342245989305,
+          "episode_lengths": [
+            400,
+            400,
+            400,
+            349,
+            400,
+            400,
+            400,
+            400
+          ],
+          "truncated": 7
+        }
+      ],
+      "D5s_share_mean": 0.09792878117031084,
+      "D5s_share_sd": 0.01591474833668323,
+      "D5s_share_min": 0.07909604519774012,
+      "D5s_share_max": 0.11764705882352941,
+      "D5s_pooled": {
+        "n": 1534,
+        "EDGE": 150,
+        "share": 0.09778357235984354,
+        "wilson95": [
+          0.08390931529964443,
+          0.11366726655576068
+        ]
+      }
+    },
+    "R2": {
+      "D5_exact": {
+        "n_decision_entries": 4967,
+        "n_highrisk": 269,
+        "EDGE": 10,
+        "share": 0.03717472118959108,
+        "wilson95": [
+          0.020315739539514144,
+          0.067066357664667
+        ],
+        "STAY_share": 0.8698884758364313,
+        "episode_lengths": [
+          400,
+          400,
+          400,
+          400,
+          400,
+          400,
+          400,
+          400
+        ],
+        "truncated": 8
+      },
+      "D5_matches_record": true,
+      "rung2_5_on_record": {
+        "n": 269,
+        "EDGE": 10,
+        "share": 0.03717472118959108
+      },
+      "D5s": [
+        {
+          "n_decision_entries": 5844,
+          "n_highrisk": 229,
+          "EDGE": 9,
+          "share": 0.039301310043668124,
+          "wilson95": [
+            0.0208120119271889,
+            0.07299198237105552
+          ],
+          "STAY_share": 0.8820960698689956,
+          "episode_lengths": [
+            400,
+            388,
+            400,
+            400,
+            400,
+            386,
+            376,
+            394
+          ],
+          "truncated": 4
+        },
+        {
+          "n_decision_entries": 6013,
+          "n_highrisk": 225,
+          "EDGE": 10,
+          "share": 0.044444444444444446,
+          "wilson95": [
+            0.02431774079367506,
+            0.07986556147089832
+          ],
+          "STAY_share": 0.8755555555555555,
+          "episode_lengths": [
+            400,
+            400,
+            400,
+            400,
+            360,
+            400,
+            398,
+            400
+          ],
+          "truncated": 6
+        },
+        {
+          "n_decision_entries": 5289,
+          "n_highrisk": 178,
+          "EDGE": 13,
+          "share": 0.07303370786516854,
+          "wilson95": [
+            0.0431750251332079,
+            0.12093198910261693
+          ],
+          "STAY_share": 0.8426966292134831,
+          "episode_lengths": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400
+          ],
+          "truncated": 8
+        },
+        {
+          "n_decision_entries": 5576,
+          "n_highrisk": 196,
+          "EDGE": 9,
+          "share": 0.04591836734693878,
+          "wilson95": [
+            0.02434308700635445,
+            0.08495084531161182
+          ],
+          "STAY_share": 0.8775510204081632,
+          "episode_lengths": [
+            400,
+            372,
+            400,
+            400,
+            368,
+            400,
+            400,
+            400
+          ],
+          "truncated": 6
+        },
+        {
+          "n_decision_entries": 5878,
+          "n_highrisk": 206,
+          "EDGE": 8,
+          "share": 0.038834951456310676,
+          "wilson95": [
+            0.01980736946533935,
+            0.07474715273001004
+          ],
+          "STAY_share": 0.8737864077669902,
+          "episode_lengths": [
+            360,
+            394,
+            394,
+            364,
+            362,
+            400,
+            374,
+            400
+          ],
+          "truncated": 2
+        },
+        {
+          "n_decision_entries": 5891,
+          "n_highrisk": 253,
+          "EDGE": 14,
+          "share": 0.05533596837944664,
+          "wilson95": [
+            0.033245213276935276,
+            0.09072799190569107
+          ],
+          "STAY_share": 0.8735177865612648,
+          "episode_lengths": [
+            400,
+            400,
+            400,
+            374,
+            387,
+            400,
+            400,
+            400
+          ],
+          "truncated": 6
+        },
+        {
+          "n_decision_entries": 5740,
+          "n_highrisk": 209,
+          "EDGE": 15,
+          "share": 0.07177033492822966,
+          "wilson95": [
+            0.04397300401943505,
+            0.1150254310559877
+          ],
+          "STAY_share": 0.8229665071770335,
+          "episode_lengths": [
+            380,
+            400,
+            400,
+            400,
+            400,
+            381,
+            400,
+            400
+          ],
+          "truncated": 6
+        },
+        {
+          "n_decision_entries": 5731,
+          "n_highrisk": 231,
+          "EDGE": 14,
+          "share": 0.06060606060606061,
+          "wilson95": [
+            0.03644148448222001,
+            0.09914555808248629
+          ],
+          "STAY_share": 0.8701298701298701,
+          "episode_lengths": [
+            400,
+            400,
+            400,
+            400,
+            389,
+            394,
+            400,
+            398
+          ],
+          "truncated": 5
+        }
+      ],
+      "D5s_share_mean": 0.05365564313378343,
+      "D5s_share_sd": 0.01375912500160499,
+      "D5s_share_min": 0.038834951456310676,
+      "D5s_share_max": 0.07303370786516854,
+      "D5s_pooled": {
+        "n": 1727,
+        "EDGE": 92,
+        "share": 0.05327156919513607,
+        "wilson95": [
+          0.043636830384931435,
+          0.06488926131309421
+        ]
+      }
+    }
+  },
+  "tests": {
+    "rung2_5_on_record": {
+      "p1": 0.0660377358490566,
+      "p2": 0.03717472118959108,
+      "diff": -0.028863014659465523,
+      "z": -1.4434261790040164,
+      "p_value": 0.14890045390623285,
+      "significant_at_05": false,
+      "n1": 212,
+      "n2": 269,
+      "k1": 14,
+      "k2": 10,
+      "wilson1": [
+        0.039741371958147295,
+        0.10778106903317079
+      ],
+      "wilson2": [
+        0.020315739539514144,
+        0.067066357664667
+      ]
+    },
+    "D5_reproduced": {
+      "p1": 0.0660377358490566,
+      "p2": 0.03717472118959108,
+      "diff": -0.028863014659465523,
+      "z": -1.4434261790040164,
+      "p_value": 0.14890045390623285,
+      "significant_at_05": false,
+      "n1": 212,
+      "n2": 269,
+      "k1": 14,
+      "k2": 10,
+      "wilson1": [
+        0.039741371958147295,
+        0.10778106903317079
+      ],
+      "wilson2": [
+        0.020315739539514144,
+        0.067066357664667
+      ]
+    },
+    "D5s_pooled_8_seeds": {
+      "p1": 0.09778357235984354,
+      "p2": 0.05327156919513607,
+      "diff": -0.04451200316470747,
+      "z": -4.840298526505742,
+      "p_value": 1.2964423170558348e-06,
+      "significant_at_05": true,
+      "n1": 1534,
+      "n2": 1727,
+      "k1": 150,
+      "k2": 92,
+      "wilson1": [
+        0.08390931529964443,
+        0.11366726655576068
+      ],
+      "wilson2": [
+        0.043636830384931435,
+        0.06488926131309421
+      ]
+    },
+    "ladder_D0_prod_eval_greedy_maskonly_bucket>=0.6": {
+      "p1": 0.027472527472527472,
+      "p2": 0.08072916666666667,
+      "diff": 0.0532566391941392,
+      "z": 3.687840385043611,
+      "p_value": 0.0002261654410125047,
+      "significant_at_05": true,
+      "n1": 546,
+      "n2": 384,
+      "k1": 15,
+      "k2": 31,
+      "wilson1": [
+        0.016718157199419,
+        0.0448295095591947
+      ],
+      "wilson2": [
+        0.0574539506886641,
+        0.11230989836247007
+      ]
+    },
+    "ladder_D1_TRAINwindow_greedy_maskonly_bucket>=0.6": {
+      "p1": 0.017271157167530225,
+      "p2": 0.02425876010781671,
+      "diff": 0.006987602940286487,
+      "z": 0.7505240565578654,
+      "p_value": 0.45293914069499586,
+      "significant_at_05": false,
+      "n1": 579,
+      "n2": 371,
+      "k1": 10,
+      "k2": 9,
+      "wilson1": [
+        0.009407898598918928,
+        0.031497665886931515
+      ],
+      "wilson2": [
+        0.012814067685864652,
+        0.045454457216586724
+      ]
+    },
+    "ladder_D2_train_greedy_maskonly_risk>0.50": {
+      "p1": 0.01721170395869191,
+      "p2": 0.024128686327077747,
+      "diff": 0.006916982368385838,
+      "z": 0.7461922466837992,
+      "p_value": 0.4555512910718047,
+      "significant_at_05": false,
+      "n1": 581,
+      "n2": 373,
+      "k1": 10,
+      "k2": 9,
+      "wilson1": [
+        0.009375422814613723,
+        0.03139025567695684
+      ],
+      "wilson2": [
+        0.012745084612467539,
+        0.04521419339833115
+      ]
+    },
+    "ladder_D3_train_greedy_HASTASK_risk>0.50": {
+      "p1": 0.01721170395869191,
+      "p2": 0.024128686327077747,
+      "diff": 0.006916982368385838,
+      "z": 0.7461922466837992,
+      "p_value": 0.4555512910718047,
+      "significant_at_05": false,
+      "n1": 581,
+      "n2": 373,
+      "k1": 10,
+      "k2": 9,
+      "wilson1": [
+        0.009375422814613723,
+        0.03139025567695684
+      ],
+      "wilson2": [
+        0.012745084612467539,
+        0.04521419339833115
+      ]
+    },
+    "ladder_D4_train_STOCHASTIC_HASTASK_risk>0.50": {
+      "p1": 0.08652482269503546,
+      "p2": 0.08552631578947369,
+      "diff": -0.0009985069055617746,
+      "z": -0.06810761598622601,
+      "p_value": 0.945699967756541,
+      "significant_at_05": false,
+      "n1": 705,
+      "n2": 760,
+      "k1": 61,
+      "k2": 65,
+      "wilson1": [
+        0.06794836025797925,
+        0.10958281727768697
+      ],
+      "wilson2": [
+        0.06766881458175408,
+        0.10755270203678216
+      ]
+    },
+    "ladder_X_evalwindow_greedy_HASTASK_risk>0.50": {
+      "p1": 0.027422303473491772,
+      "p2": 0.08051948051948052,
+      "diff": 0.05309717704598875,
+      "z": 3.684746706913444,
+      "p_value": 0.00022893018933811682,
+      "significant_at_05": true,
+      "n1": 547,
+      "n2": 385,
+      "k1": 15,
+      "k2": 31,
+      "wilson1": [
+        0.016687467086288828,
+        0.04474846576819279
+      ],
+      "wilson2": [
+        0.05730317570180531,
+        0.11202408448984988
+      ]
+    }
+  },
+  "min_detectable_R2_share_at_rung2_5_n": 0.1455742291489558,
+  "ladder_source": "D:\\MY_GURL\\RESEARCH_PAPER\\DT-MARL-Healthcare\\python-ai\\saved_models\\marl\\SPRINT_7_RUNG2_75_edgeshare_main.json"
+}

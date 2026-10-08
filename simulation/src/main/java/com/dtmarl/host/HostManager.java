@@ -12,12 +12,32 @@ import java.util.List;
 
 public class HostManager {
 
+    /**
+     * Number of edge hosts. Raised from 3 to 10 so the failure dataset
+     * contains enough independent nodes for leave-one-node-out validation
+     * (with 3 nodes a single held-out node was a third of the data).
+     */
+    public static final int HOST_COUNT = 10;
+
+    private final int hostCount;
+
+    public HostManager() {
+        this(HOST_COUNT);
+    }
+
+    /** Creates a controlled physical host scale without changing R2 defaults. */
+    public HostManager(int hostCount) {
+        if (hostCount <= 0) {
+            throw new IllegalArgumentException("hostCount must be positive");
+        }
+        this.hostCount = hostCount;
+    }
+
     public List<Host> createHosts() {
 
         List<Host> hosts = new ArrayList<>();
 
-        // Create 3 Hosts
-        for (int hostId = 0; hostId < 3; hostId++) {
+        for (int hostId = 0; hostId < hostCount; hostId++) {
 
             List<Pe> peList = new ArrayList<>();
 

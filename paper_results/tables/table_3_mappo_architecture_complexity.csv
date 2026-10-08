@@ -1,0 +1,12 @@
+component,measure,value,unit,source,value_status
+actors,number of separate actors,10,count,mappo_config.json / run_mappo_train.log,documented
+actor,parameters per actor,23300,parameters,run_mappo_train.log,documented
+actor,parameters across actors,233000,parameters,run_mappo_train.log,documented
+critic,centralised critic parameters,194049,parameters,run_mappo_train.log,documented
+combined,relevant trainable parameters,427049,parameters,233000 + 194049,derived sum
+actor,hidden layers,"[128, 128]",layer widths,mappo_config.json,documented
+critic,hidden layers,"[256, 256]",layer widths,mappo_config.json,documented
+actor,actions per actor,4,actions,mappo_config.json / run_mappo_train.log,documented
+checkpoint,mappo.pth file size,5193039,bytes,mappo.pth,observed file size
+checkpoint,mappo_best.pth file size,5204954,bytes,mappo_best.pth,observed file size
+complexity,FLOPs,unavailable,,no completed artifact provides a FLOP measurement,not measured

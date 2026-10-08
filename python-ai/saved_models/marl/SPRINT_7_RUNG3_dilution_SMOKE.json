@@ -1,0 +1,942 @@
+{
+  "probe": "SPRINT_7_RUNG3_dilution",
+  "status": "OFFLINE DIAGNOSTIC. No training, no production modification, no weighting applied to any real update.",
+  "preregistration": {
+    "file": "SPRINT_7_RUNG3_PREREGISTRATION.md",
+    "md5": "972dc323bc4a8d98ca0c5ad3273540ad",
+    "note": "written and hash-pinned before this probe existed"
+  },
+  "hypothesis": "H2: the high-risk actor signal is a 3-6% minority whose correct direction is drowned by the ~95% low-risk bulk",
+  "two_hypotheses": {
+    "A": "g_hi CONTAINS useful direction -> cos(g_hi,g_synth) > 0 beating a cardinality-matched null",
+    "B": "g_hi is LARGE ENOUGH TO CONTROL the update -> ||g_hi||/||g_full|| and cos(g_full,g_lo); dilution requires A true and B false"
+  },
+  "decomposition": "g_full = g_hi + g_lo exactly (the PG is linear in A and both terms carry the same 1/D normaliser); asserted numerically per cell",
+  "scaling_convention": "g_full/g_hi/g_lo left on their NATURAL scale because mass IS the quantity under test; only synth is mass-matched, per the Rung 2.75 convention. cos(g_hi,g_synth) is UNCHANGED by that difference (scaling g_hi by a positive scalar leaves the cosine identical), so it is directly comparable to the coherence probe's published values; only ||g_hi|| differs, and the coherence probe never reported the natural-scale norm.",
+  "high_risk_rule": "risk > 0.5 (the coherence probe's HI_RISK, used for the gradient partition). n_highrisk_bucket_rule reports what the matched-states bucket rule (min(int(risk*5),4)>=3, i.e. risk>=0.6) would give; that rule is NOT used for the partition.",
+  "window_note": "OWN uses the TRAIN window and training_start_ticks (coherence-probe convention, and where training actually happened); RANDOM/UNION use the EVAL window and eval_starts (matched-states convention, where P1/P2 were scored). load_agent_and_cfg's window argument changes only cfg.env.start_frac_lo/hi.",
+  "counterfactual_caveat": "on RANDOM and UNION the actions come from a foreign behaviour policy, so the PPO ratio is not 1 and the gradient is counterfactual, not the production update. OWN is the only source where the vanilla-PG identity is exact.",
+  "state_set_verification": {
+    "RANDOM": {
+      "obs": true,
+      "mask": true,
+      "risk": true
+    },
+    "A0-greedy": {
+      "obs": true,
+      "mask": true,
+      "risk": true
+    },
+    "R2-greedy": {
+      "obs": true,
+      "mask": true,
+      "risk": true
+    },
+    "UNION": {
+      "obs": true,
+      "mask": true,
+      "risk": true
+    }
+  },
+  "provenance": "state sets from _diag_rung2_75_matched_states' own eval_starts/random_trajectory/trajectory/union_source; buffer from _diag_rung2_5_actor_stall.build_buffer_r2; gradient and mass matching from _diag_rung2_75_coherence. All imported unmodified. Recorded rollouts asserted bit-identical to the existing constructors on obs/mask/risk.",
+  "measurement": {
+    "episodes": 4,
+    "perms": 3,
+    "start_seed": 20260825,
+    "random_seed": 31337,
+    "weights": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "device": "cpu"
+  },
+  "union_delta_to_explain": {
+    "R2": 0.1579,
+    "R3": 0.1242,
+    "A0": 0.0191
+  },
+  "per_arm": {
+    "A0": {
+      "own_starts": [
+        158,
+        202,
+        32,
+        228
+      ],
+      "OWN": {
+        "source": "OWN",
+        "on_policy": true,
+        "ratio_is_one": true,
+        "counterfactual": false,
+        "window": "train",
+        "T": 1542,
+        "n_decision": 1703,
+        "n_highrisk": 135,
+        "n_lowrisk": 1568,
+        "n_highrisk_bucket_rule": 135,
+        "highrisk_frac_of_decision": 0.07927187316500293,
+        "exactness": {
+          "cached_vs_flat_pg_grad_rel": 0.0,
+          "additivity_rel": 1.3731772696701228e-07
+        },
+        "grad_norms": {
+          "full": 0.06591606885194778,
+          "hi": 0.01842830702662468,
+          "lo": 0.07446714490652084
+        },
+        "mass": {
+          "hi_over_full": 0.2795723007695738,
+          "lo_over_full": 1.129726729817268,
+          "hi_over_lo": 0.24746896164419718
+        },
+        "cosines": {
+          "full_vs_synth": 0.2328915148973465,
+          "hi_vs_synth": 0.3762770891189575,
+          "lo_vs_synth": 0.11303164064884186,
+          "hi_vs_lo": -0.5611363649368286,
+          "full_vs_lo": 0.9729204773902893,
+          "full_vs_hi": -0.35435065627098083,
+          "hi_vs_synth_CLOUD": 0.28514647483825684
+        },
+        "synth": {
+          "scale_edge": 3.647558943000854,
+          "scale_cloud": 3.691070092420004,
+          "n_edge_pos": 10,
+          "n_cloud_pos": 7,
+          "n_stay_neg": 118
+        },
+        "null_cardinality_matched": {
+          "n_draws": 3,
+          "subset_size": 135,
+          "cos_mean": 0.26450097436706227,
+          "cos_sd": 0.21849472189571909,
+          "cos_min": 0.03197052702307701,
+          "cos_max": 0.4655431807041168,
+          "cos_p95": 0.4485877841711044,
+          "z_cos": 0.5115735235253994,
+          "p_one_sided_cos": 0.3333333333333333,
+          "norm_mean": 0.02035989984869957,
+          "norm_sd": 0.005267748202539765,
+          "p_one_sided_norm": 0.6666666666666666,
+          "definition": "n_hi decision entries drawn uniformly from ALL decision entries, arm's own advantages kept on the drawn support; tests whether the HIGH-RISK SET is special versus an arbitrary set of the same cardinality"
+        },
+        "sensitivity": {
+          "1": {
+            "cos_vs_synth": 0.2328915148973465,
+            "cos_vs_baseline": 1.000067949295044,
+            "norm_ratio": 1.0,
+            "mass_share_hi": 0.2795723007695738
+          },
+          "2": {
+            "cos_vs_synth": 0.36039137840270996,
+            "cos_vs_baseline": 0.9604393839836121,
+            "norm_ratio": 0.938113936705849,
+            "mass_share_hi": 0.5960305882487604
+          },
+          "4": {
+            "cos_vs_synth": 0.5208085179328918,
+            "cos_vs_baseline": 0.6674060821533203,
+            "norm_ratio": 1.0531348955392752,
+            "mass_share_hi": 1.0618670104038823
+          },
+          "8": {
+            "cos_vs_synth": 0.522366464138031,
+            "cos_vs_baseline": 0.1652364730834961,
+            "norm_ratio": 1.8555336463170722,
+            "mass_share_hi": 1.2053558881003474
+          },
+          "16": {
+            "cos_vs_synth": 0.4582729637622833,
+            "cos_vs_baseline": -0.12297552824020386,
+            "norm_ratio": 3.95144716831099,
+            "mass_share_hi": 1.1320300188209755
+          }
+        },
+        "sensitivity_w_star": -1.2138681663841175,
+        "dots": {
+          "g_hi_dot_synth": 0.001305753248743713,
+          "g_lo_dot_synth": 0.0015850123018026352
+        }
+      },
+      "RANDOM": {
+        "source": "RANDOM",
+        "on_policy": false,
+        "ratio_is_one": false,
+        "counterfactual": true,
+        "window": "eval",
+        "T": 12715,
+        "n_decision": 4975,
+        "n_highrisk": 216,
+        "n_lowrisk": 4759,
+        "n_highrisk_bucket_rule": 216,
+        "highrisk_frac_of_decision": 0.043417085427135675,
+        "exactness": {
+          "cached_vs_flat_pg_grad_rel": 0.0,
+          "additivity_rel": 6.447238121154442e-08
+        },
+        "grad_norms": {
+          "full": 0.4683346450328827,
+          "hi": 0.05569225177168846,
+          "lo": 0.4532344937324524
+        },
+        "mass": {
+          "hi_over_full": 0.11891550702549071,
+          "lo_over_full": 0.9677577743594645,
+          "hi_over_lo": 0.12287734614604157
+        },
+        "cosines": {
+          "full_vs_synth": 0.15009847283363342,
+          "hi_vs_synth": 0.7829803228378296,
+          "lo_vs_synth": 0.05888884887099266,
+          "hi_vs_lo": 0.2142105996608734,
+          "full_vs_lo": 0.993290901184082,
+          "full_vs_hi": 0.3262246251106262,
+          "hi_vs_synth_CLOUD": 0.5281710624694824
+        },
+        "synth": {
+          "scale_edge": 5.012610157581561,
+          "scale_cloud": 6.577299133593752,
+          "n_edge_pos": 101,
+          "n_cloud_pos": 18,
+          "n_stay_neg": 97
+        },
+        "null_cardinality_matched": {
+          "n_draws": 3,
+          "subset_size": 216,
+          "cos_mean": 0.13879219442605972,
+          "cos_sd": 0.26163497449959106,
+          "cos_min": -0.09200530499219894,
+          "cos_max": 0.4230170249938965,
+          "cos_p95": 0.389251808822155,
+          "z_cos": 2.4621636676971748,
+          "p_one_sided_cos": 0.0,
+          "norm_mean": 0.03936266899108887,
+          "norm_sd": 0.003491396959644248,
+          "p_one_sided_norm": 0.0,
+          "definition": "n_hi decision entries drawn uniformly from ALL decision entries, arm's own advantages kept on the drawn support; tests whether the HIGH-RISK SET is special versus an arbitrary set of the same cardinality"
+        },
+        "sensitivity": {
+          "1": {
+            "cos_vs_synth": 0.15009847283363342,
+            "cos_vs_baseline": 1.0000580549240112,
+            "norm_ratio": 1.0,
+            "mass_share_hi": 0.11891550702549071
+          },
+          "2": {
+            "cos_vs_synth": 0.23276545107364655,
+            "cos_vs_baseline": 0.9942508935928345,
+            "norm_ratio": 1.0448583724426737,
+            "mass_share_hi": 0.22762033623272715
+          },
+          "4": {
+            "cos_vs_synth": 0.3682265281677246,
+            "cos_vs_baseline": 0.9573341012001038,
+            "norm_ratio": 1.1661943595115989,
+            "mass_share_hi": 0.4078754319315776
+          },
+          "8": {
+            "cos_vs_synth": 0.5362407565116882,
+            "cos_vs_baseline": 0.850386917591095,
+            "norm_ratio": 1.4953310921625436,
+            "mass_share_hi": 0.6361962652887285
+          },
+          "16": {
+            "cos_vs_synth": 0.668986976146698,
+            "cos_vs_baseline": 0.6842244267463684,
+            "norm_ratio": 2.312040895714033,
+            "mass_share_hi": 0.8229301289327983
+          }
+        },
+        "sensitivity_w_star": -0.612083138475249,
+        "dots": {
+          "g_hi_dot_synth": 0.024646244943141937,
+          "g_lo_dot_synth": 0.015085550956428051
+        }
+      },
+      "UNION": {
+        "source": "UNION",
+        "on_policy": false,
+        "ratio_is_one": false,
+        "counterfactual": true,
+        "window": "eval",
+        "T": 24521,
+        "n_decision": 74237,
+        "n_highrisk": 3597,
+        "n_lowrisk": 70640,
+        "n_highrisk_bucket_rule": 3592,
+        "highrisk_frac_of_decision": 0.04845292778533615,
+        "exactness": {
+          "cached_vs_flat_pg_grad_rel": 0.0,
+          "additivity_rel": 1.6115222933876794e-07
+        },
+        "grad_norms": {
+          "full": 0.3229253888130188,
+          "hi": 0.025454936549067497,
+          "lo": 0.30493056774139404
+        },
+        "mass": {
+          "hi_over_full": 0.07882606147083247,
+          "lo_over_full": 0.94427560763256,
+          "hi_over_lo": 0.08347781181011461
+        },
+        "cosines": {
+          "full_vs_synth": 0.07232416421175003,
+          "hi_vs_synth": 0.19500219821929932,
+          "lo_vs_synth": 0.06031382456421852,
+          "hi_vs_lo": 0.6860390901565552,
+          "full_vs_lo": 0.9984025955200195,
+          "full_vs_hi": 0.7266377210617065,
+          "hi_vs_synth_CLOUD": 0.2714705467224121
+        },
+        "synth": {
+          "scale_edge": 4.7294054766169635,
+          "scale_cloud": 4.6624569958779105,
+          "n_edge_pos": 182,
+          "n_cloud_pos": 278,
+          "n_stay_neg": 3137
+        },
+        "null_cardinality_matched": {
+          "n_draws": 3,
+          "subset_size": 3597,
+          "cos_mean": 0.07288893684744835,
+          "cos_sd": 0.012066287918607348,
+          "cos_min": 0.05974489077925682,
+          "cos_max": 0.08346356451511383,
+          "cos_p95": 0.08266304358839989,
+          "z_cos": 10.12020119158112,
+          "p_one_sided_cos": 0.0,
+          "norm_mean": 0.01602729658285777,
+          "norm_sd": 0.00018732742048622732,
+          "p_one_sided_norm": 0.0,
+          "definition": "n_hi decision entries drawn uniformly from ALL decision entries, arm's own advantages kept on the drawn support; tests whether the HIGH-RISK SET is special versus an arbitrary set of the same cardinality"
+        },
+        "sensitivity": {
+          "1": {
+            "cos_vs_synth": 0.07232417911291122,
+            "cos_vs_baseline": 1.000044822692871,
+            "norm_ratio": 1.0,
+            "mass_share_hi": 0.07882606147083247
+          },
+          "2": {
+            "cos_vs_synth": 0.08283592760562897,
+            "cos_vs_baseline": 0.9987329840660095,
+            "norm_ratio": 1.0586640601913437,
+            "mass_share_hi": 0.14891609989402188
+          },
+          "4": {
+            "cos_vs_synth": 0.10011374205350876,
+            "cos_vs_baseline": 0.9905701875686646,
+            "norm_ratio": 1.1830340753395896,
+            "mass_share_hi": 0.26652169405418175
+          },
+          "8": {
+            "cos_vs_synth": 0.12397199124097824,
+            "cos_vs_baseline": 0.965320885181427,
+            "norm_ratio": 1.4513200864780818,
+            "mass_share_hi": 0.4345068311546334
+          },
+          "16": {
+            "cos_vs_synth": 0.1492914855480194,
+            "cos_vs_baseline": 0.9163781404495239,
+            "norm_ratio": 2.0288702642350964,
+            "mass_share_hi": 0.6216351068700838
+          }
+        },
+        "sensitivity_w_star": -3.705154191012475,
+        "dots": {
+          "g_hi_dot_synth": 0.0010872480925172567,
+          "g_lo_dot_synth": 0.004028421826660633
+        }
+      }
+    },
+    "R2": {
+      "own_starts": [
+        158,
+        202,
+        32,
+        228
+      ],
+      "OWN": {
+        "source": "OWN",
+        "on_policy": true,
+        "ratio_is_one": true,
+        "counterfactual": false,
+        "window": "train",
+        "T": 1600,
+        "n_decision": 2427,
+        "n_highrisk": 180,
+        "n_lowrisk": 2247,
+        "n_highrisk_bucket_rule": 180,
+        "highrisk_frac_of_decision": 0.07416563658838071,
+        "exactness": {
+          "cached_vs_flat_pg_grad_rel": 0.0,
+          "additivity_rel": 9.758152685890309e-08
+        },
+        "grad_norms": {
+          "full": 0.04171270877122879,
+          "hi": 0.015816012397408485,
+          "lo": 0.04463671147823334
+        },
+        "mass": {
+          "hi_over_full": 0.379165315878923,
+          "lo_over_full": 1.0700986052725823,
+          "hi_over_lo": 0.3543274554426128
+        },
+        "cosines": {
+          "full_vs_synth": 0.005244037602096796,
+          "hi_vs_synth": 0.767113983631134,
+          "lo_vs_synth": -0.26690948009490967,
+          "hi_vs_lo": -0.35599756240844727,
+          "full_vs_lo": 0.9351840615272522,
+          "full_vs_hi": -0.001777698751538992,
+          "hi_vs_synth_CLOUD": 0.6035536527633667
+        },
+        "synth": {
+          "scale_edge": 3.846918212062934,
+          "scale_cloud": 3.756389950657889,
+          "n_edge_pos": 8,
+          "n_cloud_pos": 16,
+          "n_stay_neg": 156
+        },
+        "null_cardinality_matched": {
+          "n_draws": 3,
+          "subset_size": 180,
+          "cos_mean": 0.3034061808139086,
+          "cos_sd": 0.3267705279898115,
+          "cos_min": -0.014910632744431496,
+          "cos_max": 0.6380205154418945,
+          "cos_p95": 0.6029293298721313,
+          "z_cos": 1.419062501351663,
+          "p_one_sided_cos": 0.0,
+          "norm_mean": 0.014079178993900618,
+          "norm_sd": 0.0009444579946848704,
+          "p_one_sided_norm": 0.0,
+          "definition": "n_hi decision entries drawn uniformly from ALL decision entries, arm's own advantages kept on the drawn support; tests whether the HIGH-RISK SET is special versus an arbitrary set of the same cardinality"
+        },
+        "sensitivity": {
+          "1": {
+            "cos_vs_synth": 0.005244037602096796,
+            "cos_vs_baseline": 1.000064730644226,
+            "norm_ratio": 1.0,
+            "mass_share_hi": 0.379165315878923
+          },
+          "2": {
+            "cos_vs_synth": 0.27703607082366943,
+            "cos_vs_baseline": 0.9350242018699646,
+            "norm_ratio": 1.0688398050578851,
+            "mass_share_hi": 0.7094895120572133
+          },
+          "4": {
+            "cos_vs_synth": 0.5801100134849548,
+            "cos_vs_baseline": 0.6595495939254761,
+            "norm_ratio": 1.5132189651492296,
+            "mass_share_hi": 1.0022748184140837
+          },
+          "8": {
+            "cos_vs_synth": 0.7201310396194458,
+            "cos_vs_baseline": 0.3511413335800171,
+            "norm_ratio": 2.8346032077748218,
+            "mass_share_hi": 1.0701048099824024
+          },
+          "16": {
+            "cos_vs_synth": 0.7566698789596558,
+            "cos_vs_baseline": 0.17148226499557495,
+            "norm_ratio": 5.772913334351448,
+            "mass_share_hi": 1.0508810201538075
+          }
+        },
+        "sensitivity_w_star": 0.9819724523554522,
+        "dots": {
+          "g_hi_dot_synth": 0.001294581452384591,
+          "g_lo_dot_synth": -0.00127124332357198
+        }
+      },
+      "RANDOM": {
+        "source": "RANDOM",
+        "on_policy": false,
+        "ratio_is_one": false,
+        "counterfactual": true,
+        "window": "eval",
+        "T": 12715,
+        "n_decision": 4975,
+        "n_highrisk": 216,
+        "n_lowrisk": 4759,
+        "n_highrisk_bucket_rule": 216,
+        "highrisk_frac_of_decision": 0.043417085427135675,
+        "exactness": {
+          "cached_vs_flat_pg_grad_rel": 0.0,
+          "additivity_rel": 5.134723224387017e-08
+        },
+        "grad_norms": {
+          "full": 0.9437820315361023,
+          "hi": 0.03888705372810364,
+          "lo": 0.9361120462417603
+        },
+        "mass": {
+          "hi_over_full": 0.04120342666919708,
+          "lo_over_full": 0.9918731390956254,
+          "hi_over_lo": 0.04154102479956835
+        },
+        "cosines": {
+          "full_vs_synth": -0.07784746587276459,
+          "hi_vs_synth": 0.8111634850502014,
+          "lo_vs_synth": -0.11218179017305374,
+          "hi_vs_lo": 0.17732460796833038,
+          "full_vs_lo": 0.9992201924324036,
+          "full_vs_hi": 0.21708796918392181,
+          "hi_vs_synth_CLOUD": 0.703521192073822
+        },
+        "synth": {
+          "scale_edge": 5.012610157581561,
+          "scale_cloud": 6.577299133593752,
+          "n_edge_pos": 101,
+          "n_cloud_pos": 18,
+          "n_stay_neg": 97
+        },
+        "null_cardinality_matched": {
+          "n_draws": 3,
+          "subset_size": 216,
+          "cos_mean": -0.031303671499093376,
+          "cos_sd": 0.06424187461853093,
+          "cos_min": -0.08160509169101715,
+          "cos_max": 0.041062965989112854,
+          "cos_p95": 0.031619780510663976,
+          "z_cos": 13.113987746339527,
+          "p_one_sided_cos": 0.0,
+          "norm_mean": 0.05612169081966082,
+          "norm_sd": 0.010566616423269077,
+          "p_one_sided_norm": 1.0,
+          "definition": "n_hi decision entries drawn uniformly from ALL decision entries, arm's own advantages kept on the drawn support; tests whether the HIGH-RISK SET is special versus an arbitrary set of the same cardinality"
+        },
+        "sensitivity": {
+          "1": {
+            "cos_vs_synth": -0.07784746587276459,
+            "cos_vs_baseline": 1.0000433921813965,
+            "norm_ratio": 1.0,
+            "mass_share_hi": 0.04120342666919708
+          },
+          "2": {
+            "cos_vs_synth": -0.04399612545967102,
+            "cos_vs_baseline": 0.9992520213127136,
+            "norm_ratio": 1.0097434418958908,
+            "mass_share_hi": 0.08161167472765889
+          },
+          "4": {
+            "cos_vs_synth": 0.021685469895601273,
+            "cos_vs_baseline": 0.9932109117507935,
+            "norm_ratio": 1.0338971083491983,
+            "mass_share_hi": 0.15941016310602016
+          },
+          "8": {
+            "cos_vs_synth": 0.14201383292675018,
+            "cos_vs_baseline": 0.9666954278945923,
+            "norm_ratio": 1.0992678745499804,
+            "mass_share_hi": 0.2998608628388416
+          },
+          "16": {
+            "cos_vs_synth": 0.32965710759162903,
+            "cos_vs_baseline": 0.8829015493392944,
+            "norm_ratio": 1.2846458909557799,
+            "mass_share_hi": 0.5131801933501426
+          }
+        },
+        "sensitivity_w_star": 3.329176028150268,
+        "dots": {
+          "g_hi_dot_synth": 0.01349217165261507,
+          "g_lo_dot_synth": -0.044917814433574677
+        }
+      },
+      "UNION": {
+        "source": "UNION",
+        "on_policy": false,
+        "ratio_is_one": false,
+        "counterfactual": true,
+        "window": "eval",
+        "T": 24521,
+        "n_decision": 74237,
+        "n_highrisk": 3597,
+        "n_lowrisk": 70640,
+        "n_highrisk_bucket_rule": 3592,
+        "highrisk_frac_of_decision": 0.04845292778533615,
+        "exactness": {
+          "cached_vs_flat_pg_grad_rel": 0.0,
+          "additivity_rel": 2.68328022912101e-07
+        },
+        "grad_norms": {
+          "full": 0.07945382595062256,
+          "hi": 0.027644289657473564,
+          "lo": 0.08370046317577362
+        },
+        "mass": {
+          "hi_over_full": 0.347928993056337,
+          "lo_over_full": 1.0534478632632516,
+          "hi_over_lo": 0.33027642391201206
+        },
+        "cosines": {
+          "full_vs_synth": -0.14394624531269073,
+          "hi_vs_synth": 0.9082150459289551,
+          "lo_vs_synth": -0.43660497665405273,
+          "hi_vs_lo": -0.31486889719963074,
+          "full_vs_lo": 0.9439257979393005,
+          "full_vs_hi": 0.016240319237113,
+          "hi_vs_synth_CLOUD": 0.9248435497283936
+        },
+        "synth": {
+          "scale_edge": 4.729404946896887,
+          "scale_cloud": 4.66245647365644,
+          "n_edge_pos": 182,
+          "n_cloud_pos": 278,
+          "n_stay_neg": 3137
+        },
+        "null_cardinality_matched": {
+          "n_draws": 3,
+          "subset_size": 3597,
+          "cos_mean": -0.17095823834339777,
+          "cos_sd": 0.11907976851714415,
+          "cos_min": -0.3074355125427246,
+          "cos_max": -0.08821248263120651,
+          "cos_p95": -0.09111390635371208,
+          "z_cos": 9.062608180305475,
+          "p_one_sided_cos": 0.0,
+          "norm_mean": 0.003946265593792002,
+          "norm_sd": 0.0001754259860684998,
+          "p_one_sided_norm": 0.0,
+          "definition": "n_hi decision entries drawn uniformly from ALL decision entries, arm's own advantages kept on the drawn support; tests whether the HIGH-RISK SET is special versus an arbitrary set of the same cardinality"
+        },
+        "sensitivity": {
+          "1": {
+            "cos_vs_synth": -0.14394623041152954,
+            "cos_vs_baseline": 1.000026822090149,
+            "norm_ratio": 1.0,
+            "mass_share_hi": 0.347928993056337
+          },
+          "2": {
+            "cos_vs_synth": 0.16168081760406494,
+            "cos_vs_baseline": 0.9450774192810059,
+            "norm_ratio": 1.0641217946698234,
+            "mass_share_hi": 0.6539270124888151
+          },
+          "4": {
+            "cos_vs_synth": 0.5517757534980774,
+            "cos_vs_baseline": 0.6979084610939026,
+            "norm_ratio": 1.4571800258661949,
+            "mass_share_hi": 0.9550748346266049
+          },
+          "8": {
+            "cos_vs_synth": 0.7810385823249817,
+            "cos_vs_baseline": 0.3926243484020233,
+            "norm_ratio": 2.6477741419069867,
+            "mass_share_hi": 1.051234657970489
+          },
+          "16": {
+            "cos_vs_synth": 0.8623194694519043,
+            "cos_vs_baseline": 0.20353290438652039,
+            "norm_ratio": 5.329775231167865,
+            "mass_share_hi": 1.0444838004325327
+          }
+        },
+        "sensitivity_w_star": 1.4555341715337196,
+        "dots": {
+          "g_hi_dot_synth": 0.00652703270316124,
+          "g_lo_dot_synth": -0.009500319138169289
+        }
+      }
+    },
+    "R3": {
+      "own_starts": [
+        158,
+        202,
+        32,
+        228
+      ],
+      "OWN": {
+        "source": "OWN",
+        "on_policy": true,
+        "ratio_is_one": true,
+        "counterfactual": false,
+        "window": "train",
+        "T": 1565,
+        "n_decision": 2393,
+        "n_highrisk": 106,
+        "n_lowrisk": 2287,
+        "n_highrisk_bucket_rule": 106,
+        "highrisk_frac_of_decision": 0.0442958629335562,
+        "exactness": {
+          "cached_vs_flat_pg_grad_rel": 0.0,
+          "additivity_rel": 9.360745423236949e-08
+        },
+        "grad_norms": {
+          "full": 0.05417656525969505,
+          "hi": 0.012302044779062271,
+          "lo": 0.060403451323509216
+        },
+        "mass": {
+          "hi_over_full": 0.22707317675257727,
+          "lo_over_full": 1.1149368926207415,
+          "hi_over_lo": 0.2036646004410393
+        },
+        "cosines": {
+          "full_vs_synth": -0.6793904304504395,
+          "hi_vs_synth": 0.3598543107509613,
+          "lo_vs_synth": -0.6826428771018982,
+          "hi_vs_lo": -0.5819202065467834,
+          "full_vs_lo": 0.9828535914421082,
+          "full_vs_hi": -0.42171725630760193,
+          "hi_vs_synth_CLOUD": -0.1997336894273758
+        },
+        "synth": {
+          "scale_edge": 4.992702579982977,
+          "scale_cloud": 4.966900468235767,
+          "n_edge_pos": 9,
+          "n_cloud_pos": 10,
+          "n_stay_neg": 87
+        },
+        "null_cardinality_matched": {
+          "n_draws": 3,
+          "subset_size": 106,
+          "cos_mean": -0.1569924702246984,
+          "cos_sd": 0.16739773477946962,
+          "cos_min": -0.28885510563850403,
+          "cos_max": 0.031336501240730286,
+          "cos_p95": 0.006856970489025095,
+          "z_cos": 3.0875374846413277,
+          "p_one_sided_cos": 0.0,
+          "norm_mean": 0.012719210237264633,
+          "norm_sd": 0.0017510908733917312,
+          "p_one_sided_norm": 0.6666666666666666,
+          "definition": "n_hi decision entries drawn uniformly from ALL decision entries, arm's own advantages kept on the drawn support; tests whether the HIGH-RISK SET is special versus an arbitrary set of the same cardinality"
+        },
+        "sensitivity": {
+          "1": {
+            "cos_vs_synth": -0.6793904304504395,
+            "cos_vs_baseline": 1.000058889389038,
+            "norm_ratio": 1.0,
+            "mass_share_hi": 0.22707317675257727
+          },
+          "2": {
+            "cos_vs_synth": -0.6444721817970276,
+            "cos_vs_baseline": 0.9751002192497253,
+            "norm_ratio": 0.9273901903133424,
+            "mass_share_hi": 0.48970364173434877
+          },
+          "4": {
+            "cos_vs_synth": -0.4604290723800659,
+            "cos_vs_baseline": 0.755746603012085,
+            "norm_ratio": 0.94314322627705,
+            "mass_share_hi": 0.9630485399292857
+          },
+          "8": {
+            "cos_vs_synth": -0.07264012098312378,
+            "cos_vs_baseline": 0.22302156686782837,
+            "norm_ratio": 1.4784862535430492,
+            "mass_share_hi": 1.2286792722403383
+          },
+          "16": {
+            "cos_vs_synth": 0.1751503050327301,
+            "cos_vs_baseline": -0.13989725708961487,
+            "norm_ratio": 3.119085580596622,
+            "mass_share_hi": 1.1648192183769062
+          }
+        },
+        "sensitivity_w_star": 9.31432266403988,
+        "dots": {
+          "g_hi_dot_synth": 0.0004669696500059217,
+          "g_lo_dot_synth": -0.004349505994468927
+        }
+      },
+      "RANDOM": {
+        "source": "RANDOM",
+        "on_policy": false,
+        "ratio_is_one": false,
+        "counterfactual": true,
+        "window": "eval",
+        "T": 12715,
+        "n_decision": 4975,
+        "n_highrisk": 216,
+        "n_lowrisk": 4759,
+        "n_highrisk_bucket_rule": 216,
+        "highrisk_frac_of_decision": 0.043417085427135675,
+        "exactness": {
+          "cached_vs_flat_pg_grad_rel": 0.0,
+          "additivity_rel": 2.4175200508125272e-08
+        },
+        "grad_norms": {
+          "full": 0.8260937929153442,
+          "hi": 0.03170303627848625,
+          "lo": 0.8229738473892212
+        },
+        "mass": {
+          "hi_over_full": 0.0383770421111675,
+          "lo_over_full": 0.9962232550917584,
+          "hi_over_lo": 0.03852253188732554
+        },
+        "cosines": {
+          "full_vs_synth": -0.007958224974572659,
+          "hi_vs_synth": 0.5652426481246948,
+          "lo_vs_synth": -0.02976297214627266,
+          "hi_vs_lo": 0.07933955639600754,
+          "full_vs_lo": 0.9993664622306824,
+          "full_vs_hi": 0.11741837114095688,
+          "hi_vs_synth_CLOUD": 0.8223760724067688
+        },
+        "synth": {
+          "scale_edge": 5.012610699779027,
+          "scale_cloud": 6.577299845038452,
+          "n_edge_pos": 101,
+          "n_cloud_pos": 18,
+          "n_stay_neg": 97
+        },
+        "null_cardinality_matched": {
+          "n_draws": 3,
+          "subset_size": 216,
+          "cos_mean": -0.030593836059172947,
+          "cos_sd": 0.1030784860855842,
+          "cos_min": -0.13245835900306702,
+          "cos_max": 0.07365716993808746,
+          "cos_p95": 0.06299342103302477,
+          "z_cos": 5.780415553340156,
+          "p_one_sided_cos": 0.0,
+          "norm_mean": 0.048867180943489075,
+          "norm_sd": 0.009204631721664072,
+          "p_one_sided_norm": 1.0,
+          "definition": "n_hi decision entries drawn uniformly from ALL decision entries, arm's own advantages kept on the drawn support; tests whether the HIGH-RISK SET is special versus an arbitrary set of the same cardinality"
+        },
+        "sensitivity": {
+          "1": {
+            "cos_vs_synth": -0.007958224974572659,
+            "cos_vs_baseline": 1.0000983476638794,
+            "norm_ratio": 1.0,
+            "mass_share_hi": 0.0383770421111675
+          },
+          "2": {
+            "cos_vs_synth": 0.013662604615092278,
+            "cos_vs_baseline": 0.9993777275085449,
+            "norm_ratio": 1.005230038426922,
+            "mass_share_hi": 0.07635474596685052
+          },
+          "4": {
+            "cos_vs_synth": 0.056001510471105576,
+            "cos_vs_baseline": 0.9937917590141296,
+            "norm_ratio": 1.0199493432472646,
+            "mass_share_hi": 0.15050567899376086
+          },
+          "8": {
+            "cos_vs_synth": 0.1350444257259369,
+            "cos_vs_baseline": 0.968235433101654,
+            "norm_ratio": 1.0654865950231875,
+            "mass_share_hi": 0.28814659736067216
+          },
+          "16": {
+            "cos_vs_synth": 0.26211586594581604,
+            "cos_vs_baseline": 0.8816489577293396,
+            "norm_ratio": 1.2110164583939713,
+            "mass_share_hi": 0.5070390823531823
+          }
+        },
+        "sensitivity_w_star": 1.3668678453943421,
+        "dots": {
+          "g_hi_dot_synth": 0.006790454499423504,
+          "g_lo_dot_synth": -0.00928165391087532
+        }
+      },
+      "UNION": {
+        "source": "UNION",
+        "on_policy": false,
+        "ratio_is_one": false,
+        "counterfactual": true,
+        "window": "eval",
+        "T": 24521,
+        "n_decision": 74237,
+        "n_highrisk": 3597,
+        "n_lowrisk": 70640,
+        "n_highrisk_bucket_rule": 3592,
+        "highrisk_frac_of_decision": 0.04845292778533615,
+        "exactness": {
+          "cached_vs_flat_pg_grad_rel": 0.0,
+          "additivity_rel": 1.420939241825181e-07
+        },
+        "grad_norms": {
+          "full": 0.31238460540771484,
+          "hi": 0.023532498627901077,
+          "lo": 0.29805341362953186
+        },
+        "mass": {
+          "hi_over_full": 0.07533181283753461,
+          "lo_over_full": 0.9541232457358827,
+          "hi_over_lo": 0.07895396446339986
+        },
+        "cosines": {
+          "full_vs_synth": -0.13789480924606323,
+          "hi_vs_synth": 0.20726464688777924,
+          "lo_vs_synth": -0.16088952124118805,
+          "hi_vs_lo": 0.5841462016105652,
+          "full_vs_lo": 0.9981839060783386,
+          "full_vs_hi": 0.6326810121536255,
+          "hi_vs_synth_CLOUD": 0.203083336353302
+        },
+        "synth": {
+          "scale_edge": 4.729406006337041,
+          "scale_cloud": 4.66245751809938,
+          "n_edge_pos": 182,
+          "n_cloud_pos": 278,
+          "n_stay_neg": 3137
+        },
+        "null_cardinality_matched": {
+          "n_draws": 3,
+          "subset_size": 3597,
+          "cos_mean": -0.14055867741505304,
+          "cos_sd": 0.01638445783056071,
+          "cos_min": -0.15684249997138977,
+          "cos_max": -0.12407540529966354,
+          "cos_p95": -0.12574367746710777,
+          "z_cos": 21.228857732116307,
+          "p_one_sided_cos": 0.0,
+          "norm_mean": 0.015910785645246506,
+          "norm_sd": 0.0007981347062145346,
+          "p_one_sided_norm": 0.0,
+          "definition": "n_hi decision entries drawn uniformly from ALL decision entries, arm's own advantages kept on the drawn support; tests whether the HIGH-RISK SET is special versus an arbitrary set of the same cardinality"
+        },
+        "sensitivity": {
+          "1": {
+            "cos_vs_synth": -0.13789480924606323,
+            "cos_vs_baseline": 1.0000512599945068,
+            "norm_ratio": 1.0,
+            "mass_share_hi": 0.07533181283753461
+          },
+          "2": {
+            "cos_vs_synth": -0.11653757095336914,
+            "cos_vs_baseline": 0.9985010027885437,
+            "norm_ratio": 1.0492853959134079,
+            "mass_share_hi": 0.14358688900260144
+          },
+          "4": {
+            "cos_vs_synth": -0.07874587923288345,
+            "cos_vs_baseline": 0.9885269403457642,
+            "norm_ratio": 1.1563005634099506,
+            "mass_share_hi": 0.26059595652320633
+          },
+          "8": {
+            "cos_vs_synth": -0.020505240187048912,
+            "cos_vs_baseline": 0.9562245607376099,
+            "norm_ratio": 1.3947340402797663,
+            "mass_share_hi": 0.43209277560859694
+          },
+          "16": {
+            "cos_vs_synth": 0.05002455413341522,
+            "cos_vs_baseline": 0.8907756209373474,
+            "norm_ratio": 1.9252510616408036,
+            "mass_share_hi": 0.6260528974196872
+          }
+        },
+        "sensitivity_w_star": 9.83169905367046,
+        "dots": {
+          "g_hi_dot_synth": 0.0009942047763615847,
+          "g_lo_dot_synth": -0.009774722158908844
+        }
+      }
+    }
+  }
+}

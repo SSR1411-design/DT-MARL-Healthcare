@@ -1,0 +1,2505 @@
+=================================
+DT-MARL Healthcare Framework
+=================================
+Host 0 created successfully!
+Host 1 created successfully!
+Host 2 created successfully!
+Host 3 created successfully!
+Host 4 created successfully!
+Host 5 created successfully!
+Host 6 created successfully!
+Host 7 created successfully!
+Host 8 created successfully!
+Host 9 created successfully!
+Digital Twin mirrored 10 edge node(s).
+Digital Twin mirrored 10 network link(s).
+Digital Twin mirrored 10 IoMT device(s).
+Host 0 degradation profile: susceptibility=0.92
+Host 1 degradation profile: susceptibility=1.02
+Host 2 degradation profile: susceptibility=1.62
+Host 3 degradation profile: susceptibility=1.71
+Host 4 degradation profile: susceptibility=0.85
+Host 5 degradation profile: susceptibility=0.67
+Host 6 degradation profile: susceptibility=1.71
+Host 7 degradation profile: susceptibility=1.59
+Host 8 degradation profile: susceptibility=1.40
+Host 9 degradation profile: susceptibility=1.52
+HostDegradationManager ready for 10 host(s) (seed=20260820)
+Scheduled cyber-attack: Node 0 attacked from t=25.0s for 5.0s
+Scheduled cyber-attack: Node 7 attacked from t=410.0s for 8.0s
+Scheduled device dropout: Device 3 will drop out at t=12.0s
+Scheduled sensor fault: Device 5 will fault at t=20.0s
+Battery drain enabled at 1.5 % per tick per device.
+VM 0 created successfully!
+VM 1 created successfully!
+VM 2 created successfully!
+VM 3 created successfully!
+VM 4 created successfully!
+VM 5 created successfully!
+VM 6 created successfully!
+VM 7 created successfully!
+VM 8 created successfully!
+VM 9 created successfully!
+VM 10 created successfully!
+VM 11 created successfully!
+VM 12 created successfully!
+VM 13 created successfully!
+VM 14 created successfully!
+VM 15 created successfully!
+VM 16 created successfully!
+VM 17 created successfully!
+VM 18 created successfully!
+VM 19 created successfully!
+Healthcare Task 0 created successfully! (patient=0, priority=0.448)
+Healthcare Task 1 created successfully! (patient=1, priority=0.495)
+Healthcare Task 2 created successfully! (patient=2, priority=0.542)
+Healthcare Task 3 created successfully! (patient=3, priority=0.589)
+Healthcare Task 4 created successfully! (patient=4, priority=0.634)
+Healthcare Task 5 created successfully! (patient=5, priority=0.679)
+Healthcare Task 6 created successfully! (patient=6, priority=0.724)
+Healthcare Task 7 created successfully! (patient=7, priority=0.767)
+Healthcare Task 8 created successfully! (patient=8, priority=0.811)
+Healthcare Task 9 created successfully! (patient=9, priority=0.853)
+Healthcare Task 10 created successfully! (patient=0, priority=0.421)
+Healthcare Task 11 created successfully! (patient=1, priority=0.466)
+Healthcare Task 12 created successfully! (patient=2, priority=0.510)
+Healthcare Task 13 created successfully! (patient=3, priority=0.553)
+Healthcare Task 14 created successfully! (patient=4, priority=0.595)
+Healthcare Task 15 created successfully! (patient=5, priority=0.637)
+Healthcare Task 16 created successfully! (patient=6, priority=0.679)
+Healthcare Task 17 created successfully! (patient=7, priority=0.720)
+Healthcare Task 18 created successfully! (patient=8, priority=0.760)
+Healthcare Task 19 created successfully! (patient=9, priority=0.800)
+Healthcare Task 20 created successfully! (patient=0, priority=0.395)
+Healthcare Task 21 created successfully! (patient=1, priority=0.436)
+Healthcare Task 22 created successfully! (patient=2, priority=0.477)
+Healthcare Task 23 created successfully! (patient=3, priority=0.517)
+Healthcare Task 24 created successfully! (patient=4, priority=0.557)
+Healthcare Task 25 created successfully! (patient=5, priority=0.596)
+Healthcare Task 26 created successfully! (patient=6, priority=0.634)
+Healthcare Task 27 created successfully! (patient=7, priority=0.672)
+Healthcare Task 28 created successfully! (patient=8, priority=0.709)
+Healthcare Task 29 created successfully! (patient=9, priority=0.746)
+Healthcare Task 30 created successfully! (patient=0, priority=0.368)
+Healthcare Task 31 created successfully! (patient=1, priority=0.406)
+Healthcare Task 32 created successfully! (patient=2, priority=0.444)
+Healthcare Task 33 created successfully! (patient=3, priority=0.482)
+Healthcare Task 34 created successfully! (patient=4, priority=0.518)
+Healthcare Task 35 created successfully! (patient=5, priority=0.554)
+Healthcare Task 36 created successfully! (patient=6, priority=0.590)
+Healthcare Task 37 created successfully! (patient=7, priority=0.624)
+Healthcare Task 38 created successfully! (patient=8, priority=0.659)
+Healthcare Task 39 created successfully! (patient=9, priority=0.692)
+Digital Twin mirrored 40 healthcare task(s).
+Infrastructure Created Successfully!
+Digital Twin synchronized with 10 host(s).
+
+@@@ DEVICE FAILURE @@@ [DEVICE_DROPOUT] Node 8 at t=0.10s (cause=RANDOM, cpu=98.5%) [mode=DROPOUT]
+
+[t=0s] up=10/10  failed=[]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=2.10] Host 0 developed POWER_SUPPLY_INSTABILITY (severity=1.49)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+@@@ DEVICE FAILURE @@@ [DEVICE_DROPOUT] Node 3 at t=12.10s (cause=SCHEDULED, cpu=80.5%) [mode=DROPOUT]
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+@@@ DEVICE FAILURE @@@ [DEVICE_SENSOR_FAULT] Node 5 at t=20.10s (cause=SCHEDULED, cpu=68.5%) [mode=SENSOR_FAULT]
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+!!! CYBER ATTACK DETECTED !!! [CYBER_ATTACK_START] Node 0 at t=25.10s (cause=ATTACK, cpu=0.0%)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=28.10] Host 2 developed POWER_SUPPLY_INSTABILITY (severity=1.17)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+!!! ATTACK ENDED !!! [CYBER_ATTACK_END] Node 0 at t=30.10s (cause=ATTACK, cpu=0.0%)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=38.10] Host 9 developed DISK_IO_SATURATION (severity=1.55)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+@@@ DEVICE FAILURE @@@ [DEVICE_DROPOUT] Node 1 at t=41.10s (cause=RANDOM, cpu=37.0%) [mode=DROPOUT]
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=45.10] Host 8 developed NIC_DEGRADATION (severity=1.61)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+@@@ DEVICE FAILURE @@@ [DEVICE_BATTERY_DEPLETED] Node 0 at t=66.10s (cause=SYSTEM, cpu=0.0%) [mode=BATTERY_DEPLETED]
+
+
+@@@ DEVICE FAILURE @@@ [DEVICE_BATTERY_DEPLETED] Node 2 at t=66.10s (cause=SYSTEM, cpu=0.0%) [mode=BATTERY_DEPLETED]
+
+
+@@@ DEVICE FAILURE @@@ [DEVICE_BATTERY_DEPLETED] Node 4 at t=66.10s (cause=SYSTEM, cpu=0.0%) [mode=BATTERY_DEPLETED]
+
+
+@@@ DEVICE FAILURE @@@ [DEVICE_BATTERY_DEPLETED] Node 6 at t=66.10s (cause=SYSTEM, cpu=0.0%) [mode=BATTERY_DEPLETED]
+
+
+@@@ DEVICE FAILURE @@@ [DEVICE_BATTERY_DEPLETED] Node 7 at t=66.10s (cause=SYSTEM, cpu=0.0%) [mode=BATTERY_DEPLETED]
+
+
+@@@ DEVICE FAILURE @@@ [DEVICE_BATTERY_DEPLETED] Node 9 at t=66.10s (cause=SYSTEM, cpu=0.0%) [mode=BATTERY_DEPLETED]
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 2 at t=77.10 (mechanism=POWER_SUPPLY_INSTABILITY, wear=1.000, severity=1.17, observable degradation lead=36.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 0 at t=79.10 (mechanism=POWER_SUPPLY_INSTABILITY, wear=1.000, severity=1.49, observable degradation lead=60.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 9 at t=81.10 (mechanism=DISK_IO_SATURATION, wear=1.000, severity=1.55, observable degradation lead=35.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 8 at t=92.10 (mechanism=NIC_DEGRADATION, wear=1.000, severity=1.61, observable degradation lead=36.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=100s] up=6/10  failed=[0, 2, 8, 9]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 2 back online at t=104.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=106.10] Host 6 developed DISK_IO_SATURATION (severity=0.55)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 0 back online at t=108.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=113.10] Host 2 developed NIC_DEGRADATION (severity=0.52)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 9 back online at t=118.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=120.10] Host 9 developed DISK_IO_SATURATION (severity=1.19)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 8 back online at t=123.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 9 at t=157.10 (mechanism=DISK_IO_SATURATION, wear=1.000, severity=1.19, observable degradation lead=37.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=186.10] Host 8 developed DISK_IO_SATURATION (severity=0.95)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=200.10] Host 0 developed THERMAL_THROTTLING (severity=1.01)
+[t=200s] up=9/10  failed=[9]
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 9 back online at t=201.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 2 at t=203.10 (mechanism=NIC_DEGRADATION, wear=1.000, severity=0.52, observable degradation lead=90.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 6 at t=207.10 (mechanism=DISK_IO_SATURATION, wear=1.000, severity=0.55, observable degradation lead=77.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 2 back online at t=239.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 8 at t=240.10 (mechanism=DISK_IO_SATURATION, wear=1.000, severity=0.95, observable degradation lead=54.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 6 back online at t=243.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+>>> OVERLOAD START >>> [OVERLOAD_START] Node 0 at t=249.10s (cause=SYSTEM, cpu=90.27420638110783%)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 8 back online at t=253.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+<<< OVERLOAD END <<< [OVERLOAD_END] Node 0 at t=257.10s (cause=SYSTEM, cpu=89.8445108097319%)
+
+Digital Twin synchronized with 10 host(s).
+
+>>> OVERLOAD START >>> [OVERLOAD_START] Node 0 at t=258.10s (cause=SYSTEM, cpu=95.3389765120338%)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 0 at t=277.10 (mechanism=THERMAL_THROTTLING, wear=1.000, severity=1.01, observable degradation lead=77.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=300s] up=9/10  failed=[0]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 0 back online at t=309.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=340.10] Host 7 developed POWER_SUPPLY_INSTABILITY (severity=1.45)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 7 at t=375.10 (mechanism=POWER_SUPPLY_INSTABILITY, wear=1.000, severity=1.45, observable degradation lead=28.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=400s] up=9/10  failed=[7]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 7 back online at t=403.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=406.10] Host 8 developed MEMORY_LEAK (severity=1.41)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+!!! CYBER ATTACK DETECTED !!! [CYBER_ATTACK_START] Node 7 at t=410.10s (cause=ATTACK, cpu=0.0%)
+
+Digital Twin synchronized with 10 host(s).
+  [t=411.10] Host 3 developed THERMAL_THROTTLING (severity=0.56)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+!!! ATTACK ENDED !!! [CYBER_ATTACK_END] Node 7 at t=418.10s (cause=ATTACK, cpu=0.0%)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 8 at t=436.10 (mechanism=MEMORY_LEAK, wear=1.000, severity=1.41, observable degradation lead=30.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=438.10] Host 2 developed THERMAL_THROTTLING (severity=1.46)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+>>> OVERLOAD START >>> [OVERLOAD_START] Node 2 at t=447.10s (cause=SYSTEM, cpu=91.31182083721605%)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 2 at t=459.10 (mechanism=THERMAL_THROTTLING, wear=1.000, severity=1.46, observable degradation lead=21.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 8 back online at t=475.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=479.10] Host 8 developed POWER_SUPPLY_INSTABILITY (severity=1.52)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 2 back online at t=488.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+>>> OVERLOAD START >>> [OVERLOAD_START] Node 3 at t=497.10s (cause=SYSTEM, cpu=93.4015536307984%)
+
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 3 at t=498.10 (mechanism=THERMAL_THROTTLING, wear=1.000, severity=0.56, observable degradation lead=74.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=500s] up=9/10  failed=[3]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 3 back online at t=511.10 (retained wear=0.300)
+
+*** FAILURE *** Host 8 at t=511.10 (mechanism=POWER_SUPPLY_INSTABILITY, wear=1.000, severity=1.52, observable degradation lead=32.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=520.10] Host 9 developed NIC_DEGRADATION (severity=1.71)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 8 back online at t=523.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 9 at t=545.10 (mechanism=NIC_DEGRADATION, wear=1.000, severity=1.71, observable degradation lead=25.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=566.10] Host 2 developed THERMAL_THROTTLING (severity=1.32)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 9 back online at t=571.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+>>> OVERLOAD START >>> [OVERLOAD_START] Node 2 at t=581.10s (cause=SYSTEM, cpu=93.06928928738954%)
+
+Digital Twin synchronized with 10 host(s).
+
+<<< OVERLOAD END <<< [OVERLOAD_END] Node 2 at t=582.10s (cause=SYSTEM, cpu=87.68617722308382%)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+>>> OVERLOAD START >>> [OVERLOAD_START] Node 2 at t=584.10s (cause=SYSTEM, cpu=90.6619024447566%)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=587.10] Host 6 developed POWER_SUPPLY_INSTABILITY (severity=0.70)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 2 at t=598.10 (mechanism=THERMAL_THROTTLING, wear=1.000, severity=1.32, observable degradation lead=32.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=600s] up=9/10  failed=[2]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 6 at t=639.10 (mechanism=POWER_SUPPLY_INSTABILITY, wear=1.000, severity=0.70, observable degradation lead=52.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 2 back online at t=641.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 6 back online at t=676.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=700s] up=10/10  failed=[]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=763.10] Host 2 developed NIC_DEGRADATION (severity=0.51)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=800s] up=10/10  failed=[]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=811.10] Host 6 developed MEMORY_LEAK (severity=0.79)
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 2 at t=812.10 (mechanism=NIC_DEGRADATION, wear=0.711, severity=0.51, observable degradation lead=49.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=835.10] Host 9 developed THERMAL_THROTTLING (severity=1.82)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+>>> OVERLOAD START >>> [OVERLOAD_START] Node 9 at t=845.10s (cause=SYSTEM, cpu=95.10801658763431%)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 2 back online at t=854.10 (retained wear=0.213)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 6 at t=859.10 (mechanism=MEMORY_LEAK, wear=1.000, severity=0.79, observable degradation lead=48.0s)
+
+
+*** FAILURE *** Host 9 at t=859.10 (mechanism=THERMAL_THROTTLING, wear=1.000, severity=1.82, observable degradation lead=24.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 6 back online at t=886.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=888.10] Host 1 developed DISK_IO_SATURATION (severity=0.83)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 9 back online at t=898.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=900s] up=10/10  failed=[]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=906.10] Host 6 developed POWER_SUPPLY_INSTABILITY (severity=1.35)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=931.10] Host 7 developed DISK_IO_SATURATION (severity=1.53)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 6 at t=936.10 (mechanism=POWER_SUPPLY_INSTABILITY, wear=1.000, severity=1.35, observable degradation lead=30.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=950.10] Host 3 developed THERMAL_THROTTLING (severity=0.57)
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 7 at t=951.10 (mechanism=DISK_IO_SATURATION, wear=1.000, severity=1.53, observable degradation lead=20.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 6 back online at t=970.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 7 back online at t=981.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 1 at t=991.10 (mechanism=DISK_IO_SATURATION, wear=1.000, severity=0.83, observable degradation lead=90.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=1000s] up=9/10  failed=[1]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=1002.10] Host 7 developed THERMAL_THROTTLING (severity=1.77)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 3 at t=1006.10 (mechanism=THERMAL_THROTTLING, wear=1.000, severity=0.57, observable degradation lead=56.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+>>> OVERLOAD START >>> [OVERLOAD_START] Node 7 at t=1008.10s (cause=SYSTEM, cpu=90.63198911610844%)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=1018.10] Host 9 developed THERMAL_THROTTLING (severity=1.87)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 7 at t=1021.10 (mechanism=THERMAL_THROTTLING, wear=1.000, severity=1.77, observable degradation lead=19.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+>>> OVERLOAD START >>> [OVERLOAD_START] Node 9 at t=1026.10s (cause=SYSTEM, cpu=90.53449343515467%)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 1 back online at t=1032.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 9 at t=1040.10 (mechanism=THERMAL_THROTTLING, wear=1.000, severity=1.87, observable degradation lead=22.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 3 back online at t=1046.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 7 back online at t=1060.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 9 back online at t=1072.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=1100s] up=10/10  failed=[]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=1176.10] Host 2 developed MEMORY_LEAK (severity=1.58)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=1200s] up=10/10  failed=[]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 2 at t=1205.10 (mechanism=MEMORY_LEAK, wear=1.000, severity=1.58, observable degradation lead=29.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 2 back online at t=1239.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=1300s] up=10/10  failed=[]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=1357.10] Host 8 developed MEMORY_LEAK (severity=1.17)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 8 at t=1390.10 (mechanism=MEMORY_LEAK, wear=1.000, severity=1.17, observable degradation lead=33.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=1400s] up=9/10  failed=[8]
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
++++ RECOVERED +++ Host 8 back online at t=1413.10 (retained wear=0.300)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+  [t=1480.10] Host 7 developed NIC_DEGRADATION (severity=1.89)
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+
+*** FAILURE *** Host 7 at t=1498.10 (mechanism=NIC_DEGRADATION, wear=1.000, severity=1.89, observable degradation lead=18.0s)
+
+Digital Twin synchronized with 10 host(s).
+Digital Twin synchronized with 10 host(s).
+[t=1500s] up=9/10  failed=[7]
+Digital Twin synchronized with 10 host(s).
+Simulation Finished!
+Simulated 1502.10 seconds of cluster time.
+
+Final Digital Twin State (last snapshot before shutdown):
+
+========== DIGITAL TWIN ==========
+Node ID : 0
+CPU     : 0.0
+RAM     : 0.0
+BW      : 0.0
+Energy  : 49.748749000551
+Tasks   : 0
+Alive   : true
+Degraded: false
+Link Up : true
+Link BW : 98.78538525431719 Mbps
+Latency : 10.17694186796511 ms
+PktLoss : 0.018835656505115456 %
+Attacked: false
+--------------------------------
+Node ID : 1
+CPU     : 0.0
+RAM     : 0.0
+BW      : 0.0
+Energy  : 49.64026564101
+Tasks   : 0
+Alive   : true
+Degraded: false
+Link Up : true
+Link BW : 97.84472653851103 Mbps
+Latency : 9.869241748812872 ms
+PktLoss : 0.23971211482583074 %
+Attacked: false
+--------------------------------
+Node ID : 2
+CPU     : 0.0
+RAM     : 0.0
+BW      : 0.0
+Energy  : 49.04580360610055
+Tasks   : 0
+Alive   : true
+Degraded: false
+Link Up : true
+Link BW : 100.0 Mbps
+Latency : 9.91809009168325 ms
+PktLoss : 0.04012750237750697 %
+Attacked: false
+--------------------------------
+Node ID : 3
+CPU     : 0.0
+RAM     : 0.0
+BW      : 0.0
+Energy  : 49.61844348479396
+Tasks   : 0
+Alive   : true
+Degraded: false
+Link Up : true
+Link BW : 100.0 Mbps
+Latency : 10.42833437332571 ms
+PktLoss : 0.046870311656567715 %
+Attacked: false
+--------------------------------
+Node ID : 4
+CPU     : 0.0
+RAM     : 0.0
+BW      : 0.0
+Energy  : 51.151605765722195
+Tasks   : 0
+Alive   : true
+Degraded: false
+Link Up : true
+Link BW : 98.71286908494407 Mbps
+Latency : 9.57790518070874 ms
+PktLoss : 0.27834132070822054 %
+Attacked: false
+--------------------------------
+Node ID : 5
+CPU     : 0.0
+RAM     : 0.0
+BW      : 0.0
+Energy  : 50.4220965145438
+Tasks   : 0
+Alive   : true
+Degraded: false
+Link Up : true
+Link BW : 100.0 Mbps
+Latency : 10.04153679844234 ms
+PktLoss : 0.23524022049524299 %
+Attacked: false
+--------------------------------
+Node ID : 6
+CPU     : 0.0
+RAM     : 0.0
+BW      : 0.0
+Energy  : 49.90621313640125
+Tasks   : 0
+Alive   : true
+Degraded: false
+Link Up : true
+Link BW : 100.0 Mbps
+Latency : 10.252965397842411 ms
+PktLoss : 0.14946686041637763 %
+Attacked: false
+--------------------------------
+Node ID : 7
+CPU     : 0.0
+RAM     : 0.0
+BW      : 0.0
+Energy  : 0.0
+Tasks   : 0
+Alive   : false
+Degraded: false
+Link Up : false
+Link BW : 0.0 Mbps
+Latency : 9999.0 ms
+PktLoss : 100.0 %
+Attacked: false
+--------------------------------
+Node ID : 8
+CPU     : 0.0
+RAM     : 0.0
+BW      : 0.0
+Energy  : 49.490245916512265
+Tasks   : 0
+Alive   : true
+Degraded: false
+Link Up : true
+Link BW : 98.70103147127791 Mbps
+Latency : 9.962875708126361 ms
+PktLoss : 0.15010807203736765 %
+Attacked: false
+--------------------------------
+Node ID : 9
+CPU     : 0.0
+RAM     : 0.0
+BW      : 0.0
+Energy  : 51.66354271270849
+Tasks   : 0
+Alive   : true
+Degraded: false
+Link Up : true
+Link BW : 99.48387260443522 Mbps
+Latency : 9.560218749767497 ms
+PktLoss : 0.0412689396273964 %
+Attacked: false
+--------------------------------
+
+---------- IoMT DEVICE LAYER ----------
+Device ID   : 0
+Edge Node   : 0
+Battery     : 0.0 %
+Connected   : false
+Signal Qual : 96.26253279933053 %
+Signal Noise: 3.737467200669471 %
+Last HB Time: 65.1s
+Alive       : false
+FailureMode : BATTERY_DEPLETED
+--------------------------------
+Device ID   : 1
+Edge Node   : 1
+Battery     : 37.0 %
+Connected   : false
+Signal Qual : 99.21805399477347 %
+Signal Noise: 0.7819460052265299 %
+Last HB Time: 40.1s
+Alive       : false
+FailureMode : DROPOUT
+--------------------------------
+Device ID   : 2
+Edge Node   : 2
+Battery     : 0.0 %
+Connected   : false
+Signal Qual : 88.69907576119797 %
+Signal Noise: 11.300924238802025 %
+Last HB Time: 65.1s
+Alive       : false
+FailureMode : BATTERY_DEPLETED
+--------------------------------
+Device ID   : 3
+Edge Node   : 3
+Battery     : 80.5 %
+Connected   : false
+Signal Qual : 88.50622716211899 %
+Signal Noise: 11.49377283788101 %
+Last HB Time: 11.1s
+Alive       : false
+FailureMode : DROPOUT
+--------------------------------
+Device ID   : 4
+Edge Node   : 4
+Battery     : 0.0 %
+Connected   : false
+Signal Qual : 92.97942509027885 %
+Signal Noise: 7.020574909721148 %
+Last HB Time: 65.1s
+Alive       : false
+FailureMode : BATTERY_DEPLETED
+--------------------------------
+Device ID   : 5
+Edge Node   : 5
+Battery     : 68.5 %
+Connected   : false
+Signal Qual : 97.07144226588832 %
+Signal Noise: 2.9285577341116777 %
+Last HB Time: 19.1s
+Alive       : false
+FailureMode : SENSOR_FAULT
+--------------------------------
+Device ID   : 6
+Edge Node   : 6
+Battery     : 0.0 %
+Connected   : false
+Signal Qual : 90.63462202179325 %
+Signal Noise: 9.365377978206752 %
+Last HB Time: 65.1s
+Alive       : false
+FailureMode : BATTERY_DEPLETED
+--------------------------------
+Device ID   : 7
+Edge Node   : 7
+Battery     : 0.0 %
+Connected   : false
+Signal Qual : 95.6428930123889 %
+Signal Noise: 4.357106987611104 %
+Last HB Time: 65.1s
+Alive       : false
+FailureMode : BATTERY_DEPLETED
+--------------------------------
+Device ID   : 8
+Edge Node   : 8
+Battery     : 98.5 %
+Connected   : false
+Signal Qual : 95.0 %
+Signal Noise: 5.0 %
+Last HB Time: 0.0s
+Alive       : false
+FailureMode : DROPOUT
+--------------------------------
+Device ID   : 9
+Edge Node   : 9
+Battery     : 0.0 %
+Connected   : false
+Signal Qual : 93.33136732161557 %
+Signal Noise: 6.6686326783844265 %
+Last HB Time: 65.1s
+Alive       : false
+FailureMode : BATTERY_DEPLETED
+--------------------------------
+
+---------- HEALTHCARE TASK LAYER ----------
+Task ID    : 0
+Patient    : 0
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.44799999999999995
+Severity   : 0.32
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 1
+Patient    : 1
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.4954333333333334
+Severity   : 0.35600000000000004
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 2
+Patient    : 2
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.5422666666666667
+Severity   : 0.392
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 3
+Patient    : 3
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.5885
+Severity   : 0.42800000000000005
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 4
+Patient    : 4
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.6341333333333333
+Severity   : 0.46399999999999997
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 5
+Patient    : 5
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.6791666666666666
+Severity   : 0.49999999999999994
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 6
+Patient    : 6
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.7236000000000001
+Severity   : 0.536
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 7
+Patient    : 7
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.7674333333333335
+Severity   : 0.5720000000000001
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 8
+Patient    : 8
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.8106666666666665
+Severity   : 0.6079999999999999
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 9
+Patient    : 9
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.8533
+Severity   : 0.644
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 10
+Patient    : 0
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.42133333333333334
+Severity   : 0.32
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 11
+Patient    : 1
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.4657666666666667
+Severity   : 0.35600000000000004
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 12
+Patient    : 2
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.5096
+Severity   : 0.392
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 13
+Patient    : 3
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.5528333333333333
+Severity   : 0.42800000000000005
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 14
+Patient    : 4
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.5954666666666666
+Severity   : 0.46399999999999997
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 15
+Patient    : 5
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.6374999999999998
+Severity   : 0.49999999999999994
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 16
+Patient    : 6
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.6789333333333334
+Severity   : 0.536
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 17
+Patient    : 7
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.7197666666666668
+Severity   : 0.5720000000000001
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 18
+Patient    : 8
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.7599999999999998
+Severity   : 0.6079999999999999
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 19
+Patient    : 9
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.7996333333333334
+Severity   : 0.644
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 20
+Patient    : 0
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.3946666666666667
+Severity   : 0.32
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 21
+Patient    : 1
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.4361000000000001
+Severity   : 0.35600000000000004
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 22
+Patient    : 2
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.4769333333333334
+Severity   : 0.392
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 23
+Patient    : 3
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.5171666666666667
+Severity   : 0.42800000000000005
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 24
+Patient    : 4
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.5568
+Severity   : 0.46399999999999997
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 25
+Patient    : 5
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.5958333333333332
+Severity   : 0.49999999999999994
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 26
+Patient    : 6
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.6342666666666668
+Severity   : 0.536
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 27
+Patient    : 7
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.6721000000000001
+Severity   : 0.5720000000000001
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 28
+Patient    : 8
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.7093333333333333
+Severity   : 0.6079999999999999
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 29
+Patient    : 9
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.7459666666666666
+Severity   : 0.644
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 30
+Patient    : 0
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.368
+Severity   : 0.32
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 31
+Patient    : 1
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.40643333333333337
+Severity   : 0.35600000000000004
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 32
+Patient    : 2
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.4442666666666667
+Severity   : 0.392
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 33
+Patient    : 3
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.48150000000000004
+Severity   : 0.42800000000000005
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 34
+Patient    : 4
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.5181333333333333
+Severity   : 0.46399999999999997
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 35
+Patient    : 5
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.5541666666666666
+Severity   : 0.49999999999999994
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 36
+Patient    : 6
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.5896000000000001
+Severity   : 0.536
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 37
+Patient    : 7
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.6244333333333335
+Severity   : 0.5720000000000001
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 38
+Patient    : 8
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.6586666666666665
+Severity   : 0.6079999999999999
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+Task ID    : 39
+Patient    : 9
+Edge Node  : -1
+State      : QUEUED
+Priority   : 0.6923
+Severity   : 0.644
+P(fail)    : 0.0
+Confidence : 0.0
+Migrations : 0
+--------------------------------
+
+Total failed nodes during this run: [7]
+Total failed devices during this run: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+--- Host degradation summary (latent ground truth) ---
+Host  0 | failures=2 | susceptibility=0.92 | final wear=0.467 | final state=NORMAL | active mechanism=NONE
+Host  1 | failures=1 | susceptibility=1.02 | final wear=0.372 | final state=NORMAL | active mechanism=NONE
+Host  2 | failures=6 | susceptibility=1.62 | final wear=0.363 | final state=NORMAL | active mechanism=NONE
+Host  3 | failures=2 | susceptibility=1.71 | final wear=0.419 | final state=NORMAL | active mechanism=NONE
+Host  4 | failures=0 | susceptibility=0.85 | final wear=0.193 | final state=NORMAL | active mechanism=NONE
+Host  5 | failures=0 | susceptibility=0.67 | final wear=0.149 | final state=NORMAL | active mechanism=NONE
+Host  6 | failures=4 | susceptibility=1.71 | final wear=0.437 | final state=NORMAL | active mechanism=NONE
+Host  7 | failures=4 | susceptibility=1.59 | final wear=1.000 | final state=RECOVERING | active mechanism=NIC_DEGRADATION
+Host  8 | failures=5 | susceptibility=1.40 | final wear=0.318 | final state=NORMAL | active mechanism=NONE
+Host  9 | failures=5 | susceptibility=1.52 | final wear=0.398 | final state=NORMAL | active mechanism=NONE
+
+Failure event log exported to: failure_log.csv (169 events)
+
+Labeled failure-prediction dataset exported to: failure_history.csv (15020 rows, lookahead=10.0s, 290 positive / 14730 negative)
+
+Labeled device-failure dataset exported to: device_failure_history.csv (15020 rows, lookahead=10.0s)
+=================================
+Execution Complete
+=================================

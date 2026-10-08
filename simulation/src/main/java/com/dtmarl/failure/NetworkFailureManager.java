@@ -40,11 +40,19 @@ public class NetworkFailureManager {
     private boolean randomLinkFailuresEnabled = false;
     private double randomLinkFailureProbabilityPerTick = 0.0;
 
-    private final Random random = new Random();
+    private final Random random;
 
     public NetworkFailureManager(DigitalTwinManager digitalTwin, FailureManager failureManager) {
+        this(digitalTwin, failureManager, 0L);
+    }
+
+    /** @param seed explicit RNG seed so a run is reproducible. */
+    public NetworkFailureManager(DigitalTwinManager digitalTwin,
+                                 FailureManager failureManager,
+                                 long seed) {
         this.digitalTwin = digitalTwin;
         this.failureManager = failureManager;
+        this.random = new Random(seed);
     }
 
     // ==========================================
@@ -209,7 +217,7 @@ public class NetworkFailureManager {
             // Sprint 4's prediction model tell this apart from a clean
             // hardware failure (both flatline) or normal degradation
             // (single metric, no spike).
-            link.setBandwidthMbps(NetworkLink.NORMAL_BANDWIDTH_MBPS * 5);
+            link.setBandwidthMbps(link.getNominalBandwidthMbps() * 5);
             link.setLatencyMs(NetworkLink.NORMAL_LATENCY_MS * 8);
             link.setPacketLossPercent(40);
             link.setUnderAttack(true);

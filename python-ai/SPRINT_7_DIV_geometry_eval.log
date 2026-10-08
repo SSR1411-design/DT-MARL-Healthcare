@@ -1,0 +1,123 @@
+
+==============================================================================
+PART A  PARAMETER-SPACE DISPLACEMENT FROM THE SHARED theta_0
+==============================================================================
+  seed (all arms)          : 20260818
+  theta_0 reproducibility  : actor max|diff| 0.0e+00, critic 0.0e+00  (two independent constructions)
+  actor params             : 233000   critic params: 194049
+  chance cosine 1/sqrt(d)  : actor 0.00207   critic 0.00227
+
+  arm       ||dTheta_actor||  ||dTheta_critic||  actor/R2
+  A0                  5.5321             9.7844    0.8965
+  R2                  6.1710             9.9936    1.0000
+  R2_best             6.1710             9.9936    1.0000
+  R3                  4.5471            10.3278    0.7369
+  R3_best             3.9510             9.1554    0.6403
+
+  decomposition against R2's ACTOR displacement direction
+  arm       proj_frac    cosine  resid_frac
+  A0           0.1672    0.1865      0.8807
+  R2           1.0000    1.0000      0.0000
+  R2_best      1.0000    1.0000      0.0000
+  R3           0.1244    0.1689      0.7263
+  R3_best      0.0990    0.1546      0.6326
+
+  pairwise cosine of ACTOR displacement
+                  A0       R2  R2_best       R3  R3_best
+  A0          1.0000   0.1865   0.1865   0.1648   0.1900
+  R2          0.1865   1.0000   1.0000   0.1689   0.1546
+  R2_best     0.1865   1.0000   1.0000   0.1689   0.1546
+  R3          0.1648   0.1689   0.1689   1.0000   0.9300
+  R3_best     0.1900   0.1546   0.1546   0.9300   1.0000
+
+  Adam actor state at the final checkpoint
+  arm        steps   lr_saved      ||m||  ||update||  ||upd||/||dTheta||
+  A0          1428  9.333e-06  7.565e-02      0.0007             0.00013
+  R2          1392  9.333e-06  1.870e-02      0.0004             0.00006
+  R2_best     1392  9.333e-06  1.870e-02      0.0004             0.00006
+  R3          1440  9.333e-06  6.370e-02      0.0012             0.00026
+  R3_best      872  2.893e-04  4.462e-02      0.0133             0.00336
+
+==============================================================================
+PART B  FUNCTION-SPACE DISPLACEMENT ON THE UNCHANGED FIXED SETS
+==============================================================================
+  episodes per source      : 32  (start-seed 20260825)
+  A0     decision  43519 (expect  43519)   hi  2174 (expect  2174)   OK
+  R2     decision  30718 (expect  30718)   hi  1418 (expect  1418)   OK
+  UNION  decision  74237 (expect  74237)   hi  3592 (expect  3592)   OK
+
+  --- RANDOM ---
+  decision entries 4975   hi(risk>=0.6) 216   lo(risk<0.2) 4757
+  reproduced Delta = P(EDGE|hi) - P(EDGE|lo):
+      A0       -0.0264
+      R2       +0.2024
+      R2_best  +0.2024
+      R3       +0.1575
+      R3_best  +0.1467
+      theta0   +0.0165
+
+  regime=all (n=4975)
+  arm        mean_TV     ||Dp||  proj_frac    cosine  resid_frac  d_p_EDGE  d_p_STAY
+  A0         0.38066    38.9727     0.6947    0.6962      0.7163  -0.28794   0.10087
+  R2         0.36454    39.0550     1.0000    1.0000      0.0000  -0.28783   0.14956
+  R2_best    0.36454    39.0550     1.0000    1.0000      0.0000  -0.28783   0.14956
+  R3         0.33273    35.0322     0.6764    0.7540      0.5892  -0.30820   0.19115
+  R3_best    0.25625    28.9053     0.5546    0.7494      0.4900  -0.21043   0.08190
+
+  regime=hi (n=216)
+  arm        mean_TV     ||Dp||  proj_frac    cosine  resid_frac  d_p_EDGE  d_p_STAY
+  A0         0.40076     8.4601     0.4542    0.2808      1.5525  -0.32898   0.19325
+  R2         0.19818     5.2302     1.0000    1.0000      0.0000  -0.11014   0.06591
+  R2_best    0.19818     5.2302     1.0000    1.0000      0.0000  -0.11014   0.06591
+  R3         0.18343     4.7418     0.1599    0.1763      0.8924  -0.17339   0.12553
+  R3_best    0.13263     3.8132     0.1677    0.2300      0.7095  -0.08603   0.02209
+
+  regime=lo (n=4757)
+  arm        mean_TV     ||Dp||  proj_frac    cosine  resid_frac  d_p_EDGE  d_p_STAY
+  A0         0.37972    38.0337     0.6992    0.7115      0.6906  -0.28601   0.09654
+  R2         0.37224    38.7031     1.0000    1.0000      0.0000  -0.29603   0.15343
+  R2_best    0.37224    38.7031     1.0000    1.0000      0.0000  -0.29603   0.15343
+  R3         0.33959    34.7087     0.6858    0.7647      0.5778  -0.31439   0.19415
+  R3_best    0.26197    28.6526     0.5617    0.7587      0.4822  -0.21617   0.08466
+  ==> R3       proj_frac  lo=+0.6858  hi=+0.1599  hi-lo=-0.5260
+  ==> R3_best  proj_frac  lo=+0.5617  hi=+0.1677  hi-lo=-0.3940
+  ==> A0       proj_frac  lo=+0.6992  hi=+0.4542  hi-lo=-0.2450
+
+  --- UNION ---
+  decision entries 74237   hi(risk>=0.6) 3592   lo(risk<0.2) 70621
+  reproduced Delta = P(EDGE|hi) - P(EDGE|lo):
+      A0       +0.0191
+      R2       +0.1579
+      R2_best  +0.1579
+      R3       +0.1242
+      R3_best  +0.0946
+      theta0   +0.0007
+
+  regime=all (n=74237)
+  arm        mean_TV     ||Dp||  proj_frac    cosine  resid_frac  d_p_EDGE  d_p_STAY
+  A0         0.30417   129.7745     0.5899    0.7111      0.5833  -0.28013   0.23676
+  R2         0.37052   156.4349     1.0000    1.0000      0.0000  -0.33523   0.30714
+  R2_best    0.37052   156.4349     1.0000    1.0000      0.0000  -0.33523   0.30714
+  R3         0.35078   143.7447     0.6993    0.7610      0.5961  -0.34032   0.30655
+  R3_best    0.22565   105.3969     0.4776    0.7088      0.4752  -0.20669   0.17267
+
+  regime=hi (n=3592)
+  arm        mean_TV     ||Dp||  proj_frac    cosine  resid_frac  d_p_EDGE  d_p_STAY
+  A0         0.29980    28.8065     0.3458    0.3043      1.0826  -0.26258   0.22286
+  R2         0.25043    25.3467     1.0000    1.0000      0.0000  -0.18572   0.16883
+  R2_best    0.25043    25.3467     1.0000    1.0000      0.0000  -0.18572   0.16883
+  R3         0.22792    23.9847     0.2147    0.2269      0.9216  -0.22291   0.20376
+  R3_best    0.13505    16.1450     0.0646    0.1014      0.6337  -0.11742   0.09538
+
+  regime=lo (n=70621)
+  arm        mean_TV     ||Dp||  proj_frac    cosine  resid_frac  d_p_EDGE  d_p_STAY
+  A0         0.30437   126.5078     0.5965    0.7278      0.5621  -0.28101   0.23745
+  R2         0.37669   154.3567     1.0000    1.0000      0.0000  -0.34289   0.31423
+  R2_best    0.37669   154.3567     1.0000    1.0000      0.0000  -0.34289   0.31423
+  R3         0.35711   141.7271     0.7124    0.7759      0.5793  -0.34637   0.31185
+  R3_best    0.23032   104.1525     0.4888    0.7243      0.4652  -0.21130   0.17666
+  ==> R3       proj_frac  lo=+0.7124  hi=+0.2147  hi-lo=-0.4977
+  ==> R3_best  proj_frac  lo=+0.4888  hi=+0.0646  hi-lo=-0.4241
+  ==> A0       proj_frac  lo=+0.5965  hi=+0.3458  hi-lo=-0.2507
+
+wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_DIV_geometry_eval.json

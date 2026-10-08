@@ -1,0 +1,2 @@
+run_id,baseline_name,episode,episode_start_tick,risk_source,prediction_used,uncertainty_used,oof_loaded,live_predictor_loaded,offline_only_note
+detection-without-prediction,detection-without-prediction,1,491,zero,0,0,0,0,No OOF windows or live predictor are loaded for this baseline; risk is hard-zeroed.

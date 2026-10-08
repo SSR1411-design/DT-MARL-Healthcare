@@ -1,0 +1,13 @@
+{
+ "probe": "SPRINT_7_RUNG2_5_signtest_data",
+ "dataset": {
+  "n_episodes": 4,
+  "dropped": 0,
+  "cls_count": {
+   "trunc": 3,
+   "both": 1
+  },
+  "mad_R2_vs_cont": 0.5119329690933228,
+  "mad_rew_vs_cont": 0.1793224811553955
+ }
+}

@@ -50,11 +50,19 @@ public class DeviceFailureManager {
     private boolean randomSensorFaultsEnabled = false;
     private double randomSensorFaultProbabilityPerTick = 0.0;
 
-    private final Random random = new Random();
+    private final Random random;
 
     public DeviceFailureManager(DigitalTwinManager digitalTwin, FailureManager failureManager) {
+        this(digitalTwin, failureManager, 0L);
+    }
+
+    /** @param seed explicit RNG seed so a run is reproducible. */
+    public DeviceFailureManager(DigitalTwinManager digitalTwin,
+                                FailureManager failureManager,
+                                long seed) {
         this.digitalTwin = digitalTwin;
         this.failureManager = failureManager;
+        this.random = new Random(seed);
     }
 
     // ==========================================

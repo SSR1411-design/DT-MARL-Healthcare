@@ -1,0 +1,387 @@
+{
+ "probe": "SPRINT_7_RUNG1",
+ "what": "offline critic diagnostic",
+ "model": "D:\\MY_GURL\\RESEARCH_PAPER\\DT-MARL-Healthcare\\python-ai\\saved_models\\marl\\mappo_A0_cpu_repro.pth",
+ "window": "train",
+ "arms": {
+  "C0": "production critic as loaded (reference; reproduces Rung 0)",
+  "C1": "fresh critic, MC discounted-return targets, plain MSE, fit to convergence with held-out early stopping",
+  "C2": "= C1 but lambda-return targets recomputed from the critic being trained (isolates target construction)",
+  "C3": "= C1 but production's clipped value loss at value_clip_eps (isolates value clipping)"
+ },
+ "gamma": 0.999,
+ "gae_lambda": 0.995,
+ "value_clip_eps": 0.2,
+ "critic_hidden": [
+  256,
+  256
+ ],
+ "lr_used": 0.001,
+ "episodes": 16,
+ "val_episodes": 4,
+ "starts": [
+  9,
+  41,
+  73,
+  105,
+  138,
+  170,
+  202,
+  234,
+  266,
+  298,
+  330,
+  362,
+  395,
+  427,
+  459,
+  491
+ ],
+ "gae_replica_check": {
+  "max_abs_adv_diff": 0.0,
+  "max_abs_ret_diff": 0.0,
+  "ok": true
+ },
+ "truncated_episodes": [
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false
+ ],
+ "target_note": "MC discounted per-agent return; exact and critic-free when episodes end naturally",
+ "fit": {
+  "C0": {
+   "note": "production critic as loaded; not refitted"
+  },
+  "C1": {
+   "best_val_mc_mse": 22.22053337097168,
+   "best_epoch": 93,
+   "epochs_run": 134,
+   "history_tail": [
+    {
+     "epoch": 129,
+     "train_mse": 4.356362342834473,
+     "val_mse": 23.65863609313965
+    },
+    {
+     "epoch": 130,
+     "train_mse": 4.6291608810424805,
+     "val_mse": 25.060373306274414
+    },
+    {
+     "epoch": 131,
+     "train_mse": 4.493925094604492,
+     "val_mse": 25.634286880493164
+    },
+    {
+     "epoch": 132,
+     "train_mse": 3.8058106899261475,
+     "val_mse": 25.264053344726562
+    },
+    {
+     "epoch": 133,
+     "train_mse": 3.642033576965332,
+     "val_mse": 24.866634368896484
+    }
+   ]
+  },
+  "C2": {
+   "best_val_mc_mse": 87.30546569824219,
+   "best_epoch": 4,
+   "epochs_run": 45,
+   "history_tail": [
+    {
+     "epoch": 40,
+     "train_mse": 244.19851684570312,
+     "val_mse": 235.423828125
+    },
+    {
+     "epoch": 41,
+     "train_mse": 245.53817749023438,
+     "val_mse": 236.17990112304688
+    },
+    {
+     "epoch": 42,
+     "train_mse": 238.4597625732422,
+     "val_mse": 230.0819091796875
+    },
+    {
+     "epoch": 43,
+     "train_mse": 231.42288208007812,
+     "val_mse": 224.76034545898438
+    },
+    {
+     "epoch": 44,
+     "train_mse": 226.22964477539062,
+     "val_mse": 220.19586181640625
+    }
+   ]
+  },
+  "C3": {
+   "best_val_mc_mse": 24.16504669189453,
+   "best_epoch": 125,
+   "epochs_run": 166,
+   "history_tail": [
+    {
+     "epoch": 161,
+     "train_mse": 3.7372961044311523,
+     "val_mse": 26.242568969726562
+    },
+    {
+     "epoch": 162,
+     "train_mse": 3.706997871398926,
+     "val_mse": 25.882278442382812
+    },
+    {
+     "epoch": 163,
+     "train_mse": 3.5939810276031494,
+     "val_mse": 26.209321975708008
+    },
+    {
+     "epoch": 164,
+     "train_mse": 3.728053092956543,
+     "val_mse": 28.158340454101562
+    },
+    {
+     "epoch": 165,
+     "train_mse": 3.908421754837036,
+     "val_mse": 28.901752471923828
+    }
+   ]
+  }
+ },
+ "residual": {
+  "C0": {
+   "what": "production critic as loaded (reference; reproduces Rung 0)",
+   "mse_train": 43.176684578695955,
+   "mse_val": 52.39785087584854,
+   "mae_train": 4.742089187705145,
+   "mae_val": 5.488388090422324,
+   "explained_var_train": 0.6544624656961022,
+   "explained_var_val": 0.6814996766242754,
+   "value_mean": 4.975927103325502,
+   "mc_mean": 1.62203941356658,
+   "mc_sd": 10.057811716256213,
+   "residual_by_risk": {
+    "lo": {
+     "n": 55710,
+     "residual_mean": -3.305651730319546,
+     "residual_sd": 5.775013137106419,
+     "residual_mean_abs": 4.879219071577043,
+     "value_mean": 5.042270275572453,
+     "mc_mean": 1.7366185452529073,
+     "explained_var": 0.6635659628644499
+    },
+    "mid": {
+     "n": 262,
+     "residual_mean": -2.7307340561319853,
+     "residual_sd": 6.419052052309791,
+     "residual_mean_abs": 4.48153110021967,
+     "value_mean": 4.856421478398372,
+     "mc_mean": 2.1256874222663864,
+     "explained_var": 0.7192873801065894
+    },
+    "hi": {
+     "n": 2778,
+     "residual_mean": -4.379982561025282,
+     "residual_sd": 6.95623890399584,
+     "residual_mean_abs": 5.8206899259675735,
+     "value_mean": 3.6567522825383567,
+     "mc_mean": -0.7232302784869252,
+     "explained_var": 0.6327637106436216
+    }
+   },
+   "residual_lo_to_hi_swing": -1.0743308307057364,
+   "residual_vs_risk_ols_all": {
+    "slope": -1.591616228948705,
+    "intercept": -3.2201795282451244,
+    "pearson": -0.04336018772314563,
+    "n": 58750
+   },
+   "residual_vs_risk_ols_highrisk_only": {
+    "slope": -5.595971006565932,
+    "intercept": -0.03405463950979609,
+    "pearson": -0.1168733597645346,
+    "n": 2778
+   },
+   "residual_risk_spearman": -0.012329193601971853
+  },
+  "C1": {
+   "what": "fresh critic, MC discounted-return targets, plain MSE, fit to convergence with held-out early stopping",
+   "mse_train": 5.317653986949928,
+   "mse_val": 22.22053097519834,
+   "mae_train": 1.4515142126931782,
+   "mae_val": 3.3079733905099635,
+   "explained_var_train": 0.9438483155836179,
+   "explained_var_val": 0.8208198679370493,
+   "value_mean": 1.7562975953447693,
+   "mc_mean": 1.62203941356658,
+   "mc_sd": 10.057811716256213,
+   "residual_by_risk": {
+    "lo": {
+     "n": 55710,
+     "residual_mean": -0.12165229922255216,
+     "residual_sd": 3.033108177530369,
+     "residual_mean_abs": 1.889953543259754,
+     "value_mean": 1.8582708444754592,
+     "mc_mean": 1.7366185452529073,
+     "explained_var": 0.9071953421490354
+    },
+    "mid": {
+     "n": 262,
+     "residual_mean": -0.7711856399968494,
+     "residual_sd": 3.3917063275769443,
+     "residual_mean_abs": 1.830303424976425,
+     "value_mean": 2.8968730622632357,
+     "mc_mean": 2.1256874222663864,
+     "explained_var": 0.9216287766657489
+    },
+    "hi": {
+     "n": 2778,
+     "residual_mean": -0.3269863038520747,
+     "residual_sd": 3.546859582503375,
+     "residual_mean_abs": 2.0860585173740747,
+     "value_mean": -0.3962439746348505,
+     "mc_mean": -0.7232302784869252,
+     "explained_var": 0.9045261131577282
+    }
+   },
+   "residual_lo_to_hi_swing": -0.20533400462952256,
+   "residual_vs_risk_ols_all": {
+    "slope": -0.2869231516906499,
+    "intercept": -0.11015440197841986,
+    "pearson": -0.014919865018833061,
+    "n": 58750
+   },
+   "residual_vs_risk_ols_highrisk_only": {
+    "slope": -0.2541561446278004,
+    "intercept": -0.12960424378301985,
+    "pearson": -0.010410490223441872,
+    "n": 2778
+   },
+   "residual_risk_spearman": -0.0016734772072502517
+  },
+  "C2": {
+   "what": "= C1 but lambda-return targets recomputed from the critic being trained (isolates target construction)",
+   "mse_train": 58.58309701767144,
+   "mse_val": 87.3054540598943,
+   "mae_train": 5.574091922482696,
+   "mae_val": 6.771175379693866,
+   "explained_var_train": 0.48856245389958053,
+   "explained_var_val": 0.3100934261645537,
+   "value_mean": -1.2721173817654874,
+   "mc_mean": 1.62203941356658,
+   "mc_sd": 10.057811716256213,
+   "residual_by_risk": {
+    "lo": {
+     "n": 55710,
+     "residual_mean": 2.8911124896380613,
+     "residual_sd": 7.5160113131269615,
+     "residual_mean_abs": 5.823462668271407,
+     "value_mean": -1.154493944385154,
+     "mc_mean": 1.7366185452529073,
+     "explained_var": 0.4301391463749473
+    },
+    "mid": {
+     "n": 262,
+     "residual_mean": 3.7412205116311443,
+     "residual_sd": 8.938603323701148,
+     "residual_mean_abs": 6.9755549391390375,
+     "value_mean": -1.615533089364758,
+     "mc_mean": 2.1256874222663864,
+     "explained_var": 0.4556735076270556
+    },
+    "hi": {
+     "n": 2778,
+     "residual_mean": 2.875318629940679,
+     "residual_sd": 8.230011528519753,
+     "residual_mean_abs": 6.542801136254166,
+     "value_mean": -3.5985489084276043,
+     "mc_mean": -0.7232302784869252,
+     "explained_var": 0.4859593077146914
+    }
+   },
+   "residual_lo_to_hi_swing": -0.015793859697382118,
+   "residual_vs_risk_ols_all": {
+    "slope": -0.20192341177172998,
+    "intercept": 2.911119934852542,
+    "pearson": -0.004253123270361084,
+    "n": 58750
+   },
+   "residual_vs_risk_ols_highrisk_only": {
+    "slope": -5.692044917122106,
+    "intercept": 7.295859212945182,
+    "pearson": -0.10048065030025476,
+    "n": 2778
+   },
+   "residual_risk_spearman": -0.0014215643302967283
+  },
+  "C3": {
+   "what": "= C1 but production's clipped value loss at value_clip_eps (isolates value clipping)",
+   "mse_train": 5.536827679330691,
+   "mse_val": 24.165047341912636,
+   "mae_train": 1.3985406022315838,
+   "mae_val": 3.4478683179191782,
+   "explained_var_train": 0.9420151008179264,
+   "explained_var_val": 0.8039773868840342,
+   "value_mean": 1.6160533258610583,
+   "mc_mean": 1.62203941356658,
+   "mc_sd": 10.057811716256213,
+   "residual_by_risk": {
+    "lo": {
+     "n": 55710,
+     "residual_mean": 0.019625290854908516,
+     "residual_sd": 3.1253376738128975,
+     "residual_mean_abs": 1.8751111391416677,
+     "value_mean": 1.7169932543979987,
+     "mc_mean": 1.7366185452529073,
+     "explained_var": 0.9014656018501888
+    },
+    "mid": {
+     "n": 262,
+     "residual_mean": -0.6448329687473997,
+     "residual_sd": 3.390752626590565,
+     "residual_mean_abs": 1.811467602856116,
+     "value_mean": 2.770520391013786,
+     "mc_mean": 2.1256874222663864,
+     "explained_var": 0.921672844280967
+    },
+    "hi": {
+     "n": 2778,
+     "residual_mean": -0.20615409035843807,
+     "residual_sd": 3.8717255068110727,
+     "residual_mean_abs": 2.248270252595851,
+     "value_mean": -0.5170761881284872,
+     "mc_mean": -0.7232302784869252,
+     "explained_var": 0.8862357699483188
+    }
+   },
+   "residual_lo_to_hi_swing": -0.2257793812133466,
+   "residual_vs_risk_ols_all": {
+    "slope": -0.3144030904724871,
+    "intercept": 0.03239839642464302,
+    "pearson": -0.015807466979566007,
+    "n": 58750
+   },
+   "residual_vs_risk_ols_highrisk_only": {
+    "slope": -0.3405174370819219,
+    "intercept": 0.05829764390552563,
+    "pearson": -0.012777602059973282,
+    "n": 2778
+   },
+   "residual_risk_spearman": -0.0029249392833662633
+  }
+ }
+}

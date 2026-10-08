@@ -1,0 +1,23 @@
+{
+  "threshold": 0.18,
+  "feature_columns": [
+    "energy",
+    "active",
+    "degraded",
+    "linkUp",
+    "linkBandwidthMbps",
+    "linkLatencyMs",
+    "linkPacketLoss",
+    "d_energy",
+    "d_active",
+    "d_degraded",
+    "d_linkUp",
+    "d_linkBandwidthMbps",
+    "d_linkLatencyMs",
+    "d_linkPacketLoss",
+    "time_since_active",
+    "time_since_linkup"
+  ],
+  "sequence_length": 10,
+  "num_features": 16
+}

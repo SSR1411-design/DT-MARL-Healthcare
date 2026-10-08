@@ -1,0 +1,50 @@
+==============================================================================
+SPRINT 7 RUNG 2.75 -- item A addendum: reproduce Rung 2.5's own
+        census, then test whether its contrast is resolvable
+==============================================================================
+
+-- A0: train.py RNG start ticks [158, 202, 32, 228, 343, 164, 277, 205]
+   D5  n_hi= 212 EDGE= 14 share=0.0660   on record n=212 EDGE=14 share=0.0660   MATCH
+   D5s seed 0: n_hi= 213 EDGE= 17 share=0.0798
+   D5s seed 1: n_hi= 205 EDGE= 19 share=0.0927
+   D5s seed 2: n_hi= 179 EDGE= 21 share=0.1173
+   D5s seed 3: n_hi= 191 EDGE= 18 share=0.0942
+   D5s seed 4: n_hi= 178 EDGE= 16 share=0.0899
+   D5s seed 5: n_hi= 177 EDGE= 14 share=0.0791
+   D5s seed 6: n_hi= 204 EDGE= 23 share=0.1127
+   D5s seed 7: n_hi= 187 EDGE= 22 share=0.1176
+   D5s over 8 seeds: share 0.0979 (sd 0.0159, range 0.0791-0.1176)   pooled 150/1534 = 0.0978
+
+-- R2: train.py RNG start ticks [158, 202, 32, 228, 343, 164, 277, 205]
+   D5  n_hi= 269 EDGE= 10 share=0.0372   on record n=269 EDGE=10 share=0.0372   MATCH
+   D5s seed 0: n_hi= 229 EDGE=  9 share=0.0393
+   D5s seed 1: n_hi= 225 EDGE= 10 share=0.0444
+   D5s seed 2: n_hi= 178 EDGE= 13 share=0.0730
+   D5s seed 3: n_hi= 196 EDGE=  9 share=0.0459
+   D5s seed 4: n_hi= 206 EDGE=  8 share=0.0388
+   D5s seed 5: n_hi= 253 EDGE= 14 share=0.0553
+   D5s seed 6: n_hi= 209 EDGE= 15 share=0.0718
+   D5s seed 7: n_hi= 231 EDGE= 14 share=0.0606
+   D5s over 8 seeds: share 0.0537 (sd 0.0138, range 0.0388-0.0730)   pooled 92/1727 = 0.0533
+
+==============================================================================
+IS THE RUNG 2.5 CONTRAST RESOLVABLE?  (A0 vs R2, two-proportion)
+==============================================================================
+  contrast                                                 A0           R2       z        p   sig
+  rung2_5_on_record                                14/212       10/269       -1.44   0.1489    no
+  D5_reproduced                                    14/212       10/269       -1.44   0.1489    no
+  D5s_pooled_8_seeds                              150/1534      92/1727      -4.84   0.0000   YES
+  ladder_D0_prod_eval_greedy_maskonly_bucket>=0.6   15/546       31/384       +3.69   0.0002   YES
+  ladder_D1_TRAINwindow_greedy_maskonly_bucket>=0.6   10/579        9/371       +0.75   0.4529    no
+  ladder_D2_train_greedy_maskonly_risk>0.50        10/581        9/373       +0.75   0.4556    no
+  ladder_D3_train_greedy_HASTASK_risk>0.50         10/581        9/373       +0.75   0.4556    no
+  ladder_D4_train_STOCHASTIC_HASTASK_risk>0.50     61/705       65/760       -0.07   0.9457    no
+  ladder_X_evalwindow_greedy_HASTASK_risk>0.50     15/547       31/385       +3.68   0.0002   YES
+
+  at Rung 2.5's own sample size (n=212 vs 269) and A0 = 0.0660,
+  the smallest R2 share detectable at 80% power / alpha=0.05 is 0.1456
+  -- i.e. that census could only have resolved an INCREASE past 14.6%, and
+     it reported a DECREASE to 0.0372 with 10 events.
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_75_edgeshare_power_main.json
+==============================================================================

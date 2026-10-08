@@ -1,0 +1,170 @@
+{
+  "analysis_scope": "Paper-facing documentation derived read-only from existing Sprint 10 ablation-analysis artifacts.",
+  "held_out_starts": [491, 521, 550, 580, 609, 639, 668, 698],
+  "core_metrics": [
+    "episode_reward",
+    "task_success_rate",
+    "completed",
+    "lost",
+    "unfinished",
+    "avg_task_latency_s",
+    "sla_violations",
+    "tasks_protected_before_failure",
+    "critical_success_rate",
+    "infeasible_actions",
+    "migrations",
+    "reroutes",
+    "energy_reward_cost"
+  ],
+  "experiments": [
+    {
+      "experiment": "R2 baseline",
+      "component_removed": null,
+      "episode_count": 1,
+      "episode_starts": [491],
+      "comparison_role": "descriptive one-episode legacy reference only",
+      "core_metrics": {
+        "episode_reward": -10.63804233702831,
+        "task_success_rate": 0.69999999999999996,
+        "completed": 28,
+        "lost": 12,
+        "unfinished": 0,
+        "avg_task_latency_s": 282.61000000000001,
+        "sla_violations": 1,
+        "tasks_protected_before_failure": 8,
+        "critical_success_rate": null,
+        "infeasible_actions": null,
+        "migrations": 59,
+        "reroutes": 0,
+        "energy_reward_cost": 1904.1063474365285
+      },
+      "source_file": "data/sprint8_episode_metrics.csv"
+    },
+    {
+      "experiment": "A1 No Digital Twin",
+      "component_removed": "Digital Twin decision context",
+      "episode_count": 8,
+      "episode_starts": [491, 521, 550, 580, 609, 639, 668, 698],
+      "core_metrics": {
+        "episode_reward": 1.0381176881419378,
+        "task_success_rate": 0.72812500000000002,
+        "completed": 29.125,
+        "lost": 10.125,
+        "unfinished": 0.75,
+        "avg_task_latency_s": 283.68945649781358,
+        "sla_violations": 1.375,
+        "tasks_protected_before_failure": 9.75,
+        "critical_success_rate": 0.7421875,
+        "infeasible_actions": 28.125,
+        "migrations": 60.625,
+        "reroutes": 0,
+        "energy_reward_cost": 2043.9505408477778
+      },
+      "source_file": "data/sprint10/a1_no_digital_twin/sprint10_a1_episode_metrics.csv"
+    },
+    {
+      "experiment": "A2 No Failure Prediction",
+      "component_removed": "Failure prediction",
+      "episode_count": 8,
+      "episode_starts": [491, 521, 550, 580, 609, 639, 668, 698],
+      "core_metrics": {
+        "episode_reward": -2.9247689616749994,
+        "task_success_rate": 0.71250000000000002,
+        "completed": 28.5,
+        "lost": 11.25,
+        "unfinished": 0.25,
+        "avg_task_latency_s": 279.44608750684188,
+        "sla_violations": 0.5,
+        "tasks_protected_before_failure": 8.125,
+        "critical_success_rate": 0.75,
+        "infeasible_actions": 44.125,
+        "migrations": 60.125,
+        "reroutes": 0,
+        "energy_reward_cost": 1945.084554988862
+      },
+      "source_file": "data/sprint10/a2_no_failure_prediction_rerun/sprint10_a2_episode_metrics.csv"
+    },
+    {
+      "experiment": "A3 Single-Agent PPO / No MARL",
+      "component_removed": "Multi-agent action selection",
+      "episode_count": 8,
+      "episode_starts": [491, 521, 550, 580, 609, 639, 668, 698],
+      "core_metrics": {
+        "episode_reward": -12.687471207747876,
+        "task_success_rate": 0.67500000000000004,
+        "completed": 27,
+        "lost": 12.625,
+        "unfinished": 0.375,
+        "avg_task_latency_s": 285.09319970527559,
+        "sla_violations": 1,
+        "tasks_protected_before_failure": 5.875,
+        "critical_success_rate": 0.71875,
+        "infeasible_actions": 7.875,
+        "migrations": 60.625,
+        "reroutes": 1,
+        "energy_reward_cost": 2030.245613343051
+      },
+      "source_file": "data/sprint10/a3_single_agent/sprint10_a3_episode_metrics.csv"
+    },
+    {
+      "experiment": "A4 No Criticality",
+      "component_removed": "Clinical criticality awareness",
+      "episode_count": 8,
+      "episode_starts": [491, 521, 550, 580, 609, 639, 668, 698],
+      "core_metrics": {
+        "episode_reward": -16.537981626992405,
+        "task_success_rate": 0.734375,
+        "completed": 29.375,
+        "lost": 9.5,
+        "unfinished": 1.125,
+        "avg_task_latency_s": 283.9576975918643,
+        "sla_violations": 1,
+        "tasks_protected_before_failure": 10.875,
+        "critical_success_rate": 0.6796875,
+        "infeasible_actions": 37.875,
+        "migrations": 60.25,
+        "reroutes": 0,
+        "energy_reward_cost": 2054.790086184692
+      },
+      "source_file": "data/sprint10/a4_no_criticality/sprint10_a4_episode_metrics.csv"
+    },
+    {
+      "experiment": "A5 No Uncertainty",
+      "component_removed": "Uncertainty interface",
+      "episode_count": 8,
+      "episode_starts": [491, 521, 550, 580, 609, 639, 668, 698],
+      "core_metrics": {
+        "episode_reward": -0.45835254394478397,
+        "task_success_rate": 0.72812500000000002,
+        "completed": 29.125,
+        "lost": 10.25,
+        "unfinished": 0.625,
+        "avg_task_latency_s": 284.53722966269845,
+        "sla_violations": 1.5,
+        "tasks_protected_before_failure": 9.875,
+        "critical_success_rate": 0.71875,
+        "infeasible_actions": 38.375,
+        "migrations": 60,
+        "reroutes": 0,
+        "energy_reward_cost": 2027.7386732948301
+      },
+      "source_file": "data/sprint10/a5_no_uncertainty/sprint10_a5_episode_metrics.csv"
+    }
+  ],
+  "source_files": {
+    "analysis_artifacts": [
+      "data/sprint10/ablation_analysis/ablation_results_means.csv",
+      "data/sprint10/ablation_analysis/ablation_results_comparable.csv",
+      "data/sprint10/ablation_analysis/ablation_results_metadata.json"
+    ],
+    "evaluation_sources": {
+      "R2 baseline": "data/sprint8_episode_metrics.csv",
+      "A1 No Digital Twin": "data/sprint10/a1_no_digital_twin/sprint10_a1_episode_metrics.csv",
+      "A2 No Failure Prediction": "data/sprint10/a2_no_failure_prediction_rerun/sprint10_a2_episode_metrics.csv",
+      "A3 Single-Agent PPO / No MARL": "data/sprint10/a3_single_agent/sprint10_a3_episode_metrics.csv",
+      "A4 No Criticality": "data/sprint10/a4_no_criticality/sprint10_a4_episode_metrics.csv",
+      "A5 No Uncertainty": "data/sprint10/a5_no_uncertainty/sprint10_a5_episode_metrics.csv"
+    }
+  },
+  "R2_baseline_limitation": "R2 has one legacy-schema episode at start 491. It is descriptive reference evidence only, is not an aligned eight-episode baseline, and has no fabricated episode rows or improvement claim."
+}

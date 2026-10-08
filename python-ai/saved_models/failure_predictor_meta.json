@@ -1,0 +1,33 @@
+{
+  "threshold": 0.18,
+  "feature_columns": [
+    "cpu",
+    "ram",
+    "bandwidth",
+    "energy",
+    "runningTasks",
+    "active",
+    "degraded",
+    "linkUp",
+    "linkBandwidthMbps",
+    "linkLatencyMs",
+    "linkPacketLoss",
+    "underAttack",
+    "d_cpu",
+    "d_ram",
+    "d_bandwidth",
+    "d_energy",
+    "d_runningTasks",
+    "d_active",
+    "d_degraded",
+    "d_linkUp",
+    "d_linkBandwidthMbps",
+    "d_linkLatencyMs",
+    "d_linkPacketLoss",
+    "d_underAttack",
+    "time_since_active",
+    "time_since_linkup"
+  ],
+  "sequence_length": 10,
+  "num_features": 26
+}

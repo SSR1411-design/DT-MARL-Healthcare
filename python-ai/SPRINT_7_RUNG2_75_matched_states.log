@@ -1,0 +1,212 @@
+==============================================================================
+SPRINT 7 RUNG 2.75 -- item A addendum 3: STATE-MATCHED comparison
+        both actors evaluated at the SAME states, so the state
+        distribution cannot carry the contrast
+==============================================================================
+
+  eval window      : [491, 698]
+  distinct starts  : 32
+  policy           : GREEDY (deterministic, no action noise)
+  high-risk rule   : min(int(risk*5), 4) >= 3   (production bucket)
+  decision rule    : mask.sum(-1) > 1           (production)
+  state sources    : A0, R2 (own greedy), RANDOM (uniform-legal), UNION (pooled)
+  arms SCORED      : A0, R2, A1, A2, A3   [A1, A2, A3 score only -- they generate no state source; their role is to calibrate the spread of the proposed primary metric across arms that already exist]
+
+-- states from A0's own greedy trajectory --------------
+   decision entries 43519   high-risk 2174   (5.0% of decision entries)
+   truncated 0/32   mean length 374.2
+   risk WITHIN the high-risk set: mean 0.7755  p25 0.6213  p50 0.8450  p75 0.9481
+   pi_A0: p_edge 0.1494 CI95 [0.1447, 0.1545]   argmaxE 0.0276 CI95 [0.0219, 0.0332]   maxp 0.8467  >.99 0.0000  ent 0.3653  <- this arm's own states
+          argmax {'STAY': 1936, 'MIGRATE_EDGE': 60, 'MIGRATE_CLOUD': 178, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.2023 -> risk>=0.6 0.1494  (delta -0.0529, spearman -0.0076)  CI95 [-0.0580, -0.0478]  z -20.40
+          pi(EDGE) by risk bin: [0.0,0.1) 0.203/n41219  [0.1,0.2) 0.088/n107  [0.2,0.3) 0.205/n15  [0.3,0.4) 0.593/n1  [0.5,0.6) 0.051/n3  [0.6,0.7) 0.206/n986  [0.8,0.9) 0.098/n560  [0.9,1.0) 0.107/n628
+   pi_R2: p_edge 0.3837 CI95 [0.3712, 0.3966]   argmaxE 0.4664 CI95 [0.4445, 0.4888]   maxp 0.6810  >.99 0.0446  ent 0.5759
+          argmax {'STAY': 1005, 'MIGRATE_EDGE': 1014, 'MIGRATE_CLOUD': 155, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.2006 -> risk>=0.6 0.3837  (delta +0.1831, spearman +0.0875)  CI95 [+0.1698, +0.1962]  z +27.07
+          pi(EDGE) by risk bin: [0.0,0.1) 0.200/n41219  [0.1,0.2) 0.519/n107  [0.2,0.3) 0.391/n15  [0.3,0.4) 0.089/n1  [0.5,0.6) 0.082/n3  [0.6,0.7) 0.349/n986  [0.8,0.9) 0.435/n560  [0.9,1.0) 0.392/n628
+   pi_A1: p_edge 0.3239 CI95 [0.3195, 0.3280]   argmaxE 0.0041 CI95 [0.0019, 0.0064]   maxp 0.6540  >.99 0.0000  ent 0.6271
+          argmax {'STAY': 2035, 'MIGRATE_EDGE': 9, 'MIGRATE_CLOUD': 130, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.2403 -> risk>=0.6 0.3239  (delta +0.0836, spearman +0.0651)  CI95 [+0.0795, +0.0876]  z +40.61
+          pi(EDGE) by risk bin: [0.0,0.1) 0.240/n41219  [0.1,0.2) 0.360/n107  [0.2,0.3) 0.337/n15  [0.3,0.4) 0.150/n1  [0.5,0.6) 0.424/n3  [0.6,0.7) 0.274/n986  [0.8,0.9) 0.374/n560  [0.9,1.0) 0.357/n628
+   pi_A2: p_edge 0.4924 CI95 [0.4866, 0.4985]   argmaxE 0.4793 CI95 [0.4608, 0.4986]   maxp 0.6109  >.99 0.0000  ent 0.6757
+          argmax {'STAY': 956, 'MIGRATE_EDGE': 1042, 'MIGRATE_CLOUD': 176, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.4954 -> risk>=0.6 0.4924  (delta -0.0029, spearman -0.0073)  CI95 [-0.0089, +0.0034]  z -0.95
+          pi(EDGE) by risk bin: [0.0,0.1) 0.495/n41219  [0.1,0.2) 0.451/n107  [0.2,0.3) 0.320/n15  [0.3,0.4) 0.228/n1  [0.5,0.6) 0.538/n3  [0.6,0.7) 0.463/n986  [0.8,0.9) 0.504/n560  [0.9,1.0) 0.529/n628
+   pi_A3: p_edge 0.4164 CI95 [0.4076, 0.4248]   argmaxE 0.3845 CI95 [0.3628, 0.4075]   maxp 0.6874  >.99 0.0000  ent 0.6224
+          argmax {'STAY': 1160, 'MIGRATE_EDGE': 836, 'MIGRATE_CLOUD': 178, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.3325 -> risk>=0.6 0.4164  (delta +0.0838, spearman +0.0294)  CI95 [+0.0769, +0.0906]  z +23.66
+          pi(EDGE) by risk bin: [0.0,0.1) 0.332/n41219  [0.1,0.2) 0.441/n107  [0.2,0.3) 0.481/n15  [0.3,0.4) 0.308/n1  [0.5,0.6) 0.364/n3  [0.6,0.7) 0.443/n986  [0.8,0.9) 0.403/n560  [0.9,1.0) 0.386/n628
+   PAIRED within-state  pi_R2 - pi_A0 = +0.2343  CI95 [+0.2212, +0.2479]  z +33.96  R2 higher at 87.8% of entries
+
+-- states from R2's own greedy trajectory --------------
+   decision entries 30718   high-risk 1418   (4.6% of decision entries)
+   truncated 17/32   mean length 392.1
+   risk WITHIN the high-risk set: mean 0.7562  p25 0.6213  p50 0.6799  p75 0.8808
+   pi_A0: p_edge 0.3366 CI95 [0.3183, 0.3548]   argmaxE 0.4006 CI95 [0.3631, 0.4375]   maxp 0.6945  >.99 0.0000  ent 0.5549
+          argmax {'STAY': 740, 'MIGRATE_EDGE': 568, 'MIGRATE_CLOUD': 110, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.2068 -> risk>=0.6 0.3366  (delta +0.1298, spearman +0.0635)  CI95 [+0.1108, +0.1493]  z +13.14
+          pi(EDGE) by risk bin: [0.0,0.1) 0.207/n29262  [0.1,0.2) 0.311/n33  [0.2,0.3) 0.068/n3  [0.5,0.6) 0.051/n2  [0.6,0.7) 0.362/n765  [0.8,0.9) 0.334/n325  [0.9,1.0) 0.280/n328
+   pi_R2: p_edge 0.1721 CI95 [0.1630, 0.1824]   argmaxE 0.0860 CI95 [0.0726, 0.1011]   maxp 0.8162  >.99 0.1065  ent 0.3994  <- this arm's own states
+          argmax {'STAY': 1196, 'MIGRATE_EDGE': 122, 'MIGRATE_CLOUD': 100, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.0600 -> risk>=0.6 0.1721  (delta +0.1121, spearman +0.0867)  CI95 [+0.1032, +0.1223]  z +23.14
+          pi(EDGE) by risk bin: [0.0,0.1) 0.060/n29262  [0.1,0.2) 0.351/n33  [0.2,0.3) 0.529/n3  [0.5,0.6) 0.082/n2  [0.6,0.7) 0.165/n765  [0.8,0.9) 0.137/n325  [0.9,1.0) 0.224/n328
+   pi_A1: p_edge 0.2329 CI95 [0.2178, 0.2476]   argmaxE 0.0000 CI95 [0.0000, 0.0000]   maxp 0.7509  >.99 0.0000  ent 0.5221
+          argmax {'STAY': 1338, 'MIGRATE_EDGE': 0, 'MIGRATE_CLOUD': 80, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.2039 -> risk>=0.6 0.2329  (delta +0.0290, spearman +0.0188)  CI95 [+0.0160, +0.0414]  z +4.41
+          pi(EDGE) by risk bin: [0.0,0.1) 0.204/n29262  [0.1,0.2) 0.259/n33  [0.2,0.3) 0.379/n3  [0.5,0.6) 0.430/n2  [0.6,0.7) 0.208/n765  [0.8,0.9) 0.249/n325  [0.9,1.0) 0.275/n328
+   pi_A2: p_edge 0.3677 CI95 [0.3531, 0.3825]   argmaxE 0.2997 CI95 [0.2592, 0.3426]   maxp 0.6579  >.99 0.0000  ent 0.6318
+          argmax {'STAY': 883, 'MIGRATE_EDGE': 425, 'MIGRATE_CLOUD': 110, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.4292 -> risk>=0.6 0.3677  (delta -0.0616, spearman -0.0121)  CI95 [-0.0759, -0.0468]  z -8.31
+          pi(EDGE) by risk bin: [0.0,0.1) 0.429/n29262  [0.1,0.2) 0.332/n33  [0.2,0.3) 0.387/n3  [0.5,0.6) 0.539/n2  [0.6,0.7) 0.361/n765  [0.8,0.9) 0.346/n325  [0.9,1.0) 0.404/n328
+   pi_A3: p_edge 0.3847 CI95 [0.3765, 0.3937]   argmaxE 0.2038 CI95 [0.1775, 0.2316]   maxp 0.6764  >.99 0.0000  ent 0.6396
+          argmax {'STAY': 1019, 'MIGRATE_EDGE': 289, 'MIGRATE_CLOUD': 110, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.2795 -> risk>=0.6 0.3847  (delta +0.1052, spearman +0.0361)  CI95 [+0.0924, +0.1172]  z +16.53
+          pi(EDGE) by risk bin: [0.0,0.1) 0.279/n29262  [0.1,0.2) 0.456/n33  [0.2,0.3) 0.560/n3  [0.5,0.6) 0.365/n2  [0.6,0.7) 0.386/n765  [0.8,0.9) 0.345/n325  [0.9,1.0) 0.420/n328
+   PAIRED within-state  pi_R2 - pi_A0 = -0.1645  CI95 [-0.1837, -0.1448]  z -16.44  R2 higher at 42.0% of entries
+
+-- states from uniform-random legal actions (POLICY-INDEPENDENT) ----
+   decision entries 4975   high-risk 216   (4.3% of decision entries)
+   truncated 26/32   mean length 397.3
+   risk WITHIN the high-risk set: mean 0.7884  p25 0.6213  p50 0.8450  p75 0.9481
+   pi_A0: p_edge 0.1261 CI95 [0.0982, 0.1540]   argmaxE 0.0833 CI95 [0.0316, 0.1373]   maxp 0.8573  >.99 0.0000  ent 0.3664
+          argmax {'STAY': 141, 'MIGRATE_EDGE': 18, 'MIGRATE_CLOUD': 57, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.1525 -> risk>=0.6 0.1261  (delta -0.0264, spearman -0.0286)  CI95 [-0.0543, +0.0008]  z -1.86
+          pi(EDGE) by risk bin: [0.0,0.1) 0.153/n4739  [0.1,0.2) 0.123/n18  [0.2,0.3) 0.070/n2  [0.6,0.7) 0.163/n90  [0.8,0.9) 0.106/n56  [0.9,1.0) 0.095/n70
+   pi_R2: p_edge 0.3449 CI95 [0.2942, 0.3976]   argmaxE 0.4630 CI95 [0.3596, 0.5723]   maxp 0.6485  >.99 0.0185  ent 0.6379
+          argmax {'STAY': 69, 'MIGRATE_EDGE': 100, 'MIGRATE_CLOUD': 47, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.1425 -> risk>=0.6 0.3449  (delta +0.2024, spearman +0.0777)  CI95 [+0.1534, +0.2554]  z +7.72
+          pi(EDGE) by risk bin: [0.0,0.1) 0.141/n4739  [0.1,0.2) 0.444/n18  [0.2,0.3) 0.524/n2  [0.6,0.7) 0.296/n90  [0.8,0.9) 0.363/n56  [0.9,1.0) 0.394/n70
+   pi_A1: p_edge 0.3173 CI95 [0.2844, 0.3503]   argmaxE 0.0139 CI95 [0.0000, 0.0308]   maxp 0.6206  >.99 0.0000  ent 0.6876
+          argmax {'STAY': 161, 'MIGRATE_EDGE': 3, 'MIGRATE_CLOUD': 52, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.1799 -> risk>=0.6 0.3173  (delta +0.1375, spearman +0.0831)  CI95 [+0.1052, +0.1706]  z +8.15
+          pi(EDGE) by risk bin: [0.0,0.1) 0.179/n4739  [0.1,0.2) 0.296/n18  [0.2,0.3) 0.413/n2  [0.6,0.7) 0.293/n90  [0.8,0.9) 0.326/n56  [0.9,1.0) 0.342/n70
+   pi_A2: p_edge 0.3779 CI95 [0.3360, 0.4206]   argmaxE 0.2917 CI95 [0.1708, 0.4206]   maxp 0.6366  >.99 0.0000  ent 0.6938
+          argmax {'STAY': 97, 'MIGRATE_EDGE': 63, 'MIGRATE_CLOUD': 56, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.3381 -> risk>=0.6 0.3779  (delta +0.0398, spearman +0.0100)  CI95 [-0.0011, +0.0828]  z +1.87
+          pi(EDGE) by risk bin: [0.0,0.1) 0.338/n4739  [0.1,0.2) 0.307/n18  [0.2,0.3) 0.384/n2  [0.6,0.7) 0.377/n90  [0.8,0.9) 0.384/n56  [0.9,1.0) 0.374/n70
+   pi_A3: p_edge 0.3834 CI95 [0.3460, 0.4226]   argmaxE 0.3611 CI95 [0.2574, 0.4774]   maxp 0.6407  >.99 0.0000  ent 0.7030
+          argmax {'STAY': 81, 'MIGRATE_EDGE': 78, 'MIGRATE_CLOUD': 57, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.2512 -> risk>=0.6 0.3834  (delta +0.1322, spearman +0.0349)  CI95 [+0.0918, +0.1764]  z +6.19
+          pi(EDGE) by risk bin: [0.0,0.1) 0.250/n4739  [0.1,0.2) 0.477/n18  [0.2,0.3) 0.569/n2  [0.6,0.7) 0.383/n90  [0.8,0.9) 0.362/n56  [0.9,1.0) 0.401/n70
+   PAIRED within-state  pi_R2 - pi_A0 = +0.2188  CI95 [+0.1559, +0.2907]  z +6.29  R2 higher at 82.9% of entries
+
+-- states from A0's states POOLED with R2's (SYMMETRIC) ----
+   decision entries 74237   high-risk 3592   (4.8% of decision entries)
+   truncated 17/32   mean length 383.1
+   risk WITHIN the high-risk set: mean 0.7679  p25 0.6213  p50 0.8450  p75 0.9481
+   pi_A0: p_edge 0.2233 CI95 [0.2011, 0.2477]   argmaxE 0.1748 CI95 [0.1305, 0.2227]   maxp 0.7866  >.99 0.0000  ent 0.4402
+          argmax {'STAY': 2676, 'MIGRATE_EDGE': 628, 'MIGRATE_CLOUD': 288, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.2042 -> risk>=0.6 0.2233  (delta +0.0191, spearman +0.0232)  CI95 [-0.0020, +0.0434]  z +1.62
+          pi(EDGE) by risk bin: [0.0,0.1) 0.204/n70481  [0.1,0.2) 0.141/n140  [0.2,0.3) 0.183/n18  [0.3,0.4) 0.593/n1  [0.5,0.6) 0.051/n5  [0.6,0.7) 0.274/n1751  [0.8,0.9) 0.184/n885  [0.9,1.0) 0.167/n956
+   pi_R2: p_edge 0.3002 CI95 [0.2732, 0.3264]   argmaxE 0.3163 CI95 [0.2674, 0.3620]   maxp 0.7344  >.99 0.0690  ent 0.5062
+          argmax {'STAY': 2201, 'MIGRATE_EDGE': 1136, 'MIGRATE_CLOUD': 255, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.1423 -> risk>=0.6 0.3002  (delta +0.1579, spearman +0.0860)  CI95 [+0.1445, +0.1710]  z +23.25
+          pi(EDGE) by risk bin: [0.0,0.1) 0.142/n70481  [0.1,0.2) 0.479/n140  [0.2,0.3) 0.414/n18  [0.3,0.4) 0.089/n1  [0.5,0.6) 0.082/n5  [0.6,0.7) 0.269/n1751  [0.8,0.9) 0.326/n885  [0.9,1.0) 0.334/n956
+   pi_A1: p_edge 0.2880 CI95 [0.2748, 0.2995]   argmaxE 0.0025 CI95 [0.0011, 0.0040]   maxp 0.6923  >.99 0.0000  ent 0.5856
+          argmax {'STAY': 3373, 'MIGRATE_EDGE': 9, 'MIGRATE_CLOUD': 210, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.2252 -> risk>=0.6 0.2880  (delta +0.0628, spearman +0.0453)  CI95 [+0.0536, +0.0710]  z +14.14
+          pi(EDGE) by risk bin: [0.0,0.1) 0.225/n70481  [0.1,0.2) 0.336/n140  [0.2,0.3) 0.344/n18  [0.3,0.4) 0.150/n1  [0.5,0.6) 0.426/n5  [0.6,0.7) 0.245/n1751  [0.8,0.9) 0.329/n885  [0.9,1.0) 0.328/n956
+   pi_A2: p_edge 0.4432 CI95 [0.4263, 0.4586]   argmaxE 0.4084 CI95 [0.3787, 0.4357]   maxp 0.6295  >.99 0.0000  ent 0.6583
+          argmax {'STAY': 1839, 'MIGRATE_EDGE': 1467, 'MIGRATE_CLOUD': 286, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.4679 -> risk>=0.6 0.4432  (delta -0.0248, spearman -0.0105)  CI95 [-0.0362, -0.0143]  z -4.42
+          pi(EDGE) by risk bin: [0.0,0.1) 0.468/n70481  [0.1,0.2) 0.423/n140  [0.2,0.3) 0.331/n18  [0.3,0.4) 0.228/n1  [0.5,0.6) 0.538/n5  [0.6,0.7) 0.418/n1751  [0.8,0.9) 0.446/n885  [0.9,1.0) 0.486/n956
+   pi_A3: p_edge 0.4039 CI95 [0.3967, 0.4112]   argmaxE 0.3132 CI95 [0.2860, 0.3401]   maxp 0.6830  >.99 0.0000  ent 0.6292
+          argmax {'STAY': 2179, 'MIGRATE_EDGE': 1125, 'MIGRATE_CLOUD': 288, 'PREEMPT_REROUTE': 0}
+          risk response (ALL decision entries of this set): p_edge risk<0.2 0.3105 -> risk>=0.6 0.4039  (delta +0.0933, spearman +0.0323)  CI95 [+0.0861, +0.1008]  z +24.90
+          pi(EDGE) by risk bin: [0.0,0.1) 0.310/n70481  [0.1,0.2) 0.445/n140  [0.2,0.3) 0.494/n18  [0.3,0.4) 0.308/n1  [0.5,0.6) 0.365/n5  [0.6,0.7) 0.418/n1751  [0.8,0.9) 0.382/n885  [0.9,1.0) 0.397/n956
+   PAIRED within-state  pi_R2 - pi_A0 = +0.0769  CI95 [+0.0264, +0.1231]  z +3.13  R2 higher at 69.7% of entries
+
+==============================================================================
+DIAGONAL PARITY -- does the cross-evaluation reproduce the headline?
+==============================================================================
+  A0: 60/2174   headline 60/2174   MATCH
+  R2: 122/1418   headline 122/1418   MATCH
+
+==============================================================================
+VERDICT -- pi(MIGRATE_EDGE | high-risk state), by state source
+==============================================================================
+   states from     pi_A0     pi_R2     R2-A0       z  argmaxE A0  argmaxE R2  note
+            A0    0.1494    0.3837   +0.2343  +33.96      0.0276      0.4664  CONFOUNDED: selected by A0
+            R2    0.3366    0.1721   -0.1645  -16.44      0.4006      0.0860  CONFOUNDED: selected by R2
+        RANDOM    0.1261    0.3449   +0.2188   +6.29      0.0833      0.4630  policy-independent
+         UNION    0.2233    0.3002   +0.0769   +3.13      0.1748      0.3163  symmetric
+
+  sign of (pi_R2 - pi_A0) by source: A0 +  R2 -  RANDOM +  UNION +
+  consistent across ALL sources          : NO
+  consistent across each arm's OWN states: NO
+  consistent across NEUTRAL sources      : YES  (sign +)
+
+  -> the ON-POLICY share REVERSES between the two arms' own
+     state sets, so as computed since Sprint 6 it does NOT
+     measure a property of the policy. Each arm scores LOW on
+     its own states and HIGH on the other's -- an on-policy
+     selection effect: choosing STAY is what keeps an agent in a
+     high-risk state, so conditioning on 'currently high-risk'
+     selects for 'just chose STAY'. Both the Rung 2 'win' and
+     the Rung 2.5 'loss' therefore fail as policy-quality claims.
+
+  -> BUT on state sets that privilege neither arm (RANDOM, UNION),
+     R2 has HIGHER pi(EDGE) at high risk than A0, consistently.
+     The confound invalidated the METRIC, not the direction of
+     the underlying policy difference.
+
+==============================================================================
+UNCONFOUNDED ALTERNATIVE -- risk RESPONSE on a FIXED state set
+   (this is what the project's primary question actually asks: does
+    the policy change its decision as predicted_failure_risk rises?)
+==============================================================================
+     state set  arm  p_edge r<.2  p_edge r>=.6     delta       z  spearman  note
+            A0   A0       0.2023        0.1494   -0.0529  -20.40   -0.0076  own states -- still selected
+            A0   R2       0.2006        0.3837   +0.1831  +27.07   +0.0875  
+            A0   A1       0.2403        0.3239   +0.0836  +40.61   +0.0651  
+            A0   A2       0.4954        0.4924   -0.0029   -0.95   -0.0073  
+            A0   A3       0.3325        0.4164   +0.0838  +23.66   +0.0294  
+            R2   A0       0.2068        0.3366   +0.1298  +13.14   +0.0635  
+            R2   R2       0.0600        0.1721   +0.1121  +23.14   +0.0867  own states -- still selected
+            R2   A1       0.2039        0.2329   +0.0290   +4.41   +0.0188  
+            R2   A2       0.4292        0.3677   -0.0616   -8.31   -0.0121  
+            R2   A3       0.2795        0.3847   +0.1052  +16.53   +0.0361  
+        RANDOM   A0       0.1525        0.1261   -0.0264   -1.86   -0.0286  
+        RANDOM   R2       0.1425        0.3449   +0.2024   +7.72   +0.0777  
+        RANDOM   A1       0.1799        0.3173   +0.1375   +8.15   +0.0831  
+        RANDOM   A2       0.3381        0.3779   +0.0398   +1.87   +0.0100  
+        RANDOM   A3       0.2512        0.3834   +0.1322   +6.19   +0.0349  
+         UNION   A0       0.2042        0.2233   +0.0191   +1.62   +0.0232  
+         UNION   R2       0.1423        0.3002   +0.1579  +23.25   +0.0860  
+         UNION   A1       0.2252        0.2880   +0.0628  +14.14   +0.0453  
+         UNION   A2       0.4679        0.4432   -0.0248   -4.42   -0.0105  
+         UNION   A3       0.3105        0.4039   +0.0933  +24.90   +0.0323  
+
+  reading the NEUTRAL rows only (the rows with no selection in them):
+      RANDOM: A0 -0.0264   R2 +0.2024   -> R2 responds to risk, A0 does not
+       UNION: A0 +0.0191   R2 +0.1579   -> both respond
+
+==============================================================================
+CALIBRATION -- the proposed primary metric across ALL EXISTING
+   arms, on the NEUTRAL (policy-independent / symmetric) sets.
+   Purpose: set the next rung's GO threshold against observed
+   between-arm spread rather than an invented number.
+==============================================================================
+
+  -- state set RANDOM ----------------------------------------
+      arm     delta   ci95_lo   ci95_hi       z        p  spearman
+       A0   -0.0264   -0.0543   +0.0008   -1.86   0.0634   -0.0286
+       R2   +0.2024   +0.1534   +0.2554   +7.72   0.0000   +0.0777
+       A1   +0.1375   +0.1052   +0.1706   +8.15   0.0000   +0.0831
+       A2   +0.0398   -0.0011   +0.0828   +1.87   0.0612   +0.0100
+       A3   +0.1322   +0.0918   +0.1764   +6.19   0.0000   +0.0349
+     across 5 existing arms: min -0.0264  max +0.2024  range 0.2289  sd 0.0901  best R2  positive 4/5
+     median within-arm CI95 half-width 0.0419  -> a next-rung delta must clear BOTH the best existing arm and its own interval
+
+  -- state set UNION ----------------------------------------
+      arm     delta   ci95_lo   ci95_hi       z        p  spearman
+       A0   +0.0191   -0.0020   +0.0434   +1.62   0.1050   +0.0232
+       R2   +0.1579   +0.1445   +0.1710  +23.25   0.0000   +0.0860
+       A1   +0.0628   +0.0536   +0.0710  +14.14   0.0000   +0.0453
+       A2   -0.0248   -0.0362   -0.0143   -4.42   0.0000   -0.0105
+       A3   +0.0933   +0.0861   +0.1008  +24.90   0.0000   +0.0323
+     across 5 existing arms: min -0.0248  max +0.1579  range 0.1826  sd 0.0699  best R2  positive 4/5
+     median within-arm CI95 half-width 0.0109  -> a next-rung delta must clear BOTH the best existing arm and its own interval
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_75_matched_states_main.json
+==============================================================================

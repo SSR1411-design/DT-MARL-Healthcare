@@ -1,0 +1,41 @@
+==============================================================================
+SPRINT 7 RUNG 2.75 -- item B dynamic: actor PLASTICITY under a
+        KNOWN-FAVOURABLE synthetic advantage (diagnostic upper
+        bound; deepcopy only, never saved, not a proposed fix)
+==============================================================================
+
+-- A0 (mappo_A0_cpu_repro.pth) --------------------------------
+   T=3100  decision entries=3452  high-risk=212  truncated=5/8
+   BEFORE  p_edge 0.0803  p_stay 0.8370  maxp 0.9147  >.99 0.0000  ent 0.2617  argmaxE 0.0000  atten 0.1795
+           argmax {'STAY': 193, 'MIGRATE_EDGE': 0, 'MIGRATE_CLOUD': 19, 'PREEMPT_REROUTE': 0}
+   M=1 after  1 update(s): p_edge 0.0815 (+0.0012)  p_stay 0.8358 (-0.0012)  ent 0.2647  argmaxE 0.0000  |dtheta| 1.2537e-02  clip 0.000
+   M=1 after  2 update(s): p_edge 0.0833 (+0.0030)  p_stay 0.8340 (-0.0030)  ent 0.2690  argmaxE 0.0000  |dtheta| 2.8581e-02  clip 0.000
+   M=1 after  3 update(s): p_edge 0.0853 (+0.0050)  p_stay 0.8320 (-0.0050)  ent 0.2738  argmaxE 0.0000  |dtheta| 4.6190e-02  clip 0.000
+   M=1 after  5 update(s): p_edge 0.0896 (+0.0093)  p_stay 0.8278 (-0.0092)  ent 0.2835  argmaxE 0.0000  |dtheta| 8.1382e-02  clip 0.002
+   M=1 after 10 update(s): p_edge 0.1000 (+0.0196)  p_stay 0.8175 (-0.0195)  ent 0.3055  argmaxE 0.0000  |dtheta| 1.5712e-01  clip 0.006
+   M=3 after  1 update(s): p_edge 0.0832 (+0.0029)  p_stay 0.8342 (-0.0028)  ent 0.2686  argmaxE 0.0000  |dtheta| 2.6989e-02  clip 0.000
+
+-- R2 (mappo_R2_mc_target.pth) --------------------------------
+   T=3200  decision entries=4967  high-risk=269  truncated=8/8
+   BEFORE  p_edge 0.0503  p_stay 0.8683  maxp 0.9291  >.99 0.4721  ent 0.1948  argmaxE 0.0223  atten 0.1324
+           argmax {'STAY': 235, 'MIGRATE_EDGE': 6, 'MIGRATE_CLOUD': 28, 'PREEMPT_REROUTE': 0}
+   M=1 after  1 update(s): p_edge 0.0507 (+0.0004)  p_stay 0.8678 (-0.0004)  ent 0.1957  argmaxE 0.0223  |dtheta| 7.1193e-03  clip 0.000
+   M=1 after  2 update(s): p_edge 0.0514 (+0.0011)  p_stay 0.8671 (-0.0012)  ent 0.1973  argmaxE 0.0223  |dtheta| 1.8223e-02  clip 0.000
+   M=1 after  3 update(s): p_edge 0.0523 (+0.0020)  p_stay 0.8662 (-0.0021)  ent 0.1991  argmaxE 0.0223  |dtheta| 3.0593e-02  clip 0.000
+   M=1 after  5 update(s): p_edge 0.0540 (+0.0037)  p_stay 0.8643 (-0.0040)  ent 0.2029  argmaxE 0.0223  |dtheta| 5.6609e-02  clip 0.000
+   M=1 after 10 update(s): p_edge 0.0584 (+0.0081)  p_stay 0.8597 (-0.0086)  ent 0.2120  argmaxE 0.0223  |dtheta| 1.1605e-01  clip 0.003
+   M=3 after  1 update(s): p_edge 0.0514 (+0.0011)  p_stay 0.8671 (-0.0012)  ent 0.1973  argmaxE 0.0223  |dtheta| 1.8097e-02  clip 0.000
+
+==============================================================================
+MATCHED CONTRAST -- response per unit of PERFECT advantage
+==============================================================================
+        p_edge@hi before  after 10 x M=1     delta      x   atten   |dtheta|
+  A0              0.0803          0.1000   +0.0196   1.24  0.1795 1.5712e-01
+  R2              0.0503          0.0584   +0.0081   1.16  0.1324 1.1605e-01
+
+  argmax == MIGRATE_EDGE at high risk, before -> after:
+    A0: 0.0000 -> 0.0000   (saturated >.99: 0.0000 -> 0.0000)
+    R2: 0.0223 -> 0.0223   (saturated >.99: 0.4721 -> 0.4721)
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_75_plasticity_main.json
+==============================================================================

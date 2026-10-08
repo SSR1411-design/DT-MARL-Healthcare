@@ -1,0 +1,48 @@
+==============================================================================
+SPRINT 7 RUNG 2.5 -- stages 1-3: truncation + target decomposition
+==============================================================================
+  model            : D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\mappo_R2_mc_target.pth
+  critic_target    : mc   gamma=0.999
+  replay           : stochastic (matches train.py)
+  continuation     : greedy
+  episodes         : 200 (start ticks reproduced from train.py rng seed 20260818)
+    25/200 replayed
+    50/200 replayed
+    75/200 replayed
+    100/200 replayed
+    125/200 replayed
+    150/200 replayed
+    175/200 replayed
+    200/200 replayed
+
+-- stage 1: episode-end classification -----------------------
+  term  (all tasks terminal BEFORE step 400)        : 64
+  both  (terminal AND at step 400; train.py bootstrapped): 6
+  trunc (live at step 400; bootstrap justified)     : 130
+  => train.py would flag truncated for 136/200 (68.0%)
+
+-- V(s_T) vs the TRUE remaining return at the boundary -------
+  [trunc] n_ep=130  V(s_T) +0.2760 (sd 0.8589)  true tail +0.3536 (sd 0.9729)  mean|V-true| 0.6778
+  [both ] n_ep=  6  V(s_T) +0.0870 (sd 0.7671)  true tail +0.0000 (sd 0.0000)  mean|V-true| 0.5668
+  post-terminal probe: 120 forced steps across 6 'both' episodes, sum|reward| = 0.000000  -> tail really is zero
+
+-- stage 2: bootstrap contribution to the R2 target ----------
+   (bootstrapped episodes only; per-agent entries pooled)
+   NOTE: signed means are near zero because rewards are two-sided,
+   so mean|.| is the magnitude that matters, not mean.
+  episode start   t=0: mean|boot|   0.407  mean|reward-only|   6.289  mean|target|   6.620  |boot|share mean 0.094 p50 0.058 p95 0.320
+  midpoint     t=T/2: mean|boot|   0.497  mean|reward-only|   5.188  mean|target|   5.548  |boot|share mean 0.135 p50 0.086 p95 0.475
+  just before  t=T-1: mean|boot|   0.607  mean|reward-only|   0.045  mean|target|   0.632  |boot|share mean 0.967 p50 0.999 p95 1.000
+
+-- stage 3: continuation-MC availability ---------------------
+  truncated episodes                     : 130
+  continuation attempted                 : 130
+  reached GENUINE terminal (exact)       : 130
+  censored by trace end (bounds only)    : 0
+  MAD(R2 target, continuation-MC)        : 0.5583
+  MAD(reward-only, continuation-MC)      : 0.3307
+  mean signed (R2 - continuation)        : -0.0639
+  corr(R2, cont)=0.9941  corr(reward-only, cont)=0.9939
+
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG2_5_targets_R2_contGREEDY.json
+==============================================================================

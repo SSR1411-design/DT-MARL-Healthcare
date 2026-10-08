@@ -1,0 +1,75 @@
+{
+  "schema_version": "sprint11.v1",
+  "campaign": "Sprint 11 pure task-count scaling additions",
+  "reference_scenario_id": "s11-d15e537cb76b5836",
+  "scenarios": [
+    {
+      "description": "Pure task-count sweep: only task_count differs from the reference; patient_count remains fixed at 10.",
+      "host_count": 10,
+      "edge_node_count": 10,
+      "device_count": 10,
+      "task_count": 80,
+      "patient_count": 10,
+      "bandwidth_mbps": 100.0,
+      "failure_intensity": 1.0,
+      "trials": 4,
+      "planned_policies": [
+        "baseline",
+        "frozen_r2_mappo_if_aligned_oof"
+      ],
+      "failure_parameters": {
+        "fault_onset_probability_per_tick": 0.0018,
+        "background_wear_per_tick": 0.00015,
+        "fault_episode_wear_per_tick": 0.01,
+        "wear_noise_sigma": 0.45,
+        "susceptibility_min": 0.6,
+        "susceptibility_max": 1.8,
+        "severity_min": 0.5,
+        "severity_max": 2.0,
+        "hazard_scale": 0.01,
+        "hazard_shape": 4.0,
+        "abrupt_failure_probability": 0.15,
+        "abrupt_wear_multiplier": 40.0,
+        "degrading_wear_threshold": 0.25,
+        "critical_wear_threshold": 0.7,
+        "repair_ticks_min": 12,
+        "repair_ticks_max": 45,
+        "imperfect_repair_retention": 0.3
+      }
+    },
+    {
+      "description": "Pure task-count sweep: only task_count differs from the reference; patient_count remains fixed at 10.",
+      "host_count": 10,
+      "edge_node_count": 10,
+      "device_count": 10,
+      "task_count": 120,
+      "patient_count": 10,
+      "bandwidth_mbps": 100.0,
+      "failure_intensity": 1.0,
+      "trials": 4,
+      "planned_policies": [
+        "baseline",
+        "frozen_r2_mappo_if_aligned_oof"
+      ],
+      "failure_parameters": {
+        "fault_onset_probability_per_tick": 0.0018,
+        "background_wear_per_tick": 0.00015,
+        "fault_episode_wear_per_tick": 0.01,
+        "wear_noise_sigma": 0.45,
+        "susceptibility_min": 0.6,
+        "susceptibility_max": 1.8,
+        "severity_min": 0.5,
+        "severity_max": 2.0,
+        "hazard_scale": 0.01,
+        "hazard_shape": 4.0,
+        "abrupt_failure_probability": 0.15,
+        "abrupt_wear_multiplier": 40.0,
+        "degrading_wear_threshold": 0.25,
+        "critical_wear_threshold": 0.7,
+        "repair_ticks_min": 12,
+        "repair_ticks_max": 45,
+        "imperfect_repair_retention": 0.3
+      }
+    }
+  ]
+}

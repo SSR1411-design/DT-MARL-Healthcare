@@ -1,0 +1,26 @@
+==============================================================================
+SPRINT 7 - RUNG 1: offline critic diagnostic (NO PPO TRAINING)
+==============================================================================
+  model      : mappo_A0_cpu_repro.pth
+  gamma=0.999 lambda=0.995 critic_hidden=[256, 256] lr_critic=0.001 value_clip_eps=0.2
+
+-- phase A: baselines (identical starts/seeds to Rung 0) ------
+  window     : 0.00-0.70 ticks [9, 491]
+  starts     : [9, 41, 73, 105, 138, 170, 202, 234, 266, 298, 330, 362, 395, 427, 459, 491]
+  baseline mean reward +13.0725  (19s)
+  gae replica vs MAPPO.compute_gae: ok=True max|dadv|=0.00e+00
+  dataset    : 5875 timesteps x 10 agents, state_dim=489
+  split      : train 4459 / val 1416 timesteps (val = episodes [12, 13, 14, 15])
+  truncated episodes (hit step limit 400): 0 / 16  -> MC targets are EXACT
+
+-- phase B: offline critic fits ------------------------------
+    C1: best val MC-MSE 22.2205 at epoch 93 (134 epochs run)
+    C2: best val MC-MSE 87.3055 at epoch 4 (45 epochs run)
+    C3: best val MC-MSE 24.1650 at epoch 125 (166 epochs run)
+
+-- phase C: residual vs risk ---------------------------------
+    C0: val EV +0.6815  val MSE   52.398  resid lo  -3.306 hi  -4.380  slope  -1.5916
+    C1: val EV +0.8208  val MSE   22.221  resid lo  -0.122 hi  -0.327  slope  -0.2869
+    C2: val EV +0.3101  val MSE   87.305  resid lo  +2.891 hi  +2.875  slope  -0.2019
+    C3: val EV +0.8040  val MSE   24.165  resid lo  +0.020 hi  -0.206  slope  -0.3144
+  wrote D:\MY_GURL\RESEARCH_PAPER\DT-MARL-Healthcare\python-ai\saved_models\marl\SPRINT_7_RUNG1_critic_fit_and_residual.json

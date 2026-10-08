@@ -43,11 +43,21 @@ public class FailureManager {
 
     private final List<FailureEvent> eventLog = new ArrayList<>();
 
-    private final Random random = new Random();
+    private final Random random;
 
     public FailureManager(List<Host> hosts, DigitalTwinManager digitalTwin) {
+        this(hosts, digitalTwin, 0L);
+    }
+
+    /**
+     * @param seed RNG seed. Seeded explicitly so a run is reproducible - the
+     *             previous unseeded Random made the exported dataset
+     *             impossible to regenerate.
+     */
+    public FailureManager(List<Host> hosts, DigitalTwinManager digitalTwin, long seed) {
         this.hosts = hosts;
         this.digitalTwin = digitalTwin;
+        this.random = new Random(seed);
     }
 
     // ==========================================
@@ -152,10 +162,18 @@ public class FailureManager {
 
     private void checkOverload(int hostId, double currentTime) {
 
-        Host host = hosts.get(hostId);
-        double cpuPercent = host.getCpuPercentUtilization() * 100;
-
+        // Read the CPU from the Digital Twin, not straight from CloudSim.
+        // The twin carries the degradation overlay applied by
+        // HostDegradationManager earlier in the same tick, so overload is now
+        // a genuine consequence of a developing fault (a throttling host
+        // really does saturate) instead of a constant.
         EdgeNode node = digitalTwin.getNode(hostId);
+
+        Host host = hosts.get(hostId);
+
+        double cpuPercent = node != null
+                ? node.getCpuUsage()
+                : host.getCpuPercentUtilization() * 100;
 
         boolean isOverloaded = cpuPercent >= overloadCpuThreshold;
         boolean wasOverloaded = currentlyOverloaded.contains(hostId);
@@ -194,6 +212,111 @@ public class FailureManager {
 
             System.out.println("\n<<< OVERLOAD END <<< " + event + "\n");
         }
+    }
+
+    // ==========================================
+    // Wear-driven failure / recovery
+    //
+    // Entry points for HostDegradationManager, which owns the progressive
+    // degradation model. Kept here so that ALL host up/down transitions go
+    // through one place and land in one event log.
+    // ==========================================
+
+    /**
+     * Fails a host because accumulated wear crossed the failure hazard.
+     *
+     * Called by {@link HostDegradationManager} at the moment the hazard draw
+     * succeeds - the failure instant is decided on the tick it happens, it is
+     * never scheduled in advance, so no future timestamp exists that could
+     * leak into the telemetry.
+     *
+     * @param mode     the fault mechanism that killed the host
+     * @param wear     latent wear at the moment of failure
+     * @param severity severity of the episode
+     * @param leadTime seconds of OBSERVABLE degradation that preceded this
+     *                 failure (0 for an abrupt failure with no warning)
+     */
+    public void triggerWearFailure(int hostId,
+                                   double currentTime,
+                                   HostFaultMode mode,
+                                   double wear,
+                                   double severity,
+                                   double leadTime) {
+
+        if (failedHosts.contains(hostId)) {
+            return;
+        }
+
+        Host host = hosts.get(hostId);
+        double cpuAtEvent = host.getCpuPercentUtilization() * 100;
+
+        host.setActive(false);
+
+        EdgeNode node = digitalTwin.getNode(hostId);
+
+        if (node != null) {
+            node.setActive(false);
+            node.setDegraded(false);
+            node.setHealthState(EdgeNode.HealthState.FAILED);
+        }
+
+        failedHosts.add(hostId);
+        currentlyOverloaded.remove(hostId);
+
+        FailureEvent event = new FailureEvent(
+                hostId, currentTime, FailureEvent.Type.HOST_FAILURE,
+                FailureEvent.Cause.WEAR, cpuAtEvent
+        );
+
+        eventLog.add(event);
+
+        System.out.printf(
+                "%n*** FAILURE *** Host %d at t=%.2f (mechanism=%s, wear=%.3f, "
+                + "severity=%.2f, observable degradation lead=%.1fs)%n%n",
+                hostId, currentTime, mode, wear, severity, leadTime);
+    }
+
+    /**
+     * Returns a repaired host to service.
+     *
+     * Host.setActive(true) applies immediately in CloudSim Plus when the
+     * host has no startup delay, and it does NOT throw here because
+     * Host.setFailed() is never used by this project - deactivation is what
+     * models the outage.
+     *
+     * @param retainedWear wear left over after an imperfect repair, logged so
+     *                     repeat-offender behaviour is auditable
+     */
+    public void recoverHost(int hostId, double currentTime, double retainedWear) {
+
+        if (!failedHosts.contains(hostId)) {
+            return;
+        }
+
+        Host host = hosts.get(hostId);
+        host.setActive(true);
+
+        EdgeNode node = digitalTwin.getNode(hostId);
+
+        if (node != null) {
+            node.setActive(true);
+            node.setDegraded(false);
+            node.setHealthState(EdgeNode.HealthState.NORMAL);
+        }
+
+        failedHosts.remove(hostId);
+
+        FailureEvent event = new FailureEvent(
+                hostId, currentTime, FailureEvent.Type.HOST_RECOVERED,
+                FailureEvent.Cause.REPAIR, retainedWear * 100
+        );
+
+        eventLog.add(event);
+
+        System.out.printf(
+                "+++ RECOVERED +++ Host %d back online at t=%.2f "
+                + "(retained wear=%.3f)%n",
+                hostId, currentTime, retainedWear);
     }
 
     // ==========================================

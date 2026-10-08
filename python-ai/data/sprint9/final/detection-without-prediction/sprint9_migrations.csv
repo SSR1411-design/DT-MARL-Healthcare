@@ -1,0 +1,1 @@
+run_id,baseline_name,episode,episode_start_tick,decision_step,recorded_tick,sim_time_s,task_id,patient_id,clinical_severity,priority,action,action_name,source_node_id,destination_node_id,migration_cost,latency_steps,preemptive,source_symptomatic,source_risk,destination_risk,source_failed_within_window,task_survived,outcome_scope
